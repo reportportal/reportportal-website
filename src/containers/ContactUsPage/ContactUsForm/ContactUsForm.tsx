@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Link } from '@app/components/Link';
 // import { subscribeUser } from '@app/components/SubscriptionForm/utils';
 import { createBemBlockBuilder } from '@app/utils';
@@ -12,7 +13,7 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { MAX_LENGTH } from './constants';
+import { MAX_LENGTH, RECAPTCHA_SITE_KEY } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -38,6 +39,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       termsAgree: false,
       wouldLikeToReceiveAds: false,
       website: '', // Honeypot field - should remain empty
+      recaptchaToken: '',
       ...(isDiscussFieldShown && { discuss: '' }),
     },
     validateOnBlur: false,
@@ -66,10 +68,11 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           const baseSalesForceValues = getBaseSalesForceValues(options);
           // Remove honeypot field before submitting
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { website, ...cleanValues } = values;
+          const { website, recaptchaToken, ...cleanValues } = values;
           const postData = {
             ...cleanValues,
             ...baseSalesForceValues,
+            recaptchaToken: values.recaptchaToken,
           };
 
           // if (values.wouldLikeToReceiveAds) {
@@ -130,9 +133,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               maxLength={MAX_LENGTH}
             />
           )}
-          {/* <FormFieldWrapper name="wouldLikeToReceiveAds"> */}
-          {/*   <CustomCheckbox label="Subscribe to ReportPortal newsletter" /> */}
-          {/* </FormFieldWrapper> */}
+          <FormFieldWrapper name="wouldLikeToReceiveAds">
+            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
+          </FormFieldWrapper>
           <FormFieldWrapper name="termsAgree">
             <CustomCheckbox
               label={
@@ -146,11 +149,26 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
+          <div className="recaptcha-container">
+            <ReCAPTCHA
+              sitekey={RECAPTCHA_SITE_KEY}
+              onChange={value => {
+                formik.setFieldValue('recaptchaToken', value);
+              }}
+            />
+            {formik.errors.recaptchaToken && (
+              <div className="error">{formik.errors.recaptchaToken as string}</div>
+            )}
+          </div>
           <button
             className="btn btn--primary btn--large"
             type="submit"
             data-gtm="send_request"
-            disabled={!getFieldProps('termsAgree').value || isLoading}
+            disabled={
+              !getFieldProps('termsAgree').value ||
+              !getFieldProps('recaptchaToken').value ||
+              isLoading
+            }
           >
             Send request
           </button>

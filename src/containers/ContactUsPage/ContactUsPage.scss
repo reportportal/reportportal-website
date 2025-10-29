@@ -114,7 +114,7 @@
 
     button {
       width: 235px;
-      margin: 24px auto 0;
+      margin: 0 auto;
     }
 
     &__tags {
@@ -288,5 +288,11 @@
         align-items: start;
       }
     }
+  }
+
+  .recaptcha-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, useRef } from 'react';
 import Icon from '@ant-design/icons';
-import { Input, Form } from 'antd';
+import { Input, Form, Modal } from 'antd';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX } from '@app/utils';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { RECAPTCHA_SITE_KEY } from '@app/containers/ContactUsPage/ContactUsForm/constants';
 
 import { EnvelopeIcon } from './icons';
 import { SubscriptionFormCard } from './SubscriptionFormCard';
@@ -21,6 +23,8 @@ enum SubscriptionStatus {
 
 export const SubscriptionForm: FC = () => {
   const [form] = Form.useForm();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [validation, setValidation] = useState<{
     isValid: boolean;
     status?: SubscriptionStatus;
@@ -77,7 +81,14 @@ export const SubscriptionForm: FC = () => {
       return;
     }
 
-    handleSubscribeUser(email);
+    setIsModalOpen(true);
+  };
+
+  const handleRecaptchaChange = (token: string | null) => {
+    if (token) {
+      handleSubscribeUser(email);
+      setIsModalOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -115,41 +126,60 @@ export const SubscriptionForm: FC = () => {
   }
 
   return (
-    <Form form={form} onFinish={handleFinish} className={getBlocksWith('__form', '__form--error')}>
-      <div className={getBlocksWith('__form-group')}>
-        <Form.Item
-          validateTrigger="onSubmit"
-          className={getBlocksWith('__form-input')}
-          name="email"
-          {...(!validation.isValid && {
-            validateStatus: 'error',
-            help: validation.message,
-          })}
-        >
-          <Input
-            placeholder="Email address"
-            prefix={
-              <Icon component={(props: object) => <Icon component={EnvelopeIcon} {...props} />} />
-            }
-          />
+    <>
+      <Form
+        form={form}
+        onFinish={handleFinish}
+        className={getBlocksWith('__form', '__form--error')}
+      >
+        <div className={getBlocksWith('__form-group')}>
+          <Form.Item
+            validateTrigger="onSubmit"
+            className={getBlocksWith('__form-input')}
+            name="email"
+            {...(!validation.isValid && {
+              validateStatus: 'error',
+              help: validation.message,
+            })}
+          >
+            <Input
+              placeholder="Email address"
+              prefix={
+                <Icon component={(props: object) => <Icon component={EnvelopeIcon} {...props} />} />
+              }
+            />
+          </Form.Item>
+        </div>
+        <Form.Item>
+          <button
+            type="submit"
+            className="btn btn--primary"
+            disabled={form.isFieldsTouched(true) && !validation.isValid}
+          >
+            Subscribe
+          </button>
         </Form.Item>
-      </div>
-      <Form.Item>
-        <button
-          type="submit"
-          className="btn btn--primary"
-          disabled={form.isFieldsTouched(true) && !validation.isValid}
-        >
-          Subscribe
-        </button>
-      </Form.Item>
-      <span className={getBlocksWith('__form-info')}>
-        By subscribing, you agree to receive marketing emails from ReportPortal team and associated
-        partners and accept our{' '}
-        <Link to="https://privacy.epam.com/core/interaction/showpolicy?type=PrivacyPolicy">
-          Privacy Policy
-        </Link>
-      </span>
-    </Form>
+        <span className={getBlocksWith('__form-info')}>
+          By subscribing, you agree to receive marketing emails from ReportPortal team and
+          associated partners and accept our{' '}
+          <Link to="https://privacy.epam.com/core/interaction/showpolicy?type=PrivacyPolicy">
+            Privacy Policy
+          </Link>
+        </span>
+      </Form>
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        destroyOnClose
+        width={370}
+      >
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={RECAPTCHA_SITE_KEY}
+          onChange={handleRecaptchaChange}
+        />
+      </Modal>
+    </>
   );
 };

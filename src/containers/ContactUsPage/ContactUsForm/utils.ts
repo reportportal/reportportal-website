@@ -41,6 +41,9 @@ const fields = [
   {
     name: 'company',
   },
+  {
+    name: 'recaptchaToken',
+  },
 ];
 
 export const validate = values =>
