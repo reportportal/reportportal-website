@@ -86,6 +86,7 @@ jobs:
           DOCUMENTATION_URL=//reportportal.io/docs
           GTM_ID=GTM-MK7ZHTL
           GATSBY_MAILCHIMP_LIST_ID=ca6d0eec5b
+          CLARITY_PROJECT_ID=nr74d9qrwk
           CONTENTFUL_ENV_ID=master
           CONTENTFUL_HOST=cdn.contentful.com
           CONTENTFUL_ACCESS_TOKEN=${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
@@ -106,6 +107,7 @@ jobs:
           echo CONTACT_US_URL=$CONTACT_US_URL >> .env.production
           echo DOCUMENTATION_URL=$DOCUMENTATION_URL >> .env.production
           echo GATSBY_MAILCHIMP_LIST_ID=$GATSBY_MAILCHIMP_LIST_ID >> .env.production
+          echo CLARITY_PROJECT_ID=$CLARITY_PROJECT_ID >> .env.production
 
       - name: Build the source code
         run: npm run build

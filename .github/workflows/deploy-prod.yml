@@ -20,6 +20,7 @@ env:
   CONTENTFUL_ENV_ID : master
   CONTENTFUL_HOST : cdn.contentful.com
   GATSBY_MAILCHIMP_LIST_ID: ca6d0eec5b
+  CLARITY_PROJECT_ID: nr74d9qrwk
 
 on:
   push:
@@ -59,6 +60,7 @@ jobs:
           echo CONTACT_US_URL=${{ env.CONTACT_US_URL }} >> .env.production
           echo DOCUMENTATION_URL=${{ env.DOCUMENTATION_URL }} >> .env.production
           echo GATSBY_MAILCHIMP_LIST_ID=${{ env.GATSBY_MAILCHIMP_LIST_ID }} >> .env.production
+          echo CLARITY_PROJECT_ID=${{ env.CLARITY_PROJECT_ID }} >> .env.production
 
       - name: Build the source code
         run: npm run build

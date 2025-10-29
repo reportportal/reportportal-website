@@ -17,6 +17,7 @@ env:
   DOCUMENTATION_URL: http://rpp-docs.s3-website.eu-central-1.amazonaws.com
   CONTENTFUL_ENV_ID: master
   CONTENTFUL_HOST: cdn.contentful.com
+  CLARITY_PROJECT_ID: nr74d9qrwk
 
 on:
   pull_request:
@@ -50,6 +51,7 @@ jobs:
           echo CONTENTFUL_HOST=${{ env.CONTENTFUL_HOST }} >> .env.production
           echo GTM_ID=${{ env.GTM_ID }} >> .env.production
           echo DOCUMENTATION_URL=${{ env.DOCUMENTATION_URL }} >> .env.production
+          echo CLARITY_PROJECT_ID=${{ env.CLARITY_PROJECT_ID }} >> .env.production  
 
       - name: Run tsc
         run: npm run tsc
