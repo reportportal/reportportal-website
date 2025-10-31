@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { BaseFieldProps, FormFieldWrapper } from '../FormFieldWrapper';
 import { InputField } from './InputField';
 
-export interface FormInputProps extends BaseFieldProps {
+interface FormInputProps extends BaseFieldProps {
   type?: string;
 }
 

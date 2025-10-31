@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
-import ReCAPTCHA from 'react-google-recaptcha';
+import ReCaptcha from 'react-google-recaptcha';
 import { Link } from '@app/components/Link';
-// import { subscribeUser } from '@app/components/SubscriptionForm/utils';
+import { subscribeUser } from '@app/components/SubscriptionForm/utils';
 import { createBemBlockBuilder } from '@app/utils';
 import axios from 'axios';
 
@@ -20,16 +20,9 @@ import '../ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 
-const MIN_FORM_INTERACTION_TIME = 3000;
-
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
-  const formMountTimeRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    formMountTimeRef.current = Date.now();
-  }, []);
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -38,7 +31,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       company: '',
       termsAgree: false,
       wouldLikeToReceiveAds: false,
-      website: '', // Honeypot field - should remain empty
       recaptchaToken: '',
       ...(isDiscussFieldShown && { discuss: '' }),
     },
@@ -46,38 +38,19 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     validateOnChange: false,
     validate,
     onSubmit: async values => {
-      // Bot detection: Check honeypot field
-      if (values.website) {
-        console.warn('Bot detected: honeypot field filled');
-        return;
-      }
-
-      // Bot detection: Check if form was submitted too quickly
-      if (formMountTimeRef.current !== null) {
-        const timeSinceMount = Date.now() - formMountTimeRef.current;
-        if (timeSinceMount < MIN_FORM_INTERACTION_TIME) {
-          console.warn('Bot detected: form submitted too quickly');
-          return;
-        }
-      }
-
       validateForm().then(errors => {
         if (isEmpty(errors)) {
           setIsLoading(true);
 
           const baseSalesForceValues = getBaseSalesForceValues(options);
-          // Remove honeypot field before submitting
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { website, recaptchaToken, ...cleanValues } = values;
           const postData = {
-            ...cleanValues,
+            ...values,
             ...baseSalesForceValues,
-            recaptchaToken: values.recaptchaToken,
           };
 
-          // if (values.wouldLikeToReceiveAds) {
-          //   subscribeUser(values.email).catch(console.error);
-          // }
+          if (values.wouldLikeToReceiveAds) {
+            subscribeUser(values.email).catch(console.error);
+          }
 
           axios
             .post(`${process.env.CONTACT_US_URL}`, postData)
@@ -110,20 +83,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
             maxLength={80}
           />
           <FormInput name="company" label="Company name" placeholder="ABC" maxLength={MAX_LENGTH} />
-          {/* Honeypot field - hidden from users but visible to bots */}
-          <div
-            style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}
-            aria-hidden="true"
-          >
-            <FormInput
-              name="website"
-              label="Website"
-              placeholder="https://example.com"
-              maxLength={MAX_LENGTH}
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
           {isDiscussFieldShown && (
             <FormInput
               name="discuss"
@@ -150,7 +109,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
             />
           </FormFieldWrapper>
           <div className="recaptcha-container">
-            <ReCAPTCHA
+            <ReCaptcha
               sitekey={RECAPTCHA_SITE_KEY}
               onChange={value => {
                 formik.setFieldValue('recaptchaToken', value);

@@ -3,7 +3,7 @@ import Icon from '@ant-design/icons';
 import { Input, Form, Modal } from 'antd';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX } from '@app/utils';
-import ReCAPTCHA from 'react-google-recaptcha';
+import ReCaptcha from 'react-google-recaptcha';
 import { RECAPTCHA_SITE_KEY } from '@app/containers/ContactUsPage/ContactUsForm/constants';
 
 import { EnvelopeIcon } from './icons';
@@ -23,8 +23,8 @@ enum SubscriptionStatus {
 
 export const SubscriptionForm: FC = () => {
   const [form] = Form.useForm();
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const recaptchaRef = useRef<ReCaptcha>(null);
+  const [isReCaptchaModalOpen, setIsReCaptchaModalOpen] = useState(false);
   const [validation, setValidation] = useState<{
     isValid: boolean;
     status?: SubscriptionStatus;
@@ -81,13 +81,13 @@ export const SubscriptionForm: FC = () => {
       return;
     }
 
-    setIsModalOpen(true);
+    setIsReCaptchaModalOpen(true);
   };
 
   const handleRecaptchaChange = (token: string | null) => {
     if (token) {
       handleSubscribeUser(email);
-      setIsModalOpen(false);
+      setIsReCaptchaModalOpen(false);
     }
   };
 
@@ -168,13 +168,13 @@ export const SubscriptionForm: FC = () => {
         </span>
       </Form>
       <Modal
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        open={isReCaptchaModalOpen}
+        onCancel={() => setIsReCaptchaModalOpen(false)}
         footer={null}
         destroyOnClose
         width={370}
       >
-        <ReCAPTCHA
+        <ReCaptcha
           ref={recaptchaRef}
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={handleRecaptchaChange}
