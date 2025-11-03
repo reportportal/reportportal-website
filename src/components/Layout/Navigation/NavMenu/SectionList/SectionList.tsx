@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import chunk from 'lodash/chunk';
+import compact from 'lodash/compact';
 import { createBemBlockBuilder } from '@app/utils';
 
 import { SectionItem, SectionItemProps } from './SectionItem';
@@ -12,6 +13,7 @@ interface SectionListProps {
   className?: string;
   showTitle?: boolean;
   itemsPerRow?: number;
+  mode?: 'primary' | 'secondary';
 }
 
 export const SectionList: FC<SectionListProps> = ({
@@ -20,12 +22,18 @@ export const SectionList: FC<SectionListProps> = ({
   items,
   itemsPerRow = items.length,
   className = '',
+  mode = 'primary',
 }) => {
-  const getBlocksWith = createBemBlockBuilder(['section-list', className]);
+  const bemClasses = compact([
+    'section-list',
+    mode === 'secondary' ? 'section-list-secondary' : undefined,
+    className,
+  ]);
+  const getBlocksWith = createBemBlockBuilder(bemClasses);
   const columns = chunk(items, itemsPerRow).map((column, columnIndex) => (
     <div key={columnIndex} className={getBlocksWith('__col')}>
       {column.map(data => (
-        <SectionItem key={data.title} className={getBlocksWith('__item')} {...data} />
+        <SectionItem key={data.title} className={getBlocksWith('__item')} {...data} mode={mode} />
       ))}
     </div>
   ));

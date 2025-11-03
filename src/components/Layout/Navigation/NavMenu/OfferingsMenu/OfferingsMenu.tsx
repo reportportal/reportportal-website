@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import classNames from 'classnames';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder } from '@app/utils';
 import { useMenuList } from '@app/hooks/useMenuList';
@@ -26,9 +25,10 @@ export const OfferingsMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuCon
 
   const pricingForSolutionsList = (
     <SectionList
-      className={classNames('pricing-solutions-list', { 'section-list-secondary': isDesktop })}
+      className="pricing-solutions-list"
       title="Pricing for Solutions"
       items={pricing}
+      mode={isDesktop ? 'secondary' : 'primary'}
     />
   );
 
