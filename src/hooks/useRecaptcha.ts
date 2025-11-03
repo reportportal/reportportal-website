@@ -63,6 +63,10 @@ const loadRecaptchaScript = () => {
 
     const handleError = () => {
       recaptchaPromiseMap.delete(RECAPTCHA_SITE_KEY);
+      if (script) {
+        script.remove();
+        script = null;
+      }
       reject(new Error('Failed to load reCAPTCHA script.'));
     };
 

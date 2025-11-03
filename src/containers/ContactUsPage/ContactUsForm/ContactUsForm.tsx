@@ -23,7 +23,7 @@ const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
+  const { executeRecaptcha, recaptchaError, clearError, isRecaptchaEnabled } = useRecaptcha({
     action: 'contact_us',
     timeout: 10000,
     retryCount: 2,
@@ -55,7 +55,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         const recaptchaToken = await executeRecaptcha();
 
-        if (recaptchaError) {
+        if ((isRecaptchaEnabled && !recaptchaToken) || recaptchaError) {
+          setIsLoading(false);
           return;
         }
 
