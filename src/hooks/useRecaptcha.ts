@@ -15,20 +15,8 @@ declare global {
       enterprise?: {
         ready(callback: () => void): void;
         execute(siteKey: string, options: { action: string }): Promise<string>;
-        render(
-          container: string | HTMLElement,
-          parameters: {
-            sitekey: string;
-            callback?: (token: string) => void;
-            'error-callback'?: () => void;
-            'expired-callback'?: () => void;
-          },
-        ): number;
-        reset(widgetId?: number): void;
       };
     };
-    recaptchaChallengeResolve?: (token: string) => void;
-    recaptchaChallengeReject?: () => void;
   }
 }
 
@@ -41,19 +29,36 @@ const loadRecaptchaScript = () => {
 
   const loadingPromise = new Promise((resolve, reject) => {
     if (window.grecaptcha?.enterprise) {
-      window.grecaptcha.enterprise.ready(() => resolve(''));
+      window.grecaptcha.enterprise.ready(() => {
+        if (window.grecaptcha?.enterprise) {
+          resolve('');
+        } else {
+          reject(new Error('reCAPTCHA enterprise became unavailable after ready.'));
+        }
+      });
       return;
     }
 
     let script = document.getElementById(RECAPTCHA_SCRIPT_ID) as HTMLScriptElement | null;
 
     const handleLoad = () => {
-      if (window.grecaptcha?.enterprise) {
-        window.grecaptcha.enterprise.ready(() => resolve(''));
-      } else {
-        recaptchaPromiseMap.delete(RECAPTCHA_SITE_KEY);
-        reject(new Error('reCAPTCHA failed to initialize.'));
-      }
+      const checkReady = (attempts = 0) => {
+        if (window.grecaptcha?.enterprise) {
+          window.grecaptcha.enterprise.ready(() => {
+            if (window.grecaptcha?.enterprise) {
+              resolve('');
+            } else {
+              reject(new Error('reCAPTCHA enterprise not available after initialization.'));
+            }
+          });
+        } else if (attempts < 10) {
+          setTimeout(() => checkReady(attempts + 1), 100);
+        } else {
+          recaptchaPromiseMap.delete(RECAPTCHA_SITE_KEY);
+          reject(new Error('reCAPTCHA failed to initialize after loading.'));
+        }
+      };
+      checkReady();
     };
 
     const handleError = () => {
@@ -72,7 +77,7 @@ const loadRecaptchaScript = () => {
         handleLoad();
       };
       script.onerror = handleError;
-      document.body.appendChild(script);
+      document.head.appendChild(script);
     } else if (script.getAttribute('data-loaded') === 'true') {
       handleLoad();
     } else {
@@ -98,12 +103,9 @@ interface UseRecaptchaOptions {
 
 interface UseRecaptchaReturn {
   executeRecaptcha: () => Promise<string | null>;
-  executeRecaptchaChallenge: () => Promise<string | null>;
   recaptchaError: string | null;
   clearError: () => void;
   isRecaptchaEnabled: boolean;
-  showChallenge: boolean;
-  setShowChallenge: (show: boolean) => void;
 }
 
 export const useRecaptcha = ({
@@ -113,12 +115,10 @@ export const useRecaptcha = ({
   retryDelay = 1000,
 }: UseRecaptchaOptions): UseRecaptchaReturn => {
   const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
-  const [showChallenge, setShowChallenge] = useState<boolean>(false);
 
   useEffect(() => {
     if (RECAPTCHA_ENABLED) {
-      loadRecaptchaScript().catch(error => {
-        console.error('Failed to load reCAPTCHA:', error);
+      loadRecaptchaScript().catch(() => {
         setRecaptchaError('Security verification failed to load. Please refresh the page.');
       });
     }
@@ -135,9 +135,16 @@ export const useRecaptcha = ({
       setTimeout(() => reject(new Error('reCAPTCHA verification timeout')), timeout);
     });
 
-    const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action });
-
-    return Promise.race([executePromise, timeoutPromise]);
+    try {
+      const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action });
+      return await Promise.race([executePromise, timeoutPromise]);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      if (errorMessage.includes('No reCAPTCHA clients exist')) {
+        throw new Error('reCAPTCHA client not properly initialized. Please refresh the page.');
+      }
+      throw error;
+    }
   }, [action, timeout]);
 
   const executeRecaptcha = useCallback(async (): Promise<string | null> => {
@@ -155,8 +162,6 @@ export const useRecaptcha = ({
         token = await executeRecaptchaBase();
       } catch (error) {
         if (retries === 0) {
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          console.error('reCAPTCHA failed after retries:', errorMessage);
           setRecaptchaError('Security verification failed. Please try again.');
           break;
         }
@@ -173,57 +178,14 @@ export const useRecaptcha = ({
     return token;
   }, [executeRecaptchaBase, retryCount, retryDelay]);
 
-  const executeRecaptchaChallenge = useCallback(async (): Promise<string | null> => {
-    if (!RECAPTCHA_ENABLED) {
-      return null;
-    }
-
-    return new Promise<string | null>((resolve, reject) => {
-      loadRecaptchaScript()
-        .then(() => {
-          if (!window.grecaptcha?.enterprise) {
-            setRecaptchaError('Security verification failed to load. Please refresh the page.');
-            reject(new Error('reCAPTCHA enterprise is not available.'));
-            return;
-          }
-
-          const timeoutId = setTimeout(() => {
-            setRecaptchaError('Security verification timeout. Please try again.');
-            reject(new Error('reCAPTCHA challenge timeout'));
-          }, timeout);
-
-          window.recaptchaChallengeResolve = (token: string) => {
-            clearTimeout(timeoutId);
-            setRecaptchaError(null);
-            setShowChallenge(false);
-            resolve(token);
-          };
-
-          window.recaptchaChallengeReject = () => {
-            clearTimeout(timeoutId);
-            setRecaptchaError('Security verification failed. Please try again.');
-            reject(new Error('reCAPTCHA challenge failed'));
-          };
-        })
-        .catch(error => {
-          console.error('Failed to load reCAPTCHA:', error);
-          setRecaptchaError('Security verification failed to load. Please refresh the page.');
-          reject(error);
-        });
-    });
-  }, [timeout]);
-
   const clearError = useCallback(() => {
     setRecaptchaError(null);
   }, []);
 
   return {
     executeRecaptcha,
-    executeRecaptchaChallenge,
     recaptchaError,
     clearError,
     isRecaptchaEnabled: RECAPTCHA_ENABLED,
-    showChallenge,
-    setShowChallenge,
   };
 };

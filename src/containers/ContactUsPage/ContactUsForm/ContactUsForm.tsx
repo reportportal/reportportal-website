@@ -13,7 +13,6 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { RecaptchaChallenge } from './RecaptchaChallenge';
 import { MAX_LENGTH } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
@@ -24,14 +23,12 @@ const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [challengeToken, setChallengeToken] = useState<string | null>(null);
-  const { executeRecaptcha, recaptchaError, clearError, showChallenge, setShowChallenge } =
-    useRecaptcha({
-      action: 'contact_us',
-      timeout: 10000,
-      retryCount: 2,
-      retryDelay: 1000,
-    });
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
+    action: 'contact_us',
+    timeout: 10000,
+    retryCount: 2,
+    retryDelay: 1000,
+  });
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -56,7 +53,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setIsLoading(true);
         clearError();
 
-        const recaptchaToken = challengeToken || (await executeRecaptcha());
+        const recaptchaToken = await executeRecaptcha();
 
         if (recaptchaError) {
           return;
@@ -66,72 +63,31 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         const postData = {
           ...values,
           ...baseSalesForceValues,
-          ...(recaptchaToken && { recaptchaToken }),
         };
 
         if (values.wouldLikeToReceiveAds) {
-          subscribeUser(values.email).catch(console.error);
+          subscribeUser(values.email, recaptchaToken).catch(console.error);
         }
 
-        const response = await axios.post(CONTACT_US_URL, postData);
-        console.log('response', response);
+        const headers = {
+          'Content-Type': 'application/json',
+          'RP-Recaptcha-Action': 'contact_us',
+          ...(recaptchaToken && { 'RP-Recaptcha-Token': recaptchaToken }),
+        };
+
+        const response = await axios.post(CONTACT_US_URL, postData, { headers });
 
         if (response.data.success) {
           showFeedbackForm();
-        } else if (
-          response.data.reason === 'low_score' ||
-          response.data.score < 0.5 ||
-          response.data.reason === 'failed_verification'
-        ) {
-          setChallengeToken(null);
-          setShowChallenge(true);
-          setIsLoading(false);
         } else {
-          console.error('Form submission failed:', response.data);
           setIsLoading(false);
         }
       } catch (error) {
-        console.error('Form submission error:', error);
-
-        if (error.response?.status === 403) {
-          const responseData =
-            typeof error.response.data === 'string'
-              ? JSON.parse(error.response.data)
-              : error.response.data;
-
-          if (
-            responseData.reason === 'failed_verification' ||
-            responseData.reason === 'low_score' ||
-            responseData.score < 0.5
-          ) {
-            setChallengeToken(null);
-            setShowChallenge(true);
-            setIsLoading(false);
-            return;
-          }
-        }
-
         setIsLoading(false);
       }
     },
   });
   const { getFieldProps, validateForm } = formik;
-
-  const handleChallengeSuccess = (token: string) => {
-    setChallengeToken(token);
-    setShowChallenge(false);
-    clearError();
-    formik.handleSubmit();
-  };
-
-  const handleChallengeError = () => {
-    setShowChallenge(false);
-    clearError();
-  };
-
-  const handleChallengeExpired = () => {
-    setChallengeToken(null);
-  };
 
   if (isFeedbackFormVisible) {
     return <FeedbackForm title={title} />;
@@ -176,22 +132,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {showChallenge && (
-            <div style={{ marginBottom: '16px' }}>
-              <p style={{ marginBottom: '12px', fontSize: '14px', color: '#666' }}>
-                Please complete the security verification to continue:
-              </p>
-              <RecaptchaChallenge
-                onSuccess={handleChallengeSuccess}
-                onError={handleChallengeError}
-                onExpired={handleChallengeExpired}
-              />
-            </div>
-          )}
           {recaptchaError && (
-            <div className="error-message" style={{ color: '#d32f2f', marginBottom: '16px' }}>
-              {recaptchaError}
-            </div>
+            <div className={getBlocksWith('__recaptcha-error')}>{recaptchaError}</div>
           )}
           <button
             className="btn btn--primary btn--large"
