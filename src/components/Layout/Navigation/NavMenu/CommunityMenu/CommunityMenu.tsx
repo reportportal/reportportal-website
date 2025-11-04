@@ -41,7 +41,7 @@ export const CommunityMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuCon
   );
 
   const footer = (
-    <div className={classNames(getBlocksWith('__footer'), 'temporary-hide')}>
+    <div className={classNames(getBlocksWith('__footer'))}>
       <div className={getBlocksWith('__footer-container')}>
         <SubscriptionForm />
       </div>

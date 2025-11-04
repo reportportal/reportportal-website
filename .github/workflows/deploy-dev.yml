@@ -36,6 +36,8 @@ on:
         required: true
       CONTENTFUL_SPACE_ID_DEV:
         required: true
+      RECAPTCHA_SITE_KEY:
+        required: true
     inputs:
       CONTENTFUL_ENV_ID:
         description: 'Contentful environment to use'
@@ -106,6 +108,8 @@ jobs:
           echo CONTACT_US_URL=$CONTACT_US_URL >> .env.production
           echo DOCUMENTATION_URL=$DOCUMENTATION_URL >> .env.production
           echo GATSBY_MAILCHIMP_LIST_ID=$GATSBY_MAILCHIMP_LIST_ID >> .env.production
+          echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env.production
+          echo GATSBY_RECAPTCHA_ENABLED=true >> .env.production
 
       - name: Build the source code
         run: npm run build

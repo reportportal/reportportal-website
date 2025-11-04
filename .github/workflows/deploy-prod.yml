@@ -59,6 +59,8 @@ jobs:
           echo CONTACT_US_URL=${{ env.CONTACT_US_URL }} >> .env.production
           echo DOCUMENTATION_URL=${{ env.DOCUMENTATION_URL }} >> .env.production
           echo GATSBY_MAILCHIMP_LIST_ID=${{ env.GATSBY_MAILCHIMP_LIST_ID }} >> .env.production
+          echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env.production
+          echo GATSBY_RECAPTCHA_ENABLED=true >> .env.production
 
       - name: Build the source code
         run: npm run build

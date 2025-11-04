@@ -9,8 +9,6 @@ export interface BaseFieldProps {
   maxLength?: number;
   value?: string;
   InputElement?: 'input' | 'textarea';
-  tabIndex?: number;
-  autoComplete?: string;
 }
 
 export const FormFieldWrapper: FC<{ name: string; children: ReactElement }> = ({
