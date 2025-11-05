@@ -38,9 +38,10 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
 
   const integrationsList = (
     <SectionList
-      className="section-list-secondary integrations-list"
+      className="integrations-list"
       title="Integrations"
       items={integrations}
+      mode="secondary"
     />
   );
 
