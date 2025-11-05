@@ -34,9 +34,10 @@ export const CommunityMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuCon
 
   const communityList = (
     <SectionList
-      className={classNames('community-list', { 'section-list-secondary': isDesktop })}
+      className="community-list"
       title="Our social medias"
       items={communities}
+      mode={isDesktop ? 'secondary' : 'primary'}
     />
   );
 
