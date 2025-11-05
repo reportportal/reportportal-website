@@ -67,12 +67,16 @@
     }
   }
 
+  &:has(.section-item-arrow) {
+    padding-right: 25px;
+  }
+
   &--no-text {
     padding-top: 16px;
     padding-bottom: 16px;
     line-height: 20px;
 
-    svg,
+    & > svg,
     .section-item-icon {
       top: 8px;
     }
@@ -95,7 +99,7 @@
     color: var(--text-primary);
   }
 
-  & svg,
+  & > svg,
   &-icon {
     position: absolute;
     top: 8px;
@@ -103,11 +107,20 @@
     width: 36px;
     height: 36px;
   }
+
+  &-arrow {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    bottom: 0;
+    margin: auto;
+    color: var(--text-service);
+  }
 }
 
 .section-list-secondary {
   &__col {
-    width: 200px;
+    width: 210px;
   }
 
   .section-item {
