@@ -23,6 +23,7 @@ const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [customError, setCustomError] = useState<string | null>(null);
   const { executeRecaptcha, recaptchaError, clearError, isRecaptchaEnabled } = useRecaptcha({
     action: 'contact_us',
     timeout: 10000,
@@ -43,6 +44,10 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     validateOnChange: false,
     validate,
     onSubmit: async values => {
+      if (isLoading) {
+        return;
+      }
+
       const errors = await validateForm();
 
       if (!isEmpty(errors)) {
@@ -52,6 +57,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       try {
         setIsLoading(true);
         clearError();
+        setCustomError(null);
 
         const recaptchaToken = await executeRecaptcha();
 
@@ -78,12 +84,25 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         const response = await axios.post(CONTACT_US_URL, postData, { headers });
 
-        if (response.data.success) {
+        let responseData = response.data;
+        if (typeof responseData === 'string') {
+          try {
+            responseData = JSON.parse(responseData);
+          } catch (parseError) {
+            setCustomError('Failed to process server response. Please try again.');
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        if (responseData.success) {
+          setIsLoading(false);
           showFeedbackForm();
         } else {
           setIsLoading(false);
         }
       } catch (error) {
+        setCustomError('Request failed. Please try again.');
         setIsLoading(false);
       }
     },
@@ -133,8 +152,10 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {recaptchaError && (
-            <div className={getBlocksWith('__recaptcha-error')}>{recaptchaError}</div>
+          {(recaptchaError || customError) && (
+            <div className={getBlocksWith('__recaptcha-error')}>
+              {recaptchaError || customError}
+            </div>
           )}
           <button
             className="btn btn--primary btn--large"
@@ -142,7 +163,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
             data-gtm="send_request"
             disabled={!getFieldProps('termsAgree').value || isLoading}
           >
-            Send request
+            {isLoading ? 'Sending...' : 'Send request'}
           </button>
         </form>
       </div>
