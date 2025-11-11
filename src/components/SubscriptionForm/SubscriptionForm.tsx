@@ -32,7 +32,6 @@ export const SubscriptionForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
   const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
-    action: 'subscribe',
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,
@@ -88,7 +87,7 @@ export const SubscriptionForm: FC = () => {
       setIsLoading(true);
       clearError();
 
-      const recaptchaToken = await executeRecaptcha();
+      const recaptchaToken = await executeRecaptcha('subscribe');
 
       if (recaptchaError) {
         setValidation({
