@@ -25,25 +25,12 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [customError, setCustomError] = useState<string | null>(null);
   const contactRecaptchaTokenRef = useRef<string | null>(null);
-  const subscribeRecaptchaTokenRef = useRef<string | null>(null);
   const {
     executeRecaptcha: executeContactRecaptcha,
     recaptchaError: contactRecaptchaError,
     clearError: clearContactError,
     isRecaptchaEnabled: isContactRecaptchaEnabled,
   } = useRecaptcha({
-    action: 'contact_us',
-    timeout: 10000,
-    retryCount: 2,
-    retryDelay: 1000,
-  });
-  const {
-    executeRecaptcha: executeSubscribeRecaptcha,
-    recaptchaError: subscribeRecaptchaError,
-    clearError: clearSubscribeError,
-    isRecaptchaEnabled: isSubscribeRecaptchaEnabled,
-  } = useRecaptcha({
-    action: 'subscribe',
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,
@@ -75,11 +62,10 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       try {
         setIsLoading(true);
         clearContactError();
-        clearSubscribeError();
         setCustomError(null);
 
         if (!contactRecaptchaTokenRef.current) {
-          contactRecaptchaTokenRef.current = await executeContactRecaptcha();
+          contactRecaptchaTokenRef.current = await executeContactRecaptcha('contact_us');
         }
 
         const contactRecaptchaToken = contactRecaptchaTokenRef.current;
@@ -96,13 +82,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         };
 
         if (values.wouldLikeToReceiveAds) {
-          if (!subscribeRecaptchaTokenRef.current) {
-            subscribeRecaptchaTokenRef.current = await executeSubscribeRecaptcha();
-          }
+          const subscribeRecaptchaToken = await executeContactRecaptcha('subscribe');
 
-          const subscribeRecaptchaToken = subscribeRecaptchaTokenRef.current;
-
-          if (isSubscribeRecaptchaEnabled && subscribeRecaptchaToken) {
+          if (isContactRecaptchaEnabled && subscribeRecaptchaToken) {
             subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
           }
         }
@@ -177,9 +159,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {(contactRecaptchaError || subscribeRecaptchaError || customError) && (
+          {(contactRecaptchaError || customError) && (
             <div className={getBlocksWith('__recaptcha-error')}>
-              {contactRecaptchaError || subscribeRecaptchaError || customError}
+              {contactRecaptchaError || customError}
             </div>
           )}
           <button

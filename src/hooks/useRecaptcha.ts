@@ -99,21 +99,21 @@ const loadRecaptchaScript = () => {
 };
 
 interface UseRecaptchaOptions {
-  action: string;
+  action?: string;
   timeout?: number;
   retryCount?: number;
   retryDelay?: number;
 }
 
 interface UseRecaptchaReturn {
-  executeRecaptcha: () => Promise<string | null>;
+  executeRecaptcha: (action?: string) => Promise<string | null>;
   recaptchaError: string | null;
   clearError: () => void;
   isRecaptchaEnabled: boolean;
 }
 
 export const useRecaptcha = ({
-  action,
+  action: defaultAction,
   timeout = 10000,
   retryCount = 2,
   retryDelay = 1000,
@@ -128,59 +128,73 @@ export const useRecaptcha = ({
     }
   }, []);
 
-  const executeRecaptchaBase = useCallback(async (): Promise<string> => {
-    await loadRecaptchaScript();
+  const executeRecaptchaBase = useCallback(
+    async (action: string): Promise<string> => {
+      await loadRecaptchaScript();
 
-    if (!window.grecaptcha?.enterprise) {
-      throw new Error('reCAPTCHA enterprise is not available.');
-    }
-
-    const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => reject(new Error('reCAPTCHA verification timeout')), timeout);
-    });
-
-    try {
-      const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action });
-      return await Promise.race([executePromise, timeoutPromise]);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      if (errorMessage.includes('No reCAPTCHA clients exist')) {
-        throw new Error('reCAPTCHA client not properly initialized. Please refresh the page.');
+      if (!window.grecaptcha?.enterprise) {
+        throw new Error('reCAPTCHA enterprise is not available.');
       }
-      throw error;
-    }
-  }, [action, timeout]);
 
-  const executeRecaptcha = useCallback(async (): Promise<string | null> => {
-    if (!RECAPTCHA_ENABLED) {
-      return null;
-    }
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('reCAPTCHA verification timeout')), timeout);
+      });
 
-    setRecaptchaError(null);
-    let token: string | null = null;
-    let retries = retryCount;
-
-    /* eslint-disable no-await-in-loop */
-    while (retries >= 0 && !token) {
       try {
-        token = await executeRecaptchaBase();
+        const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, {
+          action,
+        });
+        return await Promise.race([executePromise, timeoutPromise]);
       } catch (error) {
-        if (retries === 0) {
-          setRecaptchaError('Security verification failed. Please try again.');
-          break;
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('No reCAPTCHA clients exist')) {
+          throw new Error('reCAPTCHA client not properly initialized. Please refresh the page.');
         }
-        retries -= 1;
-        if (retryDelay > 0) {
-          await new Promise(resolve => {
-            setTimeout(resolve, retryDelay);
-          });
+        throw error;
+      }
+    },
+    [timeout],
+  );
+
+  const executeRecaptcha = useCallback(
+    async (action?: string): Promise<string | null> => {
+      if (!RECAPTCHA_ENABLED) {
+        return null;
+      }
+
+      const actionToExecute = action || defaultAction;
+      if (!actionToExecute) {
+        setRecaptchaError('reCAPTCHA action is not defined.');
+        return null;
+      }
+
+      setRecaptchaError(null);
+      let token: string | null = null;
+      let retries = retryCount;
+
+      /* eslint-disable no-await-in-loop */
+      while (retries >= 0 && !token) {
+        try {
+          token = await executeRecaptchaBase(actionToExecute);
+        } catch (error) {
+          if (retries === 0) {
+            setRecaptchaError('Security verification failed. Please try again.');
+            break;
+          }
+          retries -= 1;
+          if (retryDelay > 0) {
+            await new Promise(resolve => {
+              setTimeout(resolve, retryDelay);
+            });
+          }
         }
       }
-    }
-    /* eslint-enable no-await-in-loop */
+      /* eslint-enable no-await-in-loop */
 
-    return token;
-  }, [executeRecaptchaBase, retryCount, retryDelay]);
+      return token;
+    },
+    [executeRecaptchaBase, retryCount, retryDelay, defaultAction],
+  );
 
   const clearError = useCallback(() => {
     setRecaptchaError(null);
