@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
@@ -24,8 +24,26 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
   const [customError, setCustomError] = useState<string | null>(null);
-  const { executeRecaptcha, recaptchaError, clearError, isRecaptchaEnabled } = useRecaptcha({
+  const contactRecaptchaTokenRef = useRef<string | null>(null);
+  const subscribeRecaptchaTokenRef = useRef<string | null>(null);
+  const {
+    executeRecaptcha: executeContactRecaptcha,
+    recaptchaError: contactRecaptchaError,
+    clearError: clearContactError,
+    isRecaptchaEnabled: isContactRecaptchaEnabled,
+  } = useRecaptcha({
     action: 'contact_us',
+    timeout: 10000,
+    retryCount: 2,
+    retryDelay: 1000,
+  });
+  const {
+    executeRecaptcha: executeSubscribeRecaptcha,
+    recaptchaError: subscribeRecaptchaError,
+    clearError: clearSubscribeError,
+    isRecaptchaEnabled: isSubscribeRecaptchaEnabled,
+  } = useRecaptcha({
+    action: 'subscribe',
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,
@@ -56,12 +74,17 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
       try {
         setIsLoading(true);
-        clearError();
+        clearContactError();
+        clearSubscribeError();
         setCustomError(null);
 
-        const recaptchaToken = await executeRecaptcha();
+        if (!contactRecaptchaTokenRef.current) {
+          contactRecaptchaTokenRef.current = await executeContactRecaptcha();
+        }
 
-        if ((isRecaptchaEnabled && !recaptchaToken) || recaptchaError) {
+        const contactRecaptchaToken = contactRecaptchaTokenRef.current;
+
+        if ((isContactRecaptchaEnabled && !contactRecaptchaToken) || contactRecaptchaError) {
           setIsLoading(false);
           return;
         }
@@ -73,26 +96,28 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         };
 
         if (values.wouldLikeToReceiveAds) {
-          subscribeUser(values.email, recaptchaToken).catch(console.error);
+          if (!subscribeRecaptchaTokenRef.current) {
+            subscribeRecaptchaTokenRef.current = await executeSubscribeRecaptcha();
+          }
+
+          const subscribeRecaptchaToken = subscribeRecaptchaTokenRef.current;
+
+          if (isSubscribeRecaptchaEnabled && subscribeRecaptchaToken) {
+            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
+          }
         }
 
         const headers = {
           'Content-Type': 'application/json',
           'RP-Recaptcha-Action': 'contact_us',
-          ...(recaptchaToken && { 'RP-Recaptcha-Token': recaptchaToken }),
+          ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
 
         const response = await axios.post(CONTACT_US_URL, postData, { headers });
 
         let responseData = response.data;
         if (typeof responseData === 'string') {
-          try {
-            responseData = JSON.parse(responseData);
-          } catch (parseError) {
-            setCustomError('Failed to process server response. Please try again.');
-            setIsLoading(false);
-            return;
-          }
+          responseData = JSON.parse(responseData);
         }
 
         if (responseData.success) {
@@ -152,9 +177,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {(recaptchaError || customError) && (
+          {(contactRecaptchaError || subscribeRecaptchaError || customError) && (
             <div className={getBlocksWith('__recaptcha-error')}>
-              {recaptchaError || customError}
+              {contactRecaptchaError || subscribeRecaptchaError || customError}
             </div>
           )}
           <button
