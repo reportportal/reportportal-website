@@ -71,7 +71,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         const contactRecaptchaToken = contactRecaptchaTokenRef.current;
 
         if ((isContactRecaptchaEnabled && !contactRecaptchaToken) || contactRecaptchaError) {
-          setIsLoading(false);
           return;
         }
 
@@ -103,7 +102,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         }
 
         if (responseData.success) {
-          setIsLoading(false);
           showFeedbackForm();
         } else {
           setIsLoading(false);

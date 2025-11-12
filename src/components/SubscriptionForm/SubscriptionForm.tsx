@@ -40,6 +40,7 @@ export const SubscriptionForm: FC = () => {
   const handleSubscribeUser = async (emailToSubscribe: string, recaptchaToken: string | null) => {
     subscribeUser(emailToSubscribe, recaptchaToken)
       .then(response => {
+        setIsLoading(false);
         setValidation({
           isValid: true,
           status:
@@ -54,6 +55,7 @@ export const SubscriptionForm: FC = () => {
           error.response.data.error === 'email address already subscribed';
 
         if (shouldCheckEmail || isAlreadySubscribed) {
+          setIsLoading(false);
           setValidation({
             isValid: true,
             status: shouldCheckEmail
@@ -61,6 +63,7 @@ export const SubscriptionForm: FC = () => {
               : SubscriptionStatus.alreadySubscribed,
           });
         } else {
+          setIsLoading(false);
           setValidation({
             isValid: false,
             status: SubscriptionStatus.error,
@@ -94,7 +97,6 @@ export const SubscriptionForm: FC = () => {
           isValid: false,
           message: 'Security verification failed. Please try again.',
         });
-        setIsLoading(false);
         return;
       }
 
