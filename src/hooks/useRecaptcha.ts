@@ -113,7 +113,7 @@ interface UseRecaptchaReturn {
 }
 
 export const useRecaptcha = ({
-  action: defaultAction,
+  action,
   timeout = 10000,
   retryCount = 2,
   retryDelay = 1000,
@@ -128,33 +128,30 @@ export const useRecaptcha = ({
     }
   }, []);
 
-  const executeRecaptchaBase = useCallback(
-    async (action: string): Promise<string> => {
-      await loadRecaptchaScript();
+  const executeRecaptchaBase = useCallback(async (): Promise<string> => {
+    await loadRecaptchaScript();
 
-      if (!window.grecaptcha?.enterprise) {
-        throw new Error('reCAPTCHA enterprise is not available.');
-      }
+    if (!window.grecaptcha?.enterprise) {
+      throw new Error('reCAPTCHA enterprise is not available.');
+    }
 
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('reCAPTCHA verification timeout')), timeout);
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('reCAPTCHA verification timeout')), timeout);
+    });
+
+    try {
+      const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, {
+        action,
       });
-
-      try {
-        const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, {
-          action,
-        });
-        return await Promise.race([executePromise, timeoutPromise]);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        if (errorMessage.includes('No reCAPTCHA clients exist')) {
-          throw new Error('reCAPTCHA client not properly initialized. Please refresh the page.');
-        }
-        throw error;
+      return await Promise.race([executePromise, timeoutPromise]);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      if (errorMessage.includes('No reCAPTCHA clients exist')) {
+        throw new Error('reCAPTCHA client not properly initialized. Please refresh the page.');
       }
-    },
-    [timeout],
-  );
+      throw error;
+    }
+  }, [timeout]);
 
   const executeRecaptcha = useCallback(
     async (action?: string): Promise<string | null> => {
@@ -162,7 +159,7 @@ export const useRecaptcha = ({
         return null;
       }
 
-      const actionToExecute = action || defaultAction;
+      const actionToExecute = action;
       if (!actionToExecute) {
         setRecaptchaError('reCAPTCHA action is not defined.');
         return null;
@@ -193,7 +190,7 @@ export const useRecaptcha = ({
 
       return token;
     },
-    [executeRecaptchaBase, retryCount, retryDelay, defaultAction],
+    [executeRecaptchaBase, retryCount, retryDelay],
   );
 
   const clearError = useCallback(() => {
