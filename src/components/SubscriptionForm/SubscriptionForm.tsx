@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import Icon from '@ant-design/icons';
 import { Input, Form } from 'antd';
 import { Link } from '@app/components/Link';
-import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX, RECAPTCHA_ACTION } from '@app/utils';
+import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX } from '@app/utils';
 import { useRecaptcha } from '@app/hooks/useRecaptcha';
 
 import { EnvelopeIcon } from './icons';
@@ -32,7 +32,6 @@ export const SubscriptionForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
   const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
-    action: RECAPTCHA_ACTION,
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,

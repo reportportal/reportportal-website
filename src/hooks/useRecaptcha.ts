@@ -5,6 +5,7 @@ import {
   RECAPTCHA_SCRIPT_ID,
   RECAPTCHA_SRC,
   RECAPTCHA_ENABLED,
+  RECAPTCHA_ACTION,
 } from '../utils/constants';
 
 const recaptchaPromiseMap = new Map();
@@ -99,25 +100,23 @@ const loadRecaptchaScript = () => {
 };
 
 interface UseRecaptchaOptions {
-  action?: string;
   timeout?: number;
   retryCount?: number;
   retryDelay?: number;
 }
 
 interface UseRecaptchaReturn {
-  executeRecaptcha: (action?: string) => Promise<string | null>;
+  executeRecaptcha: () => Promise<string | null>;
   recaptchaError: string | null;
   clearError: () => void;
   isRecaptchaEnabled: boolean;
 }
 
 export const useRecaptcha = ({
-  action,
   timeout = 10000,
   retryCount = 2,
   retryDelay = 1000,
-}: UseRecaptchaOptions): UseRecaptchaReturn => {
+}: UseRecaptchaOptions = {}): UseRecaptchaReturn => {
   const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -141,7 +140,7 @@ export const useRecaptcha = ({
 
     try {
       const executePromise = window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, {
-        action,
+        action: RECAPTCHA_ACTION,
       });
       return await Promise.race([executePromise, timeoutPromise]);
     } catch (error) {
@@ -153,45 +152,36 @@ export const useRecaptcha = ({
     }
   }, [timeout]);
 
-  const executeRecaptcha = useCallback(
-    async (action?: string): Promise<string | null> => {
-      if (!RECAPTCHA_ENABLED) {
-        return null;
-      }
+  const executeRecaptcha = useCallback(async (): Promise<string | null> => {
+    if (!RECAPTCHA_ENABLED) {
+      return null;
+    }
 
-      const actionToExecute = action;
-      if (!actionToExecute) {
-        setRecaptchaError('reCAPTCHA action is not defined.');
-        return null;
-      }
+    setRecaptchaError(null);
+    let token: string | null = null;
+    let retries = retryCount;
 
-      setRecaptchaError(null);
-      let token: string | null = null;
-      let retries = retryCount;
-
-      /* eslint-disable no-await-in-loop */
-      while (retries >= 0 && !token) {
-        try {
-          token = await executeRecaptchaBase(actionToExecute);
-        } catch (error) {
-          if (retries === 0) {
-            setRecaptchaError('Security verification failed. Please try again.');
-            break;
-          }
-          retries -= 1;
-          if (retryDelay > 0) {
-            await new Promise(resolve => {
-              setTimeout(resolve, retryDelay);
-            });
-          }
+    /* eslint-disable no-await-in-loop */
+    while (retries >= 0 && !token) {
+      try {
+        token = await executeRecaptchaBase();
+      } catch (error) {
+        if (retries === 0) {
+          setRecaptchaError('Security verification failed. Please try again.');
+          break;
+        }
+        retries -= 1;
+        if (retryDelay > 0) {
+          await new Promise(resolve => {
+            setTimeout(resolve, retryDelay);
+          });
         }
       }
-      /* eslint-enable no-await-in-loop */
+    }
+    /* eslint-enable no-await-in-loop */
 
-      return token;
-    },
-    [executeRecaptchaBase, retryCount, retryDelay],
-  );
+    return token;
+  }, [executeRecaptchaBase, retryCount, retryDelay]);
 
   const clearError = useCallback(() => {
     setRecaptchaError(null);

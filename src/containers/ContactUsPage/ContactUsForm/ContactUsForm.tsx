@@ -31,7 +31,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     clearError: clearContactError,
     isRecaptchaEnabled: isContactRecaptchaEnabled,
   } = useRecaptcha({
-    action: RECAPTCHA_ACTION,
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,
