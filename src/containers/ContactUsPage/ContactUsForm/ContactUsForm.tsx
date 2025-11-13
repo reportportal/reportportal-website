@@ -4,7 +4,7 @@ import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
+import { createBemBlockBuilder, CONTACT_US_URL, RECAPTCHA_ACTION } from '@app/utils';
 import { useRecaptcha } from '@app/hooks/useRecaptcha';
 import axios from 'axios';
 
@@ -31,6 +31,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     clearError: clearContactError,
     isRecaptchaEnabled: isContactRecaptchaEnabled,
   } = useRecaptcha({
+    action: RECAPTCHA_ACTION,
     timeout: 10000,
     retryCount: 2,
     retryDelay: 1000,
@@ -65,7 +66,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         if (!contactRecaptchaTokenRef.current) {
-          contactRecaptchaTokenRef.current = await executeContactRecaptcha('contact_us');
+          contactRecaptchaTokenRef.current = await executeContactRecaptcha();
         }
 
         const contactRecaptchaToken = contactRecaptchaTokenRef.current;
@@ -80,17 +81,13 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           ...baseSalesForceValues,
         };
 
-        if (values.wouldLikeToReceiveAds) {
-          const subscribeRecaptchaToken = await executeContactRecaptcha('subscribe');
-
-          if (isContactRecaptchaEnabled && subscribeRecaptchaToken) {
-            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
-          }
+        if (values.wouldLikeToReceiveAds && isContactRecaptchaEnabled && contactRecaptchaToken) {
+          subscribeUser(values.email, contactRecaptchaToken).catch(console.error);
         }
 
         const headers = {
           'Content-Type': 'application/json',
-          'RP-Recaptcha-Action': 'contact_us',
+          'RP-Recaptcha-Action': RECAPTCHA_ACTION,
           ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
 

@@ -114,3 +114,4 @@ export const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_SITE_KEY as string;
 export const RECAPTCHA_SCRIPT_ID = 'google-recaptcha-enterprise';
 export const RECAPTCHA_SRC = `https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`;
 export const RECAPTCHA_ENABLED = process.env.GATSBY_RECAPTCHA_ENABLED !== 'false';
+export const RECAPTCHA_ACTION = 'contact_us';
