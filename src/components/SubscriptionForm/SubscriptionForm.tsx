@@ -31,11 +31,7 @@ export const SubscriptionForm: FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
-  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
-    timeout: 10000,
-    retryCount: 2,
-    retryDelay: 1000,
-  });
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
 
   const handleSubscribeUser = async (emailToSubscribe: string, recaptchaToken: string | null) => {
     return subscribeUser(emailToSubscribe, recaptchaToken)
