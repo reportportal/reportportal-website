@@ -60,7 +60,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const contactRecaptchaToken = await executeContactRecaptcha();
-        console.log('contactRecaptchaToken', contactRecaptchaToken);
         if ((isContactRecaptchaEnabled && !contactRecaptchaToken) || contactRecaptchaError) {
           return;
         }
@@ -73,7 +72,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         if (values.wouldLikeToReceiveAds) {
           const subscribeRecaptchaToken = await executeContactRecaptcha();
-          console.log('subscribeRecaptchaToken', subscribeRecaptchaToken);
           if (isContactRecaptchaEnabled && subscribeRecaptchaToken) {
             subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
           }
