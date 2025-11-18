@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL, RECAPTCHA_ACTION } from '@app/utils';
+import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
 import { useRecaptcha } from '@app/hooks/useRecaptcha';
 import axios from 'axios';
 
@@ -24,17 +24,12 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
   const [customError, setCustomError] = useState<string | null>(null);
-  const contactRecaptchaTokenRef = useRef<string | null>(null);
   const {
     executeRecaptcha: executeContactRecaptcha,
     recaptchaError: contactRecaptchaError,
     clearError: clearContactError,
     isRecaptchaEnabled: isContactRecaptchaEnabled,
-  } = useRecaptcha({
-    timeout: 10000,
-    retryCount: 2,
-    retryDelay: 1000,
-  });
+  } = useRecaptcha();
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -64,12 +59,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         clearContactError();
         setCustomError(null);
 
-        if (!contactRecaptchaTokenRef.current) {
-          contactRecaptchaTokenRef.current = await executeContactRecaptcha();
-        }
-
-        const contactRecaptchaToken = contactRecaptchaTokenRef.current;
-
+        const contactRecaptchaToken = await executeContactRecaptcha();
+        console.log('contactRecaptchaToken', contactRecaptchaToken);
         if ((isContactRecaptchaEnabled && !contactRecaptchaToken) || contactRecaptchaError) {
           return;
         }
@@ -80,13 +71,17 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           ...baseSalesForceValues,
         };
 
-        if (values.wouldLikeToReceiveAds && isContactRecaptchaEnabled && contactRecaptchaToken) {
-          subscribeUser(values.email, contactRecaptchaToken).catch(console.error);
+        if (values.wouldLikeToReceiveAds) {
+          const subscribeRecaptchaToken = await executeContactRecaptcha();
+          console.log('subscribeRecaptchaToken', subscribeRecaptchaToken);
+          if (isContactRecaptchaEnabled && subscribeRecaptchaToken) {
+            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
+          }
         }
 
         const headers = {
           'Content-Type': 'application/json',
-          'RP-Recaptcha-Action': RECAPTCHA_ACTION,
+          'RP-Recaptcha-Action': 'contact_us',
           ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
 
