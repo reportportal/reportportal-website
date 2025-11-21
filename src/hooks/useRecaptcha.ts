@@ -45,7 +45,7 @@ const loadRecaptchaScript = (): Promise<void> => {
         if (window.grecaptcha?.enterprise) {
           resolve();
         } else if (attempts < 20) {
-          setTimeout(() => checkReady(attempts + 1), 5000);
+          setTimeout(() => checkReady(attempts + 1), 250);
         } else {
           reject(new Error('reCAPTCHA failed to initialize'));
         }
