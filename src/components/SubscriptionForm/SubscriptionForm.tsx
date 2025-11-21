@@ -10,7 +10,7 @@ import { SubscriptionFormCard } from './SubscriptionFormCard';
 import { subscribeUser } from './utils';
 
 import './SubscriptionForm.scss';
-import '../ContactUsPage.scss';
+import '../../containers/ContactUsPage/ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['subscription-form']);
 
