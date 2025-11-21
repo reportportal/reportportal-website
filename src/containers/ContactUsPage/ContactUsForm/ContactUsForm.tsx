@@ -24,12 +24,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
   const [customError, setCustomError] = useState<string | null>(null);
-  const {
-    executeRecaptcha: executeContactRecaptcha,
-    recaptchaError: contactRecaptchaError,
-    clearError: clearContactError,
-    isRecaptchaEnabled: isContactRecaptchaEnabled,
-  } = useRecaptcha();
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -56,11 +51,11 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
       try {
         setIsLoading(true);
-        clearContactError();
+        clearError();
         setCustomError(null);
 
-        const contactRecaptchaToken = await executeContactRecaptcha();
-        if ((isContactRecaptchaEnabled && !contactRecaptchaToken) || contactRecaptchaError) {
+        const contactRecaptchaToken = await executeRecaptcha();
+        if (!contactRecaptchaToken || recaptchaError) {
           return;
         }
 
@@ -71,8 +66,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         };
 
         if (values.wouldLikeToReceiveAds) {
-          const subscribeRecaptchaToken = await executeContactRecaptcha();
-          if (isContactRecaptchaEnabled && subscribeRecaptchaToken) {
+          const subscribeRecaptchaToken = await executeRecaptcha();
+          if (subscribeRecaptchaToken) {
             subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
           }
         }
@@ -146,10 +141,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {(contactRecaptchaError || customError) && (
-            <div className={getBlocksWith('__recaptcha-error')}>
-              {contactRecaptchaError || customError}
-            </div>
+          {(recaptchaError || customError) && (
+            <div className="recaptcha-error">{recaptchaError || customError}</div>
           )}
           <button
             className="btn btn--primary btn--large"

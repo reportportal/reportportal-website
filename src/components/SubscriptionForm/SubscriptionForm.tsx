@@ -10,6 +10,7 @@ import { SubscriptionFormCard } from './SubscriptionFormCard';
 import { subscribeUser } from './utils';
 
 import './SubscriptionForm.scss';
+import '../ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['subscription-form']);
 
@@ -167,7 +168,7 @@ export const SubscriptionForm: FC = () => {
           {isLoading ? 'Subscribing...' : 'Subscribe'}
         </button>
       </Form.Item>
-      {recaptchaError && <div className={getBlocksWith('__recaptcha-error')}>{recaptchaError}</div>}
+      {recaptchaError && <div className="recaptcha-error">{recaptchaError}</div>}
       <span className={getBlocksWith('__form-info')}>
         By subscribing, you agree to receive marketing emails from ReportPortal team and associated
         partners and accept our{' '}

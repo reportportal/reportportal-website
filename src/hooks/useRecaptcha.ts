@@ -4,14 +4,13 @@ import {
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_SCRIPT_ID,
   RECAPTCHA_SRC,
-  RECAPTCHA_ENABLED,
   RECAPTCHA_ACTION,
 } from '../utils/constants';
 
 declare global {
   interface Window {
     grecaptcha?: {
-      enterprise?: {
+      enterprise: {
         ready(callback: () => void): void;
         execute(siteKey: string, options: { action: string }): Promise<string>;
       };
@@ -66,17 +65,12 @@ interface UseRecaptchaReturn {
   executeRecaptcha: () => Promise<string | null>;
   recaptchaError: string | null;
   clearError: () => void;
-  isRecaptchaEnabled: boolean;
 }
 
 export const useRecaptcha = (): UseRecaptchaReturn => {
   const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
 
   const executeRecaptcha = useCallback(async (): Promise<string | null> => {
-    if (!RECAPTCHA_ENABLED) {
-      return null;
-    }
-
     setRecaptchaError(null);
 
     try {
@@ -91,7 +85,7 @@ export const useRecaptcha = (): UseRecaptchaReturn => {
 
         window.grecaptcha.enterprise.ready(() => {
           window.grecaptcha?.enterprise
-            ?.execute(RECAPTCHA_SITE_KEY, { action: RECAPTCHA_ACTION })
+            .execute(RECAPTCHA_SITE_KEY, { action: RECAPTCHA_ACTION })
             .then(resolve)
             .catch(reject);
         });
@@ -110,6 +104,5 @@ export const useRecaptcha = (): UseRecaptchaReturn => {
     executeRecaptcha,
     recaptchaError,
     clearError,
-    isRecaptchaEnabled: RECAPTCHA_ENABLED,
   };
 };
