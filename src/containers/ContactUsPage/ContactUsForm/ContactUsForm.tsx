@@ -23,12 +23,8 @@ const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { executeRecaptcha, recaptchaError, clearError, isRecaptchaEnabled } = useRecaptcha({
-    action: 'contact_us',
-    timeout: 10000,
-    retryCount: 2,
-    retryDelay: 1000,
-  });
+  const [customError, setCustomError] = useState<string | null>(null);
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -43,6 +39,10 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     validateOnChange: false,
     validate,
     onSubmit: async values => {
+      if (isLoading) {
+        return;
+      }
+
       const errors = await validateForm();
 
       if (!isEmpty(errors)) {
@@ -52,11 +52,10 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       try {
         setIsLoading(true);
         clearError();
+        setCustomError(null);
 
-        const recaptchaToken = await executeRecaptcha();
-
-        if ((isRecaptchaEnabled && !recaptchaToken) || recaptchaError) {
-          setIsLoading(false);
+        const contactRecaptchaToken = await executeRecaptcha();
+        if (!contactRecaptchaToken || recaptchaError) {
           return;
         }
 
@@ -67,23 +66,32 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         };
 
         if (values.wouldLikeToReceiveAds) {
-          subscribeUser(values.email, recaptchaToken).catch(console.error);
+          const subscribeRecaptchaToken = await executeRecaptcha();
+          if (subscribeRecaptchaToken) {
+            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
+          }
         }
 
         const headers = {
           'Content-Type': 'application/json',
           'RP-Recaptcha-Action': 'contact_us',
-          ...(recaptchaToken && { 'RP-Recaptcha-Token': recaptchaToken }),
+          ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
 
         const response = await axios.post(CONTACT_US_URL, postData, { headers });
 
-        if (response.data.success) {
+        let responseData = response.data;
+        if (typeof responseData === 'string') {
+          responseData = JSON.parse(responseData);
+        }
+
+        if (responseData.success) {
           showFeedbackForm();
         } else {
           setIsLoading(false);
         }
       } catch (error) {
+        setCustomError('Request failed. Please try again.');
         setIsLoading(false);
       }
     },
@@ -133,8 +141,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {recaptchaError && (
-            <div className={getBlocksWith('__recaptcha-error')}>{recaptchaError}</div>
+          {(recaptchaError || customError) && (
+            <div className="recaptcha-error">{recaptchaError || customError}</div>
           )}
           <button
             className="btn btn--primary btn--large"
@@ -142,7 +150,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
             data-gtm="send_request"
             disabled={!getFieldProps('termsAgree').value || isLoading}
           >
-            Send request
+            {isLoading ? 'Sending...' : 'Send request'}
           </button>
         </form>
       </div>

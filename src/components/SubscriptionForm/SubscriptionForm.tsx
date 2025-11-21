@@ -10,6 +10,7 @@ import { SubscriptionFormCard } from './SubscriptionFormCard';
 import { subscribeUser } from './utils';
 
 import './SubscriptionForm.scss';
+import '../../containers/ContactUsPage/ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['subscription-form']);
 
@@ -31,15 +32,10 @@ export const SubscriptionForm: FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
-  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha({
-    action: 'subscribe',
-    timeout: 10000,
-    retryCount: 2,
-    retryDelay: 1000,
-  });
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
 
   const handleSubscribeUser = async (emailToSubscribe: string, recaptchaToken: string | null) => {
-    subscribeUser(emailToSubscribe, recaptchaToken)
+    return subscribeUser(emailToSubscribe, recaptchaToken)
       .then(response => {
         setValidation({
           isValid: true,
@@ -95,18 +91,17 @@ export const SubscriptionForm: FC = () => {
           isValid: false,
           message: 'Security verification failed. Please try again.',
         });
-        setIsLoading(false);
         return;
       }
 
       await handleSubscribeUser(email, recaptchaToken);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       setValidation({
         isValid: false,
         message: 'Subscription failed. Please try again.',
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -173,7 +168,7 @@ export const SubscriptionForm: FC = () => {
           {isLoading ? 'Subscribing...' : 'Subscribe'}
         </button>
       </Form.Item>
-      {recaptchaError && <div className={getBlocksWith('__recaptcha-error')}>{recaptchaError}</div>}
+      {recaptchaError && <div className="recaptcha-error">{recaptchaError}</div>}
       <span className={getBlocksWith('__form-info')}>
         By subscribing, you agree to receive marketing emails from ReportPortal team and associated
         partners and accept our{' '}
