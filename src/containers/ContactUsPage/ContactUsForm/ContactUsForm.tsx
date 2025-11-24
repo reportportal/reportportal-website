@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import isEmpty from 'lodash/isEmpty';
 import { Link } from '@app/components/Link';
-// import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder } from '@app/utils';
+import { subscribeUser } from '@app/components/SubscriptionForm/utils';
+import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
+import { useRecaptcha } from '@app/hooks/useRecaptcha';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -19,16 +20,11 @@ import '../ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['contact-us-form']);
 
-const MIN_FORM_INTERACTION_TIME = 3000;
-
 export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
-  const formMountTimeRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    formMountTimeRef.current = Date.now();
-  }, []);
+  const [customError, setCustomError] = useState<string | null>(null);
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -37,54 +33,67 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       company: '',
       termsAgree: false,
       wouldLikeToReceiveAds: false,
-      website: '', // Honeypot field - should remain empty
       ...(isDiscussFieldShown && { discuss: '' }),
     },
     validateOnBlur: false,
     validateOnChange: false,
     validate,
     onSubmit: async values => {
-      // Bot detection: Check honeypot field
-      if (values.website) {
-        console.warn('Bot detected: honeypot field filled');
+      if (isLoading) {
         return;
       }
 
-      // Bot detection: Check if form was submitted too quickly
-      if (formMountTimeRef.current !== null) {
-        const timeSinceMount = Date.now() - formMountTimeRef.current;
-        if (timeSinceMount < MIN_FORM_INTERACTION_TIME) {
-          console.warn('Bot detected: form submitted too quickly');
-          return;
-        }
+      const errors = await validateForm();
+
+      if (!isEmpty(errors)) {
+        return;
       }
 
-      validateForm().then(errors => {
-        if (isEmpty(errors)) {
-          setIsLoading(true);
+      try {
+        setIsLoading(true);
+        clearError();
+        setCustomError(null);
 
-          const baseSalesForceValues = getBaseSalesForceValues(options);
-          // Remove honeypot field before submitting
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { website, ...cleanValues } = values;
-          const postData = {
-            ...cleanValues,
-            ...baseSalesForceValues,
-          };
-
-          // if (values.wouldLikeToReceiveAds) {
-          //   subscribeUser(values.email).catch(console.error);
-          // }
-
-          axios
-            .post(`${process.env.CONTACT_US_URL}`, postData)
-            .catch(console.error)
-            .finally(() => {
-              showFeedbackForm();
-              setIsLoading(false);
-            });
+        const contactRecaptchaToken = await executeRecaptcha();
+        if (!contactRecaptchaToken || recaptchaError) {
+          return;
         }
-      });
+
+        const baseSalesForceValues = getBaseSalesForceValues(options);
+        const postData = {
+          ...values,
+          ...baseSalesForceValues,
+        };
+
+        if (values.wouldLikeToReceiveAds) {
+          const subscribeRecaptchaToken = await executeRecaptcha();
+          if (subscribeRecaptchaToken) {
+            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
+          }
+        }
+
+        const headers = {
+          'Content-Type': 'application/json',
+          'RP-Recaptcha-Action': 'contact_us',
+          ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
+        };
+
+        const response = await axios.post(CONTACT_US_URL, postData, { headers });
+
+        let responseData = response.data;
+        if (typeof responseData === 'string') {
+          responseData = JSON.parse(responseData);
+        }
+
+        if (responseData.success) {
+          showFeedbackForm();
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setCustomError('Request failed. Please try again.');
+        setIsLoading(false);
+      }
     },
   });
   const { getFieldProps, validateForm } = formik;
@@ -107,20 +116,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
             maxLength={80}
           />
           <FormInput name="company" label="Company name" placeholder="ABC" maxLength={MAX_LENGTH} />
-          {/* Honeypot field - hidden from users but visible to bots */}
-          <div
-            style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}
-            aria-hidden="true"
-          >
-            <FormInput
-              name="website"
-              label="Website"
-              placeholder="https://example.com"
-              maxLength={MAX_LENGTH}
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
           {isDiscussFieldShown && (
             <FormInput
               name="discuss"
@@ -130,9 +125,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               maxLength={MAX_LENGTH}
             />
           )}
-          {/* <FormFieldWrapper name="wouldLikeToReceiveAds"> */}
-          {/*   <CustomCheckbox label="Subscribe to ReportPortal newsletter" /> */}
-          {/* </FormFieldWrapper> */}
+          <FormFieldWrapper name="wouldLikeToReceiveAds">
+            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
+          </FormFieldWrapper>
           <FormFieldWrapper name="termsAgree">
             <CustomCheckbox
               label={
@@ -146,13 +141,16 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
+          {(recaptchaError || customError) && (
+            <div className="recaptcha-error">{recaptchaError || customError}</div>
+          )}
           <button
             className="btn btn--primary btn--large"
             type="submit"
             data-gtm="send_request"
             disabled={!getFieldProps('termsAgree').value || isLoading}
           >
-            Send request
+            {isLoading ? 'Sending...' : 'Send request'}
           </button>
         </form>
       </div>

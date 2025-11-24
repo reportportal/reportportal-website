@@ -6,12 +6,11 @@ import { BaseFieldProps } from '../../FormFieldWrapper';
 
 import './InputField.scss';
 
-interface InputFieldProps extends BaseFieldProps {
+interface FormInputProps extends BaseFieldProps {
   type?: string;
-  error?: string;
 }
 
-export const InputField: FC<Omit<InputFieldProps, 'name'> & { error?: string }> = ({
+export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> = ({
   className,
   error,
   value,

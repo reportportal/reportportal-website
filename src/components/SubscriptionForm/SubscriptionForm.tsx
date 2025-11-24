@@ -3,12 +3,14 @@ import Icon from '@ant-design/icons';
 import { Input, Form } from 'antd';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX } from '@app/utils';
+import { useRecaptcha } from '@app/hooks/useRecaptcha';
 
 import { EnvelopeIcon } from './icons';
 import { SubscriptionFormCard } from './SubscriptionFormCard';
 import { subscribeUser } from './utils';
 
 import './SubscriptionForm.scss';
+import '../../containers/ContactUsPage/ContactUsPage.scss';
 
 const getBlocksWith = createBemBlockBuilder(['subscription-form']);
 
@@ -28,10 +30,12 @@ export const SubscriptionForm: FC = () => {
   }>({
     isValid: true,
   });
+  const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
+  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
 
-  const handleSubscribeUser = (emailToSubscribe: string) => {
-    subscribeUser(emailToSubscribe)
+  const handleSubscribeUser = async (emailToSubscribe: string, recaptchaToken: string | null) => {
+    return subscribeUser(emailToSubscribe, recaptchaToken)
       .then(response => {
         setValidation({
           isValid: true,
@@ -64,7 +68,7 @@ export const SubscriptionForm: FC = () => {
       });
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     const isLengthValid = email?.length <= 128;
     const isFormatValid = EMAIL_VALIDATION_REGEX.test(email);
 
@@ -73,11 +77,32 @@ export const SubscriptionForm: FC = () => {
         isValid: false,
         message: 'Please use a valid email format',
       });
-
       return;
     }
 
-    handleSubscribeUser(email);
+    try {
+      setIsLoading(true);
+      clearError();
+
+      const recaptchaToken = await executeRecaptcha();
+
+      if (recaptchaError) {
+        setValidation({
+          isValid: false,
+          message: 'Security verification failed. Please try again.',
+        });
+        return;
+      }
+
+      await handleSubscribeUser(email, recaptchaToken);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setValidation({
+        isValid: false,
+        message: 'Subscription failed. Please try again.',
+      });
+    }
   };
 
   useEffect(() => {
@@ -138,11 +163,12 @@ export const SubscriptionForm: FC = () => {
         <button
           type="submit"
           className="btn btn--primary"
-          disabled={form.isFieldsTouched(true) && !validation.isValid}
+          disabled={(form.isFieldsTouched(true) && !validation.isValid) || isLoading}
         >
-          Subscribe
+          {isLoading ? 'Subscribing...' : 'Subscribe'}
         </button>
       </Form.Item>
+      {recaptchaError && <div className="recaptcha-error">{recaptchaError}</div>}
       <span className={getBlocksWith('__form-info')}>
         By subscribing, you agree to receive marketing emails from ReportPortal team and associated
         partners and accept our{' '}

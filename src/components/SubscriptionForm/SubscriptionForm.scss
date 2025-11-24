@@ -108,4 +108,12 @@
       text-decoration: underline;
     }
   }
+
+  .subscription-form__recaptcha-error {
+    @include m.font-poppins();
+    @include m.font-scale(small);
+
+    margin-bottom: 16px;
+    color: var(--graphics-coral);
+  }
 }
