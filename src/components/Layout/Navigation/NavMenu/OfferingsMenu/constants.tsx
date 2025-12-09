@@ -10,13 +10,13 @@ import QEConsultingIcon from './icons/qe-consulting.inline.svg';
 export const PRICING_CONFIG = [
   {
     icon: <SaaSIcon />,
-    title: 'SaaS',
+    title: 'SaaS Plans',
     text: 'We host and support an instance for your organization',
     link: { title: 'SaaS', url: '/pricing/saas' },
   },
   {
     icon: <OnPremiseIcon />,
-    title: 'On-Premises',
+    title: 'Service Packages',
     text: 'Self-hosted instance with support from our team',
     link: { title: 'On-Premises', url: '/pricing/on-premises' },
   },

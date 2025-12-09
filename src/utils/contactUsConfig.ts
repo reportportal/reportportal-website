@@ -4,7 +4,7 @@ import { ContactUsBaseConfig, PlanType } from './types';
 
 const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
 const LEAD_SOURCE = 'lead_source';
-const onPremisesAndAcceleratorsPlans = ['Lite', 'Service Pro', 'Advanced'];
+const onPremisesAndAcceleratorsPlans = ['Silver', 'Gold', 'Platinum'];
 const availableOptions: PlanType[] = ['quarterly', 'yearly'];
 
 const createConfig = ({
@@ -238,6 +238,18 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     leadSource: 'RP General',
     url: '/contact-us/general',
   }),
+  {
+    id: '[On-Premises]',
+    url: '/contact-us/on-premises',
+    options: [
+      {
+        name: SALESFORCE_SOURCE_NAME,
+        value: 'Landing page / On-Premises / Interest in Support Packages',
+      },
+      { name: LEAD_SOURCE, value: 'RP Service' },
+    ],
+    isDiscussFieldShown: false,
+  },
   createContactUsConfig({
     salesforceSourceName: 'RP Community',
     leadSource: 'RP Community',

@@ -3,33 +3,43 @@ import React from 'react';
 export const TIME_SCALE_DATA = [
   {
     time: '1+',
-    items: ['ReportPortal training', 'Simple query resolved'],
-  },
-  {
-    time: '20+',
     items: [
+      'ReportPortal training',
+      'Solving simple queries',
       'Simple deployment on AWS with DB',
-      'Configuration of performance monitoring',
       'Support of an existing Test Framework',
     ],
   },
   {
-    time: '120+',
-    items: ['Plugin implementation', 'Integration with a new Test Framework'],
+    time: '50+',
+    items: [
+      'Plugin implementation',
+      'Custom widget implementation',
+      'Performance monitoring configuration',
+      'Data migration between ReportPortal instances',
+    ],
+  },
+  {
+    time: '150+',
+    items: [
+      'Heavy UI customization',
+      'Integration with a new Test Framework',
+      'Deploy to highly restricted or air-gap environment',
+      'Dedicated interface with custom business logic',
+    ],
   },
 ];
 
 export const FAQ_DATA = [
   {
     key: 1,
-    label: 'What is the validity period for Professional Service Points?',
+    label: 'What is the validity period for support hours?',
     children: (
       <div>
-        The Professional Service Points included into the subscription plan are accumulated on a
-        monthly basis and are valid for the payment term only. If quarterly payment option is
-        chosen, no more than 3 monthly amounts of Professional Service Points can be accumulated or
-        used prospectively; if yearly payment option is chosen, up to 12 monthly amounts of
-        Professional Service Points can be accumulated or used prospectively.
+        Support hours included in your subscription plan are valid only for the annual payment term.
+        All hours are available from the start of each 12-month term and may be used at any time
+        during that term — either all at once or in parts. Unused hours expire at the end of the
+        term, do not roll over, are non-transferable, and are not refundable.
       </div>
     ),
   },
@@ -45,23 +55,6 @@ export const FAQ_DATA = [
   },
   {
     key: 3,
-    label: 'Can I pay monthly?',
-    children: (
-      <>
-        <div>Unfortunately, not for now.</div>
-        <div>
-          But we work to make it possible. Currently we do semi-manual invoice processing which
-          requires effort of the operations and accounting teams.
-        </div>
-        <div>
-          Monthly payments will be available as soon as we add online payment capabilities. This is
-          our highest priority at the moment.
-        </div>
-      </>
-    ),
-  },
-  {
-    key: 4,
     label: 'What payment methods do you accept?',
     children: (
       <div>
@@ -71,42 +64,29 @@ export const FAQ_DATA = [
     ),
   },
   {
-    key: 5,
+    key: 4,
     label: 'Can I change billing plans at any time?',
     children: (
-      <>
-        <div>Unfortunately, no.</div>
-        <div>You can&apos;t downgrade your billing plan at any time.</div>
-        <div>
-          However, if you need more Professional Service Points, we can discuss the plan upgrade.
-          For that, please, press &quot;Get a Quote&quot; in the upper right corner of our landing
-          page. We&apos;ll be happy to help you to find the most suitable plan for your team and
-          provide a quote.
-        </div>
-      </>
+      <div>
+        Unfortunately, no. You can&apos;t downgrade your billing plan at any time. <br /> However,
+        if you need more support hours, we can discuss the plan upgrade. For that, please, press
+        &quot;Contact us&quot; in the upper right corner of our landing page. We&apos;ll be happy to
+        help you to find the most suitable plan for your team and provide a quote.
+      </div>
+    ),
+  },
+  {
+    key: 5,
+    label: 'What if I overuse my hour limit?',
+    children: (
+      <div>
+        If Company seeks to consume more support hours than have been contracted for according to
+        the Order, overage fees of 25% on a per support hour basis will apply.
+      </div>
     ),
   },
   {
     key: 6,
-    label: 'What if I overuse or underuse my monthly limit?',
-    children: (
-      <>
-        <div>
-          If Company seeks to consume more Professional Service Points than have been contracted for
-          according to the Order, overage fees of 25% on a per Professional Service Point basis will
-          apply.
-        </div>
-        <div>
-          Professional Service Points may be used for the duration of the payment term, and expire
-          at that time. For example, annual upfront payment entitles Company to use the contracted
-          monthly service points at any point in the year. For a quarterly upfront payment, service
-          points must be used within three months.
-        </div>
-      </>
-    ),
-  },
-  {
-    key: 7,
     label: 'What are the business hours of the service team?',
     children: (
       <div>
@@ -119,16 +99,15 @@ export const FAQ_DATA = [
     ),
   },
   {
-    key: 8,
+    key: 7,
     label: 'I need a quote. How can I request one?',
     children: (
-      <>
-        <div>Just press &quot;Get a Quote&quot; in the upper right corner of our landing page.</div>
-        <div>
-          We&apos;ll be happy to help you to find the most suitable plan for your team and provide a
-          quote.
-        </div>
-      </>
+      <div>
+        Just press &quot;Contact us&quot; in the upper right corner of our landing page.
+        <br />
+        We&apos;ll be happy to help you to find the most suitable plan for your team and provide a
+        quote.
+      </div>
     ),
   },
 ];

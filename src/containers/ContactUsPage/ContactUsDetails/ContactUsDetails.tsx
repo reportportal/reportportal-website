@@ -12,14 +12,15 @@ import '../ContactUsPage.scss';
 const getBlocksWith = createBemBlockBuilder(['contact-us']);
 
 export const ContactUsDetails: FC<
-  Pick<ContactUsConfig, 'planType' | 'price' | 'message' | 'messagePosition'>
-> = ({ message, messagePosition, price, planType }) => {
+  Pick<ContactUsConfig, 'planType' | 'price' | 'message' | 'messagePosition' | 'showBillingPeriod'>
+> = ({ message, messagePosition, price, planType, showBillingPeriod }) => {
   const priceInfo =
     planType && price && price[planType] ? (
       <p>
         <span>
           <strong>Price:</strong> {price.currency}
-          {formatNumberWithCommas(price[planType] as number)} per {price.period} (billed {planType})
+          {formatNumberWithCommas(price[planType] as number)} per {price.period}
+          {showBillingPeriod ? ` (billed ${planType})` : '.'}
         </span>
       </p>
     ) : null;

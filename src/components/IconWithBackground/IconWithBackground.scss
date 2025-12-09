@@ -1,0 +1,33 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.icon-with-background {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--icon-color);
+    opacity: 0.1;
+    content: '';
+  }
+
+  &__icon {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background-color: var(--icon-color);
+    mask-image: var(--icon-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+}

@@ -2,17 +2,27 @@ import React, { FC } from 'react';
 import { createBemBlockBuilder } from '@app/utils';
 
 import { ArrowLink } from '../ArrowLink';
+import { IconWithBackground } from '../IconWithBackground';
 
 import './LinkedCard.scss';
 
-export interface LinkedCardProps {
+type CommonLinkedCardProps = {
   itemTitle: string;
   description: string;
   link?: string;
   linkText?: string;
-  icon?: string;
   delay?: number;
-}
+};
+
+export type LinkedCardProps =
+  | ({
+      icon: string;
+      iconColor: string;
+    } & CommonLinkedCardProps)
+  | ({
+      icon?: undefined;
+      iconColor?: undefined;
+    } & CommonLinkedCardProps);
 
 const getBlocksWith = createBemBlockBuilder(['linked-card']);
 
@@ -22,15 +32,14 @@ export const LinkedCard: FC<LinkedCardProps> = ({
   link,
   linkText = '',
   icon,
-  delay = false,
-}) => {
-  return (
-    <div className={getBlocksWith()}>
-      {icon && <img className={getBlocksWith('__image')} src={icon} alt="" />}
-      <strong className={getBlocksWith('__title')}>{itemTitle}</strong>
-      <p className={getBlocksWith('__description')}>{description}</p>
-      {link && <ArrowLink mode="primary" to={link} text={linkText} />}
-      {delay && <div className={getBlocksWith('__progress')} />}
-    </div>
-  );
-};
+  iconColor,
+  delay = 0,
+}) => (
+  <div className={getBlocksWith()}>
+    {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
+    <strong className={getBlocksWith('__title')}>{itemTitle}</strong>
+    <p className={getBlocksWith('__description')}>{description}</p>
+    {link && <ArrowLink mode="primary" to={link} text={linkText} />}
+    {Boolean(delay) && <div className={getBlocksWith('__progress')} />}
+  </div>
+);

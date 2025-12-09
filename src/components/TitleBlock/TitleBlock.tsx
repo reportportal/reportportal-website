@@ -5,7 +5,7 @@ import './TitleBlock.scss';
 
 interface TitleBlockProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 const getBlocksWith = createBemBlockBuilder(['title-block']);
@@ -13,6 +13,6 @@ const getBlocksWith = createBemBlockBuilder(['title-block']);
 export const TitleBlock: FC<TitleBlockProps> = ({ title, subtitle }) => (
   <>
     <div className={getBlocksWith('__title')}>{title}</div>
-    <div className={getBlocksWith('__subtitle')}>{subtitle}</div>
+    {subtitle && <div className={getBlocksWith('__subtitle')}>{subtitle}</div>}
   </>
 );

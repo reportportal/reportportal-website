@@ -12,7 +12,7 @@
     @include m.breakpoint(v.$tablet-sm-exact) {
       display: block;
       max-width: v.$tablet-sm-exact;
-      margin: 24px auto 32px;
+      margin: 24px auto;
       background-image: url('./svg/desktop.svg');
       background-position-x: center;
     }
@@ -20,7 +20,7 @@
     @include m.breakpoint(v.$desktop-sm) {
       width: 890px;
       max-width: unset;
-      background-size: cover;
+      background-size: contain;
 
       &-shifted {
         background-image: url('./svg/desktop-shifted.svg');
@@ -85,7 +85,6 @@
   &__items-wrapper {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
     margin-left: -90px;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
@@ -93,61 +92,36 @@
       margin-top: 8px;
       margin-left: 8px;
     }
-
-    ul:nth-child(2) {
-      margin-top: 54px;
-      margin-bottom: 54px;
-
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        margin: 0 18px 0 68px;
-      }
-
-      @include m.breakpoint(v.$desktop-sm) {
-        margin: 0 75px 0 136px;
-      }
-    }
-
-    ul:nth-child(3) {
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        margin-bottom: 45px;
-      }
-    }
-
-    &--shifted {
-      @include m.breakpoint(v.$desktop-sm) {
-        ul:nth-child(1) {
-          margin-left: 118px;
-        }
-
-        ul:nth-child(2) {
-          margin: 0 32px 0 74px;
-        }
-      }
-    }
   }
 
   &__list {
     @include m.font-poppins();
     @include m.font-scale(small);
 
-    width: 190px;
-    height: 150px;
+    min-height: 167px;
+    margin-top: 34px;
     margin-left: 35px;
-    color: var(--text-service);
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$phone) {
+      width: 282px;
+    }
 
     @include m.breakpoint(v.$tablet-sm-exact) {
       @include m.font-noto-sans();
 
-      height: auto;
-    }
-
-    @include m.breakpoint(v.$desktop-sm) {
-      @include m.font-scale(base);
+      min-height: auto;
+      margin-top: 0;
     }
 
     li {
       position: relative;
+      width: 240px;
       margin-bottom: 6px;
+
+      @include m.breakpoint(v.$tablet-sm-exact) {
+        width: 180px;
+      }
 
       &::before {
         position: absolute;

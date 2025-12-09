@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import {
   createBemBlockBuilder,
   easeInOutOpacityScaleAnimationProps,
-  FormattedComparePlansDto,
   OfferingPlansDto,
 } from '@app/utils';
 import { usePricingHeroProps } from '@app/hooks/usePricingHeroProps';
@@ -13,19 +12,19 @@ import { TrustedOrganizations } from '@app/components/TrustedOrganizations';
 import { Banner } from '@app/components/Banner';
 import { Link } from '@app/components/Link';
 import { PricingHero } from '@app/components/PricingHero';
-import { ComparePlans } from '@app/components/ComparePlans';
 import { PricingCard } from '@app/components/PricingCard';
 import { Faq } from '@app/components/Faq';
 import { CertificationCard } from '@app/components/CertificationCard';
 import { InfoCard } from '@app/components/InfoCard';
+import { LinkedCardBlock, BenefitItem } from '@app/components/LinkedCardBlock';
+import { CallToAction } from '@app/components/CallToAction';
 import { useInView } from '@app/hooks/useInView';
 import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
 import { useAnimationEnabledForSiblingRoutes } from '@app/hooks/useAnimationEnabledForSiblingRoutes';
-import ToolIcon from '@app/svg/tool.inline.svg';
-import HeadphonesIcon from '@app/svg/headphones.inline.svg';
-import InfoIcon from '@app/svg/infoIcon.inline.svg';
+import LinkArrow from '@app/svg/externalLinkArrow.inline.svg';
 
 import openSourceIcon from './icons/opensource.svg';
+import { BENEFITS_CARDS } from './constants';
 import { TimeScale } from './TimeScale';
 
 import './OfferPageWrapper.scss';
@@ -44,14 +43,12 @@ interface OfferPageWrapperProps {
     items: string[] | ReactNode[];
   }[];
   plans: OfferingPlansDto;
-  comparePlans: FormattedComparePlansDto;
   faqData: {
     key: number;
     label: string;
     children: ReactNode;
   }[];
   contactUsLink: string;
-  utilizationDescription: string;
   faqLink?: string;
   isScaleShifted?: boolean;
 }
@@ -64,10 +61,8 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
   pagePath,
   timeScaleData,
   plans,
-  comparePlans,
   faqData,
   contactUsLink,
-  utilizationDescription,
   faqLink,
   isScaleShifted = false,
 }) => {
@@ -98,16 +93,18 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         subtitle={subtitle}
         buttons={buttons}
         activeButton={offerType}
-        offerType={offerType}
         description={description}
         isAnimationEnabled={isAnimationEnabled}
+        {...(!isPricingPage && { offerType })}
       />
       <motion.section
         className={classNames(getBlocksWith('__plans-container'), 'container')}
         ref={cardsRef}
         {...pricingCardsAnimation}
       >
-        <h2>Get a full year of benefits with our service packages</h2>
+        <h2>
+          Get a <mark>full year</mark> of support with our Service Packages.
+        </h2>
         <div className={getBlocksWith('__plans')}>
           {paidPlans.map(paidPlan => (
             <PricingCard key={paidPlan.title} plan={paidPlan} planType="yearly" />
@@ -115,19 +112,13 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         </div>
         <div className={getBlocksWith('__plans-topology')}>
           <div className={getBlocksWith('__subscription-info')}>
-            <HeadphonesIcon />
             <div>
-              Technical Support Points (hours) refer to the duration of the available technical
-              consultations.
-            </div>
-          </div>
-          <div className={getBlocksWith('__subscription-info')}>
-            <ToolIcon />
-            <div>
-              Professional Service Points (hours) reflect our specialists&apos; efforts on feature
-              development, integrations, etc.{' '}
+              * Support hours may involve various specialists to assist with your requests, such as
+              technical consultations, integration setups, customizations, new feature
+              implementation, etc.{' '}
               <Link
                 to="#"
+                className="link"
                 onClick={event => {
                   event.preventDefault();
 
@@ -139,6 +130,13 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
             </div>
           </div>
         </div>
+        {isPricingPage && (
+          <LinkedCardBlock
+            title="Benefits in all Service Packages:"
+            cardsInfo={BENEFITS_CARDS}
+            CardComponent={BenefitItem}
+          />
+        )}
         <InfoCard
           icon={openSourceIcon}
           title={openSourcePlan.title}
@@ -149,19 +147,16 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
           }}
         />
       </motion.section>
-      <ComparePlans plans={comparePlans} isCollapsibleOnMobile={false} />
       <div ref={utilizationRef} className={getBlocksWith('__utilization')}>
-        <h2>Indicative Professional Service Point utilization</h2>
-        <div className={getBlocksWith('__utilization-subtitle')}>{utilizationDescription}</div>
+        <h2>Indicative support hours utilization</h2>
         <TimeScale data={timeScaleData} isShifted={isScaleShifted} />
-        <div className={getBlocksWith('__subscription-info')}>
-          <InfoIcon />
-          <div>
-            Subscription plan Professional Service Points are accumulated monthly and last depending
-            on the plan selected.
-            <Link to="#faq">More details in FAQ</Link>
+        {isPricingPage && (
+          <div className={getBlocksWith('__subscription-info')}>
+            <Link to="/legal/terms">
+              Terms & Conditions <LinkArrow />
+            </Link>
           </div>
-        </div>
+        )}
       </div>
       {isPricingPage && (
         <div className={getBlocksWith('__gradient-container')}>
@@ -174,6 +169,16 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
           </div>
         </div>
       )}
+      <CallToAction
+        title={
+          isPricingPage
+            ? 'Interested in our Service Packages?'
+            : `Interested in ${offerType} service packages?`
+        }
+        description="Start a conversation with us to discover the support experience that fits you perfectly."
+        buttonText="Contact us now!"
+        buttonLink={isPricingPage ? '/contact-us/on-premises' : contactUsLink}
+      />
       <div className={getBlocksWith('__faq-container')}>
         <Faq
           items={faqData}

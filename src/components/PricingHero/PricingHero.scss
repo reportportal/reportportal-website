@@ -55,7 +55,7 @@
 
   &__wrapper {
     display: block;
-    margin: 64px auto 0;
+    margin: 56px auto 0;
     padding: 0 30px;
     color: var(--white);
 
@@ -64,7 +64,7 @@
       flex-direction: column;
       align-items: baseline;
       justify-content: center;
-      margin-top: 80px;
+      margin-top: 32px;
     }
 
     @include m.breakpoint(v.$desktop-sm) {
@@ -92,6 +92,10 @@
       @include m.breakpoint(v.$desktop-sm) {
         max-width: 534px;
         padding-top: 4px;
+      }
+
+      &:first-child {
+        text-align: center;
       }
     }
   }

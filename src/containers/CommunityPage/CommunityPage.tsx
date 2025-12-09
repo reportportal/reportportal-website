@@ -43,7 +43,7 @@ export const CommunityPage: FC = () => (
       title="Documentation and resources"
       subtitle="Explore our guides, tutorials and other materials"
       cardsInfo={DOCUMENTATION_CARDS}
-      largePadding
+      mode="large"
     >
       <Link
         className="btn btn--outline btn--small go-to-documentation-button"
