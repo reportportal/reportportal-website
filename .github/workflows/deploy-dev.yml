@@ -25,19 +25,6 @@ on:
     paths-ignore:
       - README.md
   workflow_dispatch:
-    secrets:
-      CONTENTFUL_ACCESS_TOKEN:
-        required: true
-      CONTENTFUL_PREVIEW_ACCESS_TOKEN_DEV:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      CONTENTFUL_SPACE_ID_DEV:
-        required: true
-      RECAPTCHA_SITE_KEY:
-        required: true
     inputs:
       CONTENTFUL_ENV_ID:
         description: 'Contentful environment to use'
@@ -51,15 +38,18 @@ on:
         type: boolean
         default: false
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   empty-s3-bucket:
     runs-on: ubuntu-latest
     steps:
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION_NAME }}
 
       - name: Empty AWS S3 bucket
@@ -113,11 +103,10 @@ jobs:
       - name: Build the source code
         run: npm run build
 
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION_NAME }}
 
       - name: Deploy to AWS S3
