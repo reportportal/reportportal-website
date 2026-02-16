@@ -55,7 +55,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const contactRecaptchaToken = await executeRecaptcha();
+        console.log(
+          '[ContactUsForm] executeRecaptcha returned:',
+          contactRecaptchaToken ? 'Token present' : 'null',
+        );
+        console.log('[ContactUsForm] recaptchaError:', recaptchaError);
+
         if (!contactRecaptchaToken || recaptchaError) {
+          console.warn('[ContactUsForm] Aborting submission due to missing token or error');
           return;
         }
 
@@ -77,6 +84,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           'RP-Recaptcha-Action': 'contact_us',
           ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
+
+        console.log('[ContactUsForm] Sending request with headers:', headers);
 
         const response = await axios.post(CONTACT_US_URL, postData, { headers });
 

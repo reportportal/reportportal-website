@@ -72,22 +72,38 @@ export const useRecaptcha = (): UseRecaptchaReturn => {
 
   const executeRecaptcha = useCallback(async (): Promise<string | null> => {
     setRecaptchaError(null);
+    console.log('[useRecaptcha] executeRecaptcha called');
 
     try {
       removeRecaptchaScript();
       await loadRecaptchaScript();
+      console.log('[useRecaptcha] Script loaded, executing...');
 
+      const startTime = Date.now();
       return await new Promise((resolve, reject) => {
         if (!window.grecaptcha?.enterprise) {
+          console.error('[useRecaptcha] grecaptcha.enterprise not found');
           reject(new Error('reCAPTCHA not loaded'));
           return;
         }
 
         window.grecaptcha.enterprise.ready(() => {
+          console.log('[useRecaptcha] grecaptcha ready, calling execute...');
           window.grecaptcha?.enterprise
             .execute(RECAPTCHA_SITE_KEY, { action: RECAPTCHA_ACTION })
-            .then(resolve)
-            .catch(reject);
+            .then(token => {
+              const duration = Date.now() - startTime;
+              console.log(`[useRecaptcha] Execution completed in ${duration}ms.`);
+              console.log(
+                '[useRecaptcha] Challenge flow completed (if any). Token received:',
+                token,
+              );
+              resolve(token);
+            })
+            .catch(err => {
+              console.error('[useRecaptcha] Execute failed:', err);
+              reject(err);
+            });
         });
       });
     } catch (error) {
