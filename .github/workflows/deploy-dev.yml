@@ -52,8 +52,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION_NAME }}
 
-      - name: Empty AWS S3 bucket
-        run: aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }} --recursive
+      - name: Empty AWS S3 bucket (keep docs/ folder)
+        run: aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }} --recursive --exclude "docs/*"
 
   deploy:
     runs-on: ubuntu-latest
@@ -110,7 +110,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION_NAME }}
 
       - name: Deploy to AWS S3
-        run: aws s3 sync ./${{ env.BUILD_DIR }} s3://${{ env.AWS_S3_BUCKET_NAME }}
+        run: aws s3 sync ./${{ env.BUILD_DIR }} s3://${{ env.AWS_S3_BUCKET_NAME }} --exclude "docs/*"
 
       - name: Clearing CloudFront cache for the entire distribution
         run: aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_ID }} --paths "/*"
