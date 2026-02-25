@@ -1,0 +1,132 @@
+# Copyright 2024 EPAM Systems
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Deploy to dev-test (AWS S3)
+env:
+  AWS_S3_BUCKET_NAME : rpp-landing-test
+  AWS_REGION_NAME : eu-central-1
+  CLOUDFRONT_ID: EILUB1IE9EON0
+  BUILD_DIR : public/
+
+on:
+  push:
+    branches:
+      - develop
+    paths-ignore:
+      - README.md
+  workflow_dispatch:
+    secrets:
+      CONTENTFUL_ACCESS_TOKEN:
+        required: true
+      CONTENTFUL_PREVIEW_ACCESS_TOKEN_DEV:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      CONTENTFUL_SPACE_ID_DEV:
+        required: true
+      RECAPTCHA_SITE_KEY:
+        required: true
+    inputs:
+      CONTENTFUL_ENV_ID:
+        description: 'Contentful environment to use'
+        type: choice
+        default: master
+        options:
+          - master
+          - dev
+      CONTENTFUL_PREVIEW:
+        description: 'Use Contentful preview?'
+        type: boolean
+        default: false
+
+jobs:
+  empty-s3-bucket:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION_NAME }}
+
+      - name: Create S3 bucket if not exists
+        run: |
+          aws s3api head-bucket --bucket ${{ env.AWS_S3_BUCKET_NAME }} 2>/dev/null \
+            || aws s3 mb s3://${{ env.AWS_S3_BUCKET_NAME }} --region ${{ env.AWS_REGION_NAME }}
+
+      - name: Empty AWS S3 bucket (keep docs/ folder)
+        run: aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }} --recursive --exclude "docs/*"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [empty-s3-bucket]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install of node dependencies
+        run: npm install
+
+      - name: create env file
+        run: |
+          touch .env.production
+
+          CONTACT_US_URL=https://testio--partial.sandbox.my.salesforce-sites.com/leadcapture/services/apexrest/leadservice
+          DOCUMENTATION_URL=//reportportal.io/docs
+          GTM_ID=GTM-MK7ZHTL
+          GATSBY_MAILCHIMP_LIST_ID=ca6d0eec5b
+          CONTENTFUL_ENV_ID=master
+          CONTENTFUL_HOST=cdn.contentful.com
+          CONTENTFUL_ACCESS_TOKEN=${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            CONTENTFUL_ENV_ID=${{ github.event.inputs.CONTENTFUL_ENV_ID }}
+
+            if [[ "${{ github.event.inputs.CONTENTFUL_PREVIEW }}" == "true" ]]; then
+              CONTENTFUL_HOST=preview.contentful.com
+              CONTENTFUL_ACCESS_TOKEN=${{ secrets.CONTENTFUL_PREVIEW_ACCESS_TOKEN_DEV }}
+            fi
+          fi
+          echo CONTENTFUL_ENV_ID=$CONTENTFUL_ENV_ID >> .env.production
+          echo CONTENTFUL_HOST=$CONTENTFUL_HOST >> .env.production
+          echo CONTENTFUL_ACCESS_TOKEN=$CONTENTFUL_ACCESS_TOKEN >> .env.production
+          echo CONTENTFUL_SPACE_ID=${{ secrets.CONTENTFUL_SPACE_ID_DEV }} >> .env.production
+          echo GTM_ID=$GTM_ID >> .env.production
+          echo CONTACT_US_URL=$CONTACT_US_URL >> .env.production
+          echo DOCUMENTATION_URL=$DOCUMENTATION_URL >> .env.production
+          echo GATSBY_MAILCHIMP_LIST_ID=$GATSBY_MAILCHIMP_LIST_ID >> .env.production
+          echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env.production
+
+      - name: Build the source code
+        run: npm run build
+
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION_NAME }}
+
+      - name: Deploy to AWS S3
+        run: aws s3 sync ./${{ env.BUILD_DIR }} s3://${{ env.AWS_S3_BUCKET_NAME }} --exclude "docs/*"
+
+      - name: Clearing CloudFront cache for the entire distribution
+        run: aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_ID }} --paths "/*"
