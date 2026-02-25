@@ -13,7 +13,7 @@
 
 name: Deploy to dev-test (AWS S3)
 env:
-  AWS_S3_BUCKET_NAME : rpp-landing-test
+  AWS_S3_BUCKET_NAME : rpp-landing-testing
   AWS_REGION_NAME : eu-central-1
   CLOUDFRONT_ID: EILUB1IE9EON0
   BUILD_DIR : public/
@@ -61,11 +61,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION_NAME }}
-
-      - name: Create S3 bucket if not exists
-        run: |
-          aws s3api head-bucket --bucket ${{ env.AWS_S3_BUCKET_NAME }} 2>/dev/null \
-            || aws s3 mb s3://${{ env.AWS_S3_BUCKET_NAME }} --region ${{ env.AWS_REGION_NAME }}
 
       - name: Empty AWS S3 bucket (keep docs/ folder)
         run: aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }} --recursive --exclude "docs/*"
