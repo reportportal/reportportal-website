@@ -44,7 +44,8 @@ export const Seo: FC<SeoProps> = ({
   );
 
   const location = useLocation();
-  const url = `${site?.siteMetadata?.siteUrl}${location.pathname}`;
+  const canonical = new URL(location.pathname, site?.siteMetadata?.siteUrl);
+  const url = canonical.href;
   const defaultTitle = site.siteMetadata?.title;
   const titlePS = site.siteMetadata?.titlePS;
   const combinedTitle = `${title ?? defaultTitle} | ${titlePS}`;

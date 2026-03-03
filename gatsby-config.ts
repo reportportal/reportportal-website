@@ -75,8 +75,22 @@ const config: GatsbyConfig = {
           }
         }`,
         serialize: ({ path }: { path: string }) => {
+          const hasFileExtension = /\.[a-zA-Z0-9]+$/.test(path);
+          const pathWithSlashEnd = path.endsWith('/') || hasFileExtension ? path : `${path}/`;
+          const url = path === '/' ? path : pathWithSlashEnd;
+
+          let priority = 0.9;
+
+          if (path === '/') {
+            priority = 1.0;
+          } else if (path === '/legal/terms') {
+            priority = 0.4;
+          }
+
           return {
-            url: path,
+            url,
+            changefreq: 'weekly',
+            priority,
           };
         },
       },
