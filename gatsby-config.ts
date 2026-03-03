@@ -75,7 +75,8 @@ const config: GatsbyConfig = {
           }
         }`,
         serialize: ({ path }: { path: string }) => {
-          const hasFileExtension = /\.[a-zA-Z0-9]+$/.test(path);
+          const fileExtensions = ['.html', '.htm', '.xml', '.pdf', '.jpg', '.png', '.css', '.js'];
+          const hasFileExtension = fileExtensions.some(ext => path.endsWith(ext));
           const pathWithSlashEnd = path.endsWith('/') || hasFileExtension ? path : `${path}/`;
           const url = path === '/' ? path : pathWithSlashEnd;
 
