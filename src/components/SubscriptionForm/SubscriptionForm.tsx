@@ -3,7 +3,6 @@ import Icon from '@ant-design/icons';
 import { Input, Form } from 'antd';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, EMAIL_VALIDATION_REGEX } from '@app/utils';
-import { useRecaptcha } from '@app/hooks/useRecaptcha';
 
 import { EnvelopeIcon } from './icons';
 import { SubscriptionFormCard } from './SubscriptionFormCard';
@@ -32,10 +31,9 @@ export const SubscriptionForm: FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
-  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
 
-  const handleSubscribeUser = async (emailToSubscribe: string, recaptchaToken: string | null) => {
-    return subscribeUser(emailToSubscribe, recaptchaToken)
+  const handleSubscribeUser = async (emailToSubscribe: string) => {
+    return subscribeUser(emailToSubscribe)
       .then(response => {
         setValidation({
           isValid: true,
@@ -82,19 +80,8 @@ export const SubscriptionForm: FC = () => {
 
     try {
       setIsLoading(true);
-      clearError();
 
-      const recaptchaToken = await executeRecaptcha();
-
-      if (recaptchaError) {
-        setValidation({
-          isValid: false,
-          message: 'Security verification failed. Please try again.',
-        });
-        return;
-      }
-
-      await handleSubscribeUser(email, recaptchaToken);
+      await handleSubscribeUser(email);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -168,7 +155,6 @@ export const SubscriptionForm: FC = () => {
           {isLoading ? 'Subscribing...' : 'Subscribe'}
         </button>
       </Form.Item>
-      {recaptchaError && <div className="recaptcha-error">{recaptchaError}</div>}
       <span className={getBlocksWith('__form-info')}>
         By subscribing, you agree to receive marketing emails from ReportPortal team and associated
         partners and accept our{' '}
