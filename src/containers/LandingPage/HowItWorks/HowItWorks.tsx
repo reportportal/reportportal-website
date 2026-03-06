@@ -107,7 +107,7 @@ export const HowItWorks = () => {
       <div className={getBlocksWith('__button-group')} ref={buttonRef}>
         {isButtonInView && (
           <motion.div {...getButtonAnimation({ isInView: isButtonInView })}>
-            <Link className="btn btn--primary btn--large" to="/installation">
+            <Link className="btn btn--primary btn--large" to="/installation/">
               Learn how to install
             </Link>
           </motion.div>

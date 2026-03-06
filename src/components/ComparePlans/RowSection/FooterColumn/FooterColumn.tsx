@@ -19,7 +19,7 @@ export const FooterColumn: FC<FooterColumnsProps> = ({ ctas, note }) => (
   <div className={getBlocksWith('', '__container')}>
     <div className={getBlocksWithCompare('__row-title-wrapper')}>
       <div className={getBlocksWith('__row-title', '__row-title-footer')}>
-        <Link to="/legal/terms">
+        <Link to="/legal/terms/">
           Terms & Conditions <LinkArrow />
         </Link>
         <div>{note}</div>

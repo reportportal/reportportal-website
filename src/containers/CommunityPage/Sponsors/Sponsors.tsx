@@ -18,7 +18,7 @@ export const Sponsors: FC = () => (
       </div>
       <Link
         className={classNames(getBlocksWith('__button'), 'btn btn--pink btn--large')}
-        to="/sponsorship-program/business"
+        to="/sponsorship-program/business/"
       >
         Become Sponsor
       </Link>
