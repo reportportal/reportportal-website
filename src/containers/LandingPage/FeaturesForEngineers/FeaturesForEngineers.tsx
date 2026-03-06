@@ -11,7 +11,7 @@ export const FeaturesForEngineers: FC = () => (
     listDesktopPosition="right"
     data={FEATURES_FOR_ENGINEERS_LIST}
   >
-    <Link className="btn btn--primary btn--large" to="/features">
+    <Link className="btn btn--primary btn--large" to="/features/">
       Explore all features
     </Link>
   </AnimatedList>

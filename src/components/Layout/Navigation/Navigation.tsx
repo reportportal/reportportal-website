@@ -191,7 +191,7 @@ export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
                   <Link
                     data-gtm="get_a_quote_header"
                     className={getBlocksWith('-navigation__signup-button')}
-                    to="/contact-us/general"
+                    to="/contact-us/general/"
                   >
                     Contact us
                   </Link>
@@ -249,7 +249,7 @@ export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
         <div className="mobile-menu__auth-buttons">
           <Link
             className="btn btn--outline full-width"
-            to="/contact-us/general"
+            to="/contact-us/general/"
             data-gtm="get_a_quote_header"
           >
             Contact us

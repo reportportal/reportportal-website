@@ -33,7 +33,7 @@ export const LatestFromOurBlog: FC<PropsWithAnimation<LatestFromOurBlogProps>> =
         <ArticlePreview posts={posts} isAnimationEnabled={isAnimationEnabled} hasFixedItemsPerRow />
       </div>
       {isViewAll && (
-        <Link className="btn btn--outline btn--large latest-from-our-blog__button" to="/blog">
+        <Link className="btn btn--outline btn--large latest-from-our-blog__button" to="/blog/">
           View all
         </Link>
       )}
