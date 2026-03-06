@@ -43,7 +43,7 @@ export const SolutionsMenu: FC<SolutionsMenuProps> = ({
       text="Featured customers' stories where ReportPortal shines the best."
     >
       <div className={classNames(getBlocksWith('__btn-group'), 'full-width')}>
-        <Link className="btn btn--outline full-width" to="/case-studies">
+        <Link className="btn btn--outline full-width" to="/case-studies/">
           Explore Case Studies
         </Link>
       </div>

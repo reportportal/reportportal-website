@@ -63,7 +63,7 @@ export const CaseStudyPage: FC<CaseStudyProps['contentfulCaseStudy']> = ({
             <div className={getBlocksWith('__button-group')}>
               <Link
                 className={classNames('btn btn--white btn--large', getBlocksWith('__back-to-list'))}
-                to="/case-studies"
+                to="/case-studies/"
               >
                 <ArrowLeft />
                 Back to Case Studies

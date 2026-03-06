@@ -12,12 +12,12 @@ export const BenefitsForBusiness: FC = () => (
   >
     <Link
       className="btn btn--primary btn--large temporary-hide"
-      to="/contact-us/general"
+      to="/contact-us/general/"
       data-gtm="start_free_trial"
     >
       Start free trial
     </Link>
-    <Link className="btn btn--outline btn--large" to="/contact-us/general" data-gtm="get_a_quote">
+    <Link className="btn btn--outline btn--large" to="/contact-us/general/" data-gtm="get_a_quote">
       Contact us
     </Link>
   </AnimatedList>

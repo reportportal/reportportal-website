@@ -75,14 +75,29 @@ const config: GatsbyConfig = {
           }
         }`,
         serialize: ({ path }: { path: string }) => {
+          const fileExtensions = ['.html', '.htm', '.xml', '.pdf', '.jpg', '.png', '.css', '.js'];
+          const hasFileExtension = fileExtensions.some(ext => path.endsWith(ext));
+          const pathWithSlashEnd = path.endsWith('/') || hasFileExtension ? path : `${path}/`;
+          const url = path === '/' ? path : pathWithSlashEnd;
+
+          let priority = 0.9;
+
+          if (path === '/') {
+            priority = 1.0;
+          } else if (path === '/legal/terms') {
+            priority = 0.4;
+          }
+
           return {
-            url: path,
+            url,
+            changefreq: 'weekly',
+            priority,
           };
         },
       },
     },
   ],
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 };
 
 // eslint-disable-next-line import/no-default-export

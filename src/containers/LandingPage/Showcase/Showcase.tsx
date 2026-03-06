@@ -85,7 +85,7 @@ export const Showcase: FC = () => {
             </Link>
             <Link
               className="btn btn--outline-2 btn--large"
-              to="/contact-us/general"
+              to="/contact-us/general/"
               data-gtm="get_a_quote"
             >
               Contact us

@@ -51,14 +51,14 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
         <div className={getBlocksWith('__btn-group')}>
           <Link
             className="btn btn--primary temporary-hide"
-            to="/contact-us/general"
+            to="/contact-us/general/"
             data-gtm="start_free_trial"
           >
             Start free trial
           </Link>
           <Link
             className="btn btn--outline"
-            to="/contact-us/general"
+            to="/contact-us/general/"
             data-gtm="get_a_quote_product"
           >
             Contact us
@@ -81,7 +81,7 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
       <div className={getBlocksWith()}>
         {generalList}
         {featuresList}
-        <ArrowLink to="/features" text="See all features" />
+        <ArrowLink to="/features/" text="See all features" />
       </div>
     );
   }
@@ -93,7 +93,7 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
           {generalList}
           {featuresList}
           <div>
-            <ArrowLink to="/features" text="See all features" />
+            <ArrowLink to="/features/" text="See all features" />
           </div>
         </div>
         <div className={getBlocksWith('__body-col--rt', '__body-col--flex-column')}>
