@@ -97,7 +97,7 @@ const config: GatsbyConfig = {
       },
     },
   ],
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 };
 
 // eslint-disable-next-line import/no-default-export
