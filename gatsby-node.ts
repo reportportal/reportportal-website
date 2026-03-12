@@ -154,6 +154,31 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
 
   contactUsBaseConfigs.forEach(config => {
     const contentfulConfig = contactUsConfigs[config.id];
+
+    if (!contentfulConfig) {
+      const availableTitles = Object.keys(contactUsConfigs).join(', ');
+
+      reporter.warn(
+        `Contentful "Contact Us" entry with internalTitle "${config.id}" not found — skipping page ${config.url}. Available internalTitles: [${availableTitles}]`,
+      );
+
+      return;
+    }
+
+    const missingFields = ['title', 'message', 'messagePosition'].filter(
+      field => !contentfulConfig[field],
+    );
+
+    if (missingFields.length > 0) {
+      reporter.warn(
+        `Contentful "Contact Us" entry "${
+          config.id
+        }" is missing required fields: ${missingFields.join(', ')} — skipping page ${config.url}`,
+      );
+
+      return;
+    }
+
     const contactUsProps: ContactUsConfig = {
       ...config,
       title: contentfulConfig.title,
