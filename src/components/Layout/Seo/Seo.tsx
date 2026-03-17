@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useLocation } from '@reach/router';
 import { useStaticQuery, graphql } from 'gatsby';
+import { JsonLd, organizationSchema } from '@app/components/StructuredData';
 
 interface SeoProps {
   title?: string;
@@ -76,6 +77,7 @@ export const Seo: FC<SeoProps> = ({
       <meta id="meta-keywords" content={keywords} name="keywords" />
       <meta id="meta-ogsite-name" content={metaSiteName} name="og:site_name" />
       <meta id="meta-robots" content={noIndex ? 'noindex' : ''} name="robots" />
+      {!noIndex && <JsonLd data={organizationSchema()} />}
     </>
   );
 };
