@@ -1,3 +1,4 @@
+import React from 'react';
 import feature1 from '@app/svg/featuresListItem1.svg';
 import feature2 from '@app/svg/featuresListItem2.svg';
 import feature3 from '@app/svg/featuresListItem3.svg';
@@ -7,6 +8,8 @@ import feature6 from '@app/svg/featuresListItem6.svg';
 import feature7 from '@app/svg/featuresListItem7.svg';
 import feature8 from '@app/svg/featuresListItem8.svg';
 import { DOCUMENTATION_URL } from '@app/utils';
+import { Link } from '@app/components/Link';
+import { FAQSchemaItem, extractText } from '@app/components/StructuredData';
 
 export const NAVIGATION_LIST = [
   { id: 1, name: 'Single-entry point for test reporting', link: '#single-entry' },
@@ -86,3 +89,45 @@ export const FEATURES_LIST = [
     isPremium: true,
   },
 ];
+
+export const FEATURES_FAQ_ITEMS = [
+  {
+    key: 1,
+    label: 'What is meant by "Premium feature"?',
+    children: (
+      <>
+        <p>
+          Premium feature is an advanced feature which comes on top of Free Open Source edition. It
+          comes at no cost with SaaS offering and included into the &quot;160&quot; Managed Services
+          package.
+        </p>
+        <p>
+          See the{' '}
+          <Link to={`${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures`} className="link">
+            List of features
+          </Link>{' '}
+          and their description.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 2,
+    label: 'What capabilities does Rest API provide?',
+    children: (
+      <p>
+        REST API enables users to easily integrate any testing framework or third-party tool with
+        ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
+        merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
+        update the statuses in the pipeline, generate custom reports and many more.
+      </p>
+    ),
+  },
+];
+
+export const FEATURES_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FEATURES_FAQ_ITEMS.map(
+  ({ label, children }) => ({
+    question: label,
+    answer: extractText(children),
+  }),
+);

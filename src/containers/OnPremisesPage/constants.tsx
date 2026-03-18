@@ -1,4 +1,5 @@
 import React from 'react';
+import { FAQSchemaItem, OfferSchemaParams, extractText } from '@app/components/StructuredData';
 
 export const TIME_SCALE_DATA = [
   {
@@ -130,5 +131,30 @@ export const FAQ_DATA = [
         </div>
       </>
     ),
+  },
+];
+
+export const ON_PREMISES_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FAQ_DATA.map(
+  ({ label, children }) => ({
+    question: label,
+    answer: extractText(children),
+  }),
+);
+
+export const ON_PREMISES_OFFERS: OfferSchemaParams[] = [
+  {
+    name: 'Lite',
+    description: 'On-Premises Lite plan with essential support',
+    url: '/contact-us/on-premises',
+  },
+  {
+    name: 'Service Pro',
+    description: 'On-Premises Service Pro plan with professional support and service points',
+    url: '/contact-us/on-premises',
+  },
+  {
+    name: 'Advanced',
+    description: 'On-Premises Advanced plan with comprehensive support and premium services',
+    url: '/contact-us/on-premises',
   },
 ];
