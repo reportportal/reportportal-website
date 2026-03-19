@@ -65,18 +65,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           'Content-Type': 'application/json',
         };
 
-        const response = await axios.post(CONTACT_US_URL, postData, { headers });
+        await axios.post(CONTACT_US_URL, postData, { headers });
 
-        let responseData = response.data;
-        if (typeof responseData === 'string') {
-          responseData = JSON.parse(responseData);
-        }
-
-        if (responseData.success) {
-          showFeedbackForm();
-        } else {
-          setIsLoading(false);
-        }
+        showFeedbackForm();
       } catch (error) {
         setCustomError('Request failed. Please try again.');
         setIsLoading(false);
