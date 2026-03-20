@@ -5,6 +5,7 @@ export {
   articleSchema,
   productSchema,
   faqPageSchema,
+  howToSchema,
 } from './schemas';
 export { BREADCRUMBS } from './constants';
 export { extractText } from './utils';
@@ -14,4 +15,6 @@ export {
   FAQSchemaItem,
   OfferSchemaParams,
   ProductSchemaParams,
+  HowToStepSchemaItem,
+  HowToSchemaParams,
 } from './types';

@@ -1,5 +1,11 @@
 import { SITE_URL, SITE_NAME, LOGO_URL, SOCIAL_LINKS } from './constants';
-import { ArticleSchemaParams, BreadcrumbItem, FAQSchemaItem, ProductSchemaParams } from './types';
+import {
+  ArticleSchemaParams,
+  BreadcrumbItem,
+  FAQSchemaItem,
+  HowToSchemaParams,
+  ProductSchemaParams,
+} from './types';
 
 export const organizationSchema = () => ({
   '@context': 'https://schema.org',
@@ -88,5 +94,18 @@ export const faqPageSchema = (items: FAQSchemaItem[]) => ({
       '@type': 'Answer',
       text: item.answer,
     },
+  })),
+});
+
+export const howToSchema = ({ name, description, steps }: HowToSchemaParams) => ({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name,
+  description,
+  step: steps.map((step, index) => ({
+    '@type': 'HowToStep',
+    position: index + 1,
+    name: step.name,
+    text: step.text,
   })),
 });

@@ -33,3 +33,14 @@ export interface ProductSchemaParams {
   image?: string;
   offers?: OfferSchemaParams[];
 }
+
+export interface HowToStepSchemaItem {
+  name: string;
+  text: string;
+}
+
+export interface HowToSchemaParams {
+  name: string;
+  description: string;
+  steps: HowToStepSchemaItem[];
+}
