@@ -22,15 +22,6 @@ env:
   GATSBY_MAILCHIMP_LIST_ID: ca6d0eec5b
 
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - README.md
-  schedule:
-    - cron: "0 21 24 11 *"
-    - cron: "0 21 14 1 *"
-    - cron: "30 0 * * *"
   workflow_dispatch:
 
 jobs:
