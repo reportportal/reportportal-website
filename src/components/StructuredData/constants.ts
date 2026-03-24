@@ -8,3 +8,13 @@ export const SOCIAL_LINKS = [
   'https://www.linkedin.com/company/reportportal/',
   'https://www.youtube.com/@ReportPortal',
 ];
+
+export const BREADCRUMBS = {
+  home: { name: 'Home', path: '/' },
+  features: { name: 'Features', path: '/features/' },
+  blog: { name: 'Blog', path: '/blog/' },
+  installation: { name: 'Installation', path: '/installation/' },
+  pricing: { name: 'Pricing', path: '/pricing/saas/' },
+  pricingSaas: { name: 'SaaS', path: '/pricing/saas/' },
+  pricingOnPremises: { name: 'On-Premises', path: '/pricing/on-premises/' },
+};

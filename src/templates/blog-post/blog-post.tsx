@@ -6,6 +6,7 @@ import {
 } from 'gatsby-source-contentful/rich-text';
 import { BlogPostPage } from '@app/containers/BlogPostPage';
 import { Layout, Seo } from '@app/components/Layout';
+import { BREADCRUMBS } from '@app/components/StructuredData';
 
 interface DataProps {
   contentfulBlogPost: {
@@ -72,14 +73,20 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head = ({ data }) => {
+export const Head = ({ data, location }) => {
   const { title, seoTitle, seoDescription, featuredImage } = data.contentfulBlogPost;
+  const articleTitle = seoTitle ?? title?.title ?? '';
 
   return (
     <Seo
-      title={seoTitle ?? title?.title}
+      title={articleTitle}
       description={seoDescription}
       previewImage={featuredImage?.file?.url}
+      breadcrumbs={[
+        BREADCRUMBS.home,
+        BREADCRUMBS.blog,
+        { name: articleTitle, path: location.pathname },
+      ]}
     />
   );
 };
