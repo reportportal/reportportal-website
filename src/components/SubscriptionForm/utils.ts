@@ -2,10 +2,9 @@ import axios, { AxiosPromise } from 'axios';
 
 import { SUBSCRIPTION_URL } from './constants';
 
-export const subscribeUser = (email: string, recaptchaToken: string | null): AxiosPromise => {
+export const subscribeUser = (email: string): AxiosPromise => {
   const headers = {
     'Content-Type': 'application/json',
-    ...(recaptchaToken && { 'RP-Recaptcha-Token': recaptchaToken }),
   };
 
   return axios.post(SUBSCRIPTION_URL, { email_address: email }, { headers });
