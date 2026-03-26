@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SaaSIcon from './icons/saas.inline.svg';
-import OnPremiseIcon from './icons/on-premise.inline.svg';
+import ServicePackagesIcon from './icons/service-packages.inline.svg';
 import FreeVersionIcon from './icons/free-version.inline.svg';
 import TaaSIcon from './icons/taas.inline.svg';
 import TAaaSIcon from './icons/taaas.inline.svg';
@@ -15,10 +15,10 @@ export const PRICING_CONFIG = [
     link: { title: 'SaaS', url: '/pricing/saas' },
   },
   {
-    icon: <OnPremiseIcon />,
+    icon: <ServicePackagesIcon />,
     title: 'Service Packages',
     text: 'Self-hosted instance with support from our team',
-    link: { title: 'On-Premises', url: '/pricing/on-premises' },
+    link: { title: 'Service Packages', url: '/pricing/service-packages' },
   },
   {
     icon: <FreeVersionIcon />,

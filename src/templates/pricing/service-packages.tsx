@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import { Layout, Seo } from '@app/components/Layout';
-import { OnPremisesPage } from '@app/containers/OnPremisesPage';
+import { ServicePackagesPage } from '@app/containers/ServicePackagesPage';
 import { SEO_DATA } from '@app/utils';
 
-const OnPremises: FC = () => (
+const ServicePackages: FC = () => (
   <Layout className="offer-page-wrapper">
-    <OnPremisesPage />
+    <ServicePackagesPage />
   </Layout>
 );
 
-export default OnPremises;
+export default ServicePackages;
 
 export const Head = () => {
-  const { title, description } = SEO_DATA.onPremises;
+  const { title, description } = SEO_DATA.servicePackages;
 
   return <Seo title={title} description={description} />;
 };

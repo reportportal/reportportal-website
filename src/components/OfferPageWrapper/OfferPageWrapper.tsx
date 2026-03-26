@@ -37,7 +37,7 @@ interface OfferPageWrapperProps {
     offerType: string;
   };
   page: string;
-  pagePath: 'on-premises' | 'd4j' | 'qasp' | 'hlm';
+  pagePath: 'service-packages' | 'd4j' | 'qasp' | 'hlm';
   timeScaleData: {
     time: number | string;
     items: string[] | ReactNode[];
@@ -177,7 +177,7 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         }
         description="Start a conversation with us to discover the support experience that fits you perfectly."
         buttonText="Contact us now!"
-        buttonLink={isPricingPage ? '/contact-us/on-premises' : contactUsLink}
+        buttonLink={isPricingPage ? '/contact-us/service-packages' : contactUsLink}
       />
       <div className={getBlocksWith('__faq-container')}>
         <Faq

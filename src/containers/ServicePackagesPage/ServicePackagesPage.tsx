@@ -5,7 +5,7 @@ import { OfferingPlansQuery, formatOfferingPlans } from '@app/utils';
 
 import { FAQ_DATA, TIME_SCALE_DATA } from './constants';
 
-export const OnPremisesPage: FC = () => {
+export const ServicePackagesPage: FC = () => {
   const { plans } = formatOfferingPlans(
     useStaticQuery<OfferingPlansQuery>(graphql`
       query {
@@ -25,10 +25,10 @@ export const OnPremisesPage: FC = () => {
         subtitle: 'Flexible options for small teams to global enterprises',
         description:
           'Need expert assistance or enterprise features for your self-hosted or SaaS ReportPortal? We offer support, integrations, migrations and custom features development',
-        offerType: 'On-Premises',
+        offerType: 'Service Packages',
       }}
       page="pricing"
-      pagePath="on-premises"
+      pagePath="service-packages"
       timeScaleData={TIME_SCALE_DATA}
       plans={plans}
       faqData={FAQ_DATA}

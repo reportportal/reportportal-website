@@ -16,7 +16,7 @@ const pricingButtons = [
   {
     text: 'Service Packages',
     icon: <ServicePackagesIcon />,
-    linkTo: '/pricing/on-premises',
+    linkTo: '/pricing/service-packages',
   },
 ];
 
