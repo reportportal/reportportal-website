@@ -1,4 +1,20 @@
 export { JsonLd } from './JsonLd';
-export { organizationSchema, breadcrumbListSchema } from './schemas';
+export {
+  organizationSchema,
+  breadcrumbListSchema,
+  articleSchema,
+  productSchema,
+  faqPageSchema,
+  howToSchema,
+} from './schemas';
 export { BREADCRUMBS } from './constants';
-export { BreadcrumbItem } from './types';
+export { extractText } from './utils';
+export {
+  BreadcrumbItem,
+  ArticleSchemaParams,
+  FAQSchemaItem,
+  OfferSchemaParams,
+  ProductSchemaParams,
+  HowToStepSchemaItem,
+  HowToSchemaParams,
+} from './types';
