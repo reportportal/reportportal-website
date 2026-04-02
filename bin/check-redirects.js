@@ -125,10 +125,12 @@ function main() {
   const missing = findMissingRedirects();
 
   if (missing.length === 0) {
+    console.log('Redirect check passed.');
     process.exit(0);
   }
 
   if (hasSkipFlag()) {
+    console.log('Redirect check skipped.');
     process.exit(0);
   }
 
