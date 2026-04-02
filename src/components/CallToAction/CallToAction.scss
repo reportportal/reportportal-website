@@ -1,0 +1,69 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.call-to-action {
+  background: url('assets/bg-tablet.svg') no-repeat center 0 / cover;
+  color: var(--text-primary);
+
+  @include m.breakpoint(v.$desktop-sm) {
+    background-image: url('assets/bg-desktop.svg');
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 56px 16px;
+    text-align: center;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      padding: 56px 24px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      flex-direction: row;
+      padding: 56px 0;
+    }
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(x4-medium);
+
+    margin-bottom: 16px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(large);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      text-align: left;
+    }
+  }
+
+  &__description {
+    @include m.font-noto-sans();
+    @include m.font-scale();
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(medium);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      text-align: left;
+    }
+  }
+
+  &__button {
+    margin-top: 40px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-top: 48px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      margin-top: 0;
+    }
+  }
+}

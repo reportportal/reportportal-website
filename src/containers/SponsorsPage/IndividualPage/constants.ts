@@ -1,5 +1,6 @@
-import gainRecognitionSvg from './icons/gain-recognition.svg';
-import joinCommunitySvg from './icons/join-community.svg';
+import starSvg from '@app/svg/star.svg';
+import communitySvg from '@app/svg/community.svg';
+
 import supportInnovationSvg from './icons/support-innovation.svg';
 
 export const INDIVIDUAL_CARDS = [
@@ -8,18 +9,21 @@ export const INDIVIDUAL_CARDS = [
     description:
       'Help us continue to develop and maintain ReportPortal, ensuring it remains free and accessible to everyone',
     icon: supportInnovationSvg,
+    iconColor: 'var(--graphics-iris)',
   },
   {
     itemTitle: 'Join a Community',
     description:
       'Join the community of developers and testers, with opportunities to participate in discussions, events, and development sprints',
-    icon: joinCommunitySvg,
+    icon: communitySvg,
+    iconColor: 'var(--graphics-light-blue)',
   },
   {
     itemTitle: 'Gain recognition',
     description:
       'Get recognized for your contribution within the community through our website and social media channels',
-    icon: gainRecognitionSvg,
+    icon: starSvg,
+    iconColor: 'var(--graphics-jade)',
   },
 ];
 

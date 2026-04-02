@@ -54,7 +54,7 @@ const config: GatsbyConfig = {
           '/contact-us/taaas',
           '/contact-us/qe-consulting',
           '/contact-us/saas/**',
-          '/contact-us/on-premises/**',
+          '/contact-us/service-packages/**',
           '/contact-us/qasp',
           '/contact-us/d4j',
           '/contact-us/hlm',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FAQSchemaItem, OfferSchemaParams, extractText } from '@app/components/StructuredData';
 
 export const FAQ_ITEMS = [
   {
@@ -117,5 +118,32 @@ export const FAQ_ITEMS = [
         <div>After one month, all your project data will be erased.</div>
       </>
     ),
+  },
+];
+
+export const SAAS_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FAQ_ITEMS.map(({ label, children }) => ({
+  question: label,
+  answer: extractText(children),
+}));
+
+export const SAAS_OFFERS: OfferSchemaParams[] = [
+  {
+    name: 'Startup',
+    price: '49',
+    priceCurrency: 'USD',
+    description: 'SaaS Startup plan for small teams',
+    url: '/contact-us/saas/startup-plan',
+  },
+  {
+    name: 'Business',
+    price: '249',
+    priceCurrency: 'USD',
+    description: 'SaaS Business plan for growing teams',
+    url: '/contact-us/saas/business-plan',
+  },
+  {
+    name: 'Enterprise',
+    description: 'SaaS Enterprise plan for large organizations with custom pricing',
+    url: '/contact-us/saas/enterprise-plan',
   },
 ];

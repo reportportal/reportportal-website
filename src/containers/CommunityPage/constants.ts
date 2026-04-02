@@ -15,6 +15,7 @@ export const GITHUB_CONTRIBUTION_CARDS = [
     link: 'https://github.com/reportportal/reportportal/wiki/Contribution',
     linkText: 'Learn more',
     icon: improveCoreSvg,
+    iconColor: 'var(--graphics-iris)',
   },
   {
     itemTitle: 'Boost agents',
@@ -23,6 +24,7 @@ export const GITHUB_CONTRIBUTION_CARDS = [
     link: 'https://github.com/reportportal/reportportal/wiki/Contribution',
     linkText: 'Learn more',
     icon: boostAgentsSvg,
+    iconColor: 'var(--graphics-light-blue)',
   },
   {
     itemTitle: 'Enhance integrations',
@@ -31,6 +33,7 @@ export const GITHUB_CONTRIBUTION_CARDS = [
     link: 'https://github.com/reportportal/reportportal/wiki/Contribution',
     linkText: 'Learn more',
     icon: enhanceIntegrationsSvg,
+    iconColor: 'var(--graphics-jade)',
   },
 ];
 
@@ -42,6 +45,7 @@ export const DOCUMENTATION_CARDS = [
     link: `${DOCUMENTATION_URL}/installation-steps`,
     linkText: 'Open in Documentation',
     icon: installationGuideSvg,
+    iconColor: 'var(--graphics-blue)',
   },
   {
     itemTitle: 'Developer’s guide',
@@ -50,6 +54,7 @@ export const DOCUMENTATION_CARDS = [
     link: `${DOCUMENTATION_URL}/developers-guides`,
     linkText: 'Open in Documentation',
     icon: developerGuideSvg,
+    iconColor: 'var(--graphics-orange)',
   },
   {
     itemTitle: 'Release notes',
@@ -58,5 +63,6 @@ export const DOCUMENTATION_CARDS = [
     link: `${DOCUMENTATION_URL}/releases`,
     linkText: 'Open in Documentation',
     icon: releaseNotesSvg,
+    iconColor: 'var(--graphics-orchid)',
   },
 ];

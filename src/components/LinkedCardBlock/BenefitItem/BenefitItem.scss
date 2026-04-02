@@ -1,0 +1,40 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  &__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale();
+
+    margin: 0;
+    line-height: 24px;
+    color: var(--text-primary);
+  }
+
+  &__description {
+    @include m.font-noto-sans();
+    @include m.font-scale();
+
+    margin: 0;
+    line-height: 24px;
+    color: var(--text-primary);
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    margin-top: 0;
+    font-weight: v.$fw-medium;
+  }
+}

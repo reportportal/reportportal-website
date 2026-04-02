@@ -5,14 +5,14 @@ import { createBemBlockBuilder, LinkDto } from '@app/utils';
 
 import './InfoCard.scss';
 
-const getBlocksWith = createBemBlockBuilder(['info-card']);
-
 interface InfoCardProps {
   title: string;
   description: string;
   link: LinkDto;
   icon: string;
 }
+
+const getBlocksWith = createBemBlockBuilder(['info-card']);
 
 export const InfoCard: FC<InfoCardProps> = ({ title, description, icon, link }) => (
   <div className={getBlocksWith()}>

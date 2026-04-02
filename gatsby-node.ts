@@ -43,6 +43,7 @@ interface ContactUsDto {
   title: string;
   message: RenderRichTextData<ContentfulRichTextGatsbyReference>;
   messagePosition: string;
+  showBillingPeriod?: boolean;
   offeringPlan?: OfferingPlanDto;
 }
 
@@ -120,6 +121,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
               internalTitle
               title
               messagePosition
+              showBillingPeriod
               message {
                 raw
               }
@@ -159,6 +161,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
       title: contentfulConfig.title,
       message: contentfulConfig.message,
       messagePosition: contentfulConfig.messagePosition,
+      showBillingPeriod: contentfulConfig.showBillingPeriod,
       price: contentfulConfig.offeringPlan?.price,
     };
 

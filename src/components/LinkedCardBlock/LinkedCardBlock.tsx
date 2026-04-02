@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode, ComponentType } from 'react';
 import classNames from 'classnames';
 import { LinkedCard, LinkedCardProps } from '@app/components/LinkedCard';
 import { createBemBlockBuilder } from '@app/utils';
@@ -7,33 +7,35 @@ import { TitleBlock } from '../TitleBlock';
 
 import './LinkedCardBlock.scss';
 
-interface LinkedCardBlockProps {
+interface LinkedCardBlockProps<T = LinkedCardProps> {
   title: string;
-  subtitle: string;
-  cardsInfo: LinkedCardProps[];
+  cardsInfo: T[];
   children?: ReactNode;
-  largePadding?: boolean;
+  subtitle?: string;
+  mode?: 'large';
+  CardComponent?: ComponentType<T>;
 }
 
 const getBlocksWith = createBemBlockBuilder(['linked-card-block']);
 
-export const LinkedCardBlock: FC<LinkedCardBlockProps> = ({
+export const LinkedCardBlock = <T extends LinkedCardProps = LinkedCardProps>({
   children,
   title,
   subtitle,
   cardsInfo,
-  largePadding,
-}) => (
+  mode,
+  CardComponent = LinkedCard as ComponentType<T>,
+}: LinkedCardBlockProps<T>) => (
   <div
     className={classNames(getBlocksWith(), {
-      [getBlocksWith('--large-padding')]: largePadding,
+      [getBlocksWith(`--${mode}`)]: Boolean(mode),
     })}
   >
     <div className="container">
       <TitleBlock title={title} subtitle={subtitle} />
       <div className={getBlocksWith('__cards')}>
         {cardsInfo.map(cardInfo => (
-          <LinkedCard key={cardInfo.itemTitle} {...cardInfo} />
+          <CardComponent key={cardInfo.itemTitle} {...cardInfo} />
         ))}
       </div>
       {children}

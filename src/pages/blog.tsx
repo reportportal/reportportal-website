@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import { PageProps, graphql } from 'gatsby';
 import { Layout, Seo } from '@app/components/Layout';
+import { BREADCRUMBS } from '@app/components/StructuredData';
 import { BlogPage } from '@app/containers/BlogPage';
 import { BlogPostsQueryDto, BlogPostDto, SEO_DATA } from '@app/utils';
 
@@ -57,5 +58,11 @@ export const pageQuery = graphql`
 export const Head = () => {
   const { title, description } = SEO_DATA.blog;
 
-  return <Seo title={title} description={description} />;
+  return (
+    <Seo
+      title={title}
+      description={description}
+      breadcrumbs={[BREADCRUMBS.home, BREADCRUMBS.blog]}
+    />
+  );
 };

@@ -7,14 +7,9 @@ import { FAQ_DATA } from '../D4jPage/constants';
 import { TIME_SCALE_DATA } from './constants';
 
 export const QaspPage: FC = () => {
-  const { plans, comparePlans } = formatOfferingPlans(
+  const { plans } = formatOfferingPlans(
     useStaticQuery<OfferingPlansQuery>(graphql`
       query {
-        allContentfulComparePlan(filter: { internalTitle: { eq: "QaSpace Compare Plan" } }) {
-          nodes {
-            ...ComparePlanFields
-          }
-        }
         allContentfulSection(filter: { internalTitle: { eq: "[Offering Plan] QaSpace" } }) {
           nodes {
             ...OfferingPlansFields
@@ -37,9 +32,8 @@ export const QaspPage: FC = () => {
       timeScaleData={TIME_SCALE_DATA}
       contactUsLink="/contact-us/qasp"
       plans={plans}
-      comparePlans={comparePlans}
       faqData={FAQ_DATA}
-      utilizationDescription="Our team will provide services in support of Client's use of QaSpace plugin. Such services will vary based on Client's needs. The table below describes the different support services we customarily provide."
+      isScaleShifted
     />
   );
 };
