@@ -17,6 +17,7 @@
     "stylelint": "stylelint \"src/**/*.scss\"",
     "stylefix": "npm run stylelint -- --fix",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,scss,json,gql,md}\"",
+    "check-redirects": "node ./bin/check-redirects.js",
     "prepare": "husky install"
   },
   "license": "ISC",
