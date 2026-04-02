@@ -6,12 +6,16 @@ import {
 } from 'gatsby-source-contentful/rich-text';
 import { BlogPostPage } from '@app/containers/BlogPostPage';
 import { Layout, Seo } from '@app/components/Layout';
+import { BREADCRUMBS, JsonLd, articleSchema } from '@app/components/StructuredData';
+import { SITE_URL } from '@app/components/StructuredData/constants';
 
 interface DataProps {
   contentfulBlogPost: {
     industry: string;
     author: string;
     date: string;
+    isoDate: string;
+    updatedAt: string;
     articleBody: RenderRichTextData<ContentfulRichTextGatsbyReference>;
     title?: {
       title: string;
@@ -56,6 +60,8 @@ export const pageQuery = graphql`
         }
       }
       date(formatString: "MMMM D, YYYY")
+      isoDate: date(formatString: "YYYY-MM-DD")
+      updatedAt(formatString: "YYYY-MM-DD")
       author
       articleBody {
         raw
@@ -72,14 +78,35 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head = ({ data }) => {
-  const { title, seoTitle, seoDescription, featuredImage } = data.contentfulBlogPost;
+export const Head = ({ data, location }) => {
+  const { title, seoTitle, seoDescription, featuredImage, author, isoDate, updatedAt } =
+    data.contentfulBlogPost;
+  const articleTitle = seoTitle ?? title?.title ?? '';
+  const url = `${SITE_URL}${location.pathname}`;
 
   return (
-    <Seo
-      title={seoTitle ?? title?.title}
-      description={seoDescription}
-      previewImage={featuredImage?.file?.url}
-    />
+    <>
+      <Seo
+        title={articleTitle}
+        description={seoDescription}
+        previewImage={featuredImage?.file?.url}
+        breadcrumbs={[
+          BREADCRUMBS.home,
+          BREADCRUMBS.blog,
+          { name: articleTitle, path: location.pathname },
+        ]}
+      />
+      <JsonLd
+        data={articleSchema({
+          headline: articleTitle,
+          image: featuredImage?.file?.url,
+          datePublished: isoDate,
+          dateModified: updatedAt,
+          author,
+          description: seoDescription,
+          url,
+        })}
+      />
+    </>
   );
 };

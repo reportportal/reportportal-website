@@ -5,7 +5,6 @@ import isEmpty from 'lodash/isEmpty';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
 import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
-import { useRecaptcha } from '@app/hooks/useRecaptcha';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -24,7 +23,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const [isFeedbackFormVisible, { setTrue: showFeedbackForm }] = useBoolean(false);
   const [isLoading, setIsLoading] = useState(false);
   const [customError, setCustomError] = useState<string | null>(null);
-  const { executeRecaptcha, recaptchaError, clearError } = useRecaptcha();
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -51,13 +49,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
       try {
         setIsLoading(true);
-        clearError();
         setCustomError(null);
-
-        const contactRecaptchaToken = await executeRecaptcha();
-        if (!contactRecaptchaToken || recaptchaError) {
-          return;
-        }
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
         const postData = {
@@ -66,30 +58,16 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         };
 
         if (values.wouldLikeToReceiveAds) {
-          const subscribeRecaptchaToken = await executeRecaptcha();
-          if (subscribeRecaptchaToken) {
-            subscribeUser(values.email, subscribeRecaptchaToken).catch(console.error);
-          }
+          subscribeUser(values.email).catch(console.error);
         }
 
         const headers = {
           'Content-Type': 'application/json',
-          'RP-Recaptcha-Action': 'contact_us',
-          ...(contactRecaptchaToken && { 'RP-Recaptcha-Token': contactRecaptchaToken }),
         };
 
-        const response = await axios.post(CONTACT_US_URL, postData, { headers });
+        await axios.post(CONTACT_US_URL, postData, { headers });
 
-        let responseData = response.data;
-        if (typeof responseData === 'string') {
-          responseData = JSON.parse(responseData);
-        }
-
-        if (responseData.success) {
-          showFeedbackForm();
-        } else {
-          setIsLoading(false);
-        }
+        showFeedbackForm();
       } catch (error) {
         setCustomError('Request failed. Please try again.');
         setIsLoading(false);
@@ -141,9 +119,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               }
             />
           </FormFieldWrapper>
-          {(recaptchaError || customError) && (
-            <div className="recaptcha-error">{recaptchaError || customError}</div>
-          )}
+          {customError && <div className="recaptcha-error">{customError}</div>}
           <button
             className="btn btn--primary btn--large"
             type="submit"

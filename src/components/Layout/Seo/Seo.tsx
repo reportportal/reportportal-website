@@ -1,6 +1,12 @@
 import React, { FC } from 'react';
 import { useLocation } from '@reach/router';
 import { useStaticQuery, graphql } from 'gatsby';
+import {
+  JsonLd,
+  organizationSchema,
+  breadcrumbListSchema,
+  BreadcrumbItem,
+} from '@app/components/StructuredData';
 
 interface SeoProps {
   title?: string;
@@ -9,6 +15,7 @@ interface SeoProps {
   description?: string;
   noIndex?: boolean;
   lang?: string;
+  breadcrumbs?: BreadcrumbItem[];
   meta?: ConcatArray<{
     name: string;
     content: string;
@@ -23,6 +30,7 @@ export const Seo: FC<SeoProps> = ({
   description = '',
   lang = 'en',
   noIndex = false,
+  breadcrumbs,
 }) => {
   const { site } = useStaticQuery(
     graphql`
@@ -76,6 +84,8 @@ export const Seo: FC<SeoProps> = ({
       <meta id="meta-keywords" content={keywords} name="keywords" />
       <meta id="meta-ogsite-name" content={metaSiteName} name="og:site_name" />
       <meta id="meta-robots" content={noIndex ? 'noindex' : ''} name="robots" />
+      {!noIndex && <JsonLd data={organizationSchema()} />}
+      {!noIndex && breadcrumbs && <JsonLd data={breadcrumbListSchema(breadcrumbs)} />}
     </>
   );
 };
