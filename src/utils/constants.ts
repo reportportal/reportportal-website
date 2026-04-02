@@ -74,8 +74,8 @@ export const SEO_DATA = {
     description:
       'Explore our flexible pricing plans from small teams to global enterprises. Harness the power of our end-to-end testing reporting tool.',
   },
-  onPremises: {
-    title: 'Pricing: On-Premises',
+  servicePackages: {
+    title: 'Pricing: Service Packages',
     description:
       'Select the pricing plan that best suits your needs and unlock the full potential of our test report dashboard.',
   },

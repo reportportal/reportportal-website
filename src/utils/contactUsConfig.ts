@@ -4,7 +4,7 @@ import { ContactUsBaseConfig, PlanType } from './types';
 
 const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
 const LEAD_SOURCE = 'lead_source';
-const onPremisesAndAcceleratorsPlans = ['Lite', 'Service Pro', 'Advanced'];
+const servicePackagesAndAcceleratorsPlans = ['Silver', 'Gold', 'Platinum'];
 const availableOptions: PlanType[] = ['quarterly', 'yearly'];
 
 const createConfig = ({
@@ -132,29 +132,29 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     url: '/contact-us/hlm',
     source: 'Landing page / RP HLM',
   }),
-  ...onPremisesAndAcceleratorsPlans.flatMap(plan => [
+  ...servicePackagesAndAcceleratorsPlans.flatMap(plan => [
     {
-      id: `[On-Premises] ${plan}`,
+      id: `[Service Packages] ${plan}`,
       options: [
         { name: LEAD_SOURCE, value: 'RP Service' },
         {
           name: SALESFORCE_SOURCE_NAME,
-          value: `Landing page / On-Premises / Request Support "${plan} Package"`,
+          value: `Landing page / Service Packages / Request Support "${plan} Package"`,
         },
       ],
-      url: `/contact-us/on-premises/${kebabCase(plan)}`,
+      url: `/contact-us/service-packages/${kebabCase(plan)}`,
       planType: 'yearly',
     },
     {
-      id: `[On-Premises] ${plan}`,
+      id: `[Service Packages] ${plan}`,
       options: [
         { name: LEAD_SOURCE, value: 'RP Service' },
         {
           name: SALESFORCE_SOURCE_NAME,
-          value: `Landing page / On-Premises / Compare Plan / Request Support "${plan} Plan"`,
+          value: `Landing page / Service Packages / Compare Plan / Request Support "${plan} Plan"`,
         },
       ],
-      url: `/contact-us/on-premises/compare/${kebabCase(plan)}`,
+      url: `/contact-us/service-packages/compare/${kebabCase(plan)}`,
       planType: 'yearly',
     },
     createConfig({
@@ -238,6 +238,18 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     leadSource: 'RP General',
     url: '/contact-us/general',
   }),
+  {
+    id: '[Service Packages]',
+    url: '/contact-us/service-packages',
+    options: [
+      {
+        name: SALESFORCE_SOURCE_NAME,
+        value: 'Landing page / Service Packages / Interest in Support Packages',
+      },
+      { name: LEAD_SOURCE, value: 'RP Service' },
+    ],
+    isDiscussFieldShown: false,
+  },
   createContactUsConfig({
     salesforceSourceName: 'RP Community',
     leadSource: 'RP Community',

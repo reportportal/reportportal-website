@@ -45,10 +45,7 @@ export const SaasPage: FC = () => {
         subtitle="Flexible options for small teams to global enterprises"
         buttons={buttons}
         activeButton="SaaS"
-        offerType="SaaS"
-        description="An instance of ReportPortal application is hosted for you. ReportPortal team takes care
-          about infrastructure, availability, backups, monitoring and version updates and provides
-          support by request."
+        description="We host and operate your instance — you use it. Uptime, scaling, backups, monitoring, and upgrades included"
         switcherProps={{
           togglePlanType,
           isYearlyPlanType,

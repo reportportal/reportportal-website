@@ -133,6 +133,7 @@ export interface ContactUsContentfulConfig {
   title: string;
   message: RenderRichTextData<ContentfulRichTextGatsbyReference>;
   messagePosition: string;
+  showBillingPeriod?: boolean;
   price?: Omit<OfferingPlanPrice, 'title'>;
 }
 

@@ -2,22 +2,20 @@
 @use 'src/styles/variables' as v;
 
 .linked-card-block {
-  padding: 120px 0;
+  padding-block: 80px;
 
-  &--large-padding {
+  &--large {
     @include m.breakpoint(v.$desktop-sm) {
-      padding: 200px 0;
+      padding-block: 200px;
     }
   }
 
-  .title-block {
-    &__title {
-      max-width: 792px;
-    }
+  .title-block__title {
+    max-width: 792px;
+  }
 
-    &__subtitle {
-      max-width: 590px;
-    }
+  .title-block__subtitle {
+    max-width: 590px;
   }
 
   &__cards {
@@ -31,8 +29,9 @@
       flex-direction: row;
     }
 
-    .linked-card {
-      flex: 1 1 0;
+    .linked-card,
+    .benefit-item {
+      flex: 1;
     }
   }
 }

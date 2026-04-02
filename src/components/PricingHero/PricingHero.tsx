@@ -20,8 +20,8 @@ interface PricingHeroProps {
   title: string;
   buttons: ButtonSwitcherProps['buttons'];
   activeButton: string;
-  offerType: string;
   description: string;
+  offerType?: string;
   switcherProps?: PlanTypeSwitcherProps;
   subtitle?: string;
 }
@@ -85,7 +85,7 @@ export const PricingHero: FC<PropsWithAnimation<PricingHeroProps>> = ({
           isInView: isHeroInView,
         })}
       >
-        <div className={getBlocksWith('__wrapper-title')}>{offerType}</div>
+        {offerType && <div className={getBlocksWith('__wrapper-title')}>{offerType}</div>}
         <div className={getBlocksWith('__wrapper-subtitle')}>{description}</div>
       </motion.div>
       {switcherProps && (

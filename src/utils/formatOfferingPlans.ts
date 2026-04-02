@@ -5,20 +5,22 @@ export type FormattedComparePlansItemDto = FormattedComparePlansDto['sections'][
 
 export const formatOfferingPlans = (dto: OfferingPlansQuery) => {
   const [plans] = dto.allContentfulSection.nodes;
-  const [comparePlans] = dto.allContentfulComparePlan.nodes;
+  const [comparePlans] = dto.allContentfulComparePlan?.nodes || [];
 
   return {
     plans,
-    comparePlans: {
-      ...comparePlans,
-      columns: JSON.parse(comparePlans.columns) as string[],
-      sections: comparePlans.sections.map(section => ({
-        ...section,
-        items: section.items.map(item => ({
-          ...item,
-          plans: JSON.parse(item.plans) as (string | number | boolean)[],
+    ...(comparePlans && {
+      comparePlans: {
+        ...comparePlans,
+        columns: JSON.parse(comparePlans.columns) as string[],
+        sections: comparePlans.sections.map(section => ({
+          ...section,
+          items: section.items.map(item => ({
+            ...item,
+            plans: JSON.parse(item.plans) as (string | number | boolean)[],
+          })),
         })),
-      })),
-    },
+      },
+    }),
   };
 };

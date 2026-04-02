@@ -17,6 +17,7 @@ export const ContactUsPage: FC<ContactUsConfig> = config => {
     price,
     message,
     messagePosition,
+    showBillingPeriod,
     options,
     planType = undefined,
     isDiscussFieldShown = false,
@@ -28,12 +29,15 @@ export const ContactUsPage: FC<ContactUsConfig> = config => {
       <div className={getBlocksWith('__hero')}>
         <div className="container">
           <h1 className={getBlocksWith('__title')}>{title}</h1>
-          <ContactUsDetails
-            message={message}
-            messagePosition={messagePosition}
-            price={price}
-            planType={planType}
-          />
+          {message && (
+            <ContactUsDetails
+              message={message}
+              messagePosition={messagePosition}
+              showBillingPeriod={showBillingPeriod}
+              price={price}
+              planType={planType}
+            />
+          )}
         </div>
       </div>
       <div className={classNames(getBlocksWith('__content-container'), 'container')}>

@@ -6,14 +6,9 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { TIME_SCALE_DATA, FAQ_DATA } from './constants';
 
 export const D4jPage: FC = () => {
-  const { plans, comparePlans } = formatOfferingPlans(
+  const { plans } = formatOfferingPlans(
     useStaticQuery<OfferingPlansQuery>(graphql`
       query {
-        allContentfulComparePlan(filter: { internalTitle: { eq: "Drill4J Compare Plan" } }) {
-          nodes {
-            ...ComparePlanFields
-          }
-        }
         allContentfulSection(filter: { internalTitle: { eq: "[Offering Plan] Drill4J" } }) {
           nodes {
             ...OfferingPlansFields
@@ -35,10 +30,8 @@ export const D4jPage: FC = () => {
       pagePath="d4j"
       timeScaleData={TIME_SCALE_DATA}
       plans={plans}
-      comparePlans={comparePlans}
       faqData={FAQ_DATA}
       contactUsLink="/contact-us/d4j"
-      utilizationDescription="Our team will provide services in support of Client's use of Drill4J plugin. Such services will vary based on Client's needs. The table below describes the different support services we customarily provide"
       faqLink="https://drill4j.github.io/docs/what-is-drill4j"
       isScaleShifted
     />
