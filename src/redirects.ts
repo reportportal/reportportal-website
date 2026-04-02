@@ -5,6 +5,8 @@ interface AmplifyRedirect {
   condition: string | null;
 }
 
+// AWS Amplify redirect configuration for URL migrations
+// Maps deprecated old paths to new routes
 export const amplifyRedirects: AmplifyRedirect[] = [
   {
     source: '/pricing/on-premises/',
