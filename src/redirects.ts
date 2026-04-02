@@ -1,35 +1,51 @@
-interface Redirect {
-  fromPath: string;
-  toPath: string;
+interface AmplifyRedirect {
+  source: string;
+  target: string;
+  status: '301' | '302' | '200' | '404';
+  condition: string | null;
 }
 
-export const redirects: Redirect[] = [
+export const amplifyRedirects: AmplifyRedirect[] = [
   {
-    fromPath: '/pricing/on-premises/',
-    toPath: '/pricing/service-packages/',
+    source: '/pricing/on-premises/',
+    target: '/pricing/service-packages/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/lite/',
-    toPath: '/contact-us/service-packages/silver/',
+    source: '/contact-us/on-premises/lite/',
+    target: '/contact-us/service-packages/silver/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/service-pro/',
-    toPath: '/contact-us/service-packages/gold/',
+    source: '/contact-us/on-premises/service-pro/',
+    target: '/contact-us/service-packages/gold/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/advanced/',
-    toPath: '/contact-us/service-packages/platinum/',
+    source: '/contact-us/on-premises/advanced/',
+    target: '/contact-us/service-packages/platinum/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/compare/lite/',
-    toPath: '/contact-us/service-packages/silver/',
+    source: '/contact-us/on-premises/compare/lite/',
+    target: '/contact-us/service-packages/silver/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/compare/service-pro/',
-    toPath: '/contact-us/service-packages/gold/',
+    source: '/contact-us/on-premises/compare/service-pro/',
+    target: '/contact-us/service-packages/gold/',
+    status: '301',
+    condition: null,
   },
   {
-    fromPath: '/contact-us/on-premises/compare/advanced/',
-    toPath: '/contact-us/service-packages/platinum/',
+    source: '/contact-us/on-premises/compare/advanced/',
+    target: '/contact-us/service-packages/platinum/',
+    status: '301',
+    condition: null,
   },
 ];

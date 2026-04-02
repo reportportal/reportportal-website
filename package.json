@@ -31,7 +31,6 @@
     "classnames": "^2.5.1",
     "formik": "^2.4.6",
     "framer-motion": "^10.0.1",
-    "gatsby-plugin-meta-redirect": "^1.1.1",
     "highlight.js": "^11.10.0",
     "jotai": "^2.10.0",
     "lodash": "^4.17.21",

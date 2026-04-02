@@ -76,7 +76,7 @@ function getChangedPages() {
   return { deleted, renamed };
 }
 
-function getExistingRedirectSources() {
+function getRecordedRedirectSources() {
   const filePath = path.join(process.cwd(), CONFIG.redirectsFile);
 
   if (!fs.existsSync(filePath)) {
@@ -84,7 +84,7 @@ function getExistingRedirectSources() {
   }
 
   const content = fs.readFileSync(filePath, 'utf-8');
-  const matches = content.matchAll(/fromPath:\s*['"]([^'"]+)['"]/g);
+  const matches = content.matchAll(/source:\s*['"]([^'"]+)['"]/g);
 
   return new Set(Array.from(matches, match => match[1]));
 }
@@ -98,31 +98,25 @@ function hasSkipFlag() {
   }
 }
 
-function findMissingRedirects() {
+function main() {
   const { deleted, renamed } = getChangedPages();
-  const existingRedirects = getExistingRedirectSources();
+  const recordedSources = getRecordedRedirectSources();
   const missing = [];
 
   for (const file of deleted) {
     const url = convertFilePathToUrl(file);
-    if (!existingRedirects.has(url)) {
-      missing.push({ type: 'deleted', file, url });
+    if (!recordedSources.has(url)) {
+      missing.push({ source: url, target: '/', status: '301', condition: null });
     }
   }
 
   for (const { from, to } of renamed) {
     const fromUrl = convertFilePathToUrl(from);
     const toUrl = convertFilePathToUrl(to);
-    if (!existingRedirects.has(fromUrl)) {
-      missing.push({ type: 'renamed', from, to, fromUrl, toUrl });
+    if (!recordedSources.has(fromUrl)) {
+      missing.push({ source: fromUrl, target: toUrl, status: '301', condition: null });
     }
   }
-
-  return missing;
-}
-
-function main() {
-  const missing = findMissingRedirects();
 
   if (missing.length === 0) {
     console.log('Redirect check passed.');
@@ -134,19 +128,12 @@ function main() {
     process.exit(0);
   }
 
-  console.error('Missing redirects:\n');
-
-  for (const item of missing) {
-    if (item.type === 'deleted') {
-      console.error(`DELETED: ${item.file}`);
-      console.error(`  URL: ${item.url}`);
-      console.error(`  Add redirect to ${CONFIG.redirectsFile}\n`);
-    } else {
-      console.error(`RENAMED: ${item.from} -> ${item.to}`);
-      console.error(`  Add to ${CONFIG.redirectsFile}:`);
-      console.error(`  { fromPath: '${item.fromUrl}', toPath: '${item.toUrl}' }\n`);
-    }
-  }
+  console.warn('\n⚠️  WARNING: The following redirects need to be added to AWS Amplify:\n');
+  console.warn(JSON.stringify(missing, null, 2));
+  console.warn(
+    '\n1. Add these redirects in Amplify Console → App settings → Rewrites and redirects',
+  );
+  console.warn(`2. Record them in ${CONFIG.redirectsFile} so this check passes\n`);
 
   process.exit(1);
 }
