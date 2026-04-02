@@ -96,6 +96,7 @@ const config: GatsbyConfig = {
         },
       },
     },
+    'gatsby-plugin-meta-redirect',
   ],
   trailingSlash: 'always',
 };

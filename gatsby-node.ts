@@ -13,6 +13,7 @@ import {
 
 import { ContactUsConfig, OfferingPlanDto, YoutubeVideoDto } from './src/utils/types';
 import { contactUsBaseConfigs } from './src/utils/contactUsConfig';
+import { redirects } from './src/redirects';
 // importing GraphQL fragments to be available in the app
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as fragments from './src/fragments';
@@ -57,7 +58,11 @@ const pricingTemplatesPath = './src/templates/pricing';
 const sponsorsTemplatesPath = './src/templates/sponsorship-program';
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
+
+  redirects.forEach(({ fromPath, toPath }) => {
+    createRedirect({ fromPath, toPath, isPermanent: true, redirectInBrowser: true });
+  });
 
   await axios
     .get('https://status.reportportal.io/github/stars')

@@ -17,6 +17,7 @@
     "stylelint": "stylelint \"src/**/*.scss\"",
     "stylefix": "npm run stylelint -- --fix",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,scss,json,gql,md}\"",
+    "check-redirects": "node ./bin/check-redirects.js",
     "prepare": "husky install"
   },
   "license": "ISC",
@@ -30,6 +31,7 @@
     "classnames": "^2.5.1",
     "formik": "^2.4.6",
     "framer-motion": "^10.0.1",
+    "gatsby-plugin-meta-redirect": "^1.1.1",
     "highlight.js": "^11.10.0",
     "jotai": "^2.10.0",
     "lodash": "^4.17.21",
