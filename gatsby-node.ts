@@ -71,7 +71,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
     .get('https://status.reportportal.io/youtube?count=12')
     .then((response: { data: YoutubeVideoDto[] }) => response.data)
     .then(data => {
-      fs.writeFileSync('static/youtube.json', JSON.stringify(data));
+      fs.writeFileSync('static/youtube.json', JSON.stringify(data || []));
     });
 
   const blogPost = path.resolve('./src/templates/blog-post/blog-post.tsx');
