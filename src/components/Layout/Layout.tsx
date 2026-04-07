@@ -5,8 +5,6 @@ import { useAtom } from 'jotai';
 import classNames from 'classnames';
 import { isNewYearMode, watchProductOverviewAtom } from '@app/utils';
 
-// eslint-disable-next-line import/no-unresolved
-import '../../../static/antd.min.css'; // Will be generated at build time
 import '../../styles/global.scss';
 
 import { Navigation } from './Navigation';

@@ -2,6 +2,7 @@ import React from 'react';
 
 export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
+    <link key="antd" rel="stylesheet" href="/antd.min.css" />,
     <script
       key="otSDKStub"
       type="text/javascript"
