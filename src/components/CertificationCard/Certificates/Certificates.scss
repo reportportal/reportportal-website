@@ -9,9 +9,10 @@
     gap: 24px;
   }
 
-  svg {
+  img {
     width: 64px;
     height: 64px;
+    object-fit: contain;
 
     @include m.breakpoint(v.$phone-lg) {
       width: 80px;

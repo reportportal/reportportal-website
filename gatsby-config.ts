@@ -20,7 +20,22 @@ const config: GatsbyConfig = {
     siteName: 'ReportPortal | AI-powered Test Automaton Dashboard',
   },
   plugins: [
-    'gatsby-plugin-svgr-svgo',
+    {
+      resolve: 'gatsby-plugin-svgr-svgo',
+      options: {
+        urlSvgOptions: [
+          {
+            test: /\.svg$/,
+            svgo: true,
+            urlLoaderOptions: {
+              name: 'static/[name]-[hash].[ext]',
+              // Never base64-inline SVGs into JS/HTML; always emit separate files.
+              limit: false,
+            },
+          },
+        ],
+      },
+    },
     'gatsby-plugin-sass',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
