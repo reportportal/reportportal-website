@@ -1,14 +1,19 @@
+import type { GatsbySSR } from 'gatsby';
 import React from 'react';
 
-/** Gatsby’s main webpack CSS chunk filename in <head> after we replace the inline <style>. */
+/**
+ * Matches the main app stylesheet `<link href>` after swapping Gatsby’s inlined global `<style>`.
+ *
+ * Assumes Gatsby’s default webpack chunk name for the global CSS entry: `styles.<contenthash>.css`
+ * (e.g. `/styles.8fdad282ad51b3be5577.css`, `/styles.e0042f30d80eb58145bb.css`). If you rename
+ * that chunk in `gatsby-node.js` / webpack, update `GATSBY_APP_STYLES_RE` (or replace this constant)
+ * so `antd.min.css` can still be ordered before the app bundle.
+ */
 const GATSBY_APP_STYLES_RE = /\/styles\.[a-zA-Z0-9_-]+\.css$/;
 
-export const onPreRenderHTML = ({
+export const onPreRenderHTML: NonNullable<GatsbySSR['onPreRenderHTML']> = ({
   getHeadComponents,
   replaceHeadComponents,
-}: {
-  getHeadComponents: () => React.ReactNode[];
-  replaceHeadComponents: (components: React.ReactNode[]) => void;
 }) => {
   const stylesheetHref = (el: React.ReactNode): string | null => {
     if (
@@ -45,7 +50,7 @@ export const onPreRenderHTML = ({
   replaceHeadComponents(head);
 };
 
-export const onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody: NonNullable<GatsbySSR['onRenderBody']> = ({ setHeadComponents }) => {
   setHeadComponents([
     <link key="antd" rel="stylesheet" href="/antd.min.css" />,
     <script

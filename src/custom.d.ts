@@ -1,8 +1,17 @@
-declare module '*.svg' {
-  import { FC, SVGProps } from 'react';
+/* eslint-disable import/no-default-export -- ambient modules match `import x from '*.svg'` */
 
-  // eslint-disable-next-line import/no-default-export
-  export default FC<SVGProps<SVGSVGElement>>;
+/** SVGR (gatsby-plugin-svgr-svgo): `.inline.svg` → React component. */
+declare module '*.inline.svg' {
+  import type { FC, SVGProps } from 'react';
+
+  const ReactComponent: FC<SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+
+/** Webpack url-loader: plain `.svg` → resolved URL string for `<img src>` etc. */
+declare module '*.svg' {
+  const src: string;
+  export default src;
 }
 
 interface Window {

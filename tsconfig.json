@@ -18,6 +18,12 @@
     "resolveJsonModule": true,
     "lib": ["dom", "dom.iterable", "esnext"]
   },
-  "include": ["src", "./gatsby-node.ts", "./gatsby-config.ts", "./plugins/**/*"],
+  "include": [
+    "src",
+    "./gatsby-node.ts",
+    "./gatsby-config.ts",
+    "./gatsby-ssr.tsx",
+    "./plugins/**/*"
+  ],
   "exclude": ["node_modules"]
 }
