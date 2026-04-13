@@ -20,7 +20,23 @@ const config: GatsbyConfig = {
     siteName: 'ReportPortal | AI-powered Test Automaton Dashboard',
   },
   plugins: [
-    'gatsby-plugin-svgr-svgo',
+    {
+      resolve: 'gatsby-plugin-svgr-svgo',
+      options: {
+        urlSvgOptions: [
+          {
+            test: /\.svg$/,
+            svgo: true,
+            urlLoaderOptions: {
+              name: 'static/[name]-[hash].[ext]',
+              // gatsby-plugin-svgr-svgo replaces falsy limit with 512; use -1 so it is kept and
+              // url-loader never inlines (size <= -1 is never true for real files).
+              limit: -1,
+            },
+          },
+        ],
+      },
+    },
     'gatsby-plugin-sass',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
