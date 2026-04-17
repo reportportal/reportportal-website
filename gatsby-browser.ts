@@ -59,4 +59,14 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
 
 export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocation }) => {
   window.prevLocation = prevLocation ?? undefined;
+  document.documentElement.classList.add('no-transitions');
+};
+
+export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
+  // Settle one frame with transitions disabled so hover/active re-evaluation
+  // after back-navigation does not fade in over 300ms (flicker), then
+  // re-enable them for normal user interactions.
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove('no-transitions');
+  });
 };
