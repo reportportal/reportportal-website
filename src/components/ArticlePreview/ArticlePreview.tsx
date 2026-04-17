@@ -11,7 +11,7 @@ import './ArticlePreview.scss';
 interface ArticlePreviewProps {
   posts: BlogPostDto[];
   hasFixedItemsPerRow?: boolean;
-  onArticleClick?: (slug: string, scrollY: number, articleTop: number) => void;
+  searchQuery?: string;
 }
 
 const getItemsPerRow = (isDesktop: boolean, isTablet: boolean) => {
@@ -30,7 +30,7 @@ export const ArticlePreview: FC<PropsWithAnimation<ArticlePreviewProps>> = ({
   posts,
   hasFixedItemsPerRow = false,
   isAnimationEnabled = false,
-  onArticleClick,
+  searchQuery,
 }) => {
   const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
   const isTablet = useMediaQuery({ query: MEDIA_TABLET_SM });
@@ -43,7 +43,7 @@ export const ArticlePreview: FC<PropsWithAnimation<ArticlePreviewProps>> = ({
           key={rowIndex}
           row={row}
           isAnimationEnabled={isAnimationEnabled}
-          onArticleClick={onArticleClick}
+          searchQuery={searchQuery}
         />
       ))}
     </ul>

@@ -7,11 +7,12 @@ import './BlogSearch.scss';
 interface BlogSearchProps {
   value: string;
   onChange: (value: string) => void;
+  onFocusChange?: (isFocused: boolean) => void;
 }
 
 const getBlocksWith = createBemBlockBuilder(['blog-search']);
 
-export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange }) => {
+export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange, onFocusChange }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -28,6 +29,8 @@ export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange }) => {
           value={value}
           placeholder="Search article by term"
           onChange={handleChange}
+          onFocus={() => onFocusChange?.(true)}
+          onBlur={() => onFocusChange?.(false)}
         />
       </div>
     </div>

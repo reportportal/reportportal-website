@@ -14,10 +14,19 @@
     width: 100%;
     max-width: 588px;
     height: 40px;
-    border: 2px solid var(--color-primary-500);
+    border: 2px solid transparent;
     border-radius: 36px;
     padding: 10px 12px;
     background: var(--white);
+    transition: border-color var(--basic-transition);
+
+    &:focus-within {
+      border-color: var(--color-primary-500);
+
+      .blog-search__icon {
+        color: var(--color-primary-500);
+      }
+    }
   }
 
   &__icon {
@@ -27,6 +36,7 @@
     justify-content: center;
     width: 24px;
     height: 24px;
+    color: var(--text-service);
   }
 
   &__input {

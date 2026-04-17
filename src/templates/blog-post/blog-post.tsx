@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { graphql, PageProps } from 'gatsby';
 import {
   ContentfulRichTextGatsbyReference,
@@ -32,14 +32,6 @@ interface DataProps {
 
 const BlogPostTemplate: FC<PageProps<DataProps>> = ({ data }) => {
   const { industry, title, author, date, articleBody } = data.contentfulBlogPost;
-
-  // Ensure blog post pages always start at the top
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant',
-    });
-  }, []);
 
   return (
     <Layout>

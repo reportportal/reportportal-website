@@ -1,10 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { ArticlePreview } from '@app/components/ArticlePreview';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';
 import { BlogSearch } from '@app/components/BlogSearch';
 import { CategoryFilters } from '@app/components/BlogSearch/CategoryFilters';
-import { createBemBlockBuilder, BlogPostDto, defaultSpringTransition } from '@app/utils';
+import {
+  createBemBlockBuilder,
+  BlogPostDto,
+  defaultSpringTransition,
+  SEARCH_RESULTS_LIMIT,
+} from '@app/utils';
 import { AnimatedHeader } from '@app/components/AnimatedHeader';
 
 import './BlogPage.scss';
@@ -20,11 +25,17 @@ interface BlogPageProps {
   onSearchChange: (value: string) => void;
   onCategoryToggle: (category: string) => void;
   onAllArticlesClick: () => void;
-  onArticleClick?: (slug: string, scrollY: number, articleTop: number) => void;
 }
 
-const maxResultsCount = 50;
 const getBlocksWith = createBemBlockBuilder(['blog']);
+
+const getResultsCountText = (count: number) => {
+  if (count >= SEARCH_RESULTS_LIMIT) {
+    return `${SEARCH_RESULTS_LIMIT}+ matching results`;
+  }
+
+  return `${count} matching result${count === 1 ? '' : 's'}`;
+};
 
 export const BlogPage: FC<BlogPageProps> = ({
   visiblePosts,
@@ -37,23 +48,18 @@ export const BlogPage: FC<BlogPageProps> = ({
   onSearchChange,
   onCategoryToggle,
   onAllArticlesClick,
-  onArticleClick,
 }) => {
-  const getResultsCountText = () => {
-    if (!isSearchActive) {
-      return 'Start typing to search';
-    }
-
-    const count = filteredPosts.length;
-
-    if (count >= maxResultsCount) {
-      return `${maxResultsCount}+ matching results`;
-    }
-
-    return `${count} matching result${count !== 1 ? 's' : ''}`;
-  };
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const showLoadMore = !isSearchActive && visiblePosts.length < filteredPosts.length;
+  const hasNoResults = isSearchActive && isEmpty(filteredPosts);
+
+  let statusText: string | null = null;
+  if (isSearchActive) {
+    statusText = getResultsCountText(filteredPosts.length);
+  } else if (isSearchFocused) {
+    statusText = 'Start typing to search';
+  }
 
   return (
     <>
@@ -76,15 +82,19 @@ export const BlogPage: FC<BlogPageProps> = ({
             Product updates, news and technology articles
           </AnimatedHeader>
           <div className={getBlocksWith('__search-section')}>
-            <BlogSearch value={searchQuery} onChange={onSearchChange} />
+            <BlogSearch
+              value={searchQuery}
+              onChange={onSearchChange}
+              onFocusChange={setIsSearchFocused}
+            />
             <CategoryFilters
               categories={categories}
               selectedCategories={selectedCategories}
               onCategoryToggle={onCategoryToggle}
               onAllArticlesClick={onAllArticlesClick}
             />
-            <div className={getBlocksWith('__results-count')}>{getResultsCountText()}</div>
-            {isSearchActive && isEmpty(filteredPosts) && (
+            {statusText && <div className={getBlocksWith('__results-count')}>{statusText}</div>}
+            {hasNoResults && (
               <div className={getBlocksWith('__no-results')}>
                 No results found for your search. Try different keywords or check your filter.
               </div>
@@ -93,7 +103,7 @@ export const BlogPage: FC<BlogPageProps> = ({
           <ArticlePreview
             posts={visiblePosts}
             isAnimationEnabled={false}
-            onArticleClick={onArticleClick}
+            searchQuery={searchQuery}
           />
           {showLoadMore && (
             <div className={getBlocksWith('__footer')}>

@@ -55,6 +55,7 @@ export interface BlogPostDto {
     leadParagraph: string;
   };
   author: string;
+  searchIndex?: string;
 }
 
 export interface BlogPostsQueryDto {

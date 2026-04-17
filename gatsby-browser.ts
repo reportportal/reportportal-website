@@ -1,69 +1,62 @@
-/* eslint-disable no-restricted-globals */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+import type { GatsbyBrowser } from 'gatsby';
 
-exports.onInitialClientRender = () => {
-  if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
+declare global {
+  interface Window {
+    prevLocation?: Location;
+  }
+}
+
+export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
+  if (typeof window !== 'undefined' && window.history.scrollRestoration) {
+    window.history.scrollRestoration = 'manual';
   }
 };
 
-exports.shouldUpdateScroll = ({
+export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
   routerProps: { location },
-  prevRouterProps = {},
+  prevRouterProps,
   getSavedScrollPosition,
 }) => {
-  // Always scroll to top when navigating to individual blog post pages
-  // Blog post pages have pathname like /blog/article-slug (not just /blog or /blog/)
+  // Always scroll to top when navigating INTO an individual blog post page.
+  // Blog post pages have pathname like /blog/article-slug (not just /blog or /blog/).
   if (
     location?.pathname?.startsWith('/blog/') &&
     location.pathname !== '/blog/' &&
     location.pathname !== '/blog'
   ) {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant',
-    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
     return false;
   }
 
-  // Check if navigating to blog listing page with saved scroll state
-  if (location?.pathname === '/blog/' || location?.pathname === '/blog') {
-    try {
-      const blogState = sessionStorage.getItem('blogPageState');
-
-      if (blogState) {
-        const parsed = JSON.parse(blogState);
-        // If we have articleSlug, prevent Gatsby from managing scroll
-        // Let the blog page component handle scroll restoration after content is rendered
-        if (parsed.articleSlug) {
-          return false;
-        }
-      }
-    } catch {
-      // Ignore sessionStorage errors
-    }
+  // Preserve scroll when only the query string changes on the same pathname
+  // (e.g., blog filters, Load More pagination). Prevents Gatsby from resetting
+  // scroll to the top when the listing calls navigate(..., { replace: true }).
+  if (
+    prevRouterProps?.location &&
+    prevRouterProps.location.pathname === location?.pathname &&
+    prevRouterProps.location.search !== location?.search
+  ) {
+    return false;
   }
 
-  // Existing scroll restoration logic for other pages
-  const [, currentPositionY] = getSavedScrollPosition(location);
-  const [, prevPositionY] = getSavedScrollPosition(prevRouterProps?.location ?? location);
+  const [, currentPositionY] = getSavedScrollPosition(location) ?? [0, 0];
+  const [, prevPositionY] = getSavedScrollPosition(prevRouterProps?.location ?? location) ?? [0, 0];
   const withHash = Boolean(location?.hash);
 
   const isScrollDifferentFromPreviousPage =
-    prevRouterProps.location && prevPositionY !== currentPositionY;
-  const shouldScrollOnInitialLoad = !prevRouterProps.location && currentPositionY;
+    prevRouterProps?.location && prevPositionY !== currentPositionY;
+  const shouldScrollOnInitialLoad = !prevRouterProps?.location && currentPositionY;
 
   if (isScrollDifferentFromPreviousPage ?? shouldScrollOnInitialLoad) {
     window.scrollTo({
       top: currentPositionY,
-      ...(!withHash && { behavior: 'instant' }),
+      ...(!withHash && { behavior: 'instant' as ScrollBehavior }),
     });
   }
 
   return true;
 };
 
-exports.onPreRouteUpdate = ({ prevLocation }) => {
-  window.prevLocation = prevLocation;
+export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocation }) => {
+  window.prevLocation = prevLocation ?? undefined;
 };
