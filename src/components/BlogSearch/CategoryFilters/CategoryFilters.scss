@@ -1,0 +1,47 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+
+  &__button {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale(base);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border: none;
+    border-radius: 80px;
+    padding: 12px 16px;
+    background: rgb(255 255 255 / 0.2);
+    transition: var(--basic-transition);
+    line-height: 24px;
+    color: var(--white);
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(255 255 255 / 0.3);
+    }
+
+    &--active {
+      background: var(--white);
+      color: var(--color-primary-700);
+
+      &:hover {
+        background: var(--white);
+        color: var(--color-primary-700);
+      }
+    }
+  }
+
+  &__text {
+    white-space: nowrap;
+  }
+}

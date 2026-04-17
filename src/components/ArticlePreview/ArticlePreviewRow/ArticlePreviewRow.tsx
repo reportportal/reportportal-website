@@ -14,6 +14,7 @@ import { ArticlePreviewItem } from '../ArticlePreviewItem';
 
 interface ArticlePreviewRowProps {
   row: BlogPostDto[];
+  onArticleClick?: (slug: string, scrollY: number, articleTop: number) => void;
 }
 
 const getBlocksWith = createBemBlockBuilder(['article-preview-list']);
@@ -21,6 +22,7 @@ const getBlocksWith = createBemBlockBuilder(['article-preview-list']);
 export const ArticlePreviewRow: FC<PropsWithAnimation<ArticlePreviewRowProps>> = ({
   row,
   isAnimationEnabled = false,
+  onArticleClick,
 }) => {
   const [rowRef, isInView] = useInView();
   const getAnimation = useMotionEnterAnimation(
@@ -48,7 +50,7 @@ export const ArticlePreviewRow: FC<PropsWithAnimation<ArticlePreviewRowProps>> =
       })}
     >
       {row.map(post => (
-        <ArticlePreviewItem key={post.id} post={post} />
+        <ArticlePreviewItem key={post.id} post={post} onArticleClick={onArticleClick} />
       ))}
     </motion.div>
   );

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   ContentfulRichTextGatsbyReference,
   renderRichText,
@@ -7,6 +7,7 @@ import {
 import { Link } from '@app/components/Link';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';
 import { useHighlight } from '@app/hooks/useHighlight';
+import { BLOG_PAGE_SIZE, getBlogStateFromSession, serializeBlogStateToQuery } from '@app/utils';
 
 import 'highlight.js/styles/base16/atelier-cave-light.css';
 
@@ -36,6 +37,22 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
 }) => {
   useHighlight();
 
+  const backToBlogUrl = useMemo(() => {
+    const blogPath = '/blog';
+    const sessionState = getBlogStateFromSession();
+
+    if (sessionState) {
+      const queryString = serializeBlogStateToQuery(
+        sessionState.searchQuery || '',
+        sessionState.selectedCategories || [],
+        sessionState.visibleCount || BLOG_PAGE_SIZE,
+      );
+      return queryString ? `${blogPath}?${queryString}` : blogPath;
+    }
+
+    return blogPath;
+  }, []);
+
   return (
     <>
       <div className="blog-post-page">
@@ -43,7 +60,7 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
           <p className="blog-post-page__industry">{industry}</p>
           <h1 className="blog-post-page__title">{title?.title}</h1>
           <div className="blog-post-page__info">
-            <Link className="btn btn--white btn--large back-to-blog" to="/blog/">
+            <Link className="btn btn--white btn--large back-to-blog" to={backToBlogUrl}>
               <img src={ArrowLeft} alt="arrow left" />
               Back to blog
             </Link>

@@ -48,7 +48,7 @@ export interface BlogPostDto {
     file: ContentfulAsset;
     description: string;
   };
-  category: string;
+  category: string[];
   description: RenderRichTextData<ContentfulRichTextGatsbyReference>;
   publishDate: string;
   leadParagraph: {
