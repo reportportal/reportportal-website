@@ -19,12 +19,13 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
 }) => {
   // Always scroll to top when navigating INTO an individual blog post page.
   // Blog post pages have pathname like /blog/article-slug (not just /blog or /blog/).
+  // Skip when a hash is present so in-page anchor navigation still works.
   if (
     location?.pathname?.startsWith('/blog/') &&
     location.pathname !== '/blog/' &&
-    location.pathname !== '/blog'
+    !location.hash
   ) {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     return false;
   }
 
