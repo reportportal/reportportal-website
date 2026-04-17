@@ -1,6 +1,6 @@
 import React, { FC, ChangeEvent } from 'react';
 import { createBemBlockBuilder } from '@app/utils';
-import { SearchIcon } from '@app/svg/searchIcon';
+import SearchIcon from '@app/svg/searchIcon.inline.svg';
 
 import './BlogSearch.scss';
 
@@ -21,7 +21,7 @@ export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange, onFocusChange
     <div className={getBlocksWith()}>
       <div className={getBlocksWith('__input-wrapper')}>
         <div className={getBlocksWith('__icon')}>
-          <SearchIcon />
+          <SearchIcon aria-hidden focusable={false} />
         </div>
         <input
           type="search"
