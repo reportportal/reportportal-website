@@ -71,7 +71,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({ data: { allContentfulBlog
       });
     }
 
-    const query = searchQuery.trim().toLowerCase();
+    const query = searchQuery.replace(/\s+/g, ' ').trim().toLowerCase();
     if (query) {
       filtered = filtered.filter(post => post.searchIndex?.includes(query) ?? false);
     }
