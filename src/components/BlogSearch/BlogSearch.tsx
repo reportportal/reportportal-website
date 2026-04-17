@@ -24,7 +24,8 @@ export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange, onFocusChange
           <SearchIcon />
         </div>
         <input
-          type="text"
+          type="search"
+          aria-label="Search articles"
           className={getBlocksWith('__input')}
           value={value}
           placeholder="Search article by term"
