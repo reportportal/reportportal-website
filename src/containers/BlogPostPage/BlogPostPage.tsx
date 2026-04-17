@@ -46,6 +46,17 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
   useHighlight();
 
   const handleBackClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
     if (isFromBlogList()) {
       event.preventDefault();
       window.history.back();
