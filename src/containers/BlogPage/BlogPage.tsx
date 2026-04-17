@@ -30,7 +30,7 @@ interface BlogPageProps {
 const getBlocksWith = createBemBlockBuilder(['blog']);
 
 const getResultsCountText = (count: number) => {
-  if (count >= SEARCH_RESULTS_LIMIT) {
+  if (count > SEARCH_RESULTS_LIMIT) {
     return `${SEARCH_RESULTS_LIMIT}+ matching results`;
   }
 
@@ -55,9 +55,9 @@ export const BlogPage: FC<BlogPageProps> = ({
   const hasNoResults = isSearchActive && isEmpty(filteredPosts);
 
   let statusText: string | null = null;
-  if (isSearchActive) {
+  if (isSearchActive && !hasNoResults) {
     statusText = getResultsCountText(filteredPosts.length);
-  } else if (isSearchFocused) {
+  } else if (!isSearchActive && isSearchFocused) {
     statusText = 'Start typing to search';
   }
 
