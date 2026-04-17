@@ -13,6 +13,7 @@ import {
 
 import { ContactUsConfig, OfferingPlanDto, YoutubeVideoDto } from './src/utils/types';
 import { contactUsBaseConfigs } from './src/utils/contactUsConfig';
+import { buildSearchIndex } from './src/utils/buildSearchIndex';
 // importing GraphQL fragments to be available in the app
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as fragments from './src/fragments';
@@ -231,6 +232,27 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
       path: `/sponsorship-program/${key}/`,
       component: path.resolve(path.join(sponsorsTemplatesPath, file)),
     });
+  });
+};
+
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ actions }) => {
+  actions.createTypes(`
+    type ContentfulBlogPost implements Node {
+      searchIndex: String
+    }
+  `);
+};
+
+export const createResolvers: GatsbyNode['createResolvers'] = ({
+  createResolvers: addResolvers,
+}) => {
+  addResolvers({
+    ContentfulBlogPost: {
+      searchIndex: {
+        type: 'String',
+        resolve: (source: Parameters<typeof buildSearchIndex>[0]) => buildSearchIndex(source),
+      },
+    },
   });
 };
 

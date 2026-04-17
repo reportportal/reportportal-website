@@ -104,6 +104,13 @@ input:-webkit-autofill {
   display: none !important;
 }
 
+.no-transitions,
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+  transition: none !important;
+}
+
 @keyframes progressAnimation {
   100% {
     background-position: left;

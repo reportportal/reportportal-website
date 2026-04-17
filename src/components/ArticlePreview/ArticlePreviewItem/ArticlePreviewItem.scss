@@ -7,7 +7,7 @@
   border-radius: calc(2 * var(--base-spacing));
   box-shadow: 0 var(--base-spacing) calc(2 * var(--base-spacing)) 0 rgb(0 45 55 / 0.12);
   background-color: var(--white);
-  transition: var(--basic-transition);
+  transition: box-shadow 0.3s ease-in-out;
   color: var(--text-primary);
 
   @include m.breakpoint(v.$tablet-sm-exact) {
@@ -63,7 +63,7 @@
       width: 100%;
       height: 100%;
       background-color: rgb(0 0 0 / 0);
-      transition: var(--basic-transition);
+      transition: background-color 0.3s ease-in-out;
       content: ' ';
     }
 
@@ -97,7 +97,7 @@
     display: inline-block;
     margin: calc(2 * var(--base-spacing)) 0;
     border-bottom: 1.5px solid transparent;
-    transition: var(--basic-transition);
+    transition: color 0.3s ease-in-out;
   }
 
   &__meta {
