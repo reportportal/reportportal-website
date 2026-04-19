@@ -1,8 +1,8 @@
 import React from 'react';
-import Lottie from 'lottie-react';
 import { StepProps, Steps } from 'antd';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
+import { ClientOnlyLottie } from '@app/components/ClientOnlyLottie';
 import { Link } from '@app/components/Link';
 import { useAnimationInterval } from '@app/hooks/useAnimationInterval';
 import { useInView } from '@app/hooks/useInView';
@@ -36,7 +36,7 @@ const sections: Sections[] | undefined = SECTIONS_INFO.map(section => ({
   description: (
     <>
       <span>{section.content}</span>
-      <Lottie animationData={section.animation} loop />
+      <ClientOnlyLottie animationData={section.animation} loop />
     </>
   ),
 }));
@@ -86,7 +86,7 @@ export const HowItWorks = () => {
         />
         {inView && (
           <div className={getBlocksWith('__step-content')}>
-            <Lottie animationData={sections[activeListIndex].animation} loop />
+            <ClientOnlyLottie animationData={sections[activeListIndex].animation} loop />
             <div className={getBlocksWith('__step-content-text')}>
               <motion.div
                 className={getBlocksWith('__step-content-text-title')}
