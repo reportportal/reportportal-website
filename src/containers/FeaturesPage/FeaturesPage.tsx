@@ -199,9 +199,14 @@ export const FeaturesPage: FC = () => {
                     Premium feature
                   </span>
                 )}
-                <h3>{title}</h3>
+                <h3 id={`${id}-title`}>{title}</h3>
                 <p>{description}</p>
-                <ArrowLink mode="primary" to={link} text="Learn more" />
+                <ArrowLink
+                  mode="primary"
+                  to={link}
+                  text="Learn more"
+                  aria-labelledby={`${id}-title`}
+                />
               </div>
 
               <div className={getBlocksWith('__features-list-item-trailing')}>

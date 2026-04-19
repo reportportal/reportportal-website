@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useId } from 'react';
 import { createBemBlockBuilder } from '@app/utils';
 
 import { ArrowLink } from '../ArrowLink';
@@ -34,12 +34,18 @@ export const LinkedCard: FC<LinkedCardProps> = ({
   icon,
   iconColor,
   delay = 0,
-}) => (
-  <div className={getBlocksWith()}>
-    {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
-    <strong className={getBlocksWith('__title')}>{itemTitle}</strong>
-    <p className={getBlocksWith('__description')}>{description}</p>
-    {link && <ArrowLink mode="primary" to={link} text={linkText} />}
-    {Boolean(delay) && <div className={getBlocksWith('__progress')} />}
-  </div>
-);
+}) => {
+  const titleId = useId();
+
+  return (
+    <div className={getBlocksWith()}>
+      {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
+      <strong id={titleId} className={getBlocksWith('__title')}>
+        {itemTitle}
+      </strong>
+      <p className={getBlocksWith('__description')}>{description}</p>
+      {link && <ArrowLink mode="primary" to={link} text={linkText} aria-labelledby={titleId} />}
+      {Boolean(delay) && <div className={getBlocksWith('__progress')} />}
+    </div>
+  );
+};
