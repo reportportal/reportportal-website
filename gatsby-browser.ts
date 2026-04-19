@@ -68,6 +68,8 @@ export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
   // after back-navigation does not fade in over 300ms (flicker), then
   // re-enable them for normal user interactions.
   requestAnimationFrame(() => {
-    document.documentElement.classList.remove('no-transitions');
+    requestAnimationFrame(() => {
+      document.documentElement.classList.remove('no-transitions');
+    });
   });
 };
