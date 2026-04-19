@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC, ChangeEvent, useEffect, useState } from 'react';
 import { createBemBlockBuilder } from '@app/utils';
 import SearchIcon from '@app/svg/searchIcon.inline.svg';
 
@@ -13,8 +13,20 @@ interface BlogSearchProps {
 const getBlocksWith = createBemBlockBuilder(['blog-search']);
 
 export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange, onFocusChange }) => {
+  // Local mirror keeps the input in sync with the DOM on every keystroke,
+  // so the async URL round-trip in the parent (navigate -> useLocation ->
+  // params) cannot re-render the input with a stale value and snap the
+  // caret to the end.
+  const [localValue, setLocalValue] = useState(value);
+
+  useEffect(() => {
+    setLocalValue(current => (current === value ? current : value));
+  }, [value]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
+    const nextValue = event.target.value;
+    setLocalValue(nextValue);
+    onChange(nextValue);
   };
 
   return (
@@ -27,7 +39,7 @@ export const BlogSearch: FC<BlogSearchProps> = ({ value, onChange, onFocusChange
           type="search"
           aria-label="Search articles"
           className={getBlocksWith('__input')}
-          value={value}
+          value={localValue}
           placeholder="Search article by term"
           onChange={handleChange}
           onFocus={() => onFocusChange?.(true)}
