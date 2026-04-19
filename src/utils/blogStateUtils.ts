@@ -27,8 +27,9 @@ export const parseBlogParams = (search: string): BlogParams => {
 export const buildBlogUrl = ({ searchQuery, selectedCategories, page }: BlogParams): string => {
   const params = new URLSearchParams();
 
-  if (searchQuery.trim()) {
-    params.set(BLOG_PARAMS.search, searchQuery.trim());
+  const trimmedSearchQuery = searchQuery.trim();
+  if (trimmedSearchQuery) {
+    params.set(BLOG_PARAMS.search, trimmedSearchQuery);
   }
 
   if (selectedCategories.length > 0) {

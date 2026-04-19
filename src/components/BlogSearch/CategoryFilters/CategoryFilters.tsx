@@ -11,8 +11,6 @@ interface CategoryFiltersProps {
   onAllArticlesClick: () => void;
 }
 
-const ALL_ARTICLES = 'All articles';
-
 const getBlocksWith = createBemBlockBuilder(['category-filters']);
 
 export const CategoryFilters: FC<CategoryFiltersProps> = ({
@@ -21,16 +19,7 @@ export const CategoryFilters: FC<CategoryFiltersProps> = ({
   onCategoryToggle,
   onAllArticlesClick,
 }) => {
-  const hasSelectedCategories = selectedCategories.length > 0;
-  const isAllArticlesActive = !hasSelectedCategories;
-
-  const handleCategoryClick = (category: string) => {
-    if (category === ALL_ARTICLES) {
-      onAllArticlesClick();
-    } else {
-      onCategoryToggle(category);
-    }
-  };
+  const isAllArticlesActive = selectedCategories.length === 0;
 
   return (
     <div className={getBlocksWith()}>
@@ -39,9 +28,10 @@ export const CategoryFilters: FC<CategoryFiltersProps> = ({
         className={classNames(getBlocksWith('__button'), {
           [getBlocksWith('__button--active')]: isAllArticlesActive,
         })}
-        onClick={() => handleCategoryClick(ALL_ARTICLES)}
+        aria-pressed={isAllArticlesActive}
+        onClick={onAllArticlesClick}
       >
-        <span className={getBlocksWith('__text')}>{ALL_ARTICLES}</span>
+        <span className={getBlocksWith('__text')}>All articles</span>
       </button>
       {categories.map(category => {
         const isActive = selectedCategories.includes(category);
@@ -53,7 +43,8 @@ export const CategoryFilters: FC<CategoryFiltersProps> = ({
             className={classNames(getBlocksWith('__button'), {
               [getBlocksWith('__button--active')]: isActive,
             })}
-            onClick={() => handleCategoryClick(category)}
+            aria-pressed={isActive}
+            onClick={() => onCategoryToggle(category)}
           >
             <span className={getBlocksWith('__text')}>{category}</span>
           </button>
