@@ -9,22 +9,22 @@ interface HighlightProps {
 }
 
 export const Highlight: FC<HighlightProps> = ({ text, query }) => {
-  const trimmed = query?.trim();
+  const tokens = query?.trim().split(/\s+/).filter(Boolean) ?? [];
 
-  if (!trimmed) {
+  if (tokens.length === 0) {
     return <>{text}</>;
   }
 
-  const regex = new RegExp(`(${escapeRegExp(trimmed)})`, 'gi');
+  const regex = new RegExp(`(${tokens.map(escapeRegExp).join('|')})`, 'gi');
   const parts = text.split(regex);
-  const lowerQuery = trimmed.toLowerCase();
+  const lowerTokens = new Set(tokens.map(token => token.toLowerCase()));
 
   return (
     <>
       {parts.map((part, index) => {
         const key = `${index}-${part}`;
 
-        return part.toLowerCase() === lowerQuery ? (
+        return lowerTokens.has(part.toLowerCase()) ? (
           <span key={key} className="search-highlight">
             {part}
           </span>
