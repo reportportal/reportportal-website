@@ -1,6 +1,6 @@
 import { useState, useRef, useLayoutEffect } from 'react';
 import { useScroll } from 'ahooks';
-import noop from 'lodash/noop';
+import { noop } from 'lodash';
 
 interface ScrollDirection {
   isMenuOpen: boolean;

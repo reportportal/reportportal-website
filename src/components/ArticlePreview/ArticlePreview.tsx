@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import isEmpty from 'lodash/isEmpty';
-import chunk from 'lodash/chunk';
+import { chunk, isEmpty } from 'lodash';
 import { useMediaQuery } from 'react-responsive';
 import { BlogPostDto, MEDIA_DESKTOP_SM, MEDIA_TABLET_SM, PropsWithAnimation } from '@app/utils';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef, FC, RefObject, useMemo } from 're
 import { useMediaQuery } from 'react-responsive';
 import { useToggle, useScroll } from 'ahooks';
 import { Drawer, Collapse } from 'antd';
-import upperFirst from 'lodash/upperFirst';
+import { upperFirst } from 'lodash';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, isNewYearMode } from '@app/utils';

@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Collapse } from 'antd';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { INLINES } from '@contentful/rich-text-types';
-import size from 'lodash/size';
+import { size } from 'lodash';
 import classNames from 'classnames';
 import {
   createBemBlockBuilder,

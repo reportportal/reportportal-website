@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react';
-import escapeRegExp from 'lodash/escapeRegExp';
+import { escapeRegExp } from 'lodash';
 
 import './Highlight.scss';
 

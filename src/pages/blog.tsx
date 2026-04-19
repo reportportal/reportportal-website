@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import { PageProps, graphql, navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
-import isEmpty from 'lodash/isEmpty';
-import isString from 'lodash/isString';
+import { isEmpty, isString } from 'lodash';
 import { Layout, Seo } from '@app/components/Layout';
 import { BREADCRUMBS } from '@app/components/StructuredData';
 import { BlogPage } from '@app/containers/BlogPage';

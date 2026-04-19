@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { ArticlePreview } from '@app/components/ArticlePreview';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';
 import { BlogSearch } from '@app/components/BlogSearch';

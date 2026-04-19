@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState, useMemo } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
 import { Carousel } from '@app/components/Carousel';

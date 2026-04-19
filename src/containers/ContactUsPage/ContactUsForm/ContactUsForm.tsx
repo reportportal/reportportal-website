@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
 import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';

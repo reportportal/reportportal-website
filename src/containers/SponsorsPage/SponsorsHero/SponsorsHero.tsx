@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import Marquee from 'react-fast-marquee';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash';
 import { HeroSwitching } from '@app/components/HeroSwitching';
 import { Carousel } from '@app/components/Carousel';
 import { useInView } from '@app/hooks/useInView';

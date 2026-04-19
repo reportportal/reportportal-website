@@ -5,7 +5,7 @@ import path from 'node:path';
 
 import { GatsbyNode, NodePluginArgs } from 'gatsby';
 import axios from 'axios';
-import keyBy from 'lodash/keyBy';
+import { keyBy } from 'lodash';
 import {
   ContentfulRichTextGatsbyReference,
   RenderRichTextData,
@@ -57,6 +57,13 @@ interface ContactUsQuery {
 const acceleratorsTemplatesPath = './src/templates/accelerators';
 const pricingTemplatesPath = './src/templates/pricing';
 const sponsorsTemplatesPath = './src/templates/sponsorship-program';
+
+export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: 'babel-plugin-lodash',
+    options: {},
+  });
+};
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
