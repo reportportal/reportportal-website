@@ -9,7 +9,6 @@ yarn-debug.log*
 yarn-error.log*
 static/github.json
 static/youtube.json
-static/antd.min.css
 
 # Runtime data
 pids

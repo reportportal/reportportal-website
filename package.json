@@ -3,10 +3,8 @@
   "version": "2.0.0",
   "description": "Landing for ReportPortal",
   "scripts": {
-    "prestart": "node ./bin/gen-antd-css.js",
     "start": "gatsby develop -p 8080",
     "graphql:win": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
-    "prebuild": "cross-env NODE_ENV=production node ./bin/gen-antd-css.js",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "setup": "node ./bin/setup.js",
@@ -45,7 +43,6 @@
     "striptags": "^3.2.0"
   },
   "devDependencies": {
-    "@ant-design/static-style-extract": "^1.0.3",
     "@types/jsonp": "^0.2.3",
     "@types/node": "^20.8.2",
     "@types/react": "^18.2.0",

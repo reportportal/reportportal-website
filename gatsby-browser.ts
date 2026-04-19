@@ -1,4 +1,14 @@
+import React from 'react';
+import { ConfigProvider } from 'antd';
+import { StyleProvider } from '@ant-design/cssinjs';
 import type { GatsbyBrowser } from 'gatsby';
+
+export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({ element }) =>
+  React.createElement(
+    StyleProvider,
+    null,
+    React.createElement(ConfigProvider, { theme: { hashed: false } }, element),
+  );
 
 export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   if (typeof window !== 'undefined' && window.history.scrollRestoration) {
