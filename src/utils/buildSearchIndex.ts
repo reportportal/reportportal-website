@@ -12,12 +12,20 @@ interface RichTextNode {
 }
 
 const collectText = (node: RichTextNode, out: string[]): void => {
-  if (typeof node.value === 'string') {
-    out.push(node.value);
-  }
+  const stack: RichTextNode[] = [node];
 
-  if (Array.isArray(node.content)) {
-    node.content.forEach(child => collectText(child, out));
+  while (stack.length > 0) {
+    const current = stack.pop()!;
+
+    if (typeof current.value === 'string') {
+      out.push(current.value);
+    }
+
+    if (Array.isArray(current.content)) {
+      for (let i = current.content.length - 1; i >= 0; i -= 1) {
+        stack.push(current.content[i]);
+      }
+    }
   }
 };
 
