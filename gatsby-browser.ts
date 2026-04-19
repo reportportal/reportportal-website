@@ -1,11 +1,5 @@
 import type { GatsbyBrowser } from 'gatsby';
 
-declare global {
-  interface Window {
-    prevLocation?: Location;
-  }
-}
-
 export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   if (typeof window !== 'undefined' && window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
