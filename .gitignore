@@ -1,6 +1,10 @@
 .idea
 dist
 
+# Local Cursor hooks (optional per machine)
+.cursor/hooks.json
+.cursor/hooks/
+
 # Logs
 logs
 *.log

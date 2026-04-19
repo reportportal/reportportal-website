@@ -93,9 +93,13 @@ export const BlogPage: FC<BlogPageProps> = ({
               onCategoryToggle={onCategoryToggle}
               onAllArticlesClick={onAllArticlesClick}
             />
-            {statusText && <div className={getBlocksWith('__results-count')}>{statusText}</div>}
+            {statusText && (
+              <div role="status" aria-live="polite" className={getBlocksWith('__results-count')}>
+                {statusText}
+              </div>
+            )}
             {hasNoResults && (
-              <div className={getBlocksWith('__no-results')}>
+              <div role="status" aria-live="polite" className={getBlocksWith('__no-results')}>
                 No results found for your search. Try different keywords or check your filter.
               </div>
             )}
