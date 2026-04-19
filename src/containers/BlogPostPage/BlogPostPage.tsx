@@ -75,7 +75,7 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
               to="/blog"
               onClick={handleBackClick}
             >
-              <img src={ArrowLeft} alt="arrow left" />
+              <img src={ArrowLeft} alt="" aria-hidden="true" />
               Back to blog
             </Link>
             <div className="blog-post-page__info-aside">
