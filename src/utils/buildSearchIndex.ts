@@ -1,3 +1,10 @@
+/** NFKD, strip diacritics, locale-aware lowercasing — keep in sync with blog search tokens. */
+export const normalizeSearchText = (input: string): string =>
+  input
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase();
+
 interface RichTextNode {
   nodeType?: string;
   value?: string;
@@ -43,10 +50,12 @@ export const buildSearchIndex = (source: BlogPostSource): string => {
       const texts: string[] = [];
       collectText(doc, texts);
       parts.push(texts.join(' '));
-    } catch {
+    } catch (err) {
       // Malformed rich-text payload - skip body, keep other fields.
+      // eslint-disable-next-line no-console
+      console.warn('buildSearchIndex: failed to parse articleBody.raw', err);
     }
   }
 
-  return parts.join(' ').replace(/\s+/g, ' ').trim().toLowerCase();
+  return normalizeSearchText(parts.join(' ').replace(/\s+/g, ' ').trim());
 };

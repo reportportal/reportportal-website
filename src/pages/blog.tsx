@@ -15,6 +15,7 @@ import {
   parseBlogParams,
   buildBlogUrl,
 } from '@app/utils';
+import { normalizeSearchText } from '@app/utils/buildSearchIndex';
 
 const normalizeCategoryToArray = (category: string | string[] | null | undefined) => {
   if (!category) {
@@ -71,7 +72,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({ data: { allContentfulBlog
       });
     }
 
-    const tokens = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const tokens = normalizeSearchText(searchQuery.trim()).split(/\s+/).filter(Boolean);
     if (!isEmpty(tokens)) {
       filtered = filtered.filter(post => {
         const index = post.searchIndex;
