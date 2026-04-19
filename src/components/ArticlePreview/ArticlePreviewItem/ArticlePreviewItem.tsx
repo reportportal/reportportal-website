@@ -16,6 +16,9 @@ interface ArticlePreviewItemProps {
   searchQuery?: string;
 }
 
+const getCategoryLabel = (category: BlogPostDto['category']): string =>
+  Array.isArray(category) ? category.join(', ') : '';
+
 export const ArticlePreviewItem: FC<ArticlePreviewItemProps> = ({ post, searchQuery }) => (
   <li className={getBlocksWith()}>
     <Link to={`/blog/${post.slug}`} className={getBlocksWith('__link')}>
@@ -23,7 +26,7 @@ export const ArticlePreviewItem: FC<ArticlePreviewItemProps> = ({ post, searchQu
         <img alt={post.featuredImage.description} src={post.featuredImage.file.url} />
       </div>
       <div className={getBlocksWith('__content')}>
-        <p className={getBlocksWith('__category')}>{post.category.join(', ')}</p>
+        <p className={getBlocksWith('__category')}>{getCategoryLabel(post.category)}</p>
         <h2 className={getBlocksWith('__title')}>
           <Highlight text={post.title.title} query={searchQuery} />
         </h2>
