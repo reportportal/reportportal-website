@@ -25,7 +25,7 @@ export const Highlight: FC<HighlightProps> = ({ text, query }) => {
         const key = `${index}-${part}`;
 
         return part.toLowerCase() === lowerQuery ? (
-          <span key={key} className="highlight">
+          <span key={key} className="search-highlight">
             {part}
           </span>
         ) : (
