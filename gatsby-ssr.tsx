@@ -18,8 +18,6 @@ import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
  *   is not stripped here; project SCSS in `src/styles/global.scss`
  *   neutralizes it via equal-specificity overrides that win by source order
  *   thanks to the head reordering in `onPreRenderHTML` below.
- *
- * See `docs/antd-styles.md` for the full rationale and measurements.
  */
 export const replaceRenderer: NonNullable<GatsbySSR['replaceRenderer']> = ({
   bodyComponent,
