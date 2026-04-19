@@ -40,12 +40,7 @@ export const LinkedCard: FC<LinkedCardProps> = ({
     <strong className={getBlocksWith('__title')}>{itemTitle}</strong>
     <p className={getBlocksWith('__description')}>{description}</p>
     {link && (
-      <ArrowLink
-        mode="primary"
-        to={link}
-        text={linkText}
-        srOnlySuffix={linkText && ` about ${itemTitle}`}
-      />
+      <ArrowLink mode="primary" to={link} text={linkText} srOnlySuffix={` about ${itemTitle}`} />
     )}
     {Boolean(delay) && <div className={getBlocksWith('__progress')} />}
   </div>
