@@ -21,10 +21,7 @@ approach, with one fewer render-blocking CSS request per page.
 theme={{ hashed: false }}>` and calls `renderToString`. As antd
    components render they write their serialized rules into that cache.
 3. Calls `extractStyle(cache, true)` to get a CSS string containing **only**
-   the rules used by components actually rendered on this page, then runs
-   it through `stripCssinjsGlobalResets` to drop antd's bare-element
-   resets (e.g. `a { color: #1677ff }`, `* { box-sizing: border-box }`)
-   that the previous static-style-extract pipeline never emitted.
+   the rules used by components actually rendered on this page.
 4. Injects that CSS into `<head>` via `setHeadComponents` as
    `<style data-antd-cssinjs>...</style>`.
 
@@ -53,17 +50,40 @@ gz per page off the inlined CSS and removes the `class="… css-XXX"`
 noise from rendered DOM. Selector specificity is unchanged because
 `:where()` contributes zero specificity.
 
-### Why we strip antd's element resets
+### Why we override antd's link reset in global SCSS
 
-`extractStyle` includes antd's "global" resets (`a {…}`, `* {…}`, etc.)
-to make components look correct on hostile page CSS. The legacy static
-extract omitted them. The site's SCSS expects link colour and typography
-to **inherit** from page-level containers; antd's `a { color: #1677ff }`
-breaks that and turns every link inside any antd subtree blue.
-`stripCssinjsGlobalResets` removes any rule whose selectors are _all_
-bare element / universal / element-with-pseudo / element-with-attr —
-i.e. selectors that don't mention a class, id, or descendant. Anything
-referencing `.ant-…` is preserved.
+`extractStyle` includes antd's bare-element link reset — wired in
+`node_modules/antd/lib/theme/util/genStyleUtils.js` as
+`getResetStyles: token => [{ '&': genLinkStyle(token) }]` — so every
+page that mounts any antd component ships a top-level
+`a { color: var(--ant-color-link); … }` (plus `:hover` / `:active` /
+`:focus` / `[disabled]` variants). Without intervention this would
+turn every `<a>` inside any antd subtree (Layout, FAQ Collapse,
+SupportedFrameworks Tabs, HowItWorks Steps, etc.) antd-blue and add
+underlines on hover.
+
+We neutralize it from project SCSS rather than post-processing the
+extracted CSS. The existing `a {…}` rule in
+`src/styles/global.scss` is extended to cover the same property
+family antd touches (`text-decoration` on `:hover` / `:active` /
+`:focus`, `outline` on `:focus`, `color` / `cursor` on `[disabled]`).
+Antd's link reset and our project rule have equal specificity (both
+target a bare `a`), so source order is the tie-breaker — and that
+only works because `onPreRenderHTML` (see below) injects the inlined
+antd `<style data-antd-cssinjs>` _before_ the app stylesheet `<link>`.
+This replaced an earlier `stripCssinjsGlobalResets` regex pass that
+walked the extracted CSS and dropped any rule whose selectors were
+all bare-element / universal / element-with-pseudo / element-with-attr —
+the regex was fragile (it also misclassified keyframe step rules like
+`100%`, `from`, `to` as resets and stripped them, breaking antd's
+fade / zoom motion).
+
+We rely on no other top-level bare-element rule from antd cssinjs
+today. `useResetIconStyle` emits `.anticon { … }` (class-based) and
+`genCommonStyle` uses `[class^="ant-"]` (attribute-based), neither of
+which collide with project styling. Antd's bundled `reset.css` is
+never imported by Gatsby, so the broader `html` / `body` / `*` resets
+are not in our bundle.
 
 ### `onPreRenderHTML` head adjustments
 
@@ -103,13 +123,14 @@ extract from, so the inlined CSS would have been incomplete.
 
 ## Files involved
 
-| File                                                          | Role                                                                                                                                                                                                                                           |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `gatsby-ssr.tsx`                                              | `replaceRenderer` (per-page extraction + `ConfigProvider hashed:false` + reset stripping), `onPreRenderHTML` (Gatsby global `<style>` → `<link>` + antd-before-SCSS reorder), `onRenderBody` (third-party scripts only — no antd link anymore) |
-| `gatsby-browser.ts`                                           | `wrapRootElement` providing client-side `StyleProvider` + `ConfigProvider hashed:false`                                                                                                                                                        |
-| `src/components/Layout/Layout.tsx`                            | No longer wraps with `StyleProvider`                                                                                                                                                                                                           |
-| `src/components/SupportedFrameworks/SupportedFrameworks.scss` | Dropped legacy `:where(.css-dev-only-do-not-override-…)` prefixes around `.ant-tabs` selectors — obsolete now that `theme.hashed: false` is on                                                                                                 |
-| `package.json`                                                | No `prestart` / `prebuild`, no `@ant-design/static-style-extract`                                                                                                                                                                              |
+| File                                                          | Role                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gatsby-ssr.tsx`                                              | `replaceRenderer` (per-page extraction + `ConfigProvider hashed:false`), `onPreRenderHTML` (Gatsby global `<style>` → `<link>` + antd-before-SCSS reorder so equal-specificity SCSS rules in `global.scss` win), `onRenderBody` (third-party scripts only — no antd link anymore) |
+| `gatsby-browser.ts`                                           | `wrapRootElement` providing client-side `StyleProvider` + `ConfigProvider hashed:false`                                                                                                                                                                                           |
+| `src/components/Layout/Layout.tsx`                            | No longer wraps with `StyleProvider`                                                                                                                                                                                                                                              |
+| `src/styles/global.scss`                                      | Global `a {…}` rule that neutralizes antd cssinjs's bare-element link reset by overriding the same property family on `:hover` / `:active` / `:focus` / `[disabled]` — wins by source order against the inlined antd `<style>`                                                    |
+| `src/components/SupportedFrameworks/SupportedFrameworks.scss` | Dropped legacy `:where(.css-dev-only-do-not-override-…)` prefixes around `.ant-tabs` selectors — obsolete now that `theme.hashed: false` is on                                                                                                                                    |
+| `package.json`                                                | No `prestart` / `prebuild`, no `@ant-design/static-style-extract`                                                                                                                                                                                                                 |
 
 ## What we removed
 
@@ -120,10 +141,15 @@ extract from, so the inlined CSS would have been incomplete.
 - `@ant-design/static-style-extract` dev dependency — no longer needed.
 - The antd link in `gatsby-ssr.tsx#onRenderBody`
   (`<link href="/antd.min.css">`).
-- The "reorder antd link before app styles" branch in `onPreRenderHTML`.
-  Ordering no longer matters because antd CSS is now inlined per page in
-  `<head>` (above the `<link>` to the app stylesheet), and SCSS overrides
-  win on specificity rather than source order.
+- The pre-built-`<link>`-targeting variant of the "antd-before-app-CSS"
+  reorder branch in `onPreRenderHTML`. The reorder logic itself is
+  **not** gone: it now targets the inlined `<style data-antd-cssinjs>`
+  rather than the deleted antd `<link>`, because ordering is still
+  load-bearing for any rule pair where antd and the app SCSS land at
+  equal specificity (notably the bare-element `a {…}` link reset
+  neutralized in `global.scss`, and Steps wait-state dot overrides
+  where both sides are 5 classes deep). See "onPreRenderHTML head
+  adjustments" above.
 
 Reference commit: `perf: extract antd v5 styles per page via cssinjs SSR`.
 

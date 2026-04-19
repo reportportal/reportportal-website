@@ -5,34 +5,6 @@ import { ConfigProvider } from 'antd';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 
 /**
- * Drop antd's bare-element resets (`a {…}`, `* {…}`, etc.) from extracted
- * CSS — the legacy static dump never shipped them and project SCSS expects
- * to inherit colour/typography from page containers (otherwise links inside
- * antd subtrees turn antd-blue).
- *
- * A rule is a reset only if every selector in its list is a bare element /
- * `*` / element-with-pseudo / element-with-attr — anything mentioning a
- * class, id, or descendant is preserved. Assumes `theme.hashed: false`; if
- * hashing is re-enabled, resets gain a `:where(.css-XXX) ` prefix that
- * would need stripping first.
- */
-const stripCssinjsGlobalResets = (css: string): string =>
-  css.replace(/([^{}]+)\{[^}]*\}/g, full => {
-    const open = full.lastIndexOf('{');
-    const selectors = full
-      .slice(0, open)
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    if (!selectors.length) return full;
-
-    const isResetSelector = (selector: string): boolean => !/[.#\s>+~]/.test(selector);
-
-    return selectors.every(isResetSelector) ? '' : full;
-  });
-
-/**
  * Per-page antd v5 SSR via cssinjs: a fresh cache captures only the rules
  * for components rendered on this page, then `extractStyle` inlines them
  * into `<head>` — no separate `antd.min.css` blob, no unused styles.
@@ -42,6 +14,10 @@ const stripCssinjsGlobalResets = (css: string): string =>
  * - `theme.hashed: false` drops antd's `:where(.css-XXX)` multi-version
  *   wrappers (we only ship one antd version) — saves ~30–40 KB raw /
  *   ~3–5 KB gz per page with no specificity change.
+ * - The bare `a {…}` link reset that antd cssinjs emits via `getResetStyles`
+ *   is not stripped here; project SCSS in `src/styles/global.scss`
+ *   neutralizes it via equal-specificity overrides that win by source order
+ *   thanks to the head reordering in `onPreRenderHTML` below.
  *
  * See `docs/antd-styles.md` for the full rationale and measurements.
  */
@@ -64,7 +40,7 @@ export const replaceRenderer: NonNullable<GatsbySSR['replaceRenderer']> = ({
       key="antd-cssinjs"
       data-antd-cssinjs
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: stripCssinjsGlobalResets(extractStyle(cache, true)) }}
+      dangerouslySetInnerHTML={{ __html: extractStyle(cache, true) }}
     />,
   ]);
 };

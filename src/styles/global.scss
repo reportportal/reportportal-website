@@ -28,16 +28,36 @@ img {
   width: 100%;
 }
 
+// Also neutralizes antd v5's cssinjs link reset (a {color, text-decoration},
+// a:hover/:active/:focus {text-decoration, outline}, a[disabled] {color, cursor})
+// emitted via getResetStyles in node_modules/antd/lib/theme/util/genStyleUtils.js.
+// Equal-specificity wins by source order — antd's <style data-antd-cssinjs> is
+// placed before this stylesheet by onPreRenderHTML in gatsby-ssr.tsx.
 a {
   text-decoration: none;
   color: currentColor;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
 
   &:hover {
     color: var(--text-grey);
   }
 
+  &:focus {
+    outline: revert;
+    text-decoration: none;
+  }
+
   &:active {
     color: var(--color-primary-700);
+  }
+
+  &[disabled] {
+    color: inherit;
+    cursor: inherit;
   }
 }
 
