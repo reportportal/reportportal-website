@@ -243,6 +243,18 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
   `);
 };
 
+interface ContentfulBlogPostSource {
+  id?: string;
+  children?: string[];
+  category?: string[] | null;
+  articleBody?: { raw?: string } | null;
+}
+
+interface MaybeChildNode {
+  internal?: { type?: string };
+  [field: string]: unknown;
+}
+
 export const createResolvers: GatsbyNode['createResolvers'] = ({
   createResolvers: addResolvers,
 }) => {
@@ -252,14 +264,41 @@ export const createResolvers: GatsbyNode['createResolvers'] = ({
     ContentfulBlogPost: {
       searchIndex: {
         type: 'String',
-        resolve: (source: Parameters<typeof buildSearchIndex>[0] & { id?: string }) => {
+        // gatsby-source-contentful v8 stores long-text fields (title,
+        // leadParagraph) as separate child nodes linked from the parent's
+        // `children` array, while rich-text (articleBody) and primitives
+        // (category) live inline on the parent. So we resolve title/lead
+        // by walking child nodes, and read articleBody/category directly.
+        resolve: (
+          source: ContentfulBlogPostSource,
+          _args: unknown,
+          context: {
+            nodeModel: { getNodeById: (input: { id: string }) => MaybeChildNode | null };
+          },
+        ) => {
           const cacheKey = source.id;
 
           if (cacheKey && searchIndexCache.has(cacheKey)) {
             return searchIndexCache.get(cacheKey);
           }
 
-          const value = buildSearchIndex(source);
+          const childIds = Array.isArray(source.children) ? source.children : [];
+          const childNodes = childIds
+            .map(id => context.nodeModel.getNodeById({ id }))
+            .filter((node): node is MaybeChildNode => node !== null);
+
+          const findChildOfType = (type: string) =>
+            childNodes.find(node => node.internal?.type === type);
+
+          const titleNode = findChildOfType('contentfulBlogPostTitleTextNode');
+          const leadNode = findChildOfType('contentfulBlogPostLeadParagraphTextNode');
+
+          const value = buildSearchIndex({
+            title: titleNode ? { title: titleNode.title as string } : null,
+            leadParagraph: leadNode ? { leadParagraph: leadNode.leadParagraph as string } : null,
+            category: source.category,
+            articleBody: source.articleBody,
+          });
 
           if (cacheKey) {
             searchIndexCache.set(cacheKey, value);
