@@ -199,13 +199,13 @@ export const FeaturesPage: FC = () => {
                     Premium feature
                   </span>
                 )}
-                <h3 id={`${id}-title`}>{title}</h3>
+                <h3>{title}</h3>
                 <p>{description}</p>
                 <ArrowLink
                   mode="primary"
                   to={link}
                   text="Learn more"
-                  aria-labelledby={`${id}-title`}
+                  srOnlySuffix={` about ${title}`}
                 />
               </div>
 
