@@ -246,11 +246,27 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
 export const createResolvers: GatsbyNode['createResolvers'] = ({
   createResolvers: addResolvers,
 }) => {
+  const searchIndexCache = new Map<string, string>();
+
   addResolvers({
     ContentfulBlogPost: {
       searchIndex: {
         type: 'String',
-        resolve: (source: Parameters<typeof buildSearchIndex>[0]) => buildSearchIndex(source),
+        resolve: (source: Parameters<typeof buildSearchIndex>[0] & { id?: string }) => {
+          const cacheKey = source.id;
+
+          if (cacheKey && searchIndexCache.has(cacheKey)) {
+            return searchIndexCache.get(cacheKey);
+          }
+
+          const value = buildSearchIndex(source);
+
+          if (cacheKey) {
+            searchIndexCache.set(cacheKey, value);
+          }
+
+          return value;
+        },
       },
     },
   });
