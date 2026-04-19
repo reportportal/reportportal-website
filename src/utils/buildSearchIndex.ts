@@ -1,9 +1,11 @@
-/** NFKD, strip diacritics, locale-aware lowercasing — keep in sync with blog search tokens. */
+import { compact } from 'lodash';
+
+/** NFKD, strip diacritics, invariant lowercasing — keep in sync with blog search tokens. */
 export const normalizeSearchText = (input: string): string =>
   input
     .normalize('NFKD')
     .replace(/\p{Diacritic}/gu, '')
-    .toLocaleLowerCase();
+    .toLowerCase();
 
 interface RichTextNode {
   nodeType?: string;
@@ -48,7 +50,7 @@ export const buildSearchIndex = (source: BlogPostSource): string => {
   }
 
   if (Array.isArray(source.category)) {
-    parts.push(source.category.filter(Boolean).join(' '));
+    parts.push(compact(source.category).join(' '));
   }
 
   const raw = source.articleBody?.raw;
