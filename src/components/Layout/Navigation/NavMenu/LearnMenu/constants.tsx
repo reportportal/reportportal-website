@@ -16,12 +16,12 @@ export const RESOURCES_LIST = [
     icon: <BlogIcon />,
     title: 'Blog',
     text: 'News, updates and more',
-    link: { title: 'Blog', url: '/blog' },
+    link: { title: 'Blog', url: '/blog/' },
   },
   {
     icon: <SuccessStoriesIcon />,
     title: 'Success stories',
     text: 'Our Case Studies',
-    link: { title: 'Success stories', url: '/case-studies' },
+    link: { title: 'Success stories', url: '/case-studies/' },
   },
 ];

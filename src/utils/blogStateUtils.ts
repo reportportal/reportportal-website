@@ -41,5 +41,5 @@ export const buildBlogUrl = ({ searchQuery, selectedCategories, page }: BlogPara
   }
 
   const query = params.toString();
-  return query ? `/blog?${query}` : '/blog';
+  return query ? `/blog/?${query}` : '/blog/';
 };

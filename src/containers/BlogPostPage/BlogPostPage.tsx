@@ -33,7 +33,8 @@ const isFromBlogList = (): boolean => {
   }
 
   const prev = window.prevLocation;
-  return Boolean(prev && (prev.pathname === '/blog' || prev.pathname === '/blog/'));
+  const path = (prev?.pathname ?? '').replace(/\/$/, '') || '/';
+  return path === '/blog';
 };
 
 export const BlogPostPage: FC<BlogPostPageProps> = ({
@@ -72,7 +73,7 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
           <div className="blog-post-page__info">
             <Link
               className="btn btn--white btn--large back-to-blog"
-              to="/blog"
+              to="/blog/"
               onClick={handleBackClick}
             >
               <img src={ArrowLeft} alt="" aria-hidden="true" />
