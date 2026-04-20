@@ -84,6 +84,42 @@ That's it! Your changes should now be live on the website. If you encounter any 
 - [Gatsby](https://www.gatsbyjs.com/). Project is built on top of Gatsby to leverage its Static Site Generation feature. Make sure that you check that app works and looks correctly both in dev mode (`npm run dev`) and in production mode `npm run build && npm run serve`. You should pay attention whether elements are not shifting/jumping on the initial load in the production mode.
 - [And Design](https://ant.design/components/overview/). Project uses components from Ant Design. Use them when you can to avoid creating things from scratch, but make sure to style them according [to our design](https://www.figma.com/file/JDa2JNX88qMJbdWeFpBfNz/%F0%9F%8C%90-RP-Landing-2.0). As an example check out how `Steps` component is used and styled in the [HowItWorks](./src/containers/LandingPage/HowItWorks) component
 
+## Fonts
+
+The site ships three families as `woff2` files under `static/fonts/` — Poppins, Noto Sans, and Roboto Mono — each as a latin-only subset. Every family is declared in `src/styles/font/*.scss`, and Poppins / Noto Sans each come with a matched Arial-backed fallback `@font-face` (using `ascent-override`, `descent-override`, `line-gap-override`, `size-adjust`) so the fallback-to-real swap doesn't reflow text on slow networks.
+
+Apply a family via the mixins in [`src/styles/mixins/font.scss`](./src/styles/mixins/font.scss) — e.g. `@include m.font-poppins($fw-semi-bold);` — never by writing `font-family: Poppins, ...` directly. The mixin is what injects the matched fallback into the stack.
+
+Rules:
+
+- Always ship `.woff2`. Never commit `.ttf` or `.otf` — modern browser support for `woff2` is 97%+, and `.ttf` is ~4× larger.
+- Keep the license file (`OFL.txt` / `LICENSE.txt`) next to each font family in `static/fonts/<family>/` — required by SIL OFL and Apache‑2.0 redistribution terms.
+- Use the `latin` subset unless you have a concrete need for `cyrillic`, `greek`, etc. Every extra subset doubles the download.
+
+### Adding a new weight to an existing family
+
+1. Download the `.woff2` from [google-webfonts-helper](https://gwfh.mranftl.com/fonts):
+   - Select the exact family already in use.
+   - Check **only** the new weight (e.g. `300 light`).
+   - Check **only** the `latin` charset.
+   - "Copy CSS" → **Best support for modern browsers**.
+   - Download files.
+2. Drop the `.woff2` into the matching subfolder under `static/fonts/`.
+3. Add an `@font-face` block in the corresponding file under `src/styles/font/` — copy an existing block and change only the `font-weight` and the `src` URL.
+4. (Optional) If this weight renders above the fold on most pages, also add its path to `PRELOADED_FONTS` in [`gatsby-ssr.tsx`](./gatsby-ssr.tsx) so the browser starts fetching it before CSS is parsed. Preload sparingly — each entry costs a high-priority request on every page load.
+
+### Adding a new font family
+
+1. Download the `.woff2`s from [google-webfonts-helper](https://gwfh.mranftl.com/fonts) for every weight you actually use (no italics unless referenced). `latin` subset only.
+2. Create `static/fonts/<Family_Name>/` and drop the `.woff2` files plus the family's license file there.
+3. Create `src/styles/font/<family-name>.scss` with one `@font-face` block per weight, using `font-display: swap` and `format('woff2')`. Mirror the structure of `poppins.scss`.
+4. Add a matched fallback `@font-face` block in the same file. Use a tool like [Fontaine](https://github.com/unjs/fontaine) or [Capsize](https://seek-oss.github.io/capsize/) to generate the `ascent-override` / `descent-override` / `line-gap-override` / `size-adjust` values against Arial — don't eyeball them, mismatched metrics cause CLS.
+5. Import the new file from [`src/styles/font/index.scss`](./src/styles/font/index.scss).
+6. Add a mixin in [`src/styles/mixins/font.scss`](./src/styles/mixins/font.scss) that sets `font-family: 'Family Name', 'Family Name Fallback', Arial, sans-serif;`.
+7. (Optional) Preload the most‑used weight in `gatsby-ssr.tsx`.
+
+After any font change, run `npm run build && npm run serve`, open the site with DevTools → Network → Disable cache + Fast 4G throttling, and check that text doesn't visibly reflow when the custom font swaps in.
+
 ## SCSS/CSS
 
 - To set the font use mixins from [font](./src/styles/mixins/font.scss) folder
