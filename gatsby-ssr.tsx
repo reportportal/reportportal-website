@@ -86,8 +86,28 @@ export const onPreRenderHTML: NonNullable<GatsbySSR['onPreRenderHTML']> = ({
   replaceHeadComponents(head);
 };
 
+// Critical woff2 files that every page uses above the fold. Preloading them
+// here starts the download before the CSS that references them is parsed,
+// which usually lands the font bytes before first paint on fast networks and
+// reduces the window where the Arial fallback is visible on slow ones.
+const PRELOADED_FONTS = [
+  '/fonts/Poppins/poppins-v24-latin-regular.woff2',
+  '/fonts/Poppins/poppins-v24-latin-600.woff2',
+  '/fonts/Noto_Sans/noto-sans-v42-latin-regular.woff2',
+];
+
 export const onRenderBody: NonNullable<GatsbySSR['onRenderBody']> = ({ setHeadComponents }) => {
   setHeadComponents([
+    ...PRELOADED_FONTS.map(href => (
+      <link
+        key={`preload-${href}`}
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href={href}
+        crossOrigin="anonymous"
+      />
+    )),
     <script
       key="otSDKStub"
       type="text/javascript"

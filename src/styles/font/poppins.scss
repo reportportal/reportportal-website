@@ -5,8 +5,7 @@
   font-weight: $fw-regular;
   font-style: normal;
   font-display: swap;
-  src: local('Poppins Regular'), local('Poppins-Regular'),
-    url('/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  src: url('/fonts/Poppins/poppins-v24-latin-regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -14,8 +13,7 @@
   font-weight: $fw-medium;
   font-style: normal;
   font-display: swap;
-  src: local('Poppins Medium'), local('Poppins-Medium'),
-    url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  src: url('/fonts/Poppins/poppins-v24-latin-500.woff2') format('woff2');
 }
 
 @font-face {
@@ -23,8 +21,7 @@
   font-weight: $fw-semi-bold;
   font-style: normal;
   font-display: swap;
-  src: local('Poppins-SemiBold'), local('Poppins-SemiBold'),
-    url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Poppins/poppins-v24-latin-600.woff2') format('woff2');
 }
 
 @font-face {
@@ -32,6 +29,19 @@
   font-weight: $fw-bold;
   font-style: normal;
   font-display: swap;
-  src: local('Poppins-Bold'), local('Poppins-Bold'),
-    url('/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  src: url('/fonts/Poppins/poppins-v24-latin-700.woff2') format('woff2');
+}
+
+// Arial-backed fallback face whose metrics match Poppins so the swap from
+// fallback to the real font doesn't reflow text (no CLS).
+// Override values tuned against Poppins - see
+// https://developer.chrome.com/docs/fonts/font-fallbacks for the technique.
+@font-face {
+  font-family: 'Poppins Fallback';
+  font-style: normal;
+  src: local('Arial');
+  ascent-override: 93.17%;
+  descent-override: 31.06%;
+  line-gap-override: 8.73%;
+  size-adjust: 112.04%;
 }
