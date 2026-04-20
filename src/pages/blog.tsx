@@ -167,9 +167,13 @@ export const pageQuery = graphql`
         }
         category
         featuredImage {
-          file {
-            url
-          }
+          gatsbyImageData(
+            layout: CONSTRAINED
+            width: 760
+            height: 420
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+          )
           description
         }
       }

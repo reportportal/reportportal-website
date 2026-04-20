@@ -15,6 +15,10 @@ import { ArticlePreviewItem } from './ArticlePreviewItem';
 
 import './ArticlePreview.scss';
 
+// Mark the first row of cards as eager so their images aren't deferred by the
+// browser's native lazy-loading - they're above the fold on every viewport.
+const EAGER_CARDS_COUNT = 3;
+
 interface ArticlePreviewProps {
   posts: BlogPostDto[];
   searchQuery?: string;
@@ -56,8 +60,13 @@ export const ArticlePreview: FC<PropsWithAnimation<ArticlePreviewProps>> = ({
         },
       })}
     >
-      {posts.map(post => (
-        <ArticlePreviewItem key={post.id} post={post} searchQuery={searchQuery} />
+      {posts.map((post, index) => (
+        <ArticlePreviewItem
+          key={post.id}
+          post={post}
+          searchQuery={searchQuery}
+          isEager={index < EAGER_CARDS_COUNT}
+        />
       ))}
     </motion.ul>
   );

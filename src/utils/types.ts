@@ -2,6 +2,7 @@ import {
   ContentfulRichTextGatsbyReference,
   RenderRichTextData,
 } from 'gatsby-source-contentful/rich-text';
+import { IGatsbyImageData } from 'gatsby-plugin-image';
 import { Required } from 'utility-types';
 
 export interface ContentfulAsset {
@@ -45,7 +46,7 @@ export interface BlogPostDto {
     title: string;
   };
   featuredImage: {
-    file: ContentfulAsset;
+    gatsbyImageData: IGatsbyImageData;
     description: string;
   };
   category: string[] | null;
