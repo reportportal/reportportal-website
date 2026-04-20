@@ -45,10 +45,18 @@ export interface BlogPostDto {
   title: {
     title: string;
   };
+  // `gatsbyImageData` is null for SVG assets (sharp can't process them), so we
+  // also keep `file.url` around as a fallback and render a plain <img>. When
+  // the whole field is null (editor forgot a thumbnail), the UI falls back to
+  // a branded placeholder.
   featuredImage: {
-    gatsbyImageData: IGatsbyImageData;
-    description: string;
-  };
+    gatsbyImageData: IGatsbyImageData | null;
+    file: {
+      url: string;
+      contentType: string;
+    } | null;
+    description: string | null;
+  } | null;
   category: string[] | null;
   description: RenderRichTextData<ContentfulRichTextGatsbyReference>;
   publishDate: string;

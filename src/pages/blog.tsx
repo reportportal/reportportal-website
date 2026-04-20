@@ -174,6 +174,10 @@ export const pageQuery = graphql`
             placeholder: BLURRED
             formats: [AUTO, WEBP, AVIF]
           )
+          file {
+            url
+            contentType
+          }
           description
         }
       }

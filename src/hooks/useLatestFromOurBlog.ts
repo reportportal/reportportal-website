@@ -29,6 +29,10 @@ export const useLatestFromOurBlog = (): BlogPostDto[] => {
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
             )
+            file {
+              url
+              contentType
+            }
             description
           }
           slug

@@ -23,40 +23,53 @@ interface ArticlePreviewItemProps {
 const getCategoryLabel = (category: BlogPostDto['category']): string =>
   Array.isArray(category) ? category.join(', ') : '';
 
+const renderFeaturedImage = (
+  featuredImage: BlogPostDto['featuredImage'],
+  loadingStrategy: 'eager' | 'lazy',
+) => {
+  const gatsbyImage = featuredImage?.gatsbyImageData
+    ? getImage(featuredImage.gatsbyImageData)
+    : null;
+  const alt = featuredImage?.description ?? '';
+
+  if (gatsbyImage) {
+    return <GatsbyImage image={gatsbyImage} alt={alt} loading={loadingStrategy} />;
+  }
+
+  // Contentful returns gatsbyImageData=null for SVGs (sharp can't process
+  // them) - fall back to the raw file URL so the browser renders them natively.
+  const rawImageUrl = featuredImage?.file?.url;
+  if (rawImageUrl) {
+    return <img src={rawImageUrl} alt={alt} loading={loadingStrategy} />;
+  }
+
+  return <div className={getBlocksWith('__featured-image-placeholder')} aria-hidden="true" />;
+};
+
 export const ArticlePreviewItem: FC<ArticlePreviewItemProps> = ({
   post,
   searchQuery,
   isEager = false,
-}) => {
-  const featuredImage = getImage(post.featuredImage.gatsbyImageData);
-
-  return (
-    <li className={getBlocksWith()}>
-      <Link to={`/blog/${post.slug}`} className={getBlocksWith('__link')}>
-        <div className={getBlocksWith('__featured-image')}>
-          {featuredImage && (
-            <GatsbyImage
-              image={featuredImage}
-              alt={post.featuredImage.description ?? ''}
-              loading={isEager ? 'eager' : 'lazy'}
-            />
-          )}
+}) => (
+  <li className={getBlocksWith()}>
+    <Link to={`/blog/${post.slug}`} className={getBlocksWith('__link')}>
+      <div className={getBlocksWith('__featured-image')}>
+        {renderFeaturedImage(post.featuredImage, isEager ? 'eager' : 'lazy')}
+      </div>
+      <div className={getBlocksWith('__content')}>
+        <p className={getBlocksWith('__category')}>{getCategoryLabel(post.category)}</p>
+        <h2 className={getBlocksWith('__title')}>
+          <Highlight text={post.title.title} query={searchQuery} />
+        </h2>
+        {post.description?.raw && <div>{renderRichText(post.description)}</div>}
+        <div className={getBlocksWith('__meta')}>
+          <span className="meta">{post.publishDate}</span>
         </div>
-        <div className={getBlocksWith('__content')}>
-          <p className={getBlocksWith('__category')}>{getCategoryLabel(post.category)}</p>
-          <h2 className={getBlocksWith('__title')}>
-            <Highlight text={post.title.title} query={searchQuery} />
-          </h2>
-          {post.description?.raw && <div>{renderRichText(post.description)}</div>}
-          <div className={getBlocksWith('__meta')}>
-            <span className="meta">{post.publishDate}</span>
-          </div>
-          <Typography.Paragraph ellipsis={{ rows: 5 }} className={getBlocksWith('__excerpt')}>
-            <Highlight text={post.leadParagraph.leadParagraph} query={searchQuery} />
-          </Typography.Paragraph>
-          <ArticleAuthor authorName={post.author} />
-        </div>
-      </Link>
-    </li>
-  );
-};
+        <Typography.Paragraph ellipsis={{ rows: 5 }} className={getBlocksWith('__excerpt')}>
+          <Highlight text={post.leadParagraph.leadParagraph} query={searchQuery} />
+        </Typography.Paragraph>
+        <ArticleAuthor authorName={post.author} />
+      </div>
+    </Link>
+  </li>
+);
