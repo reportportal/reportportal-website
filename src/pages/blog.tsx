@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import { PageProps, graphql, navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
-import { compact, isEmpty, isString } from 'lodash';
+import { isEmpty, isString } from 'lodash';
 import { Layout, Seo } from '@app/components/Layout';
 import { BREADCRUMBS } from '@app/components/StructuredData';
 import { BlogPage } from '@app/containers/BlogPage';
@@ -34,11 +34,11 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({ data: { allContentfulBlog
   const params = useMemo(() => parseBlogParams(location.search), [location.search]);
   const { searchQuery, selectedCategories, page } = params;
 
-  const searchTokens = useMemo(
-    () => compact(normalizeSearchText(searchQuery.trim()).split(/\s+/)),
+  const searchPhrase = useMemo(
+    () => normalizeSearchText(searchQuery).replace(/\s+/g, ' ').trim(),
     [searchQuery],
   );
-  const isSearchActive = !isEmpty(searchTokens);
+  const isSearchActive = searchPhrase.length > 0;
 
   const updateParams = useCallback(
     (next: Partial<BlogParams>) => {
@@ -86,16 +86,14 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({ data: { allContentfulBlog
       });
     }
 
-    if (!isEmpty(searchTokens)) {
-      filtered = filtered.filter(post => {
-        const index = post.searchIndex;
-
-        return isString(index) && searchTokens.every(token => index.includes(token));
-      });
+    if (searchPhrase) {
+      filtered = filtered.filter(
+        post => isString(post.searchIndex) && post.searchIndex.includes(searchPhrase),
+      );
     }
 
     return filtered;
-  }, [allPosts, selectedCategories, searchTokens]);
+  }, [allPosts, selectedCategories, searchPhrase]);
 
   const visibleCount = isSearchActive ? SEARCH_RESULTS_LIMIT : page * BLOG_PAGE_SIZE;
   const visiblePosts = useMemo(
