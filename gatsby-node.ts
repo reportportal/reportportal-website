@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { GatsbyNode, NodePluginArgs } from 'gatsby';
+import { CreateWebpackConfigArgs, GatsbyNode } from 'gatsby';
 import axios from 'axios';
 import { keyBy } from 'lodash';
 import {
@@ -318,7 +318,7 @@ export const createResolvers: GatsbyNode['createResolvers'] = ({
   });
 };
 
-exports.onCreateWebpackConfig = ({ actions }: NodePluginArgs) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }: CreateWebpackConfigArgs) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
@@ -326,6 +326,34 @@ exports.onCreateWebpackConfig = ({ actions }: NodePluginArgs) => {
       },
     },
   });
+
+  // Diagnostic build: when HYDRATION_DEBUG=true is set, force the React /
+  // ReactDOM development bundles into the production browser build. Without
+  // this, React 18 in `gatsby build` only emits minified error codes (#418,
+  // #423, ...) with no component stack, making it impossible to identify
+  // which subtree caused a hydration mismatch. We override Gatsby's existing
+  // DefinePlugin so every `if (process.env.NODE_ENV !== 'production')`
+  // warning branch inside react/react-dom is preserved and the unminified
+  // dev bundle is loaded. This affects only `gatsby build && gatsby serve`
+  // when the env flag is set; SSR continues unchanged.
+  if (process.env.HYDRATION_DEBUG === 'true' && stage === 'build-javascript') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config = getConfig() as { plugins: any[] };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config.plugins = config.plugins.map((plugin: any) => {
+      if (
+        plugin?.constructor?.name === 'DefinePlugin' &&
+        plugin.definitions?.['process.env.NODE_ENV']
+      ) {
+        plugin.definitions['process.env.NODE_ENV'] = JSON.stringify('development');
+      }
+
+      return plugin;
+    });
+
+    actions.replaceWebpackConfig(config);
+  }
 };
 
 exports.onPostBuild = () => {
