@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import Marquee from 'react-fast-marquee';
 import { useAtom } from 'jotai';
 import { motion } from 'framer-motion';
@@ -28,7 +28,7 @@ const commonAnimationProps = {
 
 export const Showcase: FC = () => {
   const [, setWatchProductOverviewState] = useAtom(watchProductOverviewAtom);
-  const isDesktop = useMediaQuery({ query: '(min-width: 1124px)' });
+  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
   const { slides, allSlidesItems } = useClientCarouselItems();
   const [titleBlockRef, isTitleBlockInView] = useInView();
   const [carouselRef, isCarouselInView] = useInView();

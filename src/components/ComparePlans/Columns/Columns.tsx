@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { isBoolean, isString } from 'lodash';
 import { createBemBlockBuilder, FormattedComparePlansItemDto, MEDIA_DESKTOP_SM } from '@app/utils';
 
@@ -17,7 +17,7 @@ interface ColumnsProps {
 const getBlocksWith = createBemBlockBuilder(['compare']);
 
 export const Columns: FC<ColumnsProps> = ({ title = '', cols }) => {
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
 
   const getMark = (value: boolean) =>
     value ? (

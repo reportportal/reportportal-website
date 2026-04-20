@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useRef, FC, RefObject, useMemo } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { useToggle, useScroll } from 'ahooks';
 import { Drawer, Collapse } from 'antd';
 import { upperFirst } from 'lodash';
@@ -7,6 +6,8 @@ import classNames from 'classnames';
 import { Link } from '@app/components/Link';
 import { createBemBlockBuilder, isNewYearMode } from '@app/utils';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
+import { useHasMounted } from '@app/hooks/useHasMounted';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -58,11 +59,18 @@ interface NavigationProps {
 
 export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
   const menuLinksRef = useRef<HTMLUListElement | null>(null);
+  // `useScroll` (ahooks) reads `window.pageYOffset` synchronously on the first
+  // client render, which can differ from the SSR value of `0` if the user
+  // landed on a deep-link (e.g. `#section-3`). Gate it behind `useHasMounted`
+  // so the first hydrated tree matches the SSR HTML byte-for-byte; the real
+  // scroll value takes over on the next render. The media query no longer
+  // needs this gate -- `useMediaQuerySafe` is hydration-safe by construction.
+  const hasMounted = useHasMounted();
   const scroll = useScroll();
   const [isMobileMenuOpen, { setRight: openMobileMenu, setLeft: closeMobileMenu }] = useToggle();
   const githubCounter = githubStats.repos.reportportal;
-  const isDesktop = useMediaQuery({ query: '(min-width: 1124px)' });
-  const scrollY = scroll?.top ?? 0;
+  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
+  const scrollY = hasMounted ? scroll?.top ?? 0 : 0;
 
   const [menus, updateMenus] = useReducer(
     (prevState, newState) => ({

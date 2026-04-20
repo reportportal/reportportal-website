@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { useToggle } from 'ahooks';
 import { Divider } from 'antd';
 import { createBemBlockBuilder, MEDIA_TABLET_SM } from '@app/utils';
@@ -18,7 +18,7 @@ const getBlocksWith = createBemBlockBuilder(['scheme']);
 
 export const IntegrationScheme: FC = () => {
   const [collapsedScheme, { toggle: toggleCollapsedSchemeState }] = useToggle(true);
-  const isDesktop = useMediaQuery({ query: MEDIA_TABLET_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_TABLET_SM);
 
   return (
     <div className={getGeneralBlocksWith('__container')}>
