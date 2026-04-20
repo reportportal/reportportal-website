@@ -33,14 +33,12 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
     return false;
   }
 
-  // Preserve scroll when only the query string changes on the same pathname
-  // (e.g., blog filters, Load More pagination). Prevents Gatsby from resetting
-  // scroll to the top when the listing calls navigate(..., { replace: true }).
-  if (
-    prevRouterProps?.location &&
-    prevRouterProps.location.pathname === location?.pathname &&
-    prevRouterProps.location.search !== location?.search
-  ) {
+  // Preserve scroll when navigating on the same pathname, regardless of
+  // whether the query string changes (e.g., blog filters, Load More
+  // pagination, or a no-op navigate that trims to the same URL). Prevents
+  // Gatsby from resetting scroll to the top when the listing calls
+  // navigate(..., { replace: true }).
+  if (prevRouterProps?.location && prevRouterProps.location.pathname === location?.pathname) {
     return false;
   }
 

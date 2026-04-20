@@ -42,9 +42,19 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({ data: { allContentfulBlog
 
   const updateParams = useCallback(
     (next: Partial<BlogParams>) => {
-      navigate(buildBlogUrl({ ...params, ...next }), { replace: true });
+      const nextUrl = buildBlogUrl({ ...params, ...next });
+      const currentUrl = `${location.pathname}${location.search}`;
+
+      // Skip navigation when the URL wouldn't actually change (e.g. typing a
+      // lone space which gets trimmed away in buildBlogUrl). A no-op navigate
+      // still triggers Gatsby's scroll handling and can snap the page to top.
+      if (nextUrl === currentUrl) {
+        return;
+      }
+
+      navigate(nextUrl, { replace: true });
     },
-    [params],
+    [params, location.pathname, location.search],
   );
 
   const categories = useMemo(() => {
