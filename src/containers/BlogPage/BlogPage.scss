@@ -74,26 +74,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 120px;
     padding-top: 16px;
   }
 
-  &__results-count {
+  &__search-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  // Fixed band between category filters and cards; status copy sits inside so the
+  // layout does not shift when messages appear or change.
+  &__status-slot {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 96px;
+    padding: 0 16px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      min-height: 104px;
+    }
+  }
+
+  &__status-text {
     @include m.font-noto-sans();
     @include m.font-scale(base);
 
     text-align: center;
     line-height: 24px;
-    color: var(--white);
-  }
-
-  &__no-results {
-    @include m.font-poppins();
-    @include m.font-scale(small);
-
-    text-align: center;
-    line-height: 20px;
     color: var(--white);
   }
 

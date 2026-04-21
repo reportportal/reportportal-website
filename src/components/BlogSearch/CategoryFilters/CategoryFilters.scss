@@ -7,7 +7,6 @@
   justify-content: center;
   gap: 16px;
   width: 100%;
-  margin-bottom: 16px;
 
   &__button {
     @include m.font-poppins(v.$fw-semi-bold);

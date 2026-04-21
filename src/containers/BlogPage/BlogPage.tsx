@@ -54,11 +54,14 @@ export const BlogPage: FC<BlogPageProps> = ({
   const showLoadMore = !isSearchActive && visiblePosts.length < filteredPosts.length;
   const hasNoResults = isSearchActive && isEmpty(filteredPosts);
 
-  let statusText: string | null = null;
-  if (isSearchActive && !hasNoResults) {
-    statusText = getResultsCountText(filteredPosts.length);
+  let statusSlotText: string | null = null;
+  if (hasNoResults) {
+    statusSlotText =
+      'No results found for your search. Try different keywords or check your filter.';
+  } else if (isSearchActive && !hasNoResults) {
+    statusSlotText = getResultsCountText(filteredPosts.length);
   } else if (!isSearchActive && isSearchFocused) {
-    statusText = 'Start typing to search';
+    statusSlotText = 'Start typing to search';
   }
 
   return (
@@ -82,27 +85,26 @@ export const BlogPage: FC<BlogPageProps> = ({
             Product updates, news and technology articles
           </AnimatedHeader>
           <div className={getBlocksWith('__search-section')}>
-            <BlogSearch
-              value={searchQuery}
-              onChange={onSearchChange}
-              onFocusChange={setIsSearchFocused}
-            />
-            <CategoryFilters
-              categories={categories}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={onCategoryToggle}
-              onAllArticlesClick={onAllArticlesClick}
-            />
-            {statusText && (
-              <div role="status" aria-live="polite" className={getBlocksWith('__results-count')}>
-                {statusText}
-              </div>
-            )}
-            {hasNoResults && (
-              <div role="status" aria-live="polite" className={getBlocksWith('__no-results')}>
-                No results found for your search. Try different keywords or check your filter.
-              </div>
-            )}
+            <div className={getBlocksWith('__search-controls')}>
+              <BlogSearch
+                value={searchQuery}
+                onChange={onSearchChange}
+                onFocusChange={setIsSearchFocused}
+              />
+              <CategoryFilters
+                categories={categories}
+                selectedCategories={selectedCategories}
+                onCategoryToggle={onCategoryToggle}
+                onAllArticlesClick={onAllArticlesClick}
+              />
+            </div>
+            <div className={getBlocksWith('__status-slot')}>
+              {statusSlotText ? (
+                <span role="status" aria-live="polite" className={getBlocksWith('__status-text')}>
+                  {statusSlotText}
+                </span>
+              ) : null}
+            </div>
           </div>
           <ArticlePreview
             posts={visiblePosts}
