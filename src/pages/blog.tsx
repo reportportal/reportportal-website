@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { PageProps, graphql, navigate } from 'gatsby';
 import { isEmpty, isString } from 'lodash';
 import { Layout, Seo } from '@app/components/Layout';
@@ -32,11 +32,15 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 }) => {
   const { nodes: allPosts } = allContentfulBlogPost;
 
-  // Use Gatsby's `location` prop (not `useLocation()` from Reach Router). On a full
-  // page reload with query params, the router hook can render once with an empty
-  // `search` before syncing from the URL, which flashes all posts before filtering.
   const params = useMemo(() => parseBlogParams(location.search), [location.search]);
-  const { searchQuery, selectedCategories, page } = params;
+  const { selectedCategories, page } = params;
+  const [searchQuery, setSearchQuery] = useState(
+    () => parseBlogParams(location.search).searchQuery,
+  );
+
+  useEffect(() => {
+    setSearchQuery(parseBlogParams(location.search).searchQuery);
+  }, [location.search]);
 
   const searchPhrase = useMemo(
     () => normalizeSearchText(searchQuery).replace(/\s+/g, ' ').trim(),
@@ -113,6 +117,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
   const handleSearchChange = useCallback(
     (value: string) => {
+      setSearchQuery(value);
       updateParams({ searchQuery: value, page: 1 });
     },
     [updateParams],
