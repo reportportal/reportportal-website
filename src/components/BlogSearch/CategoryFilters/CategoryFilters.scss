@@ -2,17 +2,60 @@
 @use 'src/styles/variables' as v;
 
 .category-filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
   width: 100%;
+  min-width: 0;
+
+  &__viewport {
+    @include m.hide-scroll();
+
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    overflow: auto visible;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    // Break out of `.blog` + `.container` padding so the scrollport matches the viewport
+    // width. Plain negative margins can leave a padded band on the right (chips clip there).
+    @include m.breakpoint-max(v.$tablet-sm-exact - 1) {
+      width: 100vw;
+      margin-right: calc(50% - 50vw);
+      margin-left: calc(50% - 50vw);
+    }
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-right: 0;
+      margin-left: 0;
+      overflow: visible;
+    }
+  }
+
+  &__track {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 16px;
+    width: max-content;
+    max-width: none;
+    padding-right: 16px;
+    padding-left: 16px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+      padding: 0;
+    }
+  }
 
   &__button {
     @include m.font-poppins(v.$fw-semi-bold);
     @include m.font-scale(base);
 
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     height: 40px;

@@ -20,6 +20,13 @@
     background-size: cover;
   }
 
+  & > .container {
+    @include m.breakpoint-max(v.$tablet-sm-exact - 1) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
   &__main {
     display: block;
     grid-template-columns: 0 1fr;
@@ -81,11 +88,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: stretch;
     gap: 16px;
+    width: 100%;
+    min-width: 0;
   }
 
-  // Fixed band between category filters and cards; status copy sits inside so the
-  // layout does not shift when messages appear or change.
   &__status-slot {
     box-sizing: border-box;
     display: flex;
