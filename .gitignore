@@ -1,3 +1,5 @@
+# Local performance/build worktrees (agent-generated)
+.worktrees/
 .idea
 dist
 

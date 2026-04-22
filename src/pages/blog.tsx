@@ -128,9 +128,14 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
   useDebounceEffect(
     () => {
+      // Only reset pagination when the search query actually changes vs the URL
+      if (searchQuery.trim() === params.searchQuery.trim()) {
+        return;
+      }
+
       updateParams({ searchQuery, page: 1 });
     },
-    [searchQuery],
+    [searchQuery, params.searchQuery],
     { wait: SEARCH_URL_DEBOUNCE_MS },
   );
 
