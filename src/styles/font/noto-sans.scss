@@ -5,6 +5,7 @@
   font-weight: $fw-regular;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Noto_Sans/noto-sans-v42-latin-regular.woff2') format('woff2');
 }
 
@@ -13,6 +14,7 @@
   font-weight: $fw-medium;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Noto_Sans/noto-sans-v42-latin-500.woff2') format('woff2');
 }
 
@@ -21,6 +23,7 @@
   font-weight: $fw-semi-bold;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Noto_Sans/noto-sans-v42-latin-600.woff2') format('woff2');
 }
 
@@ -29,6 +32,7 @@
 @font-face {
   font-family: 'Noto Sans Fallback';
   font-style: normal;
+  unicode-range: #{$unicode-range-latin};
   src: local('Arial');
   ascent-override: 105.16%;
   descent-override: 28.73%;

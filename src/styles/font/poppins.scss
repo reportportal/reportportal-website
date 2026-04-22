@@ -5,6 +5,7 @@
   font-weight: $fw-regular;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Poppins/poppins-v24-latin-regular.woff2') format('woff2');
 }
 
@@ -13,6 +14,7 @@
   font-weight: $fw-medium;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Poppins/poppins-v24-latin-500.woff2') format('woff2');
 }
 
@@ -21,6 +23,7 @@
   font-weight: $fw-semi-bold;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Poppins/poppins-v24-latin-600.woff2') format('woff2');
 }
 
@@ -29,6 +32,7 @@
   font-weight: $fw-bold;
   font-style: normal;
   font-display: swap;
+  unicode-range: #{$unicode-range-latin};
   src: url('/fonts/Poppins/poppins-v24-latin-700.woff2') format('woff2');
 }
 
@@ -39,6 +43,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
+  unicode-range: #{$unicode-range-latin};
   src: local('Arial');
   ascent-override: 93.17%;
   descent-override: 31.06%;

@@ -96,6 +96,8 @@ Rules:
 - Keep the license file (`OFL.txt` / `LICENSE.txt`) next to each font family in `static/fonts/<family>/` — required by SIL OFL and Apache‑2.0 redistribution terms.
 - Use the `latin` subset unless you have a concrete need for `cyrillic`, `greek`, etc. Every extra subset doubles the download.
 
+**Non‑Latin input (e.g. Ukrainian/Russian) and Chrome on macOS:** Poppins and Noto are Latin‑only files, and the stack includes synthetic Arial fallbacks (`Poppins Fallback`, `Noto Sans Fallback`) with metric overrides for CLS. On some Chrome + macOS combinations, Cyrillic routed through those synthetic `@font-face` rules can render as invisible in inputs while the control value still updates; disabling the fallback in DevTools forces plain Arial and “fixes” it. Safari often does not hit this path. The project scopes every webfont and synthetic fallback with the same Latin `unicode-range` as the subset so non‑Latin text skips those faces and uses real **Arial** from the stack.
+
 ### Adding a new weight to an existing family
 
 1. Download the `.woff2` from [google-webfonts-helper](https://gwfh.mranftl.com/fonts):
