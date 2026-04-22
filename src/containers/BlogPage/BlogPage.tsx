@@ -23,6 +23,7 @@ interface BlogPageProps {
   selectedCategories: string[];
   isSearchActive: boolean;
   onSearchChange: (value: string) => void;
+  onSearchFocusChange?: (isFocused: boolean) => void;
   onCategoryToggle: (category: string) => void;
   onAllArticlesClick: () => void;
 }
@@ -46,6 +47,7 @@ export const BlogPage: FC<BlogPageProps> = ({
   selectedCategories,
   isSearchActive,
   onSearchChange,
+  onSearchFocusChange,
   onCategoryToggle,
   onAllArticlesClick,
 }) => {
@@ -89,7 +91,10 @@ export const BlogPage: FC<BlogPageProps> = ({
               <BlogSearch
                 value={searchQuery}
                 onChange={onSearchChange}
-                onFocusChange={setIsSearchFocused}
+                onFocusChange={nextFocused => {
+                  setIsSearchFocused(nextFocused);
+                  onSearchFocusChange?.(nextFocused);
+                }}
               />
               <CategoryFilters
                 categories={categories}

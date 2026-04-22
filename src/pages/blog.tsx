@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { PageProps, graphql, navigate } from 'gatsby';
+import { useDebounceEffect } from 'ahooks';
 import { isEmpty, isString } from 'lodash';
 import { Layout, Seo } from '@app/components/Layout';
 import { BREADCRUMBS } from '@app/components/StructuredData';
@@ -14,6 +15,8 @@ import {
   buildBlogUrl,
 } from '@app/utils';
 import { normalizeSearchText } from '@app/utils/buildSearchIndex';
+
+const SEARCH_URL_DEBOUNCE_MS = 250;
 
 const normalizeCategoryToArray = (category: string | string[] | null | undefined) => {
   if (!category) {
@@ -34,13 +37,17 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
   const params = useMemo(() => parseBlogParams(location.search), [location.search]);
   const { selectedCategories, page } = params;
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState(
     () => parseBlogParams(location.search).searchQuery,
   );
 
   useEffect(() => {
+    if (isSearchFocused) {
+      return;
+    }
     setSearchQuery(parseBlogParams(location.search).searchQuery);
-  }, [location.search]);
+  }, [isSearchFocused, location.search]);
 
   const searchPhrase = useMemo(
     () => normalizeSearchText(searchQuery).replace(/\s+/g, ' ').trim(),
@@ -115,12 +122,16 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     }
   }, [isSearchActive, page, updateParams]);
 
-  const handleSearchChange = useCallback(
-    (value: string) => {
-      setSearchQuery(value);
-      updateParams({ searchQuery: value, page: 1 });
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchQuery(value);
+  }, []);
+
+  useDebounceEffect(
+    () => {
+      updateParams({ searchQuery, page: 1 });
     },
-    [updateParams],
+    [searchQuery],
+    { wait: SEARCH_URL_DEBOUNCE_MS },
   );
 
   const handleCategoryToggle = useCallback(
@@ -128,14 +139,14 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
       const nextCategories = selectedCategories.includes(category)
         ? selectedCategories.filter(c => c !== category)
         : [...selectedCategories, category];
-      updateParams({ selectedCategories: nextCategories, page: 1 });
+      updateParams({ selectedCategories: nextCategories, searchQuery, page: 1 });
     },
-    [selectedCategories, updateParams],
+    [searchQuery, selectedCategories, updateParams],
   );
 
   const handleAllArticlesClick = useCallback(() => {
-    updateParams({ selectedCategories: [], page: 1 });
-  }, [updateParams]);
+    updateParams({ selectedCategories: [], searchQuery, page: 1 });
+  }, [searchQuery, updateParams]);
 
   return (
     <Layout>
@@ -148,6 +159,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
         selectedCategories={selectedCategories}
         isSearchActive={isSearchActive}
         onSearchChange={handleSearchChange}
+        onSearchFocusChange={setIsSearchFocused}
         onCategoryToggle={handleCategoryToggle}
         onAllArticlesClick={handleAllArticlesClick}
       />
