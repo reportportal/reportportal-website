@@ -56,6 +56,15 @@
     opacity: 0;
     cursor: pointer;
 
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible ~ .custom-checkbox__checkmark {
+      outline: 2px solid var(--color-primary-600);
+      outline-offset: 2px;
+    }
+
     &:checked ~ .custom-checkbox__checkmark::after {
       display: block;
     }
