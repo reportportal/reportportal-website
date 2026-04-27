@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useAtom } from 'jotai';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { motion } from 'framer-motion';
 import {
   ANNOUNCEMENT_CLOSED_KEY,
@@ -23,7 +23,7 @@ const desktopBannerHeight = 56;
 
 export const AnnouncementBar: FC = () => {
   const [, setAnnouncementOpen] = useAtom(announcementOpenAtom);
-  const isTablet = useMediaQuery({ query: MEDIA_TABLET_SM });
+  const isTablet = useMediaQuerySafe(MEDIA_TABLET_SM);
   const bannerHeight = isTablet ? desktopBannerHeight : mobileBannerHeight;
   const heightAnimation = { y: bannerHeight * -1, height: 0 };
 

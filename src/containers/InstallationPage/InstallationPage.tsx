@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { motion } from 'framer-motion';
 import classNames from 'classnames';
 import { Banner } from '@app/components/Banner';
@@ -66,7 +66,7 @@ export const InstallationPage: FC = () => {
   const [activeButton, setActiveButton] = useState(ACTIVE_BUTTON);
   const [heroRef, isHeroInView] = useInView();
   const [contentRef, isContentInView] = useInView({ once: true, margin: '120%' });
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
 
   const sections = buttons.find(button => button.text === activeButton)?.scrollPoints ?? [];
   const getContentAnimation = useMotionEnterAnimation({

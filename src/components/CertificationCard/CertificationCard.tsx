@@ -32,6 +32,7 @@ export const CertificationCard: FC<CertificationCardProps> = ({
       {shouldDisplayLink && (
         <ArrowLink
           text="Learn more"
+          srOnlySuffix=" about ReportPortal SOC 2 Type II audit"
           to="/blog/reportportal-completes-soc-2-type-ii-audit/"
           className={cn('btn btn--outline btn--large', getBlocksWith('__link'))}
         />

@@ -1,44 +1,73 @@
 import React, { FC } from 'react';
-import isEmpty from 'lodash/isEmpty';
-import chunk from 'lodash/chunk';
-import { useMediaQuery } from 'react-responsive';
-import { BlogPostDto, MEDIA_DESKTOP_SM, MEDIA_TABLET_SM, PropsWithAnimation } from '@app/utils';
+import { isEmpty } from 'lodash';
+import { motion } from 'framer-motion';
+import {
+  BlogPostDto,
+  createBemBlockBuilder,
+  getEaseInOutTransition,
+  opacityScaleAnimationProps,
+  PropsWithAnimation,
+} from '@app/utils';
+import { useInView } from '@app/hooks/useInView';
+import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
 
-import { ArticlePreviewRow } from './ArticlePreviewRow';
+import { ArticlePreviewItem } from './ArticlePreviewItem';
 
 import './ArticlePreview.scss';
 
+// Mark the first row of cards as eager so their images aren't deferred by the
+// browser's native lazy-loading - they're above the fold on every viewport.
+const EAGER_CARDS_COUNT = 3;
+
 interface ArticlePreviewProps {
   posts: BlogPostDto[];
-  hasFixedItemsPerRow?: boolean;
+  searchQuery?: string;
 }
 
-const getItemsPerRow = (isDesktop: boolean, isTablet: boolean) => {
-  if (isDesktop) {
-    return 3;
-  }
-
-  if (isTablet) {
-    return 2;
-  }
-
-  return 1;
-};
+const getBlocksWith = createBemBlockBuilder(['article-preview-list']);
 
 export const ArticlePreview: FC<PropsWithAnimation<ArticlePreviewProps>> = ({
   posts,
-  hasFixedItemsPerRow = false,
   isAnimationEnabled = false,
+  searchQuery,
 }) => {
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
-  const isTablet = useMediaQuery({ query: MEDIA_TABLET_SM });
-  const rows = chunk(posts, hasFixedItemsPerRow ? 3 : getItemsPerRow(isDesktop, isTablet));
+  const [listRef, isInView] = useInView();
+  const getAnimation = useMotionEnterAnimation(
+    {
+      ...opacityScaleAnimationProps,
+      ...getEaseInOutTransition(0.7),
+    },
+    isAnimationEnabled,
+  );
 
-  return !isEmpty(posts) ? (
-    <ul>
-      {rows.map((row, rowIndex) => (
-        <ArticlePreviewRow key={rowIndex} row={row} isAnimationEnabled={isAnimationEnabled} />
+  if (isEmpty(posts)) {
+    return null;
+  }
+
+  return (
+    <motion.ul
+      ref={listRef}
+      className={getBlocksWith()}
+      {...getAnimation({
+        isInView,
+        additionalEffects: {
+          hiddenAdditional: {
+            y: 150,
+          },
+          enterAdditional: {
+            y: 0,
+          },
+        },
+      })}
+    >
+      {posts.map((post, index) => (
+        <ArticlePreviewItem
+          key={post.id}
+          post={post}
+          searchQuery={searchQuery}
+          isEager={index < EAGER_CARDS_COUNT}
+        />
       ))}
-    </ul>
-  ) : null;
+    </motion.ul>
+  );
 };

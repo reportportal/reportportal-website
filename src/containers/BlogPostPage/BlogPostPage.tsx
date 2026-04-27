@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import {
   ContentfulRichTextGatsbyReference,
   renderRichText,
@@ -27,6 +27,16 @@ interface BlogPostPageProps {
   };
 }
 
+const isFromBlogList = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const prev = window.prevLocation;
+  const path = (prev?.pathname ?? '').replace(/\/$/, '') || '/';
+  return path === '/blog';
+};
+
 export const BlogPostPage: FC<BlogPostPageProps> = ({
   industry,
   title,
@@ -36,6 +46,24 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
 }) => {
   useHighlight();
 
+  const handleBackClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    if (isFromBlogList()) {
+      event.preventDefault();
+      window.history.back();
+    }
+  };
+
   return (
     <>
       <div className="blog-post-page">
@@ -43,8 +71,12 @@ export const BlogPostPage: FC<BlogPostPageProps> = ({
           <p className="blog-post-page__industry">{industry}</p>
           <h1 className="blog-post-page__title">{title?.title}</h1>
           <div className="blog-post-page__info">
-            <Link className="btn btn--white btn--large back-to-blog" to="/blog/">
-              <img src={ArrowLeft} alt="arrow left" />
+            <Link
+              className="btn btn--white btn--large back-to-blog"
+              to="/blog/"
+              onClick={handleBackClick}
+            >
+              <img src={ArrowLeft} alt="" aria-hidden="true" />
               Back to blog
             </Link>
             <div className="blog-post-page__info-aside">

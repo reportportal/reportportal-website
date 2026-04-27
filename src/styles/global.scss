@@ -28,16 +28,36 @@ img {
   width: 100%;
 }
 
+// Also neutralizes antd v5's cssinjs link reset (a {color, text-decoration},
+// a:hover/:active/:focus {text-decoration, outline}, a[disabled] {color, cursor})
+// emitted via getResetStyles in node_modules/antd/lib/theme/util/genStyleUtils.js.
+// Equal-specificity wins by source order — antd's <style data-antd-cssinjs> is
+// placed before this stylesheet by onPreRenderHTML in gatsby-ssr.tsx.
 a {
   text-decoration: none;
   color: currentColor;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
 
   &:hover {
     color: var(--text-grey);
   }
 
+  &:focus {
+    outline: revert;
+    text-decoration: none;
+  }
+
   &:active {
     color: var(--color-primary-700);
+  }
+
+  &[disabled] {
+    color: inherit;
+    cursor: inherit;
   }
 }
 
@@ -102,6 +122,25 @@ input:-webkit-autofill {
 
 .temporary-hide {
   display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.no-transitions,
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+  transition: none !important;
 }
 
 @keyframes progressAnimation {

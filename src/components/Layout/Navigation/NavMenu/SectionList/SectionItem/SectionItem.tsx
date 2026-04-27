@@ -9,6 +9,7 @@ import {
   isContentfulRecord,
   LinkDto,
 } from '@app/utils';
+import { useHasMounted } from '@app/hooks/useHasMounted';
 import ArrowIcon from '@app/svg/arrow.inline.svg';
 
 interface SectionItemBaseProps {
@@ -31,6 +32,14 @@ export type SectionItemProps =
 export const SectionItem: FC<SectionItemProps> = props => {
   const { title, link, icon, hoverIcon, iconClass, text, className = '', mode = 'primary' } = props;
 
+  // `createPortal` requires `document`, which is unavailable on the server. A
+  // `typeof document !== 'undefined'` guard alone causes a React 18 hydration
+  // mismatch (#418): the SSR React tree has no portal child, but the first
+  // client render does. Gating on `useHasMounted` keeps the first hydrated
+  // tree byte-identical to the SSR output and defers the `<link rel="preload">`
+  // injection until after hydration commits, so React doesn't throw out the
+  // entire root and re-render client-side (which is the white flash).
+  const hasMounted = useHasMounted();
   const getBlocksWith = createBemBlockBuilder(['section-item', className]);
   const shouldDisplayArrow = mode === 'secondary' && isAbsoluteURL(link.url);
 
@@ -41,7 +50,7 @@ export const SectionItem: FC<SectionItemProps> = props => {
     if (iconClassName) {
       return (
         <>
-          {typeof document !== 'undefined' &&
+          {hasMounted &&
             hoverIcon &&
             createPortal(<link rel="preload" as="image" href={hoverIcon.url} />, document.head)}
           <span

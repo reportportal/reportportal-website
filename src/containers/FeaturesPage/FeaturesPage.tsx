@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, FC } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { useScroll } from 'ahooks';
 import { motion } from 'framer-motion';
@@ -75,7 +75,7 @@ export const FeaturesPage: FC = () => {
   const processIntegrationRef = useRef<null | HTMLDivElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
   const scrollY = scroll?.top ?? 0;
 
   const featuresBlockStickyPosition = 126;
@@ -201,7 +201,12 @@ export const FeaturesPage: FC = () => {
                 )}
                 <h3>{title}</h3>
                 <p>{description}</p>
-                <ArrowLink mode="primary" to={link} text="Learn more" />
+                <ArrowLink
+                  mode="primary"
+                  to={link}
+                  text="Learn more"
+                  srOnlySuffix={` about ${title}`}
+                />
               </div>
 
               <div className={getBlocksWith('__features-list-item-trailing')}>

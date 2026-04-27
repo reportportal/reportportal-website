@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
+import { noop } from 'lodash';
 import { createBemBlockBuilder } from '@app/utils';
 
 import './CustomCheckbox.scss';

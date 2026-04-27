@@ -1,6 +1,5 @@
 import React, { FC, ReactElement, useCallback, useRef } from 'react';
 import Snowfall, { SnowfallProps } from 'react-snowfall';
-import { StyleProvider } from '@ant-design/cssinjs';
 import { useAtom } from 'jotai';
 import classNames from 'classnames';
 import { isNewYearMode, watchProductOverviewAtom } from '@app/utils';
@@ -36,7 +35,7 @@ export const Layout: FC<LayoutProps> = ({ children, className }) => {
   );
 
   return (
-    <StyleProvider hashPriority="high">
+    <>
       <div className={classNames(className, { 'new-year-mode': isNewYearMode })}>
         <Navigation announcementBarRef={announcementBarRef} />
         <main>{children}</main>
@@ -48,6 +47,6 @@ export const Layout: FC<LayoutProps> = ({ children, className }) => {
         />
       </div>
       {isNewYearMode && <Snowfall {...snowfallProps} />}
-    </StyleProvider>
+    </>
   );
 };

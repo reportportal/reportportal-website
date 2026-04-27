@@ -1,9 +1,9 @@
 import React, { FC, Fragment } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { Collapse } from 'antd';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { INLINES } from '@contentful/rich-text-types';
-import size from 'lodash/size';
+import { size } from 'lodash';
 import classNames from 'classnames';
 import {
   createBemBlockBuilder,
@@ -30,7 +30,7 @@ export const ComparePlans: FC<ComparePlansProps> = ({
   plans: { sections, columns, ctas, note },
   isCollapsibleOnMobile = true,
 }) => {
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
   const { Panel } = Collapse;
   const [featureColumn, ...plansColumns] = columns;
 

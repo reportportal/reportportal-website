@@ -16,7 +16,7 @@ declare module '*.svg' {
 
 interface Window {
   dataLayer: object[];
-  prevLocation: Location | null;
+  prevLocation?: Location;
 }
 
 declare module 'react-scroll' {

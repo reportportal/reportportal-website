@@ -23,6 +23,7 @@
     "./gatsby-node.ts",
     "./gatsby-config.ts",
     "./gatsby-ssr.tsx",
+    "./gatsby-browser.ts",
     "./plugins/**/*"
   ],
   "exclude": ["node_modules"]
