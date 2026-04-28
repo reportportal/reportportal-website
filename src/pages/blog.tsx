@@ -91,6 +91,11 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     return selectedCategories.filter(category => known.has(category));
   }, [categories, selectedCategories]);
 
+  const selectedCategorySet = useMemo(
+    () => new Set(cleanedSelectedCategories),
+    [cleanedSelectedCategories],
+  );
+
   const filteredPosts = useMemo(() => {
     let filtered = allPosts;
 
@@ -98,9 +103,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
       filtered = filtered.filter(post => {
         const postCategories = categoriesFromPost(post.category);
 
-        return postCategories.some(category =>
-          cleanedSelectedCategories.includes(trimCategory(category)),
-        );
+        return postCategories.some(category => selectedCategorySet.has(trimCategory(category)));
       });
     }
 
@@ -111,7 +114,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     }
 
     return filtered;
-  }, [allPosts, cleanedSelectedCategories, searchPhrase]);
+  }, [allPosts, cleanedSelectedCategories, selectedCategorySet, searchPhrase]);
 
   const visibleCount = isSearchActive ? SEARCH_RESULTS_LIMIT : page * BLOG_PAGE_SIZE;
   const visiblePosts = useMemo(
