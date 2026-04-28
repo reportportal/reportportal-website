@@ -1,4 +1,4 @@
-import { compact } from 'lodash';
+import { compact, escapeRegExp } from 'lodash';
 
 /** NFKD, strip diacritics, invariant lowercasing — keep in sync with blog search tokens. */
 export const normalizeSearchText = (input: string): string =>
@@ -6,6 +6,68 @@ export const normalizeSearchText = (input: string): string =>
     .normalize('NFKD')
     .replace(/\p{Diacritic}/gu, '')
     .toLowerCase();
+
+export interface HighlightRange {
+  start: number;
+  end: number;
+}
+
+/**
+ * Per-code-unit normalized form (same token space as `normalizeSearchText`) plus index map back to `text`.
+ */
+const buildNormalizedTextAndIndexMap = (
+  text: string,
+): { normalizedText: string; indexMap: number[] } => {
+  const indexMap: number[] = [];
+  let normalizedText = '';
+
+  for (let i = 0; i < text.length; i += 1) {
+    const chunk = normalizeSearchText(text[i]);
+    normalizedText += chunk;
+    for (let j = 0; j < chunk.length; j += 1) {
+      indexMap.push(i);
+    }
+  }
+
+  return { normalizedText, indexMap };
+};
+
+/**
+ * Ranges in `text` to highlight for UI when `query` matches per blog search normalization (diacritics, case).
+ */
+export const getHighlightRanges = (text: string, query: string | undefined): HighlightRange[] => {
+  const phrase = query?.replace(/\s+/g, ' ').trim() ?? '';
+
+  if (phrase.length === 0) {
+    return [];
+  }
+
+  const normalizedPhrase = normalizeSearchText(phrase);
+
+  if (normalizedPhrase.length === 0) {
+    return [];
+  }
+
+  const { normalizedText, indexMap } = buildNormalizedTextAndIndexMap(text);
+  const matchRegex = new RegExp(escapeRegExp(normalizedPhrase), 'gi');
+  const ranges: HighlightRange[] = [];
+
+  let match = matchRegex.exec(normalizedText);
+  while (match !== null) {
+    const startNorm = match.index;
+    const endNorm = startNorm + match[0].length;
+    const startOrig = indexMap[startNorm];
+    const endOrig = indexMap[endNorm - 1] + 1;
+
+    if (typeof startOrig === 'number' && typeof endOrig === 'number') {
+      ranges.push({ start: startOrig, end: endOrig });
+    }
+
+    match = matchRegex.exec(normalizedText);
+  }
+
+  return ranges;
+};
 
 interface RichTextNode {
   nodeType?: string;
