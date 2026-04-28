@@ -44,9 +44,16 @@ export const FeaturesPage: FC = () => {
   const [activeElement, setActiveElement] = useState(location.hash);
   const processIntegrationRef = useRef<null | HTMLDivElement>(null);
 
-  const setHistoryValue = useCallback((hashFragment: string) => {
-    window.history.replaceState(null, '', `/features${hashFragment}`);
-  }, []);
+  const setHistoryValue = useCallback(
+    (hashFragment: string) => {
+      window.history.replaceState(
+        null,
+        '',
+        `${location.pathname}${location.search}${hashFragment}`,
+      );
+    },
+    [location.pathname, location.search],
+  );
 
   const handleScroll = useCallback(() => {
     const itemList = document.querySelectorAll(
