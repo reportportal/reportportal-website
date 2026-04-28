@@ -88,15 +88,24 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     return Array.from(categorySet).sort();
   }, [allPosts]);
 
+  const cleanedSelectedCategories = useMemo(() => {
+    if (isEmpty(selectedCategories)) {
+      return [];
+    }
+
+    const known = new Set(categories);
+    return selectedCategories.filter(category => known.has(category));
+  }, [categories, selectedCategories]);
+
   const filteredPosts = useMemo(() => {
     let filtered = allPosts;
 
-    if (!isEmpty(selectedCategories)) {
+    if (!isEmpty(cleanedSelectedCategories)) {
       filtered = filtered.filter(post => {
         const postCategories = normalizeCategoryToArray(post.category);
 
         return postCategories.some(category =>
-          selectedCategories.includes(normalizeCategoryString(category)),
+          cleanedSelectedCategories.includes(normalizeCategoryString(category)),
         );
       });
     }
@@ -108,7 +117,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     }
 
     return filtered;
-  }, [allPosts, selectedCategories, searchPhrase]);
+  }, [allPosts, cleanedSelectedCategories, searchPhrase]);
 
   const visibleCount = isSearchActive ? SEARCH_RESULTS_LIMIT : page * BLOG_PAGE_SIZE;
   const visiblePosts = useMemo(
@@ -141,12 +150,12 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
   const handleCategoryToggle = useCallback(
     (category: string) => {
-      const nextCategories = selectedCategories.includes(category)
-        ? selectedCategories.filter(c => c !== category)
-        : [...selectedCategories, category];
+      const nextCategories = cleanedSelectedCategories.includes(category)
+        ? cleanedSelectedCategories.filter(c => c !== category)
+        : [...cleanedSelectedCategories, category];
       updateParams({ selectedCategories: nextCategories, searchQuery, page: 1 });
     },
-    [searchQuery, selectedCategories, updateParams],
+    [cleanedSelectedCategories, searchQuery, updateParams],
   );
 
   const handleAllArticlesClick = useCallback(() => {
@@ -161,7 +170,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
         loadMorePosts={loadMorePosts}
         categories={categories}
         searchQuery={searchQuery}
-        selectedCategories={selectedCategories}
+        selectedCategories={cleanedSelectedCategories}
         isSearchActive={isSearchActive}
         onSearchChange={handleSearchChange}
         onSearchFocusChange={setIsSearchFocused}
