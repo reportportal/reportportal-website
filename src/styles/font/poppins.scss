@@ -42,6 +42,7 @@
 // https://developer.chrome.com/docs/fonts/font-fallbacks for the technique.
 @font-face {
   font-family: 'Poppins Fallback';
+  font-weight: 100 900;
   font-style: normal;
   unicode-range: #{$unicode-range-latin};
   src: local('Arial');
