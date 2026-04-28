@@ -36,7 +36,7 @@ export const getTimeSince = (date: string) => {
   return `${currentPeriod} ${stringifyPeriods[currentIndex]}${currentPeriod > 1 ? 's' : ''} ago`;
 };
 
-const getViewDigit = count => {
+const getViewDigit = (count: number) => {
   const truncDigit = Math.trunc(count);
   const floatDigit = count.toFixed(1);
   const fractionalDigit = floatDigit.split('.')[1];
