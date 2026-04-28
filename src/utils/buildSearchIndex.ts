@@ -12,6 +12,36 @@ export interface HighlightRange {
   end: number;
 }
 
+/** Same whitespace collapsing as the search query (`phrase`) so matches align with multi-space source text. */
+const collapseWhitespaceWithOrigIndexMap = (
+  text: string,
+): { collapsed: string; collapsedCharToOrigIndex: number[] } => {
+  const collapsedCharToOrigIndex: number[] = [];
+  let collapsed = '';
+  let i = 0;
+
+  while (i < text.length) {
+    const ch = text[i];
+
+    if (/\s/.test(ch)) {
+      const runStart = i;
+
+      while (i < text.length && /\s/.test(text[i])) {
+        i += 1;
+      }
+
+      collapsed += ' ';
+      collapsedCharToOrigIndex.push(runStart);
+    } else {
+      collapsed += ch;
+      collapsedCharToOrigIndex.push(i);
+      i += 1;
+    }
+  }
+
+  return { collapsed, collapsedCharToOrigIndex };
+};
+
 /**
  * Per-code-unit normalized form (same token space as `normalizeSearchText`) plus index map back to `text`.
  */
@@ -48,7 +78,8 @@ export const getHighlightRanges = (text: string, query: string | undefined): Hig
     return [];
   }
 
-  const { normalizedText, indexMap } = buildNormalizedTextAndIndexMap(text);
+  const { collapsed, collapsedCharToOrigIndex } = collapseWhitespaceWithOrigIndexMap(text);
+  const { normalizedText, indexMap } = buildNormalizedTextAndIndexMap(collapsed);
   const matchRegex = new RegExp(escapeRegExp(normalizedPhrase), 'gi');
   const ranges: HighlightRange[] = [];
 
@@ -56,8 +87,10 @@ export const getHighlightRanges = (text: string, query: string | undefined): Hig
   while (match !== null) {
     const startNorm = match.index;
     const endNorm = startNorm + match[0].length;
-    const startOrig = indexMap[startNorm];
-    const endOrig = indexMap[endNorm - 1] + 1;
+    const startCollapsed = indexMap[startNorm];
+    const endCollapsed = indexMap[endNorm - 1] + 1;
+    const startOrig = collapsedCharToOrigIndex[startCollapsed];
+    const endOrig = collapsedCharToOrigIndex[endCollapsed - 1] + 1;
 
     if (typeof startOrig === 'number' && typeof endOrig === 'number') {
       ranges.push({ start: startOrig, end: endOrig });
