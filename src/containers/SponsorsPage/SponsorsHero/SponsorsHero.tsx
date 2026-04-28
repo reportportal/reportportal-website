@@ -5,7 +5,12 @@ import { chunk } from 'lodash';
 import { HeroSwitching } from '@app/components/HeroSwitching';
 import { Carousel } from '@app/components/Carousel';
 import { useInView } from '@app/hooks/useInView';
-import { createBemBlockBuilder, MEDIA_PHONE_LG, COMMON_MARQUEE_PROPS } from '@app/utils';
+import {
+  createBemBlockBuilder,
+  MEDIA_DESKTOP,
+  MEDIA_PHONE_LG,
+  COMMON_MARQUEE_PROPS,
+} from '@app/utils';
 import { useAnimationEnabledForSiblingRoutes } from '@app/hooks/useAnimationEnabledForSiblingRoutes';
 
 import { PRICING_BUTTONS, SPONSOR_SLIDES } from './constants';
@@ -18,7 +23,7 @@ export const SponsorsHero: FC = () => {
   const [heroRef, isHeroInView] = useInView();
   const isAnimationEnabled = useAnimationEnabledForSiblingRoutes();
 
-  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP);
   const isPhoneLg = useMediaQuerySafe(MEDIA_PHONE_LG);
   const slidesLength = SPONSOR_SLIDES.length;
   // ToDo: verify if it works fine with real sponsors
