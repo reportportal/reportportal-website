@@ -44,7 +44,7 @@ export const BenefitItem: FC<BenefitItemProps> = ({
         <Link className="link" to={link}>
           {linkText}
           <span className="visually-hidden"> about {itemTitle}</span>
-          {' >'}
+          <span aria-hidden="true"> {' >'}</span>
         </Link>
       )}
     </div>
