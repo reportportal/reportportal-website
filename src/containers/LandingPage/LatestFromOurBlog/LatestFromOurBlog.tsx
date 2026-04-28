@@ -30,7 +30,7 @@ export const LatestFromOurBlog: FC<PropsWithAnimation<LatestFromOurBlogProps>> =
         Latest from our blog
       </AnimatedHeader>
       <div className={getBlocksWith('__latest-post')}>
-        <ArticlePreview posts={posts} isAnimationEnabled={isAnimationEnabled} hasFixedItemsPerRow />
+        <ArticlePreview posts={posts} isAnimationEnabled={isAnimationEnabled} />
       </div>
       {isViewAll && (
         <Link className="btn btn--outline btn--large latest-from-our-blog__button" to="/blog/">

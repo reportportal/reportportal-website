@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
+import { noop } from 'lodash';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { Link } from '@app/components/Link';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';

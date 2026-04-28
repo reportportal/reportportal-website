@@ -3,10 +3,8 @@
   "version": "2.0.0",
   "description": "Landing for ReportPortal",
   "scripts": {
-    "prestart": "node ./bin/gen-antd-css.js",
     "start": "gatsby develop -p 8080",
     "graphql:win": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
-    "prebuild": "cross-env NODE_ENV=production node ./bin/gen-antd-css.js",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "setup": "node ./bin/setup.js",
@@ -39,13 +37,11 @@
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.5",
     "react-intersection-observer": "^9.13.1",
-    "react-responsive": "^9.0.2",
     "react-scroll": "^1.9.0",
     "react-snowfall": "^2.1.1",
     "striptags": "^3.2.0"
   },
   "devDependencies": {
-    "@ant-design/static-style-extract": "^1.0.3",
     "@types/jsonp": "^0.2.3",
     "@types/node": "^20.8.2",
     "@types/react": "^18.2.0",
@@ -54,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
     "axios": "^1.7.7",
+    "babel-plugin-lodash": "^3.3.4",
     "chalk": "^5.3.0",
     "contentful-import": "^9.4.59",
     "cross-env": "^7.0.3",

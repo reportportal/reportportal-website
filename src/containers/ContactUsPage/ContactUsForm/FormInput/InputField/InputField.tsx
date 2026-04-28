@@ -1,6 +1,6 @@
 import React, { ElementType, FC } from 'react';
 import classNames from 'classnames';
-import omit from 'lodash/omit';
+import { omit } from 'lodash';
 
 import { BaseFieldProps } from '../../FormFieldWrapper';
 

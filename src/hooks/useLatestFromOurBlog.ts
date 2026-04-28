@@ -22,9 +22,18 @@ export const useLatestFromOurBlog = (): BlogPostDto[] => {
           }
           category
           featuredImage {
+            gatsbyImageData(
+              layout: CONSTRAINED
+              width: 760
+              height: 420
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
             file {
               url
+              contentType
             }
+            description
           }
           slug
         }

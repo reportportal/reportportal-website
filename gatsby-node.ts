@@ -3,9 +3,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { GatsbyNode, NodePluginArgs } from 'gatsby';
+import { CreateWebpackConfigArgs, GatsbyNode } from 'gatsby';
 import axios from 'axios';
-import keyBy from 'lodash/keyBy';
+import { keyBy } from 'lodash';
 import {
   ContentfulRichTextGatsbyReference,
   RenderRichTextData,
@@ -13,6 +13,7 @@ import {
 
 import { ContactUsConfig, OfferingPlanDto, YoutubeVideoDto } from './src/utils/types';
 import { contactUsBaseConfigs } from './src/utils/contactUsConfig';
+import { buildSearchIndex } from './src/utils/buildSearchIndex';
 // importing GraphQL fragments to be available in the app
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as fragments from './src/fragments';
@@ -56,6 +57,13 @@ interface ContactUsQuery {
 const acceleratorsTemplatesPath = './src/templates/accelerators';
 const pricingTemplatesPath = './src/templates/pricing';
 const sponsorsTemplatesPath = './src/templates/sponsorship-program';
+
+export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: 'babel-plugin-lodash',
+    options: {},
+  });
+};
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
@@ -234,7 +242,83 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
   });
 };
 
-exports.onCreateWebpackConfig = ({ actions }: NodePluginArgs) => {
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ actions }) => {
+  actions.createTypes(`
+    type ContentfulBlogPost implements Node {
+      searchIndex: String
+    }
+  `);
+};
+
+interface ContentfulBlogPostSource {
+  id?: string;
+  children?: string[];
+  category?: string[] | null;
+  articleBody?: { raw?: string } | null;
+}
+
+interface MaybeChildNode {
+  internal?: { type?: string };
+  [field: string]: unknown;
+}
+
+export const createResolvers: GatsbyNode['createResolvers'] = ({
+  createResolvers: addResolvers,
+}) => {
+  const searchIndexCache = new Map<string, string>();
+
+  addResolvers({
+    ContentfulBlogPost: {
+      searchIndex: {
+        type: 'String',
+        // gatsby-source-contentful v8 stores long-text fields (title,
+        // leadParagraph) as separate child nodes linked from the parent's
+        // `children` array, while rich-text (articleBody) and primitives
+        // (category) live inline on the parent. So we resolve title/lead
+        // by walking child nodes, and read articleBody/category directly.
+        resolve: (
+          source: ContentfulBlogPostSource,
+          _args: unknown,
+          context: {
+            nodeModel: { getNodeById: (input: { id: string }) => MaybeChildNode | null };
+          },
+        ) => {
+          const cacheKey = source.id;
+
+          if (cacheKey && searchIndexCache.has(cacheKey)) {
+            return searchIndexCache.get(cacheKey);
+          }
+
+          const childIds = Array.isArray(source.children) ? source.children : [];
+          const childNodes = childIds
+            .map(id => context.nodeModel.getNodeById({ id }))
+            .filter((node): node is MaybeChildNode => node !== null);
+
+          const findChildOfType = (type: string) =>
+            childNodes.find(node => node.internal?.type === type);
+
+          const titleNode = findChildOfType('contentfulBlogPostTitleTextNode');
+          const leadNode = findChildOfType('contentfulBlogPostLeadParagraphTextNode');
+
+          const value = buildSearchIndex({
+            title: titleNode ? { title: titleNode.title as string } : null,
+            leadParagraph: leadNode ? { leadParagraph: leadNode.leadParagraph as string } : null,
+            category: source.category,
+            articleBody: source.articleBody,
+          });
+
+          if (cacheKey) {
+            searchIndexCache.set(cacheKey, value);
+          }
+
+          return value;
+        },
+      },
+    },
+  });
+};
+
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }: CreateWebpackConfigArgs) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
@@ -242,6 +326,34 @@ exports.onCreateWebpackConfig = ({ actions }: NodePluginArgs) => {
       },
     },
   });
+
+  // Diagnostic build: when HYDRATION_DEBUG=true is set, force the React /
+  // ReactDOM development bundles into the production browser build. Without
+  // this, React 18 in `gatsby build` only emits minified error codes (#418,
+  // #423, ...) with no component stack, making it impossible to identify
+  // which subtree caused a hydration mismatch. We override Gatsby's existing
+  // DefinePlugin so every `if (process.env.NODE_ENV !== 'production')`
+  // warning branch inside react/react-dom is preserved and the unminified
+  // dev bundle is loaded. This affects only `gatsby build && gatsby serve`
+  // when the env flag is set; SSR continues unchanged.
+  if (process.env.HYDRATION_DEBUG === 'true' && stage === 'build-javascript') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config = getConfig() as { plugins: any[] };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config.plugins = config.plugins.map((plugin: any) => {
+      if (
+        plugin?.constructor?.name === 'DefinePlugin' &&
+        plugin.definitions?.['process.env.NODE_ENV']
+      ) {
+        plugin.definitions['process.env.NODE_ENV'] = JSON.stringify('development');
+      }
+
+      return plugin;
+    });
+
+    actions.replaceWebpackConfig(config);
+  }
 };
 
 exports.onPostBuild = () => {

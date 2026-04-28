@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Tag } from 'antd';
-import isEmpty from 'lodash/isEmpty';
-import xor from 'lodash/xor';
+import { isEmpty, xor } from 'lodash';
 import classNames from 'classnames';
 import { createBemBlockBuilder } from '@app/utils';
 

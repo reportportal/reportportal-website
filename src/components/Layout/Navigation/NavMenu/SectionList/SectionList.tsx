@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import chunk from 'lodash/chunk';
-import compact from 'lodash/compact';
+import { chunk, compact } from 'lodash';
 import { createBemBlockBuilder } from '@app/utils';
 
 import { SectionItem, SectionItemProps } from './SectionItem';

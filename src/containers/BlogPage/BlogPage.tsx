@@ -1,34 +1,77 @@
-import React, { FC } from 'react';
-import { motion } from 'framer-motion';
+import React, { FC, useState } from 'react';
+import { isEmpty } from 'lodash';
 import { ArticlePreview } from '@app/components/ArticlePreview';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';
+import { BlogSearch } from '@app/components/BlogSearch';
+import { CategoryFilters } from '@app/components/BlogSearch/CategoryFilters';
 import {
   createBemBlockBuilder,
   BlogPostDto,
   defaultSpringTransition,
-  heroBackgroundAnimationProps,
+  SEARCH_RESULTS_LIMIT,
 } from '@app/utils';
 import { AnimatedHeader } from '@app/components/AnimatedHeader';
-import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
 
 import './BlogPage.scss';
 
 interface BlogPageProps {
   visiblePosts: BlogPostDto[];
-  allPosts: BlogPostDto[];
+  filteredPosts: BlogPostDto[];
   loadMorePosts: () => void;
+  categories: string[];
+  searchQuery: string;
+  selectedCategories: string[];
+  isSearchActive: boolean;
+  onSearchChange: (value: string) => void;
+  onSearchFocusChange?: (isFocused: boolean) => void;
+  onCategoryToggle: (category: string) => void;
+  onAllArticlesClick: () => void;
 }
 
 const getBlocksWith = createBemBlockBuilder(['blog']);
 
-export const BlogPage: FC<BlogPageProps> = ({ visiblePosts, allPosts, loadMorePosts }) => {
-  const getBackgroundAnimation = useMotionEnterAnimation(heroBackgroundAnimationProps);
+const getResultsCountText = (count: number) => {
+  if (count > SEARCH_RESULTS_LIMIT) {
+    return `${SEARCH_RESULTS_LIMIT}+ matching results`;
+  }
+
+  return `${count} matching result${count === 1 ? '' : 's'}`;
+};
+
+export const BlogPage: FC<BlogPageProps> = ({
+  visiblePosts,
+  filteredPosts,
+  loadMorePosts,
+  categories,
+  searchQuery,
+  selectedCategories,
+  isSearchActive,
+  onSearchChange,
+  onSearchFocusChange,
+  onCategoryToggle,
+  onAllArticlesClick,
+}) => {
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+  const showLoadMore = !isSearchActive && visiblePosts.length < filteredPosts.length;
+  const hasNoResults = isSearchActive && isEmpty(filteredPosts);
+
+  let statusSlotText: string | null = null;
+  if (hasNoResults) {
+    statusSlotText =
+      'No results found for your search. Try different keywords or check your filter.';
+  } else if (isSearchActive && !hasNoResults) {
+    statusSlotText = getResultsCountText(filteredPosts.length);
+  } else if (!isSearchActive && isSearchFocused) {
+    statusSlotText = 'Start typing to search';
+  }
 
   return (
     <>
-      <motion.div className={getBlocksWith()} {...getBackgroundAnimation({ isInView: true })}>
+      <div className={getBlocksWith()}>
         <div className="container">
           <AnimatedHeader
+            isAnimationEnabled={false}
             headerLevel={1}
             transition={defaultSpringTransition}
             className={getBlocksWith('__title')}
@@ -36,14 +79,44 @@ export const BlogPage: FC<BlogPageProps> = ({ visiblePosts, allPosts, loadMorePo
             Blog
           </AnimatedHeader>
           <AnimatedHeader
+            isAnimationEnabled={false}
             transition={defaultSpringTransition}
             delay={0.1}
             className={getBlocksWith('__subtitle')}
           >
             Product updates, news and technology articles
           </AnimatedHeader>
-          <ArticlePreview posts={visiblePosts} isAnimationEnabled />
-          {visiblePosts.length < allPosts.length && (
+          <div className={getBlocksWith('__search-section')}>
+            <div className={getBlocksWith('__search-controls')}>
+              <BlogSearch
+                value={searchQuery}
+                onChange={onSearchChange}
+                onFocusChange={nextFocused => {
+                  setIsSearchFocused(nextFocused);
+                  onSearchFocusChange?.(nextFocused);
+                }}
+              />
+              <CategoryFilters
+                categories={categories}
+                selectedCategories={selectedCategories}
+                onCategoryToggle={onCategoryToggle}
+                onAllArticlesClick={onAllArticlesClick}
+              />
+            </div>
+            <div className={getBlocksWith('__status-slot')}>
+              {statusSlotText ? (
+                <span role="status" aria-live="polite" className={getBlocksWith('__status-text')}>
+                  {statusSlotText}
+                </span>
+              ) : null}
+            </div>
+          </div>
+          <ArticlePreview
+            posts={visiblePosts}
+            isAnimationEnabled={false}
+            searchQuery={searchQuery}
+          />
+          {showLoadMore && (
             <div className={getBlocksWith('__footer')}>
               <button className="btn btn--outline btn--large" onClick={loadMorePosts}>
                 Load more
@@ -51,7 +124,7 @@ export const BlogPage: FC<BlogPageProps> = ({ visiblePosts, allPosts, loadMorePo
             </div>
           )}
         </div>
-      </motion.div>
+      </div>
       <SubscriptionBanner />
     </>
   );

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import Marquee from 'react-fast-marquee';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash';
 import { HeroSwitching } from '@app/components/HeroSwitching';
 import { Carousel } from '@app/components/Carousel';
 import { useInView } from '@app/hooks/useInView';
@@ -18,8 +18,8 @@ export const SponsorsHero: FC = () => {
   const [heroRef, isHeroInView] = useInView();
   const isAnimationEnabled = useAnimationEnabledForSiblingRoutes();
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 1124px)' });
-  const isPhoneLg = useMediaQuery({ query: MEDIA_PHONE_LG });
+  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
+  const isPhoneLg = useMediaQuerySafe(MEDIA_PHONE_LG);
   const slidesLength = SPONSOR_SLIDES.length;
   // ToDo: verify if it works fine with real sponsors
   const isMarqueePlayable = (!isPhoneLg && slidesLength >= 3) || (isPhoneLg && slidesLength > 5);

@@ -126,6 +126,7 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
                 }}
               >
                 Learn more
+                <span className="visually-hidden"> about support hours</span>
               </Link>
             </div>
           </div>

@@ -32,7 +32,7 @@
         @include m.font-poppins(v.$fw-semi-bold);
       }
 
-      :where(.css-dev-only-do-not-override-e4vwb2).ant-tabs .ant-tabs-tab-btn {
+      .ant-tabs .ant-tabs-tab-btn {
         position: relative;
 
         &::after {
@@ -49,9 +49,7 @@
         }
       }
 
-      :where(.css-dev-only-do-not-override-e4vwb2).ant-tabs
-        .ant-tabs-tab.ant-tabs-tab-active
-        .ant-tabs-tab-btn {
+      .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
         &::after {
           right: 0;
           left: 0;

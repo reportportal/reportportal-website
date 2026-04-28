@@ -13,13 +13,13 @@
 @mixin font-poppins($weight: typography.$fw-regular, $font-style: false) {
   @include font-info($weight, $font-style);
 
-  font-family: Poppins, Arial, sans-serif;
+  font-family: Poppins, 'Poppins Fallback', Arial, sans-serif;
 }
 
 @mixin font-noto-sans($weight: typography.$fw-regular, $font-style: false) {
   @include font-info($weight, $font-style);
 
-  font-family: 'Noto Sans', Arial, sans-serif;
+  font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif;
 }
 
 @mixin roboto-mono($weight: typography.$fw-regular, $font-style: false) {

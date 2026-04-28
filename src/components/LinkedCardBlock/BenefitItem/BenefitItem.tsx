@@ -43,6 +43,7 @@ export const BenefitItem: FC<BenefitItemProps> = ({
       {link && (
         <Link className="link" to={link}>
           {linkText}
+          <span className="visually-hidden"> about {itemTitle}</span>
           {' >'}
         </Link>
       )}

@@ -1,4 +1,4 @@
-import isUndefined from 'lodash/isUndefined';
+import { isUndefined } from 'lodash';
 import { YoutubeVideoDto } from '@app/utils';
 
 const stringifyPeriods = ['year', 'month', 'day', 'hour', 'minute'];

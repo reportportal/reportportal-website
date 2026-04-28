@@ -39,7 +39,9 @@ export const LinkedCard: FC<LinkedCardProps> = ({
     {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
     <strong className={getBlocksWith('__title')}>{itemTitle}</strong>
     <p className={getBlocksWith('__description')}>{description}</p>
-    {link && <ArrowLink mode="primary" to={link} text={linkText} />}
+    {link && (
+      <ArrowLink mode="primary" to={link} text={linkText} srOnlySuffix={` about ${itemTitle}`} />
+    )}
     {Boolean(delay) && <div className={getBlocksWith('__progress')} />}
   </div>
 );

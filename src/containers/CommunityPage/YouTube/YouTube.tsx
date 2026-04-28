@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState, useMemo } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import chunk from 'lodash/chunk';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
+import { chunk } from 'lodash';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
 import { Carousel } from '@app/components/Carousel';
@@ -21,7 +21,7 @@ const getBlocksWith = createBemBlockBuilder(['youtube']);
 export const YouTube: FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [videoId, setVideoId] = useState<string>();
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
 
   const videos = useMemo(() => prepareYoutubeVideos(youtubeVideos as YoutubeVideoDto[]), []);
 

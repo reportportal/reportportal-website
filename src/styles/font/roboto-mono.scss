@@ -5,6 +5,5 @@
   font-weight: $fw-regular;
   font-style: normal;
   font-display: swap;
-  src: local('Roboto Mono Regular'), local('RobotoMono-Regular'),
-    url('/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf') format('truetype');
+  src: url('/fonts/Roboto_Mono/roboto-mono-v31-latin-regular.woff2') format('woff2');
 }

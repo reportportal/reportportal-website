@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import chunk from 'lodash/chunk';
+import { chunk } from 'lodash';
 import { ContentfulAsset, createBemBlockBuilder, LinkDto } from '@app/utils';
 
 import { LinkListItem } from './LinkListItem';

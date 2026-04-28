@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Children } from 'react';
 import { BLOCKS } from '@contentful/rich-text-types';
-import compact from 'lodash/compact';
+import { compact } from 'lodash';
 import { createBemBlockBuilder } from '@app/utils';
 
 const getBlocksWith = createBemBlockBuilder(['case-page']);
