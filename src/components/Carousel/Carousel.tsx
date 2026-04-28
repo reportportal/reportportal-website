@@ -42,8 +42,13 @@ export const Carousel: FC<CarouselProps> = memo(
 
     return (
       <div className={getBlocksWith()}>
-        <button aria-label="Previous slide" className={buttonClassName} onClick={handlePrevClick}>
-          <ButtonIcon />
+        <button
+          type="button"
+          aria-label="Previous slide"
+          className={buttonClassName}
+          onClick={handlePrevClick}
+        >
+          <ButtonIcon aria-hidden="true" focusable="false" />
         </button>
         <AntdCarousel
           ref={carouselRef}
@@ -53,8 +58,13 @@ export const Carousel: FC<CarouselProps> = memo(
         >
           {children}
         </AntdCarousel>
-        <button aria-label="Next slide" className={buttonClassName} onClick={handleNextClick}>
-          <ButtonIcon />
+        <button
+          type="button"
+          aria-label="Next slide"
+          className={buttonClassName}
+          onClick={handleNextClick}
+        >
+          <ButtonIcon aria-hidden="true" focusable="false" />
         </button>
       </div>
     );
