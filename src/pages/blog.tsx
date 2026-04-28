@@ -6,6 +6,7 @@ import { Layout, Seo } from '@app/components/Layout';
 import { BREADCRUMBS } from '@app/components/StructuredData';
 import { BlogPage } from '@app/containers/BlogPage';
 import {
+  BlogPostDto,
   BlogPostsQueryDto,
   SEO_DATA,
   BLOG_PAGE_SIZE,
@@ -18,16 +19,9 @@ import { normalizeSearchText } from '@app/utils/buildSearchIndex';
 
 const SEARCH_URL_DEBOUNCE_MS = 250;
 
-const normalizeCategoryToArray = (category: string | string[] | null | undefined) => {
-  if (!category) {
-    return [];
-  }
+const categoriesFromPost = (category: BlogPostDto['category']): string[] => category ?? [];
 
-  return Array.isArray(category) ? category : [category];
-};
-
-const normalizeCategoryString = (category: string | null | undefined) =>
-  isString(category) ? category.trim() : '';
+const trimCategory = (value: string) => value.trim();
 
 const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
   data: { allContentfulBlogPost },
@@ -76,8 +70,8 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     const categorySet = new Set<string>();
 
     allPosts.forEach(post => {
-      normalizeCategoryToArray(post.category).forEach(cat => {
-        const normalized = normalizeCategoryString(cat);
+      categoriesFromPost(post.category).forEach(cat => {
+        const normalized = trimCategory(cat);
 
         if (normalized) {
           categorySet.add(normalized);
@@ -102,10 +96,10 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
     if (!isEmpty(cleanedSelectedCategories)) {
       filtered = filtered.filter(post => {
-        const postCategories = normalizeCategoryToArray(post.category);
+        const postCategories = categoriesFromPost(post.category);
 
         return postCategories.some(category =>
-          cleanedSelectedCategories.includes(normalizeCategoryString(category)),
+          cleanedSelectedCategories.includes(trimCategory(category)),
         );
       });
     }
