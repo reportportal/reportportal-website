@@ -34,19 +34,23 @@ export const BenefitItem: FC<BenefitItemProps> = ({
   linkText = '',
   icon,
   iconColor,
-}) => (
-  <div className={getBlocksWith()}>
-    {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
-    <div className={getBlocksWith('__content')}>
-      <h3 className={getBlocksWith('__title')}>{itemTitle}</h3>
-      <p className={getBlocksWith('__description')}>{description}</p>
-      {link && (
-        <Link className="link" to={link}>
-          {linkText}
-          <span className="visually-hidden"> about {itemTitle}</span>
-          <span aria-hidden="true"> {' >'}</span>
-        </Link>
-      )}
+}) => {
+  const visibleLinkLabel = linkText.trim() ? linkText : 'Learn more';
+
+  return (
+    <div className={getBlocksWith()}>
+      {icon && <IconWithBackground icon={icon} iconColor={iconColor} />}
+      <div className={getBlocksWith('__content')}>
+        <h3 className={getBlocksWith('__title')}>{itemTitle}</h3>
+        <p className={getBlocksWith('__description')}>{description}</p>
+        {link && (
+          <Link className="link" to={link}>
+            {visibleLinkLabel}
+            <span className="visually-hidden"> about {itemTitle}</span>
+            <span aria-hidden="true"> {' >'}</span>
+          </Link>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
