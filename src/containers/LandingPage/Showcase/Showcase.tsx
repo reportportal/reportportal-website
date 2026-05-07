@@ -9,6 +9,7 @@ import {
   COMMON_MARQUEE_PROPS,
   createBemBlockBuilder,
   defaultSpringTransition,
+  MEDIA_DESKTOP,
   opacityScaleAnimationProps,
   watchProductOverviewAtom,
 } from '@app/utils';
@@ -28,7 +29,7 @@ const commonAnimationProps = {
 
 export const Showcase: FC = () => {
   const [, setWatchProductOverviewState] = useAtom(watchProductOverviewAtom);
-  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP);
   const { slides, allSlidesItems } = useClientCarouselItems();
   const [titleBlockRef, isTitleBlockInView] = useInView();
   const [carouselRef, isCarouselInView] = useInView();

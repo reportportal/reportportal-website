@@ -4,7 +4,7 @@ import { Drawer, Collapse } from 'antd';
 import { upperFirst } from 'lodash';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
-import { createBemBlockBuilder, isNewYearMode } from '@app/utils';
+import { createBemBlockBuilder, isNewYearMode, MEDIA_DESKTOP } from '@app/utils';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useHasMounted } from '@app/hooks/useHasMounted';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
@@ -69,7 +69,7 @@ export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
   const scroll = useScroll();
   const [isMobileMenuOpen, { setRight: openMobileMenu, setLeft: closeMobileMenu }] = useToggle();
   const githubCounter = githubStats.repos.reportportal;
-  const isDesktop = useMediaQuerySafe('(min-width: 1124px)');
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP);
   const scrollY = hasMounted ? scroll?.top ?? 0 : 0;
 
   const [menus, updateMenus] = useReducer(

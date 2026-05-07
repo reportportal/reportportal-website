@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react';
-import { escapeRegExp } from 'lodash';
+import { getHighlightRanges, type HighlightRange } from '@app/utils/buildSearchIndex';
 
 import './Highlight.scss';
 
@@ -8,30 +8,41 @@ interface HighlightProps {
   query?: string;
 }
 
-export const Highlight: FC<HighlightProps> = ({ text, query }) => {
-  const phrase = query?.replace(/\s+/g, ' ').trim() ?? '';
+const renderRanges = (text: string, ranges: HighlightRange[]): React.ReactNode => {
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
 
-  if (phrase.length === 0) {
+  ranges.forEach(({ start, end }, index) => {
+    const before = text.slice(cursor, start);
+    const hit = text.slice(start, end);
+
+    if (before) {
+      parts.push(<Fragment key={`b-${index}`}>{before}</Fragment>);
+    }
+    if (hit) {
+      parts.push(
+        <span key={`h-${index}`} className="search-highlight">
+          {hit}
+        </span>,
+      );
+    }
+    cursor = end;
+  });
+
+  const tail = text.slice(cursor);
+  if (tail) {
+    parts.push(<Fragment key="tail">{tail}</Fragment>);
+  }
+
+  return <>{parts}</>;
+};
+
+export const Highlight: FC<HighlightProps> = ({ text, query }) => {
+  const ranges = getHighlightRanges(text, query);
+
+  if (ranges.length === 0) {
     return <>{text}</>;
   }
 
-  const regex = new RegExp(`(${escapeRegExp(phrase)})`, 'gi');
-  const parts = text.split(regex);
-  const lowerPhrase = phrase.toLowerCase();
-
-  return (
-    <>
-      {parts.map((part, index) => {
-        const key = `${index}-${part}`;
-
-        return part.toLowerCase() === lowerPhrase ? (
-          <span key={key} className="search-highlight">
-            {part}
-          </span>
-        ) : (
-          <Fragment key={key}>{part}</Fragment>
-        );
-      })}
-    </>
-  );
+  return <>{renderRanges(text, ranges)}</>;
 };

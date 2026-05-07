@@ -6,6 +6,7 @@ import { Layout, Seo } from '@app/components/Layout';
 import { BREADCRUMBS } from '@app/components/StructuredData';
 import { BlogPage } from '@app/containers/BlogPage';
 import {
+  BlogPostDto,
   BlogPostsQueryDto,
   SEO_DATA,
   BLOG_PAGE_SIZE,
@@ -18,16 +19,9 @@ import { normalizeSearchText } from '@app/utils/buildSearchIndex';
 
 const SEARCH_URL_DEBOUNCE_MS = 250;
 
-const normalizeCategoryToArray = (category: string | string[] | null | undefined) => {
-  if (!category) {
-    return [];
-  }
+const categoriesFromPost = (category: BlogPostDto['category']): string[] => category ?? [];
 
-  return Array.isArray(category) ? category : [category];
-};
-
-const normalizeCategoryString = (category: string | null | undefined) =>
-  isString(category) ? category.trim() : '';
+const trimCategory = (value: string) => value.trim();
 
 const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
   data: { allContentfulBlogPost },
@@ -76,8 +70,8 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     const categorySet = new Set<string>();
 
     allPosts.forEach(post => {
-      normalizeCategoryToArray(post.category).forEach(cat => {
-        const normalized = normalizeCategoryString(cat);
+      categoriesFromPost(post.category).forEach(cat => {
+        const normalized = trimCategory(cat);
 
         if (normalized) {
           categorySet.add(normalized);
@@ -88,16 +82,28 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     return Array.from(categorySet).sort();
   }, [allPosts]);
 
+  const cleanedSelectedCategories = useMemo(() => {
+    if (isEmpty(selectedCategories)) {
+      return [];
+    }
+
+    const known = new Set(categories);
+    return selectedCategories.filter(category => known.has(category));
+  }, [categories, selectedCategories]);
+
+  const selectedCategorySet = useMemo(
+    () => new Set(cleanedSelectedCategories),
+    [cleanedSelectedCategories],
+  );
+
   const filteredPosts = useMemo(() => {
     let filtered = allPosts;
 
-    if (!isEmpty(selectedCategories)) {
+    if (!isEmpty(cleanedSelectedCategories)) {
       filtered = filtered.filter(post => {
-        const postCategories = normalizeCategoryToArray(post.category);
+        const postCategories = categoriesFromPost(post.category);
 
-        return postCategories.some(category =>
-          selectedCategories.includes(normalizeCategoryString(category)),
-        );
+        return postCategories.some(category => selectedCategorySet.has(trimCategory(category)));
       });
     }
 
@@ -108,7 +114,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
     }
 
     return filtered;
-  }, [allPosts, selectedCategories, searchPhrase]);
+  }, [allPosts, cleanedSelectedCategories, selectedCategorySet, searchPhrase]);
 
   const visibleCount = isSearchActive ? SEARCH_RESULTS_LIMIT : page * BLOG_PAGE_SIZE;
   const visiblePosts = useMemo(
@@ -141,12 +147,12 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
 
   const handleCategoryToggle = useCallback(
     (category: string) => {
-      const nextCategories = selectedCategories.includes(category)
-        ? selectedCategories.filter(c => c !== category)
-        : [...selectedCategories, category];
+      const nextCategories = cleanedSelectedCategories.includes(category)
+        ? cleanedSelectedCategories.filter(c => c !== category)
+        : [...cleanedSelectedCategories, category];
       updateParams({ selectedCategories: nextCategories, searchQuery, page: 1 });
     },
-    [searchQuery, selectedCategories, updateParams],
+    [cleanedSelectedCategories, searchQuery, updateParams],
   );
 
   const handleAllArticlesClick = useCallback(() => {
@@ -161,7 +167,7 @@ const BlogIndex: FC<PageProps<BlogPostsQueryDto>> = ({
         loadMorePosts={loadMorePosts}
         categories={categories}
         searchQuery={searchQuery}
-        selectedCategories={selectedCategories}
+        selectedCategories={cleanedSelectedCategories}
         isSearchActive={isSearchActive}
         onSearchChange={handleSearchChange}
         onSearchFocusChange={setIsSearchFocused}

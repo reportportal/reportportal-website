@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react';
+import { isFunction } from 'lodash';
 
 /**
  * SSR-safe media-query hook.
@@ -29,9 +30,16 @@ import { useCallback, useSyncExternalStore } from 'react';
  *   `framer-motion` `initial`/`animate` props that only fire on mount).
  */
 export const useMediaQuerySafe = (query: string, ssrFallback = false): boolean => {
+  const canUseMatchMedia = () => typeof window !== 'undefined' && isFunction(window.matchMedia);
+
   const subscribe = useCallback(
     (callback: () => void) => {
+      if (!canUseMatchMedia()) {
+        return () => undefined;
+      }
+
       const mql = window.matchMedia(query);
+
       mql.addEventListener('change', callback);
 
       return () => mql.removeEventListener('change', callback);
@@ -41,7 +49,13 @@ export const useMediaQuerySafe = (query: string, ssrFallback = false): boolean =
 
   return useSyncExternalStore(
     subscribe,
-    () => window.matchMedia(query).matches,
+    () => {
+      if (!canUseMatchMedia()) {
+        return ssrFallback;
+      }
+
+      return window.matchMedia(query).matches;
+    },
     () => ssrFallback,
   );
 };
