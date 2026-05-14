@@ -46,7 +46,7 @@ export const GoogleCloudLaunchPortal: FC = () => {
         For a more comprehensive installation guide, please refer to the{' '}
         <Link
           className={getBlocksWith('__link')}
-          to={`${DOCUMENTATION_URL}/installation-steps/DeployViaGoogleCloudMarketplace`}
+          to={`${DOCUMENTATION_URL}/installation-steps/DeployViaGoogleCloudMarketplace/`}
         >
           link
         </Link>

@@ -21,7 +21,7 @@ export const GENERAL_LIST = [
   {
     icon: <ReleaseIcon />,
     title: 'Releases',
-    link: { title: 'Releases', url: `${DOCUMENTATION_URL}/releases` },
+    link: { title: 'Releases', url: `${DOCUMENTATION_URL}/releases/` },
   },
 ];
 
