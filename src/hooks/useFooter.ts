@@ -1,5 +1,5 @@
 import { useStaticQuery, graphql } from 'gatsby';
-import { ContentfulAsset, ImageWrapperDto, LinkDto } from '@app/utils';
+import { ImageWrapperDto } from '@app/utils';
 
 interface FooterQuery {
   text: string;
@@ -14,12 +14,6 @@ interface FooterQuery {
     title: string;
     url: string;
   }[];
-  testedOn: {
-    link: LinkDto;
-    alt: string;
-    icon: Required<ContentfulAsset>;
-    hoverIcon: ContentfulAsset;
-  };
   socials: Required<ImageWrapperDto>[];
 }
 
@@ -44,20 +38,6 @@ export const useFooter = (): FooterQuery => {
             url
           }
           socials {
-            alt
-            link {
-              url
-            }
-            icon {
-              url
-              width
-              height
-            }
-            hoverIcon {
-              url
-            }
-          }
-          testedOn {
             alt
             link {
               url
