@@ -82,7 +82,6 @@ export const Footer: FC = () => {
                 </li>
               ))}
             </ul>
-
           </div>
         </section>
       </div>
