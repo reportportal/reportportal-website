@@ -1,22 +1,53 @@
-import { useEffect, useRef, useState } from 'react';
-import { useInView as useFramerInView } from 'framer-motion';
+import { useCallback, useRef, useState } from 'react';
 
-type InViewOptions = Parameters<typeof useFramerInView>[1];
+interface InViewOptions {
+  once?: boolean;
+  margin?: string;
+}
 
-export const useInView = (options: InViewOptions = { once: true }) => {
-  const ref = useRef(null);
-  const isInView = useFramerInView(ref, options);
+export const useInView = ({ once = true, margin }: InViewOptions = {}) => {
+  const [isInView, setIsInView] = useState(false);
   const [hasBeenScrolledPast, setHasBeenScrolledPast] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
-    if (ref.current) {
-      const { bottom } = (ref.current as HTMLElement).getBoundingClientRect();
+  const ref = useCallback(
+    (node: Element | null) => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+
+      if (!node) return;
+
+      setHasBeenScrolledPast(false);
+
+      const { bottom } = node.getBoundingClientRect();
 
       if (bottom <= 0) {
         setHasBeenScrolledPast(true);
+        return;
       }
-    }
-  }, []);
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            if (once) {
+              observer.disconnect();
+            }
+          } else if (!once) {
+            setIsInView(false);
+            setHasBeenScrolledPast(false);
+          }
+        },
+        { rootMargin: margin },
+      );
+
+      observer.observe(node);
+      observerRef.current = observer;
+    },
+    [once, margin],
+  );
 
   return [ref, isInView || hasBeenScrolledPast] as const;
 };
