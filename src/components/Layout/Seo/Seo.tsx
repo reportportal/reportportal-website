@@ -83,7 +83,7 @@ export const Seo: FC<SeoProps> = ({
       <meta id="meta-twitter-creator" content={twitter} name="twitter:creator" />
       <meta id="meta-keywords" content={keywords} name="keywords" />
       <meta id="meta-ogsite-name" content={metaSiteName} name="og:site_name" />
-      <meta id="meta-robots" content={noIndex ? 'noindex' : ''} name="robots" />
+      <meta id="meta-robots" content={noIndex ? 'noindex' : 'index, follow'} name="robots" />
       {!noIndex && <JsonLd data={organizationSchema()} />}
       {!noIndex && breadcrumbs && <JsonLd data={breadcrumbListSchema(breadcrumbs)} />}
     </>
