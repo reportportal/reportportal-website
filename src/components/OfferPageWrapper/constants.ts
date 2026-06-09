@@ -11,7 +11,7 @@ export const BENEFITS_CARDS: BenefitItemProps[] = [
     description: 'Quality Gates, SCIM Server, etc.',
     icon: starSvg,
     iconColor: 'var(--graphics-orchid)',
-    link: `${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures`,
+    link: `${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures/`,
     linkText: 'Learn more',
   },
   {
