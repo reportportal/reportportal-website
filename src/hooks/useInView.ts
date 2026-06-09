@@ -19,6 +19,8 @@ export const useInView = ({ once = true, margin }: InViewOptions = {}) => {
 
       if (!node) return;
 
+      setHasBeenScrolledPast(false);
+
       const { bottom } = node.getBoundingClientRect();
 
       if (bottom <= 0) {
@@ -35,6 +37,7 @@ export const useInView = ({ once = true, margin }: InViewOptions = {}) => {
             }
           } else if (!once) {
             setIsInView(false);
+            setHasBeenScrolledPast(false);
           }
         },
         { rootMargin: margin },
