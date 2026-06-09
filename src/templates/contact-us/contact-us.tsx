@@ -4,7 +4,7 @@ import { Layout, Seo } from '@app/components/Layout';
 import { ContactUsPage } from '@app/containers/ContactUsPage';
 import { ContactUsConfig, SEO_DATA } from '@app/utils';
 
-const CONTACT_US_GENERAL_PATH = '/contact-us/general';
+const CONTACT_US_GENERAL_PATH = '/contact-us/general/';
 
 const ContactUs: FC<PageProps<null, ContactUsConfig>> = ({ pageContext: config }) => {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, FC } from 'react';
+import React, { useCallback, useEffect, useRef, useState, FC, MouseEvent } from 'react';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { useScroll } from 'ahooks';
@@ -39,7 +39,23 @@ export const FeaturesPage: FC = () => {
   const getHeroImageAnimation = useMotionEnterAnimation(easeInOutOpacityScaleAnimationProps);
   const getBackgroundAnimation = useMotionEnterAnimation(heroBackgroundAnimationProps);
 
-  const handleScroll = () => {
+  const location = useLocation();
+  const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
+  const [activeElement, setActiveElement] = useState(location.hash);
+  const processIntegrationRef = useRef<null | HTMLDivElement>(null);
+
+  const setHistoryValue = useCallback(
+    (hashFragment: string) => {
+      window.history.replaceState(
+        null,
+        '',
+        `${location.pathname}${location.search}${hashFragment}`,
+      );
+    },
+    [location.pathname, location.search],
+  );
+
+  const handleScroll = useCallback(() => {
     const itemList = document.querySelectorAll(
       `.${getBlocksWith('__features-list-item-container')}`,
     );
@@ -67,12 +83,8 @@ export const FeaturesPage: FC = () => {
         setHistoryValue(anchor);
       }
     }
-  };
+  }, [activeElement, setHistoryValue]);
 
-  const location = useLocation();
-  const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
-  const [activeElement, setActiveElement] = useState(location.hash);
-  const processIntegrationRef = useRef<null | HTMLDivElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
   const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
@@ -84,8 +96,6 @@ export const FeaturesPage: FC = () => {
   const featuresBlockStickyPositionWithHeader = featuresBlockStickyPosition - headerHeight;
   const menuItemActiveClassName = getBlocksWith('__features-navigation-item--active');
   const featureItemClassName = getBlocksWith('__features-navigation-item');
-
-  const setHistoryValue = val => window.history.replaceState(null, '', `/features${val}`);
 
   useEffect(() => {
     const processIntegrationTopPosition =
@@ -106,11 +116,14 @@ export const FeaturesPage: FC = () => {
     }
   }, [scroll, scrollDirection, isFeaturesMenuSticky]);
 
-  const handleNavClick = (event, anchor) => {
-    event.preventDefault();
+  const handleNavClick = useCallback(
+    (event: MouseEvent, anchor: string) => {
+      event.preventDefault();
 
-    scrollIntoViewHandler(anchor.slice(1));
-  };
+      scrollIntoViewHandler(anchor.slice(1));
+    },
+    [scrollIntoViewHandler],
+  );
 
   return (
     <div className={getBlocksWith()}>

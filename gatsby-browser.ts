@@ -38,7 +38,11 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
   // pagination, or a no-op navigate that trims to the same URL). Prevents
   // Gatsby from resetting scroll to the top when the listing calls
   // navigate(..., { replace: true }).
-  if (prevRouterProps?.location && prevRouterProps.location.pathname === location?.pathname) {
+  if (
+    prevRouterProps?.location &&
+    prevRouterProps.location.pathname === location?.pathname &&
+    prevRouterProps.location.hash === location?.hash
+  ) {
     return false;
   }
 

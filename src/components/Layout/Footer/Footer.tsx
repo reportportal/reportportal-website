@@ -16,7 +16,7 @@ import './Footer.scss';
 const getBlocksWith = createBemBlockBuilder(['footer']);
 
 export const Footer: FC = () => {
-  const { text, sections, terms, socials, testedOn } = useFooter();
+  const { text, sections, terms, socials } = useFooter();
   const containerRef = useRef<HTMLElement | null>(null);
   const isInView = useInView(containerRef, { once: true });
 
@@ -82,22 +82,6 @@ export const Footer: FC = () => {
                 </li>
               ))}
             </ul>
-            <Link
-              to={testedOn.link.url}
-              style={
-                {
-                  '--hover-icon': `url('${testedOn.hoverIcon.url}')`,
-                } as CSSProperties
-              }
-            >
-              {typeof document !== 'undefined' &&
-                isInView &&
-                createPortal(
-                  <link rel="preload" as="image" href={testedOn.hoverIcon.url} />,
-                  document.head,
-                )}
-              <img src={testedOn.icon.url} alt={testedOn.alt} />
-            </Link>
           </div>
         </section>
       </div>
