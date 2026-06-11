@@ -1,8 +1,6 @@
-import React, { CSSProperties, FC, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import React, { CSSProperties, FC } from 'react';
 import { Divider } from 'antd';
 import classNames from 'classnames';
-import { useInView } from 'framer-motion';
 import { Link } from '@app/components/Link';
 import { Certificates } from '@app/components/CertificationCard/Certificates';
 import { useFooter } from '@app/hooks/useFooter';
@@ -17,11 +15,9 @@ const getBlocksWith = createBemBlockBuilder(['footer']);
 
 export const Footer: FC = () => {
   const { text, sections, terms, socials } = useFooter();
-  const containerRef = useRef<HTMLElement | null>(null);
-  const isInView = useInView(containerRef, { once: true });
 
   return (
-    <footer ref={containerRef} className={getBlocksWith()}>
+    <footer className={getBlocksWith()}>
       <div className={classNames(getBlocksWith('__container'), 'container')}>
         <section id="footer-content" />
         <section className={getBlocksWith('__navigation')}>
@@ -71,12 +67,6 @@ export const Footer: FC = () => {
                       } as CSSProperties
                     }
                   >
-                    {typeof document !== 'undefined' &&
-                      isInView &&
-                      createPortal(
-                        <link rel="preload" as="image" href={hoverIcon.url} />,
-                        document.head,
-                      )}
                     <img src={icon.url} width={icon.width} height={icon.height} alt={alt} />
                   </Link>
                 </li>
