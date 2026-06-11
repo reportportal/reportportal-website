@@ -96,6 +96,8 @@ const PRELOADED_FONTS = [
   '/fonts/Noto_Sans/noto-sans-v42-latin-regular.woff2',
 ];
 
+const isVwoEnabled = process.env.GATSBY_ENABLE_VWO === 'true';
+
 export const onRenderBody: NonNullable<GatsbySSR['onRenderBody']> = ({ setHeadComponents }) => {
   setHeadComponents([
     ...PRELOADED_FONTS.map(href => (
@@ -118,11 +120,15 @@ export const onRenderBody: NonNullable<GatsbySSR['onRenderBody']> = ({ setHeadCo
     <script key="OptanonWrapper" type="text/javascript">
       {'function OptanonWrapper() { }'}
     </script>,
-    <link
-      key="visualwebsiteoptimizer"
-      rel="preconnect"
-      href="https://dev.visualwebsiteoptimizer.com"
-    />,
-    <script key="vwoCode" type="text/javascript" id="vwoCode" src="/abtesting.js" />,
+    ...(isVwoEnabled
+      ? [
+          <link
+            key="visualwebsiteoptimizer"
+            rel="preconnect"
+            href="https://dev.visualwebsiteoptimizer.com"
+          />,
+          <script key="vwoCode" type="text/javascript" id="vwoCode" src="/abtesting.js" />,
+        ]
+      : []),
   ]);
 };
