@@ -224,6 +224,15 @@
         background-image: var(--hover-icon);
         content: '';
       }
+
+      &::after {
+        position: absolute;
+        width: 0;
+        height: 0;
+        background-image: var(--hover-icon);
+        overflow: hidden;
+        content: '';
+      }
     }
   }
 
