@@ -92,8 +92,11 @@ export const onPreRenderHTML: NonNullable<GatsbySSR['onPreRenderHTML']> = ({
 // reduces the window where the Arial fallback is visible on slow ones.
 const PRELOADED_FONTS = [
   '/fonts/Poppins/poppins-v24-latin-regular.woff2',
+  '/fonts/Poppins/poppins-v24-latin-500.woff2',
   '/fonts/Poppins/poppins-v24-latin-600.woff2',
+  '/fonts/Poppins/poppins-v24-latin-700.woff2',
   '/fonts/Noto_Sans/noto-sans-v42-latin-regular.woff2',
+  '/fonts/Noto_Sans/noto-sans-v42-latin-500.woff2',
 ];
 
 const isVwoEnabled = process.env.GATSBY_ENABLE_VWO === 'true';
@@ -130,5 +133,7 @@ export const onRenderBody: NonNullable<GatsbySSR['onRenderBody']> = ({ setHeadCo
           <script key="vwoCode" type="text/javascript" id="vwoCode" src="/abtesting.js" />,
         ]
       : []),
+    <link key="preconnect-clarity" rel="preconnect" href="https://www.clarity.ms" />,
+    <link key="preconnect-youtube" rel="preconnect" href="https://www.youtube.com" />,
   ]);
 };
