@@ -29,9 +29,12 @@ jobs:
   deploy-redirects:
     runs-on: ubuntu-latest
     environment: production
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4

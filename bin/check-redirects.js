@@ -131,7 +131,10 @@ function main() {
   console.error(`Add the following entries to ${CONFIG.redirectsFile}:\n`);
   console.error(JSON.stringify(missing, null, 2));
   console.error(
-    `\nTo apply: insert the entries above into ${CONFIG.redirectsFile} (set "target" to the correct destination), then commit the file.`,
+    `\nTo apply: insert the entries above into ${CONFIG.redirectsFile} (set "target" to the correct destination).`,
+  );
+  console.error(
+    'Important: place new entries BEFORE the catch-all rules ("/<*>" and "/docs/<*>") at the end of the file, otherwise they will never match.',
   );
   console.error(`To skip this check: add ${CONFIG.skipFlag} to your commit message.\n`);
 
