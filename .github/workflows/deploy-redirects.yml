@@ -1,0 +1,49 @@
+# Copyright 2026 EPAM Systems
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Deploy Redirects to Amplify
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/redirects.json'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-redirects:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-central-1
+
+      - name: Apply redirects to Amplify
+        run: |
+          RULES=$(jq '[.[] | {source, target, status} + (if .condition != null and .condition != "" then {condition} else {} end)]' src/redirects.json)
+          aws amplify update-app \
+            --app-id ${{ secrets.AWS_AMPLIFY_APP_ID }} \
+            --region eu-central-1 \
+            --custom-rules "$RULES"
+          echo "Redirects applied: $(echo "$RULES" | jq 'length') rules"
