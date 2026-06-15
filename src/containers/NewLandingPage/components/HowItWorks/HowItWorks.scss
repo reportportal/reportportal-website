@@ -5,8 +5,16 @@
 // Keyframes
 // ---------------------------------------------------------------------------
 @keyframes hiw-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.72); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.72);
+  }
 }
 
 // Ping-pong comet: badge → cards (2 s) → pause (2 s) → cards → badge (2 s) → pause (2 s).
@@ -15,20 +23,44 @@
 // Opacity fades the comet out at each end so the instant snap is never visible.
 @keyframes hiw-flow {
   /* Phase 1 — badge → card (0–25%, 2 s) */
-  0%   { stroke-dashoffset: 100; opacity: 1; }   /* comet at badge        */
-  22%  { stroke-dashoffset: 20;  opacity: 1; }   /* comet near card       */
-  25%  { stroke-dashoffset: 15;  opacity: 0; }   /* comet at card, faded  */
+  0% {
+    opacity: 1;
+    stroke-dashoffset: 100;
+  } /* comet at badge        */
+  22% {
+    opacity: 1;
+    stroke-dashoffset: 20;
+  } /* comet near card       */
+  25% {
+    opacity: 0;
+    stroke-dashoffset: 15;
+  } /* comet at card, faded  */
 
   /* Phase 2 — pause at card (25–50%, 2 s) */
-  49%  { stroke-dashoffset: 15;  opacity: 0; }
+  49% {
+    opacity: 0;
+    stroke-dashoffset: 15;
+  }
 
   /* Phase 3 — card → badge (50–75%, 2 s) */
-  50%  { stroke-dashoffset: 15;  opacity: 1; }   /* comet snaps at card   */
-  72%  { stroke-dashoffset: 95;  opacity: 1; }   /* comet near badge      */
-  75%  { stroke-dashoffset: 100; opacity: 0; }   /* comet at badge, faded */
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 15;
+  } /* comet snaps at card   */
+  72% {
+    opacity: 1;
+    stroke-dashoffset: 95;
+  } /* comet near badge      */
+  75% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  } /* comet at badge, faded */
 
   /* Phase 4 — pause at badge (75–100%, 2 s) */
-  100% { stroke-dashoffset: 100; opacity: 0; }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -36,8 +68,8 @@
 // ---------------------------------------------------------------------------
 .how-it-works-new {
   position: relative;
-  overflow: hidden;
   background: var(--surface-dark);
+  overflow: hidden;
 
   // Circular orb glow — nested radial-gradient simulates a blurred sphere
   // behind the heading without GPU-heavy filter: blur().
@@ -56,8 +88,15 @@
       transparent 70%
     );
     transform: translateX(-50%);
-    pointer-events: none;
     content: '';
+    pointer-events: none;
+  }
+
+  // Pause infinite animations (hiw-pulse, hiw-flow) when off-screen or the
+  // tab is hidden — frees frames for smoother scrolling, no visual change.
+  &--paused,
+  &--paused * {
+    animation-play-state: paused !important;
   }
 
   // ── SVG decorative patterns — top & bottom edges (max 240px overlap) ────────
@@ -65,13 +104,13 @@
   &__pattern-bottom {
     position: absolute;
     left: 0;
+    z-index: 0;
     width: 100%;
     height: 240px;
-    background-size: cover;
     background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 0;
+    background-size: cover;
     opacity: 0.25;
+    pointer-events: none;
   }
 
   &__pattern-top {
@@ -79,7 +118,6 @@
     background-image: url('/svg/RP-Pattern-top.svg');
     background-position: top center;
     mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
   }
 
   &__pattern-bottom {
@@ -87,7 +125,6 @@
     background-image: url('/svg/RP-Pattern-bottom.svg');
     background-position: bottom center;
     mask-image: linear-gradient(to top, black 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
   }
 
   // ── Content wrapper ───────────────────────────────────────────────────────
@@ -115,8 +152,13 @@
     text-align: center;
     color: var(--on-surface-dark-primary);
 
-    @include m.breakpoint(v.$tablet-sm-exact) { @include m.font-scale(large); }
-    @include m.breakpoint(v.$desktop-sm)      { @include m.font-scale(x3-large); }
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(large);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
   }
 
   // ── Subtitle ──────────────────────────────────────────────────────────────
@@ -124,11 +166,11 @@
     @include m.font-noto-sans();
     @include m.font-scale('x2-medium');
 
-    margin: 16px auto 40px;
     max-width: 792px;
-    color: var(--on-surface-dark-primary);
-    line-height: 1.7;
+    margin: 16px auto 40px;
     text-align: center;
+    line-height: 1.7;
+    color: var(--on-surface-dark-primary);
   }
 
   // ── Badge ─────────────────────────────────────────────────────────────────
@@ -140,12 +182,20 @@
     align-items: center;
     gap: 8px;
     margin-top: 24px;
-    margin-bottom: 8px;    // small gap to stem below
-    padding: 6px 14px 6px 10px;
+    margin-bottom: 8px; // small gap to stem below
     border: 1px solid var(--accent-purple-border);
     border-radius: 100px;
+    padding: 6px 14px 6px 10px;
     background: var(--accent-purple-bg);
     color: var(--accent-purple);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-top: 28px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      margin-bottom: 0; // T-bar SVG starts immediately after badge
+    }
 
     // Pulsing dot
     &::before {
@@ -157,12 +207,6 @@
       animation: hiw-pulse 2s ease-in-out infinite;
       content: '';
     }
-
-    @include m.breakpoint(v.$tablet-sm-exact) { margin-top: 28px; }
-
-    @include m.breakpoint(v.$desktop-sm) {
-      margin-bottom: 0; // T-bar SVG starts immediately after badge
-    }
   }
 
   // ── Simple gradient stem — mobile & tablet ────────────────────────────────
@@ -173,13 +217,15 @@
     margin: 0 auto;
     background: linear-gradient(
       to bottom,
-      rgb(var(--accent-purple-rgb) / 0)      0%,
-      rgb(var(--accent-purple-rgb) / 0.7)    25%,
+      rgb(var(--accent-purple-rgb) / 0) 0%,
+      rgb(var(--accent-purple-rgb) / 0.7) 25%,
       rgb(var(--color-primary-500-rgb) / 0.7) 75%,
-      rgb(var(--color-primary-500-rgb) / 0)   100%
+      rgb(var(--color-primary-500-rgb) / 0) 100%
     );
 
-    @include m.breakpoint(v.$desktop-sm) { display: none; }
+    @include m.breakpoint(v.$desktop-sm) {
+      display: none;
+    }
   }
 
   // ── T-bar SVG connector — desktop only ────────────────────────────────────
@@ -188,58 +234,86 @@
     width: 100%;
     overflow: visible;
 
-    @include m.breakpoint(v.$desktop-sm) { display: block; }
+    @include m.breakpoint(v.$desktop-sm) {
+      display: block;
+    }
 
     // Ping-pong: 2 s forward + 2 s pause + 2 s back + 2 s pause = 8 s cycle.
     .hiw-flow {
-      stroke-dasharray: 15 85;
       animation: hiw-flow 8s linear infinite;
+      stroke-dasharray: 15 85;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hiw-flow { animation: none; stroke-dasharray: none; }
+      .hiw-flow {
+        animation: none;
+        stroke-dasharray: none;
+      }
     }
   }
 
   // ── Cards grid — single bordered container with interior dividers ─────────
   &__features-list {
     display: grid;
+
+    // ── Mobile — 1 col, vertical stack ───────────────────────────────────
+    grid-template-columns: 1fr;
     width: 100%;
     margin-top: 0;
     border: 1px solid var(--surface-dark-border);
     border-radius: 16px;
     overflow: hidden;
 
-    // ── Mobile — 1 col, vertical stack ───────────────────────────────────
-    grid-template-columns: 1fr;
-
-    > *:nth-child(n+2) { border-top: 1px solid var(--surface-dark-border); }
-
     // ── Tablet — 3 cols, layout 3 + 2 ───────────────────────────────────
     @include m.breakpoint(v.$tablet-sm-exact) {
       grid-template-columns: repeat(3, 1fr);
 
       // Reset mobile top-border-on-all rule
-      > * { border-top: none; border-right: none; }
-      > *:last-child { grid-column: auto !important; border-right: none; }
+      > * {
+        border-top: none;
+        border-right: none;
+      }
+
+      > *:last-child {
+        grid-column: auto !important;
+        border-right: none;
+      }
 
       // Row 1 dividers
       > *:nth-child(1),
-      > *:nth-child(2) { border-right: 1px solid var(--surface-dark-border); }
+      > *:nth-child(2) {
+        border-right: 1px solid var(--surface-dark-border);
+      }
 
       // Row 2 top separator + divider
       > *:nth-child(4),
-      > *:nth-child(5) { border-top: 1px solid var(--surface-dark-border); }
+      > *:nth-child(5) {
+        border-top: 1px solid var(--surface-dark-border);
+      }
 
-      > *:nth-child(4) { border-right: 1px solid var(--surface-dark-border); }
+      > *:nth-child(4) {
+        border-right: 1px solid var(--surface-dark-border);
+      }
     }
 
     // ── Desktop — 5 cols, single row ────────────────────────────────────
     @include m.breakpoint(v.$desktop-sm) {
       grid-template-columns: repeat(5, 1fr);
 
-      > * { grid-column: auto; border-top: none !important; border-right: 1px solid var(--surface-dark-border); }
-      > *:last-child { grid-column: auto !important; border-right: none !important; }
+      > * {
+        grid-column: auto;
+        border-top: none !important;
+        border-right: 1px solid var(--surface-dark-border);
+      }
+
+      > *:last-child {
+        grid-column: auto !important;
+        border-right: none !important;
+      }
+    }
+
+    > *:nth-child(n + 2) {
+      border-top: 1px solid var(--surface-dark-border);
     }
   }
 
@@ -248,8 +322,8 @@
     padding: 28px 20px;
     background: linear-gradient(
       160deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.01) 50%,
+      rgb(255 255 255 / 0.05) 0%,
+      rgb(255 255 255 / 0.01) 50%,
       transparent 100%
     );
     transition: background 0.2s ease;
@@ -257,8 +331,8 @@
     &:hover {
       background: linear-gradient(
         160deg,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.03) 50%,
+        rgb(255 255 255 / 0.08) 0%,
+        rgb(255 255 255 / 0.03) 50%,
         transparent 100%
       );
     }
@@ -272,14 +346,10 @@
     width: 56px;
     height: 56px;
     margin-bottom: 16px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.16);
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-    box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgb(0 0 0 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.1);
+    background: rgb(255 255 255 / 0.05);
     color: var(--on-surface-dark-primary);
   }
 
@@ -289,10 +359,10 @@
 
     display: block;
     margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--color-primary-500);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    color: var(--color-primary-500);
+    font-size: 14px;
   }
 
   // ── Card title — matches .linked-card__title ──────────────────────────────
@@ -325,7 +395,9 @@
     a {
       flex-grow: 1;
 
-      @include m.breakpoint(v.$tablet-sm-exact) { flex-grow: 0; }
+      @include m.breakpoint(v.$tablet-sm-exact) {
+        flex-grow: 0;
+      }
     }
   }
 }

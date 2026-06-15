@@ -86,7 +86,7 @@ export const EnterpriseIntegrationsSection: FC<EnterpriseIntegrationsSectionProp
               ...LOCAL_INTEGRATIONS,
             ].map((slide, index) => (
               <div className={getBlocksWith('__strip-logo')} key={index}>
-                <img src={slide.url} alt={slide.alt} />
+                <img src={slide.url} alt={slide.alt} loading="lazy" />
               </div>
             ))}
           </Marquee>

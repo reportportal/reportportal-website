@@ -7,11 +7,11 @@
   align-items: center;
 
   h2 {
-    text-align: center;
     @include m.font-poppins(v.$fw-semi-bold);
     @include m.font-scale(medium);
 
     margin: 0;
+    text-align: center;
     color: var(--text-primary);
 
     @include m.breakpoint(v.$tablet-sm-exact) {

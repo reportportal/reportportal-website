@@ -21,9 +21,9 @@
     @include m.font-scale('small');
 
     margin: 0;
-    color: var(--text-service);
     text-transform: uppercase;
     letter-spacing: 0.12em;
+    color: var(--text-service);
   }
 
   &__marquee-wrapper {
@@ -43,14 +43,15 @@
     transition: var(--basic-transition);
 
     img {
-      max-height: 40px;
       width: auto;
-      object-fit: contain;
+      max-height: 40px;
       transition: var(--basic-transition);
-      // Converts any logo to --text-service (#8791ab)
-      filter: grayscale(1) brightness(0) invert(57%) sepia(9%) saturate(540%) hue-rotate(193deg) brightness(110%) contrast(90%);
-    }
+      object-fit: contain;
 
+      // Converts any logo to --text-service (#8791ab)
+      filter: grayscale(1) brightness(0) invert(57%) sepia(9%) saturate(540%) hue-rotate(193deg)
+        brightness(110%) contrast(90%);
+    }
   }
 
   &__stats {
@@ -74,20 +75,9 @@
     padding: 24px 0;
     text-align: center;
 
-    // Mobile: horizontal divider between stacked stats
-    & + & {
-      border-top: 1px solid var(--purple-grey);
-    }
-
     @include m.breakpoint(v.$tablet-sm-exact) {
       width: auto;
       padding: 0 40px;
-
-      // Tablet+: reset horizontal divider, use vertical instead
-      & + & {
-        border-top: none;
-        border-left: 1px solid var(--purple-grey);
-      }
 
       &:first-child {
         padding-left: 0;
@@ -96,6 +86,17 @@
       &:last-child {
         padding-right: 0;
       }
+
+      // Tablet+: reset horizontal divider, use vertical instead
+      & + & {
+        border-top: none;
+        border-left: 1px solid var(--purple-grey);
+      }
+    }
+
+    // Mobile: horizontal divider between stacked stats
+    & + & {
+      border-top: 1px solid var(--purple-grey);
     }
   }
 

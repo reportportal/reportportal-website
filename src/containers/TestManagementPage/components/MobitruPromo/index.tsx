@@ -48,7 +48,7 @@ export const MobitruPromo: FC = () => (
 
       <div className={getBlocksWith('__image-wrap')}>
         <img
-          src="/images/mobitru-devices.png"
+          src="/images/mobitru-devices.webp"
           alt="Real devices available through Mobitru integration"
           className={getBlocksWith('__image')}
           loading="lazy"

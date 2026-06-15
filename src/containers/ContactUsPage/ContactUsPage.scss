@@ -70,7 +70,6 @@
       color: var(--text-service);
     }
 
-
     &__select-field {
       display: flex;
       flex-direction: column;
@@ -103,8 +102,8 @@
         @include m.font-scale();
 
         height: 56px !important;
-        border-color: var(--text-light-grey) !important;
         border-radius: 4px !important;
+        border-color: var(--text-light-grey) !important;
         padding: 0 16px !important;
         box-shadow: none !important;
 
@@ -140,6 +139,7 @@
         }
       }
     }
+
     margin: 64px auto 0;
     background: var(--white);
     color: var(--text-primary);
@@ -207,9 +207,9 @@
       @include m.font-scale(small);
 
       margin: 0;
+      text-align: center;
       line-height: 20px;
       color: var(--text-service);
-      text-align: center;
     }
 
     &__required {
@@ -221,8 +221,8 @@
       @include m.font-scale(medium);
 
       margin: 0;
-      color: var(--text-primary);
       text-align: center;
+      color: var(--text-primary);
 
       @include m.breakpoint(v.$tablet-sm-exact) {
         text-align: left;
@@ -239,7 +239,7 @@
 
     button {
       width: 235px;
-      margin: 0 auto 0;
+      margin: 0 auto;
     }
 
     &__tags {
@@ -340,8 +340,8 @@
 
     ul {
       align-self: center;
-      list-style: disc outside;
       padding-left: 1.2em;
+      list-style: disc outside;
       text-align: left;
 
       @include m.breakpoint(v.$desktop-sm) {
@@ -389,8 +389,8 @@
         }
 
         &__icons {
-          gap: 38px 73px;
           justify-content: flex-start;
+          gap: 38px 73px;
         }
 
         &__icons-wrapper {

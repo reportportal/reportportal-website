@@ -1,16 +1,120 @@
 @use 'src/styles/mixins' as m;
 @use 'src/styles/variables' as v;
 
-@keyframes rt-fadeIn    { from { opacity: 0 } to { opacity: 1 } }
-@keyframes rt-slideUp   { from { opacity: 0; transform: translateY(7px) } to { opacity: 1; transform: translateY(0) } }
-@keyframes rt-spin      { to { transform: rotate(360deg) } }
-@keyframes rt-fadeOut   { to { opacity: 0 } }
-@keyframes rt-popIn     { 0% { opacity: 0; transform: scale(0.18) } 65% { transform: scale(1.28) } 100% { opacity: 1; transform: scale(1) } }
-@keyframes rt-pulse     { 0%, 100% { opacity: 1 } 50% { opacity: 0.3 } }
-@keyframes rt-barPassed  { 0% { width: 0; background: #009dbb } 86% { background: #009dbb } 100% { width: 100%; background: #00b884 } }
-@keyframes rt-barFailed  { 0% { width: 0; background: #009dbb } 86% { background: #009dbb } 100% { width: 100%; background: #e8273f } }
-@keyframes rt-barSkipped { from { width: 0; background: #c8dde6 } to { width: 28%; background: #f0a400 } }
-@keyframes rt-globalFill { from { width: 0 } to { width: 100% } }
+@keyframes rt-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rt-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rt-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rt-fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rt-popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.18);
+  }
+
+  65% {
+    transform: scale(1.28);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rt-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes rt-barPassed {
+  0% {
+    width: 0;
+    background: #009dbb;
+  }
+
+  86% {
+    background: #009dbb;
+  }
+
+  100% {
+    width: 100%;
+    background: #00b884;
+  }
+}
+
+@keyframes rt-barFailed {
+  0% {
+    width: 0;
+    background: #009dbb;
+  }
+
+  86% {
+    background: #009dbb;
+  }
+
+  100% {
+    width: 100%;
+    background: #e8273f;
+  }
+}
+
+@keyframes rt-barSkipped {
+  from {
+    width: 0;
+    background: #c8dde6;
+  }
+
+  to {
+    width: 28%;
+    background: #f0a400;
+  }
+}
+
+@keyframes rt-globalFill {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
 
 .rt-illus {
   width: 100%;
@@ -35,14 +139,19 @@
   // ---------------------------------------------------------------------------
 
   .window {
+    display: flex;
+    flex-direction: column;
     width: 650px;
     height: 504px;
     border-radius: 14px;
+    box-shadow: 0 8px 48px rgb(0 60 100 / 0.1), 0 2px 12px rgb(0 60 100 / 0.06);
     overflow: hidden;
-    box-shadow: 0 8px 48px rgb(0 60 100 / 0.10), 0 2px 12px rgb(0 60 100 / 0.06);
-    display: flex;
-    flex-direction: column;
     animation: rt-fadeIn 0.35s ease both 0.05s;
+
+    // Pause infinite loading spinners when off-screen / tab hidden.
+    &--paused .spinner {
+      animation-play-state: paused !important;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -50,27 +159,27 @@
   // ---------------------------------------------------------------------------
 
   .titlebar {
-    height: 54px;
+    display: flex;
     flex-shrink: 0;
-    background: #fff;
+    align-items: center;
+    height: 54px;
     border-bottom: 0.5px solid #d8e4ee;
     padding: 0 16px;
-    display: flex;
-    align-items: center;
+    background: #fff;
     animation: rt-slideUp 0.35s ease both 0.1s;
   }
 
   .gp-track {
-    height: 4px;
-    background: #dde7f0;
-    border-radius: 2px;
-    overflow: hidden;
     flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: #dde7f0;
+    overflow: hidden;
   }
 
   .gp-fill {
-    height: 100%;
     width: 0;
+    height: 100%;
     border-radius: 2px;
     background: linear-gradient(90deg, #009dbb 0%, #00cde0 100%);
     animation: rt-globalFill 2.7s ease both 0.5s;
@@ -81,22 +190,22 @@
   // ---------------------------------------------------------------------------
 
   .col-hdr {
-    height: 24px;
-    flex-shrink: 0;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     gap: 9px;
+    height: 24px;
+    border-bottom: 0.5px solid #dce9f0;
     padding: 0 10px;
     background: #f0f6fa;
-    border-bottom: 0.5px solid #dce9f0;
   }
 
   .cl {
-    font-size: 9px;
-    color: #8791ab;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    color: #8791ab;
+    font-size: 9px;
+    font-weight: 600;
   }
 
   // ---------------------------------------------------------------------------
@@ -104,110 +213,147 @@
   // ---------------------------------------------------------------------------
 
   .content {
-    flex: 1;
-    overflow: hidden;
-    background: #f5f8fb;
-    padding: 9px 10px;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 5px;
+    padding: 9px 10px;
+    background: #f5f8fb;
+    overflow: hidden;
   }
 
   .t-row {
+    display: flex;
     flex: 1;
-    background: #fff;
+    align-items: center;
+    gap: 9px;
     border: 0.5px solid #e8edf5;
     border-radius: 8px;
     padding: 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    box-shadow: 0 1px 3px rgba(0, 80, 120, 0.04);
+    box-shadow: 0 1px 3px rgb(0 80 120 / 0.04);
+    background: #fff;
     animation: rt-slideUp 0.26s ease both;
   }
 
   .sc {
-    width: 20px;
-    height: 20px;
     position: relative;
-    flex-shrink: 0;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
+    width: 20px;
+    height: 20px;
   }
 
   .spinner {
     position: absolute;
     width: 16px;
     height: 16px;
-    border: 1.8px solid rgba(0, 157, 187, 0.2);
-    border-top-color: #009dbb;
+    border: 1.8px solid rgb(0 157 187 / 0.2);
     border-radius: 50%;
+    border-top-color: #009dbb;
   }
 
   .si {
     position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
     opacity: 0;
 
-    &.p { background: #00b884 }
-    &.f { background: #e8273f }
-    &.s { background: #f0a400 }
+    &.p {
+      background: #00b884;
+    }
+
+    &.f {
+      background: #e8273f;
+    }
+
+    &.s {
+      background: #f0a400;
+    }
   }
 
-  .tname { font-size: 11px; font-weight: 700; color: #1a2740; display: block }
-  .tmeta { font-size: 9.5px; color: #8791ab; margin-top: 2px; display: block }
+  .tname {
+    display: block;
+    color: #1a2740;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .tmeta {
+    display: block;
+    margin-top: 2px;
+    color: #8791ab;
+    font-size: 9.5px;
+  }
 
   .rbar-track {
-    height: 4px;
-    background: #e4eef5;
-    border-radius: 2px;
-    overflow: hidden;
-    width: 80px;
     flex-shrink: 0;
+    width: 80px;
+    height: 4px;
+    border-radius: 2px;
+    background: #e4eef5;
+    overflow: hidden;
   }
 
   .rbar-fill {
-    height: 100%;
     width: 0;
+    height: 100%;
     border-radius: 2px;
   }
 
-  .dur { width: 28px; text-align: right; font-size: 9.5px; color: #8791ab; font-weight: 500; flex-shrink: 0 }
+  .dur {
+    flex-shrink: 0;
+    width: 28px;
+    text-align: right;
+    color: #8791ab;
+    font-size: 9.5px;
+    font-weight: 500;
+  }
 
   // ---------------------------------------------------------------------------
   // Summary footer
   // ---------------------------------------------------------------------------
 
   .summary {
-    height: 58px;
+    position: relative;
+    display: flex;
     flex-shrink: 0;
-    background: #fff;
+    align-items: center;
+    height: 58px;
     border-top: 0.5px solid #d8e4ee;
     padding: 0 16px;
-    display: flex;
-    align-items: center;
+    background: #fff;
     animation: rt-slideUp 0.35s ease both 0.22s;
-    position: relative;
   }
 
   .ss {
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 5px 11px;
     border-radius: 6px;
+    padding: 5px 11px;
+    white-space: nowrap;
     font-size: 10.5px;
     font-weight: 700;
-    white-space: nowrap;
 
-    &.p { background: rgba(0, 184, 132, 0.1); color: #006e50 }
-    &.f { background: rgba(232, 39, 63, 0.1); color: #ad1030 }
-    &.s { background: rgba(240, 164, 0, 0.1); color: #784f00 }
+    &.p {
+      background: rgb(0 184 132 / 0.1);
+      color: #006e50;
+    }
+
+    &.f {
+      background: rgb(232 39 63 / 0.1);
+      color: #ad1030;
+    }
+
+    &.s {
+      background: rgb(240 164 0 / 0.1);
+      color: #784f00;
+    }
   }
 }

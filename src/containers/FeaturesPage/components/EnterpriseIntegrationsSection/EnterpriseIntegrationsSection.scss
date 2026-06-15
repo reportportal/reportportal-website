@@ -2,9 +2,9 @@
 @use 'src/styles/variables' as v;
 
 .enterprise-integrations {
-  background: var(--gradient-section-light);
   padding-top: 80px;
   padding-bottom: 80px;
+  background: var(--gradient-section-light);
 
   @include m.breakpoint(v.$tablet-sm-exact) {
     padding-top: 96px;
@@ -33,10 +33,10 @@
     display: inline-flex;
     align-items: center;
     margin-bottom: 16px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    background: var(--color-primary-100);
     border: 1px solid var(--color-primary-200);
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: var(--color-primary-100);
     color: var(--color-primary-700);
   }
 
@@ -63,8 +63,8 @@
 
     max-width: 640px;
     margin: 24px auto 0;
-    line-height: 1.6;
     text-align: center;
+    line-height: 1.6;
     color: var(--text-service);
   }
 
@@ -88,43 +88,43 @@
     }
 
     .linked-card {
-      background: var(--white);
       border: 1px solid var(--purple-grey);
       box-shadow: none;
+      background: var(--white);
     }
   }
 
   &__card-icon-wrap {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
     width: 56px;
     height: 56px;
+    margin-bottom: 4px;
     border-radius: 50%;
     background: rgb(0 157 187 / 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 4px;
-    flex-shrink: 0;
-    align-self: flex-start;
     line-height: 0;
   }
 
   &__card-icon {
     display: block;
+    flex-shrink: 0;
     width: 24px;
     height: 24px;
     color: var(--color-primary-600);
-    flex-shrink: 0;
   }
 
   // ---------------------------------------------------------------------------
   // Integrations marquee strip — matches ProcessIntegration carousel style
   // ---------------------------------------------------------------------------
   &__strip {
+    margin-top: 40px;
+
     // overflow-x: clip prevents horizontal scroll without creating a BFC,
     // so overflow-y: visible keeps box-shadows on logo cards unclipped
-    overflow-x: clip;
-    overflow-y: visible;
-    margin-top: 40px;
+    overflow: clip visible;
   }
 
   &__strip-marquee {
@@ -133,8 +133,7 @@
     // overflow-x: clip keeps the horizontal marquee masking (no scroll, clips at edge)
     // without creating a BFC, so overflow-y: visible lets shadows breathe.
     .rfm-marquee-container {
-      overflow-x: clip;
-      overflow-y: visible;
+      overflow: clip visible;
     }
 
     div:has(.rfm-child) {
@@ -144,19 +143,20 @@
   }
 
   &__strip-logo {
-    // margin-right instead of parent gap — ensures the last item in each
-    // rfm-marquee copy also carries the spacing, so the loop junction is seamless
-    margin-right: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    // margin-right instead of parent gap — ensures the last item in each
+    // rfm-marquee copy also carries the spacing, so the loop junction is seamless
+    margin-right: 80px;
     border-radius: 14px;
     padding: 16px;
-    box-shadow: 0 8px 20px rgb(0 45 55 / 0.10);
+    box-shadow: 0 8px 20px rgb(0 45 55 / 0.1);
 
     img {
-      max-height: 48px;
       max-width: 48px;
+      max-height: 48px;
       object-fit: contain;
     }
   }

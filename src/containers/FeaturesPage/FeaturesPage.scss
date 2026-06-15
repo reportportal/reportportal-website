@@ -111,6 +111,15 @@
     @include m.breakpoint(v.$tablet-sm-exact) {
       padding-top: 64px;
     }
+
+    // Reserve the dashboard image's height BEFORE it loads (natural 1078×622).
+    // Without this the hero collapses until the ~1.9 MB SVG finishes loading,
+    // then expands — causing the layout jump on navigation to /features.
+    // Image already renders at width:100% (global rule), so no visual change.
+    img {
+      height: auto;
+      aspect-ratio: 1078 / 622;
+    }
   }
 }
 
@@ -232,6 +241,8 @@
 // Feature list item container — mirrors .feature-section root
 // ---------------------------------------------------------------------------
 .features-page__features-list-item-container {
+  padding: 40px 0;
+
   // Compensates for sticky header (76px) on mobile/tablet,
   // and additionally the sticky features nav (~50px) on desktop,
   // so that anchor jumps land correctly without content being obscured.
@@ -240,14 +251,16 @@
     scroll-margin-top: 64px;
   }
 
-  padding: 40px 0;
-
   @include m.breakpoint(v.$tablet-sm-exact) {
     padding: 48px 0;
   }
 
   @include m.breakpoint(v.$desktop-sm) {
     padding: 120px 0;
+  }
+
+  &:nth-child(even) {
+    background-color: var(--white);
   }
 
   &--full-width {
@@ -260,10 +273,6 @@
     @include m.breakpoint(v.$desktop-sm) {
       padding: 0;
     }
-  }
-
-  &:nth-child(even) {
-    background-color: var(--white);
   }
 }
 
@@ -576,8 +585,8 @@
   flex-shrink: 0;
   align-self: center;
   width: 20px;
-  height: 20px;
   min-width: 20px;
+  height: 20px;
   color: var(--color-primary-500);
 }
 

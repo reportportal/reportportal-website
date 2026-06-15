@@ -4,42 +4,129 @@
 // ---------------------------------------------------------------------------
 // Keyframes — prefixed with ml- to avoid global name collisions
 // ---------------------------------------------------------------------------
-@keyframes ml-fadeIn    { from { opacity: 0 }                       to { opacity: 1 } }
-@keyframes ml-slideUp   { from { opacity: 0; transform: translateY(10px) }  to { opacity: 1; transform: translateY(0) } }
-@keyframes ml-slideIn   { from { opacity: 0; transform: translateX(-8px) }  to { opacity: 1; transform: translateX(0) } }
-@keyframes ml-tagSlide  { from { opacity: 0; transform: translateX(-10px) } to { opacity: 1; transform: translateX(0) } }
-@keyframes ml-sectionUp { from { opacity: 0; transform: translateY(14px) }  to { opacity: 1; transform: translateY(0) } }
-@keyframes ml-popIn     { from { opacity: 0; transform: scale(.78) }        to { opacity: 1; transform: scale(1) } }
-@keyframes ml-btnClick  { 0% { transform: scale(1) } 35% { transform: scale(.9); filter: brightness(.88) } 100% { transform: scale(1) } }
-@keyframes ml-dotPulse  { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+@keyframes ml-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ml-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ml-slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ml-tagSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ml-sectionUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ml-popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.78);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ml-btnClick {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(0.9);
+    filter: brightness(0.88);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ml-dotPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Root block
 // ---------------------------------------------------------------------------
 .manual-launch {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
   text-align: left;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   // ---------------------------------------------------------------------------
   // Scene wrapper
   // ---------------------------------------------------------------------------
   &__scene {
-    border-radius: 14px;
-    overflow: hidden;
-    border: 0.5px solid #c8dde6;
-    box-shadow: 0 4px 28px rgba(0, 80, 120, 0.12);
     display: flex;
+    border: 0.5px solid #c8dde6;
+    border-radius: 14px;
+    box-shadow: 0 4px 28px rgb(0 80 120 / 0.12);
     opacity: 0;
+    overflow: hidden;
 
     &--active {
-      animation: ml-fadeIn .4s ease both .05s;
+      animation: ml-fadeIn 0.4s ease both 0.05s;
     }
 
     // Scale the 760px-wide scene to fit the mobile container
-    @media (max-width: 767px) {
+    @media (width <= 767px) {
       width: 760px;
       zoom: calc((100vw - 32px) / 760px);
     }
@@ -47,48 +134,50 @@
 
   // Header — triggered by --active on scene
   &__scene--active &__hdr {
-    animation: ml-slideUp .4s ease both .15s;
+    animation: ml-slideUp 0.4s ease both 0.15s;
   }
 
   // Steps section — triggered by --active on scene
   &__scene--active &__steps-section {
-    animation: ml-slideUp .38s ease both .25s;
+    animation: ml-slideUp 0.38s ease both 0.25s;
   }
 
   &__hdr {
-    padding: 10px 18px;
-    background: #fff;
-    border-bottom: 0.5px solid #d8e4ee;
+    position: relative;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     gap: 10px;
-    flex-shrink: 0;
     min-height: 48px;
-    position: relative;
+    border-bottom: 0.5px solid #d8e4ee;
+    padding: 10px 18px;
+    background: #fff;
   }
 
   // ---------------------------------------------------------------------------
   // Nav icon button
   // ---------------------------------------------------------------------------
   &__nb {
-    width: 28px;
-    height: 24px;
-    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 28px;
+    height: 24px;
+    border-radius: 5px;
 
-    &--on { background: rgba(0, 180, 213, 0.2) }
+    &--on {
+      background: rgb(0 180 213 / 0.2);
+    }
   }
 
   // ---------------------------------------------------------------------------
   // Section card (shared by steps / bts / comment)
   // ---------------------------------------------------------------------------
   &__section {
-    background: #fff;
-    border-radius: 8px;
     border: 0.5px solid #e0eaf2;
-    box-shadow: 0 1px 4px rgba(0, 80, 120, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgb(0 80 120 / 0.05);
+    background: #fff;
     overflow: hidden;
   }
 
@@ -104,14 +193,14 @@
   // ---------------------------------------------------------------------------
   &__step-row {
     display: grid;
-    grid-template-columns: 36px 1fr 1fr 28px;
-    padding: 9px 14px;
-    border-top: 0.5px solid #eef3f8;
     align-items: center;
+    grid-template-columns: 36px 1fr 1fr 28px;
+    border-top: 0.5px solid #eef3f8;
+    padding: 9px 14px;
     opacity: 0;
 
     &--visible {
-      animation: ml-slideIn .32s ease forwards;
+      animation: ml-slideIn 0.32s ease forwards;
     }
   }
 
@@ -123,10 +212,9 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transform: scale(.4);
-    transition:
-      opacity .22s cubic-bezier(.34, 1.56, .64, 1),
-      transform .22s cubic-bezier(.34, 1.56, .64, 1);
+    transform: scale(0.4);
+    transition: opacity 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &--visible {
       opacity: 1;
@@ -138,10 +226,10 @@
   // Failed pill — click animation
   // ---------------------------------------------------------------------------
   &__s-fail {
-    transition: transform .15s, filter .15s;
+    transition: transform 0.15s, filter 0.15s;
 
     &--clicking {
-      animation: ml-btnClick .26s ease forwards;
+      animation: ml-btnClick 0.26s ease forwards;
     }
   }
 
@@ -152,21 +240,21 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 10px;
-    background: #c8373a;
     border-radius: 6px;
+    padding: 4px 10px;
+    box-shadow: 0 2px 8px rgb(200 55 58 / 0.3);
+    background: #c8373a;
+    animation: ml-popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    color: #fff;
     font-size: 11px;
     font-weight: 800;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(200, 55, 58, 0.3);
-    animation: ml-popIn .3s cubic-bezier(.34, 1.56, .64, 1) both;
   }
 
   &__exec-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgb(255 255 255 / 0.7);
     animation: ml-dotPulse 2s ease-in-out infinite;
   }
 
@@ -177,7 +265,7 @@
     opacity: 0;
 
     &--visible {
-      animation: ml-sectionUp .4s cubic-bezier(.22, .68, 0, 1.1) forwards;
+      animation: ml-sectionUp 0.4s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
     }
   }
 
@@ -185,34 +273,34 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 4px 8px;
-    background: #ebf8fb;
     border: 0.5px solid #b2e4ee;
     border-radius: 4px 8px 8px 4px;
-    font-size: 10px;
-    color: #0081a7;
-    font-weight: 700;
+    padding: 4px 8px;
+    background: #ebf8fb;
     opacity: 0;
+    color: #0081a7;
+    font-size: 10px;
+    font-weight: 700;
     cursor: default;
 
     &--visible {
-      animation: ml-tagSlide .32s cubic-bezier(.22, .68, 0, 1.1) forwards;
+      animation: ml-tagSlide 0.32s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
     }
   }
 
   &__bts-add {
-    margin-left: auto;
-    font-size: 10px;
-    color: #009dbb;
-    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-left: auto;
     opacity: 0;
+    color: #009dbb;
+    font-size: 10px;
+    font-weight: 700;
     cursor: default;
 
     &--visible {
-      animation: ml-fadeIn .3s ease forwards;
+      animation: ml-fadeIn 0.3s ease forwards;
     }
   }
 
@@ -223,7 +311,7 @@
     opacity: 0;
 
     &--visible {
-      animation: ml-sectionUp .4s cubic-bezier(.22, .68, 0, 1.1) forwards;
+      animation: ml-sectionUp 0.4s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
     }
   }
 
@@ -238,8 +326,8 @@
     &__bts-add,
     &__comment-section {
       opacity: 1 !important;
-      animation: none !important;
       transform: none !important;
+      animation: none !important;
     }
 
     &__step-icon {
@@ -261,7 +349,7 @@
   // ---------------------------------------------------------------------------
   // Mobile — show everything immediately, no animation
   // ---------------------------------------------------------------------------
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     &__scene,
     &__step-row,
     &__bts-section,
@@ -269,8 +357,8 @@
     &__bts-add,
     &__comment-section {
       opacity: 1 !important;
-      animation: none !important;
       transform: none !important;
+      animation: none !important;
     }
 
     &__step-icon {

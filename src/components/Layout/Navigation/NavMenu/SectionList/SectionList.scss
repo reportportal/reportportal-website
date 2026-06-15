@@ -104,12 +104,12 @@
 
     display: inline-flex;
     align-items: center;
-    padding: 0 8px;
     border-radius: 16px;
-    background: rgba(0, 184, 132, 0.1);
-    color: var(--graphics-jade);
+    padding: 0 8px;
+    background: rgb(0 184 132 / 0.1);
     line-height: 20px;
     white-space: nowrap;
+    color: var(--graphics-jade);
   }
 
   &-text {

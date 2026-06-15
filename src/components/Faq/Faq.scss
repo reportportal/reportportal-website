@@ -116,11 +116,10 @@ $mobile-horizontal-padding: 16px;
   }
 
   .ant-collapse-header-text {
-    flex: 1;
-
     @include m.font-poppins(v.$fw-semi-bold);
     @include m.font-scale();
 
+    flex: 1;
     margin: 0;
     color: var(--dark);
   }
@@ -130,8 +129,7 @@ $mobile-horizontal-padding: 16px;
   .ant-collapse-icon-position-end {
     .ant-collapse-expand-icon {
       order: 1;
-      padding-inline-end: 0;
-      padding-inline-start: 12px;
+      padding-inline: 12px 0;
     }
   }
 
@@ -149,7 +147,8 @@ $mobile-horizontal-padding: 16px;
 
   .ant-motion-collapse {
     overflow: hidden;
-    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+      opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
   }
 
   .ant-motion-collapse-legacy {
@@ -157,7 +156,8 @@ $mobile-horizontal-padding: 16px;
   }
 
   .ant-motion-collapse-legacy-active {
-    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+      opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
   }
 
   .ant-collapse-expand-icon {

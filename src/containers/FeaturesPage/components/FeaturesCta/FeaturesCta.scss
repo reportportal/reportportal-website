@@ -41,22 +41,18 @@
     @include m.font-noto-sans();
     @include m.font-scale('x2-medium');
 
-    margin: 24px auto 40px;
     max-width: 792px;
-    color: var(--color-primary-200);
+    margin: 24px auto 40px;
+    text-align: center;
     line-height: 1.7;
-    text-align:center; }
+    color: var(--color-primary-200);
+  }
 
   &__button-group {
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 100%;
-
-    a {
-      width: 100%;
-      justify-content: center;
-    }
 
     @include m.breakpoint(v.$tablet-sm-exact) {
       flex-direction: row;
@@ -65,6 +61,11 @@
       a {
         width: auto;
       }
+    }
+
+    a {
+      justify-content: center;
+      width: 100%;
     }
   }
 }

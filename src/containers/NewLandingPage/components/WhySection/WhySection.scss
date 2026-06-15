@@ -35,8 +35,8 @@
     @include m.font-noto-sans();
     @include m.font-scale('x2-medium');
 
-    margin: 0 auto 56px;
     max-width: 800px;
+    margin: 0 auto 56px;
     text-align: center;
     color: var(--text-service);
   }
@@ -93,7 +93,7 @@
     display: inline-block;
     margin-top: 8px;
     text-align: center;
-    color: var(--text-primary);
     line-height: 1.6;
+    color: var(--text-primary);
   }
 }

@@ -5,27 +5,35 @@
 // Keyframes
 // ---------------------------------------------------------------------------
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1) }
-  50%       { opacity: 0.4; transform: scale(0.72) }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.72);
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Scoped dark-theme tokens (not in the global design system)
 // ---------------------------------------------------------------------------
 .how-it-works {
-  --hiw-bg:            #0b1220;
-  --hiw-title:         #e8f2ff;
-  --hiw-subtitle:      #4a5e78;
-  --hiw-badge-bg:      rgba(155, 89, 245, 0.10);
-  --hiw-badge-border:  rgba(155, 89, 245, 0.35);
-  --hiw-badge-color:   #b794f4;
-  --hiw-card-border:   rgba(255, 255, 255, 0.07);
-  --hiw-icon-bg:       #1a2235;
-  --hiw-icon-color:    #e8f2ff;
-  --hiw-step-label:    #3b6b8a;
-  --hiw-card-title:    #d8eeff;
-  --hiw-card-desc:     #3f5472;
-  --hiw-card-hover:    rgba(255, 255, 255, 0.02);
+  --hiw-bg: #0b1220;
+  --hiw-title: #e8f2ff;
+  --hiw-subtitle: #4a5e78;
+  --hiw-badge-bg: rgb(155 89 245 / 0.1);
+  --hiw-badge-border: rgb(155 89 245 / 0.35);
+  --hiw-badge-color: #b794f4;
+  --hiw-card-border: rgb(255 255 255 / 0.07);
+  --hiw-icon-bg: #1a2235;
+  --hiw-icon-color: #e8f2ff;
+  --hiw-step-label: #3b6b8a;
+  --hiw-card-title: #d8eeff;
+  --hiw-card-desc: #3f5472;
+  --hiw-card-hover: rgb(255 255 255 / 0.02);
 }
 
 // ---------------------------------------------------------------------------
@@ -38,8 +46,8 @@
   align-items: center;
   padding-top: 80px;
   padding-bottom: 80px;
-  overflow: hidden;
   background: var(--hiw-bg);
+  overflow: hidden;
 
   @include m.breakpoint(v.$desktop-sm) {
     padding-top: 120px;
@@ -56,12 +64,12 @@
     height: 640px;
     background: radial-gradient(
       ellipse 900px 640px at 50% 20%,
-      rgba(0, 180, 213, 0.11) 0%,
+      rgb(0 180 213 / 0.11) 0%,
       transparent 68%
     );
     transform: translateX(-50%);
-    pointer-events: none;
     content: '';
+    pointer-events: none;
   }
 
   > * {
@@ -107,11 +115,15 @@
     align-items: center;
     gap: 8px;
     margin-bottom: 20px;
-    padding: 6px 14px 6px 10px;
     border: 1px solid var(--hiw-badge-border);
     border-radius: 100px;
+    padding: 6px 14px 6px 10px;
     background: var(--hiw-badge-bg);
     color: var(--hiw-badge-color);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-bottom: 24px;
+    }
 
     // Pulsing dot
     &::before {
@@ -122,10 +134,6 @@
       background: var(--hiw-badge-color);
       animation: pulse 2s ease-in-out infinite;
       content: '';
-    }
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      margin-bottom: 24px;
     }
   }
 
@@ -146,29 +154,13 @@
   // Single bordered container; cards separated by inner dividers only.
   &__features-list {
     display: grid;
+
+    // ── Mobile — 2 columns, layout: 2 + 2 + 1 ──────────────────────────────
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     border: 1px solid var(--hiw-card-border);
     border-radius: 16px;
     overflow: hidden;
-
-    // ── Mobile — 2 columns, layout: 2 + 2 + 1 ──────────────────────────────
-    grid-template-columns: 1fr 1fr;
-
-    // Right border between the two columns (col-1 items, but not card 5)
-    > *:nth-child(2n+1):not(:last-child) {
-      border-right: 1px solid var(--hiw-card-border);
-    }
-
-    // Top border for every row after the first (items 3 onward)
-    > *:nth-child(n+3) {
-      border-top: 1px solid var(--hiw-card-border);
-    }
-
-    // Card 5 spans both columns; no right border
-    > *:last-child {
-      grid-column: 1 / -1;
-      border-right: none;
-    }
 
     // ── Tablet — 3 columns, layout: 3 + 2 ─────────────────────────────────
     @include m.breakpoint(v.$tablet-sm-exact) {
@@ -215,6 +207,22 @@
         border-right: none !important;
       }
     }
+
+    // Right border between the two columns (col-1 items, but not card 5)
+    > *:nth-child(2n + 1):not(:last-child) {
+      border-right: 1px solid var(--hiw-card-border);
+    }
+
+    // Top border for every row after the first (items 3 onward)
+    > *:nth-child(n + 3) {
+      border-top: 1px solid var(--hiw-card-border);
+    }
+
+    // Card 5 spans both columns; no right border
+    > *:last-child {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
   }
 
   // ── Individual card ───────────────────────────────────────────────────────
@@ -241,7 +249,7 @@
     color: var(--hiw-icon-color);
 
     svg {
-      fill: currentcolor;
+      fill: currentColor;
     }
   }
 
@@ -251,10 +259,10 @@
 
     display: block;
     margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--hiw-step-label);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    color: var(--hiw-step-label);
+    font-size: 14px;
   }
 
   // ── Card title ────────────────────────────────────────────────────────────
@@ -263,9 +271,9 @@
 
     display: block;
     margin-bottom: 8px;
-    font-size: 13px;
-    color: var(--hiw-card-title);
     line-height: 1.4;
+    color: var(--hiw-card-title);
+    font-size: 13px;
   }
 
   // ── Card description ──────────────────────────────────────────────────────
@@ -273,9 +281,9 @@
     @include m.font-noto-sans();
 
     display: block;
-    font-size: 11px;
-    color: var(--hiw-card-desc);
     line-height: 1.6;
+    color: var(--hiw-card-desc);
+    font-size: 11px;
   }
 
   // ── CTA button group ──────────────────────────────────────────────────────

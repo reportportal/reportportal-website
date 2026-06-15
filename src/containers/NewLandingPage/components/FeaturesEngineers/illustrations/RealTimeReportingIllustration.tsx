@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { useInView } from '@app/hooks/useInView';
 import { useIllustrationStatic } from '@app/components/AnimatedList/IllustrationStaticContext';
 
 import './RealTimeReportingIllustration.scss';
@@ -12,6 +14,24 @@ export const RealTimeReportingIllustration: FC = () => {
   const canvasRef    = useRef<HTMLDivElement>(null);
   const counterRef   = useRef<HTMLSpanElement>(null);
   const isStatic = useIllustrationStatic();
+
+  // Pause the infinite loading spinners when the illustration is off-screen
+  // or the tab is hidden — they otherwise keep spinning (even after fading
+  // out) and steal frames during scroll. Entrance choreography is untouched.
+  const [inViewRef, isInView] = useInView({ once: false, amount: 0.2 });
+
+  const [isTabVisible, setIsTabVisible] = useState(
+    typeof document !== 'undefined' ? !document.hidden : true,
+  );
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+    const onVisibilityChange = () => setIsTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
+
+  const spinnersPaused = !isInView || !isTabVisible;
 
   // Scale canvas to fit the parent container width
   useEffect(() => {
@@ -61,7 +81,7 @@ export const RealTimeReportingIllustration: FC = () => {
   return (
     <div className="rt-illus" ref={containerRef}>
       <div className="rt-canvas" ref={canvasRef}>
-      <div className="window">
+      <div className={classNames('window', { 'window--paused': spinnersPaused })} ref={inViewRef}>
 
         {/* Title bar */}
         <div className="titlebar">

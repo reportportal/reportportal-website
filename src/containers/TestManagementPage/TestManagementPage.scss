@@ -7,12 +7,12 @@
     width: 100%;
     margin-top: calc(-1 * var(--header-height));
     padding-top: var(--header-height);
-    overflow: hidden;
     background-color: var(--color-primary-700);
     background-image: url('/svg/BackgroundTMS.svg');
-    background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 
     & > .container {
       position: relative;
@@ -69,8 +69,8 @@
 
     max-width: 640px;
     margin: 24px auto 0;
-    color: rgb(255 255 255 / 0.85);
     text-align: center;
+    color: rgb(255 255 255 / 0.85);
   }
 
   &__hero-cta {
@@ -83,8 +83,7 @@
     padding-bottom: 80px;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      flex-direction: row;
-      flex-wrap: nowrap;
+      flex-flow: row nowrap;
     }
 
     @include m.breakpoint(v.$desktop-sm) {
@@ -92,11 +91,12 @@
       padding-bottom: 120px;
     }
 
-    a, button {
+    a,
+    button {
+      justify-content: center;
       width: 100%;
       max-width: 280px;
       text-align: center;
-      justify-content: center;
       white-space: nowrap;
 
       @include m.breakpoint(v.$tablet-sm-exact) {
@@ -242,7 +242,6 @@
     @include m.breakpoint(v.$tablet-sm-exact) {
       padding: 120px 0;
     }
-
   }
 
   &__cta-inner {

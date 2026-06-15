@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { createBemBlockBuilder } from '@app/utils';
+import { useInView } from '@app/hooks/useInView';
 import { Link } from '@app/components/Link';
 
 import { HOW_IT_WORKS_STEPS } from './constants';
@@ -43,8 +44,31 @@ const STEP_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-export const HowItWorks: FC = () => (
-  <section className={getBlocksWith()}>
+export const HowItWorks: FC = () => {
+  // Pause the two infinite decorative animations (hiw-pulse badge + hiw-flow
+  // connector) when the section is scrolled out of view or the tab is hidden.
+  // Keeping them running off-screen steals frames and makes scrolling feel
+  // less smooth, with zero visual benefit.
+  const [ref, isInView] = useInView({ once: false, amount: 0.2 });
+
+  const [isTabVisible, setIsTabVisible] = useState(
+    typeof document !== 'undefined' ? !document.hidden : true,
+  );
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+    const onVisibilityChange = () => setIsTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      className={classNames(getBlocksWith(), {
+        'how-it-works-new--paused': !isInView || !isTabVisible,
+      })}
+    >
     <div className={getBlocksWith('__pattern-top')} aria-hidden="true" />
     <div className={getBlocksWith('__pattern-bottom')} aria-hidden="true" />
     <div className={classNames(getBlocksWith('__inner'), 'container')}>
@@ -166,5 +190,6 @@ export const HowItWorks: FC = () => (
       </div>
 
     </div>
-  </section>
-);
+    </section>
+  );
+};

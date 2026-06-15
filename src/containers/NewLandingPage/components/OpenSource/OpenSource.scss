@@ -3,10 +3,10 @@
 
 .open-source {
   position: relative;
-  overflow: hidden;
   padding-top: 80px;
   padding-bottom: 80px;
   background: var(--gradient-section-light);
+  overflow: hidden;
 
   @include m.breakpoint(v.$tablet-sm-exact) {
     padding-top: 96px;
@@ -27,24 +27,24 @@
     position: absolute;
     top: 25%;
     left: -48px;
-    transform: translateY(-50%);
     display: none;
+    opacity: 0.5;
+    transform: translateY(-50%);
     pointer-events: none;
     user-select: none;
-    opacity: 0.5;
-
-    svg {
-      width: 160px;
-      height: 160px;
-    }
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      display: block;
       left: -24px;
+      display: block;
     }
 
     @include m.breakpoint(v.$desktop-sm) {
       left: 140px;
+    }
+
+    svg {
+      width: 160px;
+      height: 160px;
     }
   }
 
@@ -53,24 +53,24 @@
     position: absolute;
     top: 25%;
     right: -32px;
-    transform: translateY(-50%);
     display: none;
+    opacity: 0.5;
+    transform: translateY(-50%);
     pointer-events: none;
     user-select: none;
-    opacity: 0.5;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      right: -16px;
+      display: block;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      right: 124px;
+    }
 
     svg {
       width: 160px;
       height: 160px;
-    }
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      display: block;
-      right: -16px;
-    }
-
-    @include m.breakpoint(v.$desktop-sm) {
-      right:124px;
     }
   }
 
@@ -89,8 +89,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     max-width: 792px;
+    text-align: center;
   }
 
   h2 {
@@ -106,6 +106,7 @@
 
     @include m.breakpoint(v.$desktop-sm) {
       @include m.font-scale('x3-large');
+
       margin-bottom: 24px;
     }
   }
@@ -115,8 +116,8 @@
     @include m.font-scale('x2-medium');
 
     margin: 0;
-    color: var(--text-service);
     line-height: 1.6;
+    color: var(--text-service);
   }
 
   // ---------------------------------------------------------------------------
@@ -132,10 +133,10 @@
 
   &__stat {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    flex: 1;
     min-width: 100px;
     text-align: center;
   }
@@ -144,8 +145,8 @@
     @include m.font-poppins(v.$fw-bold);
     @include m.font-scale('large');
 
-    color: var(--text-primary);
     line-height: 1;
+    color: var(--text-primary);
   }
 
   &__stat-label {
@@ -163,11 +164,11 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 24px;
     width: 100%;
-    background: var(--white);
     border-radius: 16px;
+    padding: 24px;
     box-shadow: 0 6px 24px rgb(0 59 72 / 0.08);
+    background: var(--white);
 
     @include m.breakpoint(v.$tablet-sm-exact) {
       flex-direction: row;
@@ -187,11 +188,11 @@
 
   &__feature-icon {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    flex-shrink: 0;
     color: var(--color-primary-600);
 
     svg {
@@ -210,8 +211,8 @@
     @include m.font-poppins(v.$fw-semi-bold);
     @include m.font-scale('medium');
 
-    color: var(--text-primary);
     line-height: 1.5;
+    color: var(--text-primary);
   }
 
   &__feature-description {
@@ -219,8 +220,8 @@
     @include m.font-scale('base');
 
     margin: 0;
-    color: var(--text-primary);
     line-height: 1.6;
+    color: var(--text-primary);
   }
 
   // ---------------------------------------------------------------------------
@@ -231,8 +232,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 16px;
     gap: 20px;
+    padding-top: 16px;
   }
 
   &__actions-buttons {

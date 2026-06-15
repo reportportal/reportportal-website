@@ -3,8 +3,8 @@
 
 .mobitru-promo {
   position: relative;
-  overflow: hidden;
   background: url('../../../../svg/community/sponsor-tablet.svg') no-repeat center 0 / cover;
+  overflow: hidden;
   color: var(--text-primary);
 
   @include m.breakpoint(v.$desktop-sm) {
@@ -39,7 +39,7 @@
 
     @include m.breakpoint(v.$desktop-sm) {
       flex: 0 0 42%;
-      padding: 104px 0 120px 0;
+      padding: 104px 0 120px;
     }
   }
 
@@ -101,8 +101,8 @@
     flex-shrink: 0;
     align-self: center;
     width: 20px;
-    height: 20px;
     min-width: 20px;
+    height: 20px;
     color: var(--color-primary-500);
   }
 
@@ -124,16 +124,16 @@
     @include m.font-noto-sans();
     @include m.font-scale();
 
-    color: var(--text-service);
     white-space: nowrap;
+    color: var(--text-service);
   }
 
   &__powered-link {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: var(--color-primary-700);
     transition: var(--basic-transition);
+    color: var(--color-primary-700);
 
     &:hover {
       color: var(--color-primary-500);
@@ -152,8 +152,8 @@
     display: none;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      display: block;
       position: relative;
+      display: block;
       flex: 1;
       align-self: stretch;
       overflow: hidden;
