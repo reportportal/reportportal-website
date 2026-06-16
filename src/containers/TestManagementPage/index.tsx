@@ -95,8 +95,14 @@ export const TestManagementPage: FC = () => (
         </p>
       </div>
       <div className={`${getBlocksWith('__benefits-cards')} container`}>
-        {BENEFITS.map(({ id, title, description, icon }) => (
-          <LinkedCard key={id} itemTitle={title} description={description} icon={icon} />
+        {BENEFITS.map(({ id, title, description, icon, iconColor }) => (
+          <LinkedCard
+            key={id}
+            itemTitle={title}
+            description={description}
+            icon={icon}
+            iconColor={iconColor}
+          />
         ))}
       </div>
     </section>

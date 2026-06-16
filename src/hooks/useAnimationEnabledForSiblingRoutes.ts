@@ -1,4 +1,4 @@
-import { useLocation } from '@reach/router';
+import { useLocation } from '@gatsbyjs/reach-router';
 import { isSameParentRoute } from '@app/utils';
 
 export const useAnimationEnabledForSiblingRoutes = () => {

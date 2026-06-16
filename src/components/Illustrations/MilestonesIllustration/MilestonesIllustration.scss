@@ -68,6 +68,7 @@
 // pollute the global namespace without giving anything reusable.
 
 .mi {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   width: 100%;
   max-width: 760px;
   margin: 0 auto;

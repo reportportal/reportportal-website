@@ -81,6 +81,7 @@
 // pollute the global namespace without giving anything reusable.
 
 .release-decision-illustration {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   // Pause all CSS animations when tab is hidden (set by JS via class)
   &--paused,
   &--paused * {

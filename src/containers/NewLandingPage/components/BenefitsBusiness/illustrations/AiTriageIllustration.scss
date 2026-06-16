@@ -117,6 +117,7 @@
 }
 
 .ai-triage-illus {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

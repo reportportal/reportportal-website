@@ -75,6 +75,7 @@
 // ── AI Agents Illustration component ─────────────────────────────────────────
 
 .ai-agents-illustration {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   width: 100%;
 
   &__inner {
@@ -227,6 +228,7 @@
 }
 
 .feature-illustration {
+  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
 
   &__window {
@@ -458,6 +460,7 @@
 // ── Canvas: --animate triggers all sequences ─────────────────────────────────
 
 .test-planning-illustration {
+  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
 
   &__inner {
@@ -736,6 +739,7 @@
 // ── Canvas: --animate triggers all sequences ─────────────────────────────────
 
 .unified-reporting-illustration {
+  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
 
   &__inner {
@@ -1250,6 +1254,7 @@
 // ── Component shell ───────────────────────────────────────────────────────────
 
 .ai-pa-illustration {
+  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
 
   &__inner {
@@ -1717,6 +1722,7 @@
 // ── Component shell ───────────────────────────────────────────────────────────
 
 .dr-illustration {
+  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
 
   &__inner {

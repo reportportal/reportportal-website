@@ -101,6 +101,7 @@ $start-delay: 0.3s; // Global delay before the illustration starts appearing
 // Root block
 // ---------------------------------------------------------------------------
 .tcl {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   // Illustration-specific color tokens (mockup UI palette, not page tokens)
   --tcl-nav: #1c2a40;
   --tcl-nav-border: rgb(0 157 187 / 0.2);

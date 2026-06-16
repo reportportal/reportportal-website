@@ -38,6 +38,7 @@ export const BENEFITS = [
     description:
       'See manual and auto tests in one dashboard. No more switching between tools to get the full picture.',
     icon: '/svg/benefits/benefit-unified-view.svg',
+    iconColor: '#5577FF',
   },
   {
     id: 'no-extra-cost',
@@ -45,6 +46,7 @@ export const BENEFITS = [
     description:
       'Included in your ReportPortal instance. No additional licenses or subscriptions required. Available for free in the OpenSource version.',
     icon: '/svg/benefits/benefit-no-extra-cost.svg',
+    iconColor: '#00B884',
   },
   {
     id: 'traceability',
@@ -52,6 +54,7 @@ export const BENEFITS = [
     description:
       'Link bugs directly to your BTS for better tracking. Associate test cases to requirements and defects seamlessly to enhance your workflow.',
     icon: '/svg/benefits/benefit-traceability.svg',
+    iconColor: '#009DBB',
   },
   {
     id: 'ai-ready',
@@ -59,5 +62,6 @@ export const BENEFITS = [
     description:
       'Connect AI agents through MCP Server to enhance your manual and automated scope. ReportPortal shows all results in one view.',
     icon: '/svg/benefits/benefit-ai-ready.svg',
+    iconColor: '#BB66E1',
   },
 ];

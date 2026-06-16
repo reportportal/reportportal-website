@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState, FC } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { useScroll } from 'ahooks';
 import classNames from 'classnames';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import {
   createBemBlockBuilder,
   MEDIA_DESKTOP_SM,
@@ -67,7 +67,7 @@ export const FeaturesPage: FC = () => {
   const featuresEndRef = useRef<null | HTMLDivElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
-  const isDesktop = useMediaQuery({ query: MEDIA_DESKTOP_SM });
+  const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
   const scrollY = scroll?.top ?? 0;
 
   const featuresBlockStickyPosition = 126;

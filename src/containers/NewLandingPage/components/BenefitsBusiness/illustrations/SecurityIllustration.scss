@@ -118,6 +118,7 @@
 }
 
 .security-illus {
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   // Container — width = parent. JS ResizeObserver scales the .scene canvas
   // inside via transform: scale() to fit this width. Height is set
   // dynamically by JS based on NATURAL_H * scale.
