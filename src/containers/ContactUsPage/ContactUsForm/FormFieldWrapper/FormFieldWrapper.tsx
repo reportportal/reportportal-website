@@ -1,14 +1,14 @@
-import { Children, cloneElement, FC, ReactElement } from 'react';
+import { Children, cloneElement, FC, ReactElement, ReactNode } from 'react';
 import { useField } from 'formik';
 
 export interface BaseFieldProps {
   name: string;
-  label: string;
+  label: ReactNode;
   placeholder?: string;
   className?: string;
   maxLength?: number;
   value?: string;
-  InputElement?: 'input' | 'textarea';
+  InputElement?: 'input' | 'textarea' | 'select';
 }
 
 export const FormFieldWrapper: FC<{ name: string; children: ReactElement }> = ({

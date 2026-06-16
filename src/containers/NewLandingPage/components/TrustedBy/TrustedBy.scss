@@ -1,0 +1,126 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.trusted-by {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: transparent;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 64px;
+    padding-bottom: 160px;
+  }
+
+  &__header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  &__label {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale('small');
+
+    margin: 0;
+    color: var(--text-service);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  &__marquee-wrapper {
+    overflow: hidden;
+  }
+
+  &__marquee {
+    padding: 16px 0;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin-right: 64px;
+    transition: var(--basic-transition);
+
+    img {
+      max-height: 40px;
+      width: auto;
+      object-fit: contain;
+      transition: var(--basic-transition);
+      // Converts any logo to --text-service (#8791ab)
+      filter: grayscale(1) brightness(0) invert(57%) sepia(9%) saturate(540%) hue-rotate(193deg) brightness(110%) contrast(90%);
+    }
+
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 48px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 24px 0;
+    text-align: center;
+
+    // Mobile: horizontal divider between stacked stats
+    & + & {
+      border-top: 1px solid var(--purple-grey);
+    }
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      width: auto;
+      padding: 0 40px;
+
+      // Tablet+: reset horizontal divider, use vertical instead
+      & + & {
+        border-top: none;
+        border-left: 1px solid var(--purple-grey);
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__stat-value {
+    @include m.font-poppins(v.$fw-bold);
+
+    display: flex;
+    align-items: baseline;
+    line-height: 48px;
+    color: var(--text-primary);
+  }
+
+  &__stat-digits {
+    font-size: 31px;
+  }
+
+  &__stat-suffix {
+    font-size: 32px;
+  }
+
+  &__stat-label {
+    @include m.font-noto-sans();
+    @include m.font-scale('medium');
+
+    color: var(--text-primary);
+    font-size: 16px;
+  }
+}

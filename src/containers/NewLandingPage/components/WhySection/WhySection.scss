@@ -1,0 +1,99 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.why-section {
+  background: var(--gradient-section-light);
+
+  &__inner {
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      padding-top: 120px;
+      padding-bottom: 160px;
+    }
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('x4-medium');
+
+    margin: 0 0 16px;
+    text-align: center;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('large');
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale('x3-large');
+    }
+  }
+
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    margin: 0 auto 56px;
+    max-width: 800px;
+    text-align: center;
+    color: var(--text-service);
+  }
+
+  &__grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(1, 280px);
+    gap: 64px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      justify-content: space-around;
+      grid-template-columns: repeat(2, 280px);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      justify-content: center;
+      grid-template-columns: repeat(4, 280px);
+      gap: 24px;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    align-items: center;
+    width: 282px;
+  }
+
+  &__card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__card-title {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale('medium');
+
+    margin: 40px 0 0;
+    text-align: center;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('x2-medium');
+    }
+  }
+
+  &__card-description {
+    @include m.font-noto-sans();
+    @include m.font-scale('base');
+
+    display: inline-block;
+    margin-top: 8px;
+    text-align: center;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+}

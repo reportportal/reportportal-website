@@ -59,6 +59,46 @@
     rgb(102 210 230 / 0.2) 58.33%
   );
   --gradient-light-grey: linear-gradient(180deg, var(--bg-grey2) 0%, rgb(244 245 250 / 0) 100%);
+  --gradient-section-light: linear-gradient(180deg, var(--bg-grey2) -50%, var(--white) 100%);
+
+  /* dark surface tokens (shared by NewLandingPage dark sections) */
+  --surface-dark: #0b1220;
+  --surface-dark-elevated: #1a2235;
+  --surface-dark-border: rgb(255 255 255 / 0.07);
+  --surface-dark-hover: rgb(255 255 255 / 0.02);
+  --on-surface-dark-primary: #e8f2ff;
+  --on-surface-dark-secondary: #d8eeff;
+  --on-surface-dark-muted: #7a9ab5;
+  --on-surface-dark-subtle: #4a5e78;
+
+  /* accent — purple (badge / decorative) */
+  --accent-purple: #b794f4;
+  --accent-purple-rgb: 155 89 245;
+  --accent-purple-bg: rgb(var(--accent-purple-rgb) / 0.1);
+  --accent-purple-border: rgb(var(--accent-purple-rgb) / 0.35);
+
+  /* accent — primary tinted surfaces (alpha over --color-primary-500) */
+  --color-primary-500-rgb: 0 180 213;
+  --accent-primary-bg: rgb(var(--color-primary-500-rgb) / 0.1);
+  --accent-primary-border: rgb(var(--color-primary-500-rgb) / 0.35);
+
+  /* signal — semantic status colors */
+  --signal-success: #22c55e;
+  --signal-success-rgb: 34 197 94;
+  --signal-success-emphasis: #4ade80;
+  --signal-success-soft: #86efac;
+  --signal-error: #ef4444;
+  --signal-error-rgb: 239 68 68;
+  --signal-warning: #f97316;
+  --signal-warning-rgb: 249 115 22;
+  --signal-warning-soft: #f59e0b;
+  --signal-caution: #eab308;
+  --signal-caution-rgb: 234 179 8;
+
+  /* window chrome dots (macOS traffic-light style) */
+  --dot-red: #ff5f57;
+  --dot-yellow: #febc2e;
+  --dot-green: #28c840;
 
   /* z-index values */
   --z-index: 999;

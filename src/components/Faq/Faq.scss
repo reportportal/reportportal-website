@@ -105,23 +105,59 @@ $mobile-horizontal-padding: 16px;
   .ant-collapse-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin-top: 24px;
-    margin-bottom: 5px;
+    margin-bottom: 24px;
     color: var(--text-dark);
     cursor: pointer;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
       align-items: center;
     }
+  }
 
-    span {
-      @include m.font-poppins(v.$fw-semi-bold);
-      @include m.font-scale();
+  .ant-collapse-header-text {
+    flex: 1;
 
-      margin: 0;
-      color: var(--dark);
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale();
+
+    margin: 0;
+    color: var(--dark);
+  }
+
+  // antd v5 CSS-in-JS rules re-declared without hash dependency
+  // so they apply in both dev and production regardless of :where(.css-HASH)
+  .ant-collapse-icon-position-end {
+    .ant-collapse-expand-icon {
+      order: 1;
+      padding-inline-end: 0;
+      padding-inline-start: 12px;
     }
+  }
+
+  .ant-collapse-content-hidden {
+    display: none !important;
+  }
+
+  .ant-collapse > .ant-collapse-item {
+    border-bottom: 1px solid var(--text-light-grey);
+  }
+
+  .ant-collapse > .ant-collapse-item:last-child {
+    border-bottom: 0;
+  }
+
+  .ant-motion-collapse {
+    overflow: hidden;
+    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+  }
+
+  .ant-motion-collapse-legacy {
+    overflow: hidden;
+  }
+
+  .ant-motion-collapse-legacy-active {
+    transition: height 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
   }
 
   .ant-collapse-expand-icon {

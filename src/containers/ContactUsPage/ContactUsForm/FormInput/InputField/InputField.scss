@@ -15,7 +15,7 @@
   }
 
   .input {
-    @include m.font-poppins(v.$fw-medium);
+    @include m.font-poppins(v.$fw-regular);
     @include m.font-scale();
 
     display: flex;
@@ -46,6 +46,7 @@
 
   textarea.input {
     height: 88px;
+    resize: vertical;
   }
 
   &.error .input {

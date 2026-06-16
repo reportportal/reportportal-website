@@ -1,0 +1,70 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.features-cta {
+  position: relative;
+  background: url('/svg/cta-bg.svg') center top / cover no-repeat;
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 96px;
+    padding-bottom: 96px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(x4-medium);
+
+    max-width: 640px;
+    margin: 0;
+    text-align: center;
+    color: var(--white);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(large);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
+  }
+
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    margin: 24px auto 40px;
+    max-width: 792px;
+    color: var(--color-primary-200);
+    line-height: 1.7;
+    text-align:center; }
+
+  &__button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    a {
+      width: 100%;
+      justify-content: center;
+    }
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      flex-direction: row;
+      width: auto;
+
+      a {
+        width: auto;
+      }
+    }
+  }
+}

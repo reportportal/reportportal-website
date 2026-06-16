@@ -118,13 +118,14 @@
   @include m.font-poppins(v.$fw-semi-bold);
   @include m.font-scale(medium);
 
-  margin: 120px 0 0;
+  margin: 64px 0 0;
   padding-top: 24px;
   padding-bottom: 24px;
   text-align: center;
   color: var(--text-primary);
 
   @include m.breakpoint(v.$tablet-sm-exact) {
+    margin-top: 80px;
     font-weight: v.$fw-bold;
   }
 
@@ -182,12 +183,12 @@
 
   &-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 4px;
     min-width: 116px;
-    max-width: 116px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
+    max-width: 146px;
+    padding: 12px;
+    text-align: left;
 
     @include m.breakpoint(1200px) {
       min-width: auto;
@@ -219,124 +220,155 @@
   }
 }
 
+// ---------------------------------------------------------------------------
+// Feature list — outer wrapper (no extra padding; each container owns its own)
+// ---------------------------------------------------------------------------
 .features-page__features-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding-bottom: 80px;
+}
 
-  @include m.breakpoint(v.$tablet-sm-exact) {
-    padding-bottom: 200px;
+// ---------------------------------------------------------------------------
+// Feature list item container — mirrors .feature-section root
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-container {
+  // Compensates for sticky header (76px) on mobile/tablet,
+  // and additionally the sticky features nav (~50px) on desktop,
+  // so that anchor jumps land correctly without content being obscured.
+  // Extra breathing room accounts for the header sliding back in on scroll-up.
+  @include m.breakpoint(v.$desktop-sm) {
+    scroll-margin-top: 64px;
   }
 
+  padding: 40px 0;
+
   @include m.breakpoint(v.$tablet-sm-exact) {
-    &-item-container:nth-child(even) > .container {
-      flex-direction: row-reverse;
-    }
+    padding: 48px 0;
   }
 
-  &-item {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    margin-top: 120px;
+  @include m.breakpoint(v.$desktop-sm) {
+    padding: 120px 0;
+  }
+
+  &--full-width {
+    padding: 0;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      flex-direction: row;
-      align-items: flex-start;
+      padding: 0;
     }
 
     @include m.breakpoint(v.$desktop-sm) {
-      margin-top: 240px;
+      padding: 0;
+    }
+  }
 
-      &:first-child {
-        margin-top: 200px;
-      }
+  &:nth-child(even) {
+    background-color: var(--white);
+  }
+}
 
-      &:nth-child(odd) > div:first-child {
-        padding-right: 32px;
-      }
+// ---------------------------------------------------------------------------
+// Feature list item — mirrors .feature-section__content
+// ---------------------------------------------------------------------------
+.features-page__features-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 
-      &:nth-child(even) > div:first-child {
-        padding-left: 32px;
-      }
+  @include m.breakpoint(v.$desktop-sm) {
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+  }
+}
+
+// Alternate direction on desktop — mirrors feature-section__content--reversed
+.features-page__features-list-item-container:nth-child(even) .features-page__features-list-item {
+  @include m.breakpoint(v.$desktop-sm) {
+    flex-direction: row-reverse;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Leading column — mirrors .feature-section__leading
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-leading {
+  flex: 1;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    max-width: 45%;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Trailing column — mirrors .feature-section__image
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-trailing {
+  flex: 1;
+  order: -1;
+  width: 100%;
+  max-width: 596px;
+  margin-right: auto;
+  margin-left: 0;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    order: 0;
+    max-width: 596px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Premium pill — unchanged
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-premium {
+  @include m.font-poppins(v.$fw-semi-bold);
+  @include m.font-scale(x-small);
+
+  display: inline-flex;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  padding: 0 8px;
+  background: var(--graphics-orchid);
+  color: var(--white);
+}
+
+// ---------------------------------------------------------------------------
+// Typography inside leading — mirrors feature-section h2 / __description
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-leading {
+  h3 {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(large);
+
+    margin: 0 0 16px;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-bottom: 24px;
     }
 
-    &-trailing {
-      flex: 1;
-      margin: 0 30px;
-
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        margin: 0;
-      }
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
     }
+  }
 
-    &-leading {
-      flex: 1;
-    }
+  p {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-base);
 
-    &-premium {
-      @include m.font-poppins(v.$fw-semi-bold);
-      @include m.font-scale(x-small);
+    margin: 0 0 24px;
+    color: var(--text-primary);
+  }
+}
 
-      display: inline-flex;
-      margin-bottom: 8px;
-      border-radius: 16px;
-      padding: 0 8px;
-      background: var(--graphics-orchid);
-      color: var(--white);
-    }
-
-    h3 {
-      @include m.font-poppins(v.$fw-bold);
-      @include m.font-scale(x4-medium);
-
-      margin: 0;
-      color: var(--text-primary);
-
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        @include m.font-scale(large);
-      }
-
-      @include m.breakpoint(v.$desktop-sm) {
-        @include m.font-scale(x3-large);
-      }
-    }
-
-    p {
-      @include m.font-noto-sans();
-      @include m.font-scale();
-
-      display: flex;
-      align-items: center;
-      margin: 16px 0 0;
-      line-height: 24px;
-      color: var(--text-primary);
-
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        margin-top: 24px;
-      }
-
-      @include m.breakpoint(v.$desktop-sm) {
-        @include m.font-scale(medium);
-
-        margin-top: 32px;
-      }
-    }
-
-    a {
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        margin-top: 24px;
-      }
-
-      @include m.breakpoint(v.$desktop-sm) {
-        margin-top: 32px;
-      }
-    }
+// ---------------------------------------------------------------------------
+// CTA buttons — mirrors .feature-section__leading .btn--large
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-cta {
+  .btn--large {
+    max-width: 280px;
   }
 }
 
@@ -508,5 +540,57 @@
         }
       }
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Feature item — bullet list
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include m.breakpoint(v.$tablet-sm-exact) {
+    margin-top: 24px;
+  }
+
+  li {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-base);
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-primary);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Feature item — bullet icon (checkmark SVG)
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-bullet-icon {
+  flex-shrink: 0;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  color: var(--color-primary-500);
+}
+
+// ---------------------------------------------------------------------------
+// Feature item — multi-CTA row
+// ---------------------------------------------------------------------------
+.features-page__features-list-item-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    margin-top: 32px;
   }
 }

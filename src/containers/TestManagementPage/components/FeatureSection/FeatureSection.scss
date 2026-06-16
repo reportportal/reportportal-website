@@ -1,0 +1,132 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.feature-section {
+  padding: 80px 0;
+
+  @include m.breakpoint(v.$tablet-sm-exact) {
+    padding: 96px 0;
+  }
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding: 120px 0;
+  }
+
+  &:nth-child(even) {
+    background-color: var(--white);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      flex-direction: row;
+      align-items: center;
+      gap: 80px;
+    }
+
+    &--reversed {
+      @include m.breakpoint(v.$desktop-sm) {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  &__leading {
+    flex: 1;
+
+    .btn--large {
+      width: 164px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      max-width: 40%;
+    }
+  }
+
+  h2 {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(large);
+
+    margin: 0 0 16px;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-bottom: 24px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
+  }
+
+  &__description {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-base);
+
+    margin: 0 0 24px;
+    color: var(--text-primary);
+  }
+
+  &__bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 0 32px;
+    padding: 0;
+    list-style: none;
+
+    li {
+      @include m.font-noto-sans();
+      @include m.font-scale(x-base);
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+    }
+  }
+
+  &__bullet-icon {
+    flex-shrink: 0;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    color: var(--color-primary-500);
+  }
+
+  &__bullet-link {
+    color: var(--color-primary-700);
+    transition: var(--basic-transition);
+
+    &:hover {
+      color: var(--color-primary-500);
+    }
+  }
+
+  &__image {
+    flex: 1;
+    order: -1;
+    min-height: 300px;
+    border-radius: 16px;
+    background-color: var(--bg-grey2);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      min-height: 400px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      order: 0;
+      min-height: 500px;
+    }
+
+    &--has-illustration {
+      background-color: transparent;
+      min-height: unset;
+      border-radius: 0;
+    }
+  }
+}

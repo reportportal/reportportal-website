@@ -4,7 +4,7 @@ import { YoutubeVideoDto } from '@app/utils';
 const stringifyPeriods = ['year', 'month', 'day', 'hour', 'minute'];
 
 export const prepareYoutubeVideos = (videos: YoutubeVideoDto[]) =>
-  videos.map(({ id, title, duration, published_at: publishedAt, statistics, thumbnail }) => ({
+  (videos ?? []).map(({ id, title, duration, published_at: publishedAt, statistics, thumbnail }) => ({
     id,
     title,
     duration,

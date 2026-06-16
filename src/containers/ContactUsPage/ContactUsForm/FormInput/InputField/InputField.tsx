@@ -8,6 +8,7 @@ import './InputField.scss';
 
 interface FormInputProps extends BaseFieldProps {
   type?: string;
+  children?: React.ReactNode;
 }
 
 export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> = ({
@@ -16,6 +17,7 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
   value,
   label,
   InputElement = 'input',
+  children,
   ...props
 }) => {
   const Element = InputElement as ElementType;
@@ -25,10 +27,12 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
       <label>
         {label}
         <Element
-          className="input"
+          className={classNames('input', { 'input--select': InputElement === 'select' })}
           value={value}
           {...omit(props, ['touched', 'initialValue', 'initialTouched', 'initialError'])}
-        />
+        >
+          {children}
+        </Element>
       </label>
       {error && <div className="error-message">{error}</div>}
     </div>

@@ -1,0 +1,38 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.blog-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('x4-medium');
+
+    margin: 0 0 48px;
+    text-align: center;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('large');
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale('x3-large');
+    }
+  }
+
+  &__posts {
+    margin-bottom: 48px;
+  }
+
+  &__cta {
+    display: flex;
+    justify-content: center;
+  }
+}

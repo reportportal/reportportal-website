@@ -1,0 +1,248 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.open-source {
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: var(--gradient-section-light);
+
+  @include m.breakpoint(v.$tablet-sm-exact) {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 120px;
+    padding-bottom: 160px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Decorative background icons
+  // ---------------------------------------------------------------------------
+
+  // OpenSource (RP icon) — left side
+  &__deco-os {
+    position: absolute;
+    top: 25%;
+    left: -48px;
+    transform: translateY(-50%);
+    display: none;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+
+    svg {
+      width: 160px;
+      height: 160px;
+    }
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      display: block;
+      left: -24px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      left: 140px;
+    }
+  }
+
+  // Git icon — right side, same size as OS icon
+  &__deco-git {
+    position: absolute;
+    top: 25%;
+    right: -32px;
+    transform: translateY(-50%);
+    display: none;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+
+    svg {
+      width: 160px;
+      height: 160px;
+    }
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      display: block;
+      right: -16px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      right:124px;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Centered heading block — max-width 792px, text centered
+  // ---------------------------------------------------------------------------
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 792px;
+  }
+
+  h2 {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('x4-medium');
+
+    margin: 0 0 16px;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('large');
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale('x3-large');
+      margin-bottom: 24px;
+    }
+  }
+
+  &__description {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    margin: 0;
+    color: var(--text-service);
+    line-height: 1.6;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Stat cards — 3 equal columns, centered, text-center
+  // ---------------------------------------------------------------------------
+
+  &__stats {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  &__stat-value {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('large');
+
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  &__stat-label {
+    @include m.font-noto-sans();
+    @include m.font-scale('base');
+
+    color: var(--text-primary);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Feature card — column on mobile, row of 3 equal columns on tablet+
+  // ---------------------------------------------------------------------------
+
+  &__feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgb(0 59 72 / 0.08);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  &__feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      flex: 1;
+    }
+  }
+
+  &__feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--color-primary-600);
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__feature-title {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale('medium');
+
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  &__feature-description {
+    @include m.font-noto-sans();
+    @include m.font-scale('base');
+
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Actions — centered row
+  // ---------------------------------------------------------------------------
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+    gap: 20px;
+  }
+
+  &__actions-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  &__community-link {
+    margin-top: 0;
+  }
+}

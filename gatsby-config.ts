@@ -77,6 +77,7 @@ const config: GatsbyConfig = {
           '/contact-us/qasp/**',
           '/contact-us/d4j/**',
           '/contact-us/hlm/**',
+          '/illustrations/**',
         ],
         query: `{
           site {

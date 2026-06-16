@@ -1,4 +1,5 @@
 export * from './AiIcon';
+export * from './EnterpriseIcon';
 export * from './DefectTypeIcon';
 export * from './PieChartIcon';
 export * from './PlayIcon';

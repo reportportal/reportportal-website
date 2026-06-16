@@ -92,6 +92,24 @@
 
   &-title {
     @include m.font-poppins(v.$fw-semi-bold);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-badge {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale(x-small);
+
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 16px;
+    background: rgba(0, 184, 132, 0.1);
+    color: var(--graphics-jade);
+    line-height: 20px;
+    white-space: nowrap;
   }
 
   &-text {
@@ -137,7 +155,7 @@
 
       .menu-dialog-offerings &,
       .menu-dialog-community & {
-        margin-bottom: 16px;
+        margin-bottom: 8px;
       }
     }
   }

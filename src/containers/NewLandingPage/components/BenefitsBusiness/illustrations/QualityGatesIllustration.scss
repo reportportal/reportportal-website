@@ -1,0 +1,465 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+// Namespaced keyframes — avoid conflicts with other animations on the page
+@keyframes qg-fadeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+@keyframes qg-slideUp {
+  from { opacity: 0; transform: translateY(8px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes qg-rowIn {
+  from { opacity: 0; transform: translateY(5px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes qg-barGrow {
+  from { width: 0 }
+  to   { width: var(--w) }
+}
+
+@keyframes qg-checkDraw {
+  from { stroke-dashoffset: 22 }
+  to   { stroke-dashoffset: 0 }
+}
+
+@keyframes qg-aiIn {
+  from { opacity: 0; transform: translateY(4px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes qg-goPop {
+  from { opacity: 0; transform: translateY(6px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes qg-circlePass {
+  0%   { background: #fff;     box-shadow: inset 0 0 0 1.5px #c8d4dc }
+  60%  { background: #e8f9f1;  box-shadow: inset 0 0 0 1.5px #00b884 }
+  100% { background: #e8f9f1;  box-shadow: inset 0 0 0 1.5px #00b884 }
+}
+
+@keyframes qg-circleWarn {
+  0%   { background: #fff;     box-shadow: inset 0 0 0 1.5px #c8d4dc }
+  60%  { background: #fff4e6;  box-shadow: inset 0 0 0 1.5px #f5a623 }
+  100% { background: #fff4e6;  box-shadow: inset 0 0 0 1.5px #f5a623 }
+}
+
+@keyframes qg-rowWarn {
+  from { background: #fff }
+  to   { background: #fffcf5 }
+}
+
+@keyframes qg-valWarn {
+  from { color: #8797a8; background: #eef2f6; border-color: #dde4ec }
+  to   { color: #a06000; background: #fff4e0; border-color: #f5d08a }
+}
+
+@keyframes qg-noteIn {
+  from { opacity: 0; transform: translateX(4px) }
+  to   { opacity: 1; transform: translateX(0) }
+}
+
+// ---------------------------------------------------------------------------
+// Illustration wrapper — centres the scene card
+// ---------------------------------------------------------------------------
+
+.quality-gates-illus {
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  // Reset only inside illustration to avoid leaking to page
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Scale canvas — JS sets transform: scale() + container height via ResizeObserver
+  // ---------------------------------------------------------------------------
+  .qg-canvas {
+    width: 670px;
+    transform-origin: top left;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Scene card
+  // ---------------------------------------------------------------------------
+
+  .scene {
+    width: 670px;
+    height: 472px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 28px rgba(0, 80, 120, 0.14);
+    animation: qg-fadeIn 0.35s ease both 0.05s;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Header
+  // ---------------------------------------------------------------------------
+
+  .hdr {
+    padding: 14px 20px 13px;
+    border-bottom: 0.5px solid #e0eaf2;
+    animation: qg-slideUp 0.38s ease both 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  .hdr-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a2740;
+    flex: 1;
+  }
+
+  .release-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #5f8a9a;
+    background: #edf5fa;
+    border: 0.5px solid #c2d8e4;
+    border-radius: 5px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Coverage bar
+  // ---------------------------------------------------------------------------
+
+  .bar-wrap {
+    padding: 12px 20px 13px;
+    border-bottom: 0.5px solid #e4eaf2;
+    background: #fafcfe;
+    animation: qg-slideUp 0.35s ease both 0.2s;
+    flex-shrink: 0;
+  }
+
+  .bar-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+  }
+
+  .cov-title {
+    font-size: 9px;
+    font-weight: 700;
+    color: #8791ab;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .leg-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 8.5px;
+    font-weight: 600;
+  }
+
+  .leg-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .leg-uncov {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #8791ab;
+    margin-left: auto;
+  }
+
+  .leg-hatch {
+    width: 12px;
+    height: 8px;
+    border-radius: 1px;
+    background: repeating-linear-gradient(135deg, #d8e4ec 0, #d8e4ec 2px, #eef3f8 2px, #eef3f8 4px);
+    border: 0.5px solid #d0dce6;
+    flex-shrink: 0;
+  }
+
+  .stacked {
+    height: 14px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    border: 0.5px solid #dce9f0;
+    background: #e4eef5;
+  }
+
+  .seg {
+    height: 100%;
+    flex-shrink: 0;
+  }
+
+  .sp { background: #00916a; animation: qg-barGrow 0.7s ease both 0.42s; --w: 58% }
+  .sf { background: #c8373a; animation: qg-barGrow 0.4s ease both 0.62s; --w: 10% }
+  .ss { background: #c8d4dc; animation: qg-barGrow 0.3s ease both 0.76s; --w: 12% }
+
+  .su {
+    flex: 1;
+    background: repeating-linear-gradient(135deg, #f0f5f8 0, #f0f5f8 3px, #e4eef5 3px, #e4eef5 6px);
+    animation: qg-fadeIn 0.3s ease both 0.88s;
+    opacity: 0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Rules list
+  // ---------------------------------------------------------------------------
+
+  .rules {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rule-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    flex: 1;
+    border-bottom: 0.5px solid #eef3f8;
+    opacity: 0;
+
+    &:last-child { border-bottom: none }
+    &.warn-bg { animation: qg-rowWarn 0.4s ease forwards }
+  }
+
+  .light {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: inset 0 0 0 1.5px #c8d4dc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.pass {
+      animation: qg-circlePass 0.32s ease forwards;
+
+      .ck {
+        animation: qg-checkDraw 0.3s ease 0.1s forwards;
+        stroke: #00916a;
+      }
+    }
+
+    &.warn {
+      animation: qg-circleWarn 0.32s ease forwards;
+
+      .dk { opacity: 1; stroke: #f5a623 }
+      .ck { opacity: 0 }
+    }
+  }
+
+  .ck {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+    stroke: #c8d4dc;
+    transition: none;
+  }
+
+  .dk {
+    stroke: #c8d4dc;
+    opacity: 0;
+    transition: none;
+  }
+
+  .rule-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rule-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #2f3c5f;
+    margin-bottom: 2px;
+  }
+
+  .rule-meta {
+    font-size: 9px;
+    color: #a0adb8;
+  }
+
+  .rule-val {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8797a8;
+    background: #eef2f6;
+    padding: 2px 9px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    border: 0.5px solid #dde4ec;
+
+    &.pass {
+      color: #00916a;
+      background: #ebf9f3;
+      border-color: #b2e4ce;
+      transition: color 0.3s, background 0.3s, border-color 0.3s;
+    }
+
+    &.warn { animation: qg-valWarn 0.4s ease forwards }
+  }
+
+  .rule-note {
+    font-size: 8.5px;
+    color: #a06000;
+    background: #fff4e0;
+    border: 0.5px solid #f5d08a;
+    border-radius: 3px;
+    padding: 1px 7px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    opacity: 0;
+
+    &.show { animation: qg-noteIn 0.28s ease forwards }
+  }
+
+  // ---------------------------------------------------------------------------
+  // AI strip
+  // ---------------------------------------------------------------------------
+
+  .ai-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 9px 20px;
+    background: #fafbff;
+    border-top: 0.5px solid #e4eaf6;
+    flex-shrink: 0;
+    opacity: 0;
+  }
+
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    background: #f0eaff;
+    border: 0.5px solid #c8b4f0;
+    border-radius: 4px;
+    font-size: 8px;
+    color: #6644bb;
+    font-weight: 800;
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-top: 1px;
+  }
+
+  .ai-text {
+    font-size: 9.5px;
+    color: #5f7a8a;
+    line-height: 1.55;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Footer + ready badge
+  // ---------------------------------------------------------------------------
+
+  .go-footer {
+    padding: 13px 20px;
+    background: #fff;
+    border-top: 0.5px solid #d8e4ee;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    opacity: 0;
+
+    &.show { animation: qg-goPop 0.42s cubic-bezier(0.22, 0.68, 0, 1.1) forwards }
+  }
+
+  .mini-lights {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ml {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #dde4ec;
+
+    &.on    { background: radial-gradient(circle at 38% 34%, #00e080, #00c272) }
+    &.amber { background: radial-gradient(circle at 38% 34%, #ffd060, #f5a623) }
+  }
+
+  .go-text { flex: 1; min-width: 0 }
+
+  .go-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1a2740;
+    letter-spacing: 0.02em;
+  }
+
+  .go-sub {
+    font-size: 12px;
+    color: #8797a8;
+    margin-top: 2px;
+  }
+
+  .ready-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px 8px 12px;
+    background: #e8f9f1;
+    border: 0.5px solid #7dcfab;
+    border-radius: 10px;
+    flex-shrink: 0;
+    opacity: 0;
+
+    &.show { animation: qg-goPop 0.44s cubic-bezier(0.34, 1.56, 0.64, 1) forwards }
+  }
+
+  .ready-badge-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #00784e;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .ready-badge-sub {
+    font-size: 8px;
+    font-weight: 600;
+    color: #5aa880;
+    letter-spacing: 0.02em;
+    margin-top: 1px;
+  }
+
+}

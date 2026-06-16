@@ -162,8 +162,15 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
     'internalTitle',
   );
 
+
   contactUsBaseConfigs.forEach(config => {
     const contentfulConfig = contactUsConfigs[config.id];
+
+    if (!contentfulConfig) {
+      reporter.warn(`[contact-us] No Contentful data for id "${config.id}", skipping page at ${config.url}`);
+      return;
+    }
+
     const contactUsProps: ContactUsConfig = {
       ...config,
       title: contentfulConfig.title,

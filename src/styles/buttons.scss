@@ -128,12 +128,13 @@ a.btn--primary {
   }
 
   &--outline-2 {
-    border-color: var(--white);
+    border: none;
+    box-shadow: inset 0 0 0 2px var(--white);
     color: var(--white);
 
     &:hover,
     &:active:not(:disabled) {
-      border-color: var(--color-primary-100);
+      box-shadow: inset 0 0 0 2px var(--color-primary-100);
       background: var(--color-primary-100);
       color: var(--color-primary-500);
     }
