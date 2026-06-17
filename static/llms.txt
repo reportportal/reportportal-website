@@ -1,0 +1,53 @@
+# ReportPortal
+
+> Open-source TestOps platform for centralized test reporting, AI-powered failure analysis, and real-time quality analytics.
+
+## Main Pages
+
+- [Community](https://reportportal.io/community/): Connect, learn, and collaborate with testing enthusiasts. Join the ReportPortal community.
+- [Features](https://reportportal.io/features/): Explore features for seamless test automation. Rethink end-to-end testing with automated defect triaging and a dynamic QA metrics dashboard.
+- [Installation guide](https://reportportal.io/installation/): Three steps to get started with our test automation dashboard.
+- [Quality Engineering Consulting](https://reportportal.io/qe-consulting/): Achieve a product-quality transformation with our outstanding Quality Engineering Consulting.
+- [Test Automation as a Service](https://reportportal.io/test-automation-as-a-service/): Enhance your testing process by utilizing our on-demand automation tools, infrastructure, hardware, and expert resources.
+- [Testing as a Service](https://reportportal.io/testing-as-a-service/): Optimize your testing costs with our on-demand software, hardware, and expert resources.
+
+## Blog
+
+- [Blog](https://reportportal.io/blog/): Stay informed by reading ReportPortal's updates, news, and technology articles.
+- [Funny situations in testing](https://reportportal.io/blog/funny-situations-in-testing/): We've collected comical stories to highlight the humorous side of the serious world of software testing. Enjoy the read!
+- [How we use AI](https://reportportal.io/blog/How-we-use-AI/): Let's examine how ReportPortal utilizes the power of AI to be a robust end-to-end testing reporting tool.
+- [New approach to versions naming](https://reportportal.io/blog/new-approach-to-versions-naming/): We've opted to revisit our versioning models and release flow, aiming to provide greater flexibility in feature delivery for our test automation reporting dashboard.
+- [Store more, clean faster](https://reportportal.io/blog/store-more-clean-faster/): We're pleased to announce performance improvements: The CleanStorage job has been optimized for both S3 and MinIO.
+
+## Case Studies
+
+- [Case Studies](https://reportportal.io/case-studies/): Discover how organizations have optimized their testing processes thanks to ReportPortal.
+- [Improving test automation stability](https://reportportal.io/case-studies/improving-test-automation-stability/): Learn how our test automation reporting - clear and comprehensible for non-technical stakeholders - has improved test automation stability.
+- [Increasing test automation stability and visibility](https://reportportal.io/case-studies/increasing-test-automation-stability-and-visibility/): Read about how ReportPortal has become the primary test automation reporting tool for tracking test automation progress and health.
+- [Reducing regression analysis efforts](https://reportportal.io/case-studies/reducing-regression-analysis-efforts/): Read the success story about reducing regression analysis efforts, thanks to our test automation results dashboard.
+- [Reducing regression time by 50%​](https://reportportal.io/case-studies/reducing-regression-time-by-50-percent/): Discover success story that leverage our simplified test automation reporting and AI-based defect triage system.
+
+## Accelerators
+
+- [Pricing for accelerators: Drill4J](https://reportportal.io/accelerators/d4j/): Enhance your testing strategy with our priced plans, designed to streamline your quality assurance workflows.
+- [Pricing for accelerators: Healenium](https://reportportal.io/accelerators/hlm/): Choose the pricing package that enables you to stay ahead of the curve with our comprehensive test automation reporting solutions.
+- [Pricing for accelerators: QaSpace](https://reportportal.io/accelerators/qasp/): Dive into the specifics of our offerings to keep track of your project's health and progress with our advanced QA metrics dashboard.
+
+## Legal
+
+- [Terms and Conditions](https://reportportal.io/legal/terms/): Review the Terms and Conditions to stay informed about the rules governing the use of our test automation results dashboard.
+
+## Pricing
+
+- [Pricing: On-Premises](https://reportportal.io/pricing/on-premises/): Select the pricing plan that best suits your needs and unlock the full potential of our test report dashboard.
+- [Pricing: SaaS](https://reportportal.io/pricing/saas/): Explore our flexible pricing plans from small teams to global enterprises. Harness the power of our end-to-end testing reporting tool.
+
+## Sponsorship Program
+
+- [Business sponsorship program](https://reportportal.io/sponsorship-program/business/): Boost brand visibility, enhance your tech influence, and shape the future of end to end testing reporting tools by sponsoring ReportPortal.
+- [Individual sponsorship program](https://reportportal.io/sponsorship-program/individual/): Help maintain a test automation results dashboard by sponsoring ReportPortal. Enjoy the acknowledgment of your efforts.
+
+## Optional
+
+- [AI Sitemap](https://reportportal.io/ai-sitemap.json): JSON content map of every page.
+- [Documentation](https://reportportal.io/docs/llms.txt): Full documentation manifest.

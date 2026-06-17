@@ -16,6 +16,7 @@
     "stylefix": "npm run stylelint -- --fix",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,scss,json,gql,md}\"",
     "check-redirects": "node ./bin/check-redirects.js",
+    "gen-llms": "node ./bin/gen-llms.js",
     "prepare": "husky install"
   },
   "license": "ISC",

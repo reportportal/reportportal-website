@@ -39,7 +39,7 @@ on:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 jobs:
   empty-s3-bucket:
@@ -102,6 +102,21 @@ jobs:
 
       - name: Build the source code
         run: npm run build
+
+      - name: Generate llms.txt and ai-sitemap.json
+        run: node ./bin/gen-llms.js
+
+      - name: Commit refreshed llms.txt and ai-sitemap.json
+        run: |
+          git add static/llms.txt static/ai-sitemap.json
+          if git diff --cached --quiet -- static/llms.txt static/ai-sitemap.json; then
+            echo "No changes to llms.txt or ai-sitemap.json — skipping commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh llms.txt and ai-sitemap.json [skip ci]"
+          git push origin HEAD:develop
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
