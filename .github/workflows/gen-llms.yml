@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Regenerate llms.txt (PR)
+name: Regenerate llms.txt (manual)
 
 env:
   GTM_ID: GTM-MK7ZHTL
@@ -20,15 +20,6 @@ env:
   CONTENTFUL_HOST: cdn.contentful.com
 
 on:
-  pull_request:
-    branches:
-      - develop
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'src/pages/**'
-      - 'src/templates/**'
-      - 'bin/gen-llms.js'
-      - '.github/workflows/gen-llms.yml'
   workflow_dispatch:
     inputs:
       branch:
@@ -41,35 +32,25 @@ permissions:
 
 jobs:
   regenerate:
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'pull_request' &&
-       github.actor != 'github-actions[bot]' &&
-       github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - name: Resolve target branch
         id: target
         env:
-          EVENT_NAME: ${{ github.event_name }}
           INPUT_BRANCH: ${{ github.event.inputs.branch }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-            if [ -n "$INPUT_BRANCH" ]; then
-              echo "ref=$INPUT_BRANCH" >> "$GITHUB_OUTPUT"
-            else
-              echo "ref=$DEFAULT_BRANCH" >> "$GITHUB_OUTPUT"
-            fi
+          if [ -n "$INPUT_BRANCH" ]; then
+            echo "ref=$INPUT_BRANCH" >> "$GITHUB_OUTPUT"
           else
-            printf 'ref=%s\n' "$PR_HEAD_REF" >> "$GITHUB_OUTPUT"
+            echo "ref=$DEFAULT_BRANCH" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.target.outputs.ref }}
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -98,6 +79,7 @@ jobs:
       - name: Commit regenerated files
         env:
           TARGET_REF: ${{ steps.target.outputs.ref }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add static/llms.txt static/ai-sitemap.json
           if git diff --cached --quiet -- static/llms.txt static/ai-sitemap.json; then
@@ -107,4 +89,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: regenerate llms.txt and ai-sitemap.json"
-          git push origin "HEAD:$TARGET_REF"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:$TARGET_REF"
