@@ -8,7 +8,7 @@ const path = require('path');
 const CONFIG = {
   pagesDir: 'src/pages',
   templatesDir: 'src/templates',
-  redirectsFile: 'src/redirects.ts',
+  redirectsFile: 'src/redirects.json',
   skipFlag: '[skip-redirect-check]',
 };
 
@@ -83,10 +83,9 @@ function getRecordedRedirectSources() {
     return new Set();
   }
 
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const matches = content.matchAll(/source:\s*['"]([^'"]+)['"]/g);
+  const redirects = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-  return new Set(Array.from(matches, match => match[1]));
+  return new Set(redirects.map(r => r.source));
 }
 
 function hasSkipFlag() {
@@ -128,12 +127,16 @@ function main() {
     process.exit(0);
   }
 
-  console.warn('\n⚠️  WARNING: The following redirects need to be added to AWS Amplify:\n');
-  console.warn(JSON.stringify(missing, null, 2));
-  console.warn(
-    '\n1. Add these redirects in Amplify Console → App settings → Rewrites and redirects',
+  console.error('\n⚠️  Missing redirects detected.\n');
+  console.error(`Add the following entries to ${CONFIG.redirectsFile}:\n`);
+  console.error(JSON.stringify(missing, null, 2));
+  console.error(
+    `\nTo apply: insert the entries above into ${CONFIG.redirectsFile} (set "target" to the correct destination).`,
   );
-  console.warn(`2. Record them in ${CONFIG.redirectsFile} so this check passes\n`);
+  console.error(
+    'Important: place new entries BEFORE the catch-all rules ("/<*>" and "/docs/<*>") at the end of the file, otherwise they will never match.',
+  );
+  console.error(`To skip this check: add ${CONFIG.skipFlag} to your commit message.\n`);
 
   process.exit(1);
 }
