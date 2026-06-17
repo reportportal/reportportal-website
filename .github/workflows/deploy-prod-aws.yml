@@ -90,6 +90,7 @@ jobs:
         run: node ./bin/gen-llms.js
 
       - name: Commit refreshed llms.txt and ai-sitemap.json
+        continue-on-error: true
         run: |
           git add static/llms.txt static/ai-sitemap.json
           if git diff --cached --quiet -- static/llms.txt static/ai-sitemap.json; then
@@ -99,7 +100,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: refresh llms.txt and ai-sitemap.json [skip ci]"
-          git push origin HEAD:master
+          if ! git push origin HEAD:master; then
+            echo "::warning::Could not push refreshed llms.txt/ai-sitemap.json (e.g. branch protection or a non-fast-forward race). This is non-blocking — deployment will continue and the files will be regenerated on the next master push."
+          fi
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
