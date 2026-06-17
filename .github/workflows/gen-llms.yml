@@ -88,5 +88,5 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: regenerate llms.txt and ai-sitemap.json"
+          git commit -m "chore: regenerate llms.txt and ai-sitemap.json [skip ci]"
           git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:$TARGET_REF"
