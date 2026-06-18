@@ -89,8 +89,32 @@ const config: GatsbyConfig = {
               path
             }
           }
+          allContentfulBlogPost {
+            nodes {
+              slug
+              updatedAt
+            }
+          }
         }`,
-        serialize: ({ path }: { path: string }) => {
+        resolvePages: ({
+          allSitePage: { nodes: pages },
+          allContentfulBlogPost: { nodes: blogPosts },
+        }: {
+          allSitePage: { nodes: { path: string }[] };
+          allContentfulBlogPost: { nodes: { slug: string; updatedAt: string }[] };
+        }) => {
+          const lastmodByPath = blogPosts.reduce<Record<string, string>>((acc, post) => {
+            acc[`/blog/${post.slug}/`] = post.updatedAt;
+
+            return acc;
+          }, {});
+
+          return pages.map(page => ({
+            ...page,
+            lastmod: lastmodByPath[page.path],
+          }));
+        },
+        serialize: ({ path, lastmod }: { path: string; lastmod?: string }) => {
           const fileExtensions = ['.html', '.htm', '.xml', '.pdf', '.jpg', '.png', '.css', '.js'];
           const hasFileExtension = fileExtensions.some(ext => path.endsWith(ext));
           const pathWithSlashEnd = path.endsWith('/') || hasFileExtension ? path : `${path}/`;
@@ -108,6 +132,7 @@ const config: GatsbyConfig = {
             url,
             changefreq: 'weekly',
             priority,
+            ...(lastmod ? { lastmod } : {}),
           };
         },
       },
