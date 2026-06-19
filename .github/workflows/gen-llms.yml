@@ -1,4 +1,4 @@
-# Copyright 2024 EPAM Systems
+# Copyright 2026 EPAM Systems
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -11,7 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI Build
+name: Regenerate llms.txt (manual)
+
 env:
   GTM_ID: GTM-MK7ZHTL
   DOCUMENTATION_URL: http://rpp-docs.s3-website.eu-central-1.amazonaws.com
@@ -19,24 +20,36 @@ env:
   CONTENTFUL_HOST: cdn.contentful.com
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - master
-    paths-ignore:
-      - README.md
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to regenerate llms.txt on (defaults to the selected branch)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  regenerate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout repository
+      - name: Resolve target branch
+        id: target
+        env:
+          INPUT_BRANCH: ${{ github.event.inputs.branch }}
+          DEFAULT_BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ -n "$INPUT_BRANCH" ]; then
+            echo "ref=$INPUT_BRANCH" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=$DEFAULT_BRANCH" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ steps.target.outputs.ref }}
           persist-credentials: false
 
       - name: Set up Node.js
@@ -57,31 +70,23 @@ jobs:
           echo GTM_ID=${{ env.GTM_ID }} >> .env.production
           echo DOCUMENTATION_URL=${{ env.DOCUMENTATION_URL }} >> .env.production
 
-      - name: Run tsc
-        run: npm run tsc
-
-      - name: Run eslint
-        run: npm run lint
-
-      - name: Run stylelint
-        run: npm run stylelint
-
       - name: Build the source code
         run: npm run build
 
-      - name: Regenerate and commit llms.txt / ai-sitemap.json if changed
-        if: github.event.pull_request.head.repo.full_name == github.repository
+      - name: Regenerate llms.txt and ai-sitemap.json
+        run: node ./bin/gen-llms.js
+
+      - name: Commit regenerated files
         env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          TARGET_REF: ${{ steps.target.outputs.ref }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node ./bin/gen-llms.js
           git add static/llms.txt static/ai-sitemap.json
           if git diff --cached --quiet -- static/llms.txt static/ai-sitemap.json; then
-            echo "llms.txt and ai-sitemap.json are already up to date — nothing to commit."
+            echo "No changes to llms.txt or ai-sitemap.json — skipping commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: regenerate llms.txt and ai-sitemap.json [skip ci]"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${HEAD_REF}"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:$TARGET_REF"
