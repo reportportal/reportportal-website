@@ -83,3 +83,7 @@ Thumbs.db
 
 # Local Claude / agent settings
 .claude/
+
+PERFORMANCE_AUDIT.md
+static/antd.min.css
+static/svg/test.txt
