@@ -21,7 +21,7 @@ on:
     paths:
       - 'src/pages/**'
       - 'src/templates/**'
-      - 'src/redirects.ts'
+      - 'src/redirects.json'
 
 jobs:
   check-redirects:
