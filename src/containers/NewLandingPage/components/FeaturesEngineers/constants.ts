@@ -17,7 +17,7 @@ export const FEATURES_ITEMS = [
     description:
       'See results as they happen — access executed test cases instantly to react faster and reduce time to triage.',
     image: feature5,
-    link: '/features/#real-time-reporting',
+    link: '/features/#unified-reporting',
   },
   {
     title: 'AI agents for testing & ML triage',
@@ -31,13 +31,13 @@ export const FEATURES_ITEMS = [
     description:
       'Automate go/no-go decisions in your CI/CD pipeline by setting pass/fail thresholds on test results.',
     image: feature8,
-    link: '/features/#quality-gates',
+    link: '/features/#ai-powered-analysis',
   },
   {
     title: 'Widgets and dashboards',
     description:
       'Build custom dashboards and widgets to track quality, spot trends and share insights with stakeholders.',
     image: feature6,
-    link: '/features/#visualisation-of-tests',
+    link: '/features/#widgets-dashboards',
   },
 ];

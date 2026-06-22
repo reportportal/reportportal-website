@@ -22,7 +22,7 @@ export const CtaSection: FC = () => (
       <div className={getBlocksWith('__actions')}>
         <Link
           className="btn btn--secondary btn--large"
-          to="https://app.reportportal.io/ui/#login"
+          to="/contact-us/general/?reason=free_trial"
           data-gtm="get_started_cta"
         >
           Start free trial

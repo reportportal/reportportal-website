@@ -17,7 +17,7 @@ export const BlogSection: FC = () => {
       <h2 className={getBlocksWith('__title')}>Latest from our blog</h2>
 
       <div className={getBlocksWith('__posts')}>
-        <ArticlePreview posts={posts} isAnimationEnabled={false} hasFixedItemsPerRow />
+        <ArticlePreview posts={posts} isAnimationEnabled={false} />
       </div>
 
       <div className={getBlocksWith('__cta')}>

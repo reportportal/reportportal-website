@@ -44,7 +44,7 @@ export const HeroSection: FC = () => {
             </Link>
             <Link
               className="btn btn--outline-2 btn--large"
-              to="https://reportportal.io/contact-us/saas/startup-plan/yearly/"
+              to="/contact-us/general/?reason=free_trial"
               data-gtm="start_free_trial_hero"
             >
               Start free trial

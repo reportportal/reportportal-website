@@ -6,5 +6,4 @@ export const GITHUB_URL = 'https://github.com/reportportal/reportportal';
 export const SLACK_URL = 'https://slack.epmrpp.reportportal.io/';
 export const COMMUNITY_URL = 'https://community.reportportal.io/';
 export const BLOG_URL = '/blog/';
-export const INTEGRATIONS_URL = '/integrations/';
 export const INSTALLATION_URL = '/installation/';

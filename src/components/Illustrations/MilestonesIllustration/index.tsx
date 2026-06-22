@@ -5,7 +5,7 @@ import { useInView } from '@app/hooks/useInView';
 import './MilestonesIllustration.scss';
 
 export const MilestonesIllustration: FC = () => {
-  const [ref, isVisible] = useInView({ once: true, amount: 0.3 });
+  const [ref, isVisible] = useInView({ once: true });
 
   return (
     <div

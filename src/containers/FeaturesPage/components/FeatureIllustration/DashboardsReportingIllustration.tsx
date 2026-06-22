@@ -6,7 +6,7 @@ import { useIllustrationStatic, useRegisterSelfScaling } from '@app/components/A
 export const DashboardsReportingIllustration: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [inViewRef, isVisible] = useInView({ once: true, amount: 0.3 });
+  const [inViewRef, isVisible] = useInView({ once: true });
   const isStatic = useIllustrationStatic();
   useRegisterSelfScaling();
 

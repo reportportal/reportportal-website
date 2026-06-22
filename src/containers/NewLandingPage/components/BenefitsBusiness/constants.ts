@@ -24,13 +24,13 @@ export const BENEFITS_ITEMS = [
     description:
       'Auto-Analyzer uses ML to match failures against historical runs and assign defect types automatically — no manual review, no external agents, no extra cost.',
     image: feature10,
-    link: '/features/#ai-based',
+    link: '/features/#ai-capabilities',
   },
   {
     title: 'Key metrics and KPI',
     description: 'With widgets and dashboards, you can quickly overview the project or dive into details for faster decision-making.',
     image: feature6,
-    link: '/features/#visualisation-of-tests',
+    link: '/features/#widgets-dashboards',
   },
   {
     title: 'Certified security',

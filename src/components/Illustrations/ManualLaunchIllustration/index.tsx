@@ -5,7 +5,7 @@ import { useInView } from '@app/hooks/useInView';
 import './ManualLaunchIllustration.scss';
 
 export const ManualLaunchIllustration: FC = () => {
-  const [ref, isVisible] = useInView({ once: true, amount: 0.3 });
+  const [ref, isVisible] = useInView({ once: true });
 
   const [stepsVisible, setStepsVisible] = useState([false, false, false, false]);
   const [iconsVisible, setIconsVisible] = useState([false, false, false, false]);

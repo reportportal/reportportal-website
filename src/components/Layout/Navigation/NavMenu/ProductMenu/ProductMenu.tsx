@@ -51,7 +51,7 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
         <div className={getBlocksWith('__btn-group')}>
           <Link
             className="btn btn--primary temporary-hide"
-            to="/contact-us/general/"
+            to="/contact-us/general/?reason=free_trial"
             data-gtm="start_free_trial"
           >
             Start free trial

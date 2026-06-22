@@ -38,6 +38,9 @@ const fields = [
     regex: EMAIL_VALIDATION_REGEX,
     message: 'Please check your email',
   },
+  {
+    name: 'company',
+  },
 ];
 
 export const validate = values =>

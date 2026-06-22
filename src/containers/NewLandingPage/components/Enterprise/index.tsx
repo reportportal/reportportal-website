@@ -70,8 +70,8 @@ export const Enterprise: FC = () => (
       </p>
 
       <div className={getBlocksWith('__certificates')}>
-        {ENTERPRISE_CERTIFICATES.map(Certificate => (
-          <Certificate key={Certificate} />
+        {ENTERPRISE_CERTIFICATES.map((Certificate, index) => (
+          <Certificate key={index} />
         ))}
       </div>
 
@@ -94,7 +94,7 @@ export const Enterprise: FC = () => (
         <div className={getBlocksWith('__actions')}>
           <Link
             className="btn btn--primary btn--large"
-            to="https://demo.reportportal.io/"
+            to="/contact-us/general/?reason=demo"
             data-gtm="request_demo_enterprise"
           >
             Request demo

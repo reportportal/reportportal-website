@@ -13,7 +13,7 @@ export const AiAgentsIllustration: FC = () => {
   // out of view, not just trigger it once on first reveal. Combined with
   // Page Visibility below this kills the constant CPU/GPU drain that
   // happens when the page is open but the user isn't looking at it.
-  const [inViewRef, isVisible] = useInView({ once: false, amount: 0.3 });
+  const [inViewRef, isVisible] = useInView({ once: false });
 
   // Page Visibility — pause when the tab is in the background (second monitor,
   // Teams screen-share, just-switched-tab). Without this, RAF loops keep

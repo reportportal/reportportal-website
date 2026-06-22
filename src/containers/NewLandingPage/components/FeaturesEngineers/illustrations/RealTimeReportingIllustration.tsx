@@ -18,7 +18,7 @@ export const RealTimeReportingIllustration: FC = () => {
   // Pause the infinite loading spinners when the illustration is off-screen
   // or the tab is hidden — they otherwise keep spinning (even after fading
   // out) and steal frames during scroll. Entrance choreography is untouched.
-  const [inViewRef, isInView] = useInView({ once: false, amount: 0.2 });
+  const [inViewRef, isInView] = useInView({ once: false });
 
   const [isTabVisible, setIsTabVisible] = useState(
     typeof document !== 'undefined' ? !document.hidden : true,

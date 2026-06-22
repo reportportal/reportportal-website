@@ -5,7 +5,7 @@ import { useInView } from '@app/hooks/useInView';
 import './TestCaseLibrary.scss';
 
 export const TestCaseLibrary: FC = () => {
-  const [ref, isVisible] = useInView({ once: true, amount: 0.3 });
+  const [ref, isVisible] = useInView({ once: true });
 
   return (
     <div

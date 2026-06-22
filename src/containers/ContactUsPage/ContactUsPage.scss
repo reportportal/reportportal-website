@@ -109,6 +109,8 @@
 
         .ant-select-selection-item,
         .ant-select-selection-placeholder {
+          @include m.font-scale();
+
           display: flex;
           align-items: center;
           color: var(--text-light-grey);

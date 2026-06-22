@@ -49,7 +49,7 @@ export const HowItWorks: FC = () => {
   // connector) when the section is scrolled out of view or the tab is hidden.
   // Keeping them running off-screen steals frames and makes scrolling feel
   // less smooth, with zero visual benefit.
-  const [ref, isInView] = useInView({ once: false, amount: 0.2 });
+  const [ref, isInView] = useInView({ once: false });
 
   const [isTabVisible, setIsTabVisible] = useState(
     typeof document !== 'undefined' ? !document.hidden : true,

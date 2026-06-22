@@ -1,4 +1,5 @@
 import React, { FC, Fragment } from 'react';
+import { useLocation } from '@gatsbyjs/reach-router';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import {
   ContactUsConfig,
@@ -27,6 +28,11 @@ const TEMP_GENERAL_MESSAGE = (
 export const ContactUsDetails: FC<
   Pick<ContactUsConfig, 'planType' | 'price' | 'message' | 'messagePosition' | 'showBillingPeriod'>
 > = ({ message, messagePosition, price, planType, showBillingPeriod }) => {
+  const { pathname } = useLocation();
+  // Limit the hardcoded fallback to the /contact-us/general page only, so it
+  // doesn't override the CMS message on other no-planType pages (qasp, taas…).
+  const isGeneralContact = pathname.includes('/contact-us/general');
+
   const priceInfo =
     planType && price && price[planType] ? (
       <p>
@@ -39,7 +45,7 @@ export const ContactUsDetails: FC<
     ) : null;
 
   // TODO: remove TEMP_GENERAL_MESSAGE condition once Contentful content is updated
-  const messageInfo = !planType && !priceInfo
+  const messageInfo = !planType && !priceInfo && isGeneralContact
     ? TEMP_GENERAL_MESSAGE
     : renderRichText(message, {
         renderText: formatTextFromContentfulRichTextFieldWithLineBreaks,

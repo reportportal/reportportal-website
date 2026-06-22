@@ -5,7 +5,7 @@ import { useInView } from '@app/hooks/useInView';
 export const AiPoweredAnalysisIllustration: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [inViewRef, isVisible] = useInView({ once: true, amount: 0.3 });
+  const [inViewRef, isVisible] = useInView({ once: true });
 
   // ── Scale canvas to fill container width ─────────────────────────────────
   useEffect(() => {

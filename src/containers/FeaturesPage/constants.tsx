@@ -1,11 +1,13 @@
 import React, { ReactNode } from 'react';
 import { Link } from '@app/components/Link';
+import { DOCUMENTATION_URL } from '@app/utils';
+import { FAQSchemaItem, extractText } from '@app/components/StructuredData';
 
 export interface FeatureLinkedCard {
   icon?: string;
   title: string;
   description: string;
-  link: string;
+  link?: string;
 }
 
 export interface FeatureCta {
@@ -29,12 +31,12 @@ export interface Feature {
 }
 
 export const NAVIGATION_LIST = [
-  { id: 1., name: 'AI capabilities for testing', link: '#ai-capabilities' },
-  { id: 2., name: 'Test Planning & Design', link: '#test-planning-design' },
-  { id: 3., name: 'Unified Reporting & Traceability', link: '#unified-reporting' },
-  { id: 4., name: 'AI-Powered Analysis', link: '#ai-powered-analysis' },
-  { id: 5., name: 'Widgets & Dashboards', link: '#widgets-dashboards' },
-  { id: 6., name: 'Enterprise Integrations', link: '#enterprise-integrations' },
+  { id: 1, name: 'AI capabilities for testing', link: '#ai-capabilities' },
+  { id: 2, name: 'Test Planning & Design', link: '#test-planning-design' },
+  { id: 3, name: 'Unified Reporting & Traceability', link: '#unified-reporting' },
+  { id: 4, name: 'AI-Powered Analysis', link: '#ai-powered-analysis' },
+  { id: 5, name: 'Widgets & Dashboards', link: '#widgets-dashboards' },
+  { id: 6, name: 'Enterprise Integrations', link: '#enterprise-integrations' },
 ];
 
 export const FEATURES_LIST: Feature[] = [
@@ -115,28 +117,66 @@ export const FEATURES_LIST: Feature[] = [
         icon: 'jira',
         title: 'BTS Integrations',
         description: 'Sync test failures to BTS tickets automatically',
-        link: '/integrations/jira/',
       },
       {
         icon: 'cicd',
         title: 'CI/CD Pipelines',
         description: 'Works with Jenkins, GitLab CI, GitHub Actions, and more',
-        link: '/integrations/cicd/',
       },
       {
         icon: 'sso',
         title: 'SSO',
         description: 'Sign in with your existing identity provider',
-        link: '/integrations/sso/',
       },
       {
         icon: 'scim',
         title: 'SCIM Provisioning',
         description: 'Keep user access in sync with your directory',
-        link: '/integrations/scim/',
       },
     ],
     cta: [{ text: 'View all integrations', link: 'https://reportportal.io/docs/plugins/' }],
     integrationsStrip: true,
   },
 ];
+
+export const FEATURES_FAQ_ITEMS = [
+  {
+    key: 1,
+    label: 'What is meant by "Premium feature"?',
+    children: (
+      <>
+        <p>
+          Premium feature is an advanced feature which comes on top of Free Open Source edition. It
+          comes at no cost with SaaS offering and included into the &quot;160&quot; Managed Services
+          package.
+        </p>
+        <p>
+          See the{' '}
+          <Link to={`${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures/`} className="link">
+            List of features
+          </Link>{' '}
+          and their description.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 2,
+    label: 'What capabilities does Rest API provide?',
+    children: (
+      <p>
+        REST API enables users to easily integrate any testing framework or third-party tool with
+        ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
+        merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
+        update the statuses in the pipeline, generate custom reports and many more.
+      </p>
+    ),
+  },
+];
+
+export const FEATURES_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FEATURES_FAQ_ITEMS.map(
+  ({ label, children }) => ({
+    question: label,
+    answer: extractText(children),
+  }),
+);
