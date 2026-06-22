@@ -107,8 +107,16 @@
         padding: 0 16px !important;
         box-shadow: none !important;
 
+        // antd applies `font-family: -apple-system` on `[class^="ant-select"]`,
+        // which hits these inner elements — re-apply the project font here.
+        .ant-select-selection-search-input {
+          @include m.font-poppins(v.$fw-regular);
+          @include m.font-scale();
+        }
+
         .ant-select-selection-item,
         .ant-select-selection-placeholder {
+          @include m.font-poppins(v.$fw-regular);
           @include m.font-scale();
 
           display: flex;

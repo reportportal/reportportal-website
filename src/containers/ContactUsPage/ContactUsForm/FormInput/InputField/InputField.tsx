@@ -16,6 +16,7 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
   error,
   value,
   label,
+  required,
   InputElement = 'input',
   children,
   ...props
@@ -26,6 +27,7 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
     <div className={classNames('input-field', className, { error, filled: value })}>
       <label>
         {label}
+        {required && <span className="contact-us-form__required"> *</span>}
         <Element
           className={classNames('input', { 'input--select': InputElement === 'select' })}
           value={value}

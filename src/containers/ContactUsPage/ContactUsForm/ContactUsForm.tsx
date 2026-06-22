@@ -105,10 +105,12 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     <FormikProvider value={formik}>
       <div className={getBlocksWith('-container')}>
         <form noValidate className={getBlocksWith()} onSubmit={formik.handleSubmit}>
+          <h2 className={getBlocksWith('__title')}>Contact form</h2>
           {isGeneralContact && (
             <div className={getBlocksWith('__select-field')}>
               <label className={getBlocksWith('__select-label')} htmlFor="reason-select">
                 I&apos;m interested in
+                <span className={getBlocksWith('__required')}> *</span>
               </label>
               <Select
                 id="reason-select"
@@ -125,16 +127,22 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               />
             </div>
           )}
-          <FormInput name="first_name" label="First name" placeholder="John" maxLength={40} />
-          <FormInput name="last_name" label="Last name" placeholder="Smith" maxLength={80} />
+          <FormInput name="first_name" label="First name" required placeholder="Jane" maxLength={40} />
+          <FormInput name="last_name" label="Last name" required placeholder="Doe" maxLength={80} />
           <FormInput
             name="email"
             label="Email"
-            placeholder="name@company.com"
+            required
+            placeholder="jane@mail.com"
             type="email"
             maxLength={80}
           />
-          <FormInput name="company" label="Company name" placeholder="ABC" maxLength={MAX_LENGTH} />
+          <FormInput
+            name="company"
+            label="Company name"
+            placeholder="Acme Inc"
+            maxLength={MAX_LENGTH}
+          />
           {isGeneralContact && (
             <FormInput
               name="reason_other"
@@ -153,9 +161,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               maxLength={MAX_LENGTH}
             />
           )}
-          <FormFieldWrapper name="wouldLikeToReceiveAds">
-            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
-          </FormFieldWrapper>
           <FormFieldWrapper name="termsAgree">
             <CustomCheckbox
               label={
@@ -164,10 +169,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
                   information as set out in the{' '}
                   <Link to="https://privacy.epam.com/core/interaction/showpolicy?type=PrivacyPolicy">
                     Privacy Policy <ArrowIcon />
-                  </Link>
+                  </Link>{' '}
+                  *
                 </>
               }
             />
+          </FormFieldWrapper>
+          <FormFieldWrapper name="wouldLikeToReceiveAds">
+            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
           </FormFieldWrapper>
           {customError && <div className="recaptcha-error">{customError}</div>}
           <button
@@ -178,6 +187,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           >
             {isLoading ? 'Sending...' : 'Send request'}
           </button>
+          <p className={getBlocksWith('__submit-hint')}>
+            Complete required fields (*) and check consent box to submit
+          </p>
         </form>
       </div>
     </FormikProvider>

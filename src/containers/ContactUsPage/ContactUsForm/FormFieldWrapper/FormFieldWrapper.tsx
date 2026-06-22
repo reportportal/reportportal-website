@@ -4,6 +4,7 @@ import { useField } from 'formik';
 export interface BaseFieldProps {
   name: string;
   label: ReactNode;
+  required?: boolean;
   placeholder?: string;
   className?: string;
   maxLength?: number;
