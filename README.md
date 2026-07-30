@@ -67,7 +67,7 @@ npm run start
 Each changes pushing (direct pushing or via merging a Pull Request) to the:
 
 - `develop` branch will trigger the deployment to the dev environment to AWS S3 bucket.
-- `master` branch will trigger the deployment to the prod environment to GitHub Pages (https://reportportal.io).
+- `master` branch will trigger the deployment to the prod environment to AWS Amplify (https://reportportal.io).
 
 ### To deploy your Git branch to dev environment (AWS S3), please follow these steps:
 
@@ -78,6 +78,10 @@ Each changes pushing (direct pushing or via merging a Pull Request) to the:
 5. Once the deployment is finished, verify that your changes have been deployed by checking the website at the following URL: https://landing.epmrpp.reportportal.io/.
 
 That's it! Your changes should now be live on the website. If you encounter any issues during the deployment process, please consult the documentation or reach out to the project maintainers for assistance.
+
+### Redirects
+
+Amplify custom redirect rules are managed via `src/redirects.json`. When a page is deleted or renamed, the CI check (`check-redirects`) will fail on the PR until the new redirect is added to that file. Upon merge to `master`, the `deploy-redirects` workflow automatically applies the full ruleset to Amplify. You can also trigger it manually via Actions → **Deploy Redirects to Amplify** → **Run workflow**.
 
 ## Libraries
 
