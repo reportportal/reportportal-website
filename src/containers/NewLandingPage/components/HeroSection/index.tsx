@@ -24,14 +24,12 @@ export const HeroSection: FC = () => {
 
       <div className={classNames(getBlocksWith('__inner'), 'container')}>
         <div className={getBlocksWith('__content')}>
-          <h1 className={getBlocksWith('__title')}>
-            AI-powered test management & analytics
-          </h1>
+          <h1 className={getBlocksWith('__title')}>AI-powered test management & analytics</h1>
 
           <p className={getBlocksWith('__subtitle')}>
-            Full-cycle test management powered by AI agents that work inside your existing
-            pipeline. Connect your stack, and let ReportPortal handle failure analysis, triage,
-            and release decisions — automatically.
+            Full-cycle test management powered by AI agents that work inside your existing pipeline.
+            Connect your stack, and let ReportPortal handle failure analysis, triage, and release
+            decisions — automatically.
           </p>
 
           <div className={getBlocksWith('__actions')}>

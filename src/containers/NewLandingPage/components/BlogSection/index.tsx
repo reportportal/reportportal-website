@@ -21,11 +21,7 @@ export const BlogSection: FC = () => {
       </div>
 
       <div className={getBlocksWith('__cta')}>
-        <Link
-          className="btn btn--outline btn--large"
-          to="/blog/"
-          data-gtm="view_all_articles"
-        >
+        <Link className="btn btn--outline btn--large" to="/blog/" data-gtm="view_all_articles">
           View all articles
         </Link>
       </div>

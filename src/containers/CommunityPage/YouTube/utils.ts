@@ -4,14 +4,16 @@ import { YoutubeVideoDto } from '@app/utils';
 const stringifyPeriods = ['year', 'month', 'day', 'hour', 'minute'];
 
 export const prepareYoutubeVideos = (videos: YoutubeVideoDto[]) =>
-  (videos ?? []).map(({ id, title, duration, published_at: publishedAt, statistics, thumbnail }) => ({
-    id,
-    title,
-    duration,
-    publishedAt,
-    viewCount: statistics.view_count,
-    imageSrc: (thumbnail.maxres?.url || thumbnail.medium?.url) as string,
-  }));
+  (videos ?? []).map(
+    ({ id, title, duration, published_at: publishedAt, statistics, thumbnail }) => ({
+      id,
+      title,
+      duration,
+      publishedAt,
+      viewCount: statistics.view_count,
+      imageSrc: (thumbnail.maxres?.url || thumbnail.medium?.url) as string,
+    }),
+  );
 
 export const getTimeSince = (date: string) => {
   const creationTime = new Date(date);

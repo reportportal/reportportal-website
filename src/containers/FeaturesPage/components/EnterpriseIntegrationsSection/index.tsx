@@ -16,13 +16,13 @@ import './EnterpriseIntegrationsSection.scss';
 const getBlocksWith = createBemBlockBuilder(['enterprise-integrations']);
 
 const LOCAL_INTEGRATIONS = [
-  { url: '/svg/integrations/github.svg',     alt: 'GitHub' },
-  { url: '/svg/integrations/gitlab.svg',     alt: 'GitLab' },
-  { url: '/svg/integrations/slack.svg',      alt: 'Slack' },
-  { url: '/svg/integrations/telegram.svg',   alt: 'Telegram' },
-  { url: '/svg/integrations/jenkins.svg',    alt: 'Jenkins' },
-  { url: '/svg/integrations/monday.svg',     alt: 'Monday.com' },
-  { url: '/svg/integrations/red-hat.svg',    alt: 'Red Hat' },
+  { url: '/svg/integrations/github.svg', alt: 'GitHub' },
+  { url: '/svg/integrations/gitlab.svg', alt: 'GitLab' },
+  { url: '/svg/integrations/slack.svg', alt: 'Slack' },
+  { url: '/svg/integrations/telegram.svg', alt: 'Telegram' },
+  { url: '/svg/integrations/jenkins.svg', alt: 'Jenkins' },
+  { url: '/svg/integrations/monday.svg', alt: 'Monday.com' },
+  { url: '/svg/integrations/red-hat.svg', alt: 'Red Hat' },
 ];
 
 const ICON_MAP: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -45,9 +45,7 @@ export const EnterpriseIntegrationsSection: FC<EnterpriseIntegrationsSectionProp
   return (
     <section className={getBlocksWith()}>
       <div className={classNames(getBlocksWith('__heading'), 'container')}>
-        {feature.badge && (
-          <span className={getBlocksWith('__badge')}>{feature.badge}</span>
-        )}
+        {feature.badge && <span className={getBlocksWith('__badge')}>{feature.badge}</span>}
         <h2 className={getBlocksWith('__title')}>{feature.title}</h2>
         {feature.description && (
           <p className={getBlocksWith('__description')}>{feature.description}</p>
@@ -76,11 +74,7 @@ export const EnterpriseIntegrationsSection: FC<EnterpriseIntegrationsSectionProp
 
       {feature.integrationsStrip && integrations && (
         <div className={getBlocksWith('__strip')}>
-          <Marquee
-            className={getBlocksWith('__strip-marquee')}
-            speed={25}
-            gradientWidth="19.27%"
-          >
+          <Marquee className={getBlocksWith('__strip-marquee')} speed={25} gradientWidth="19.27%">
             {[
               ...integrations.map(s => ({ url: s.icon.url, alt: s.alt })),
               ...LOCAL_INTEGRATIONS,

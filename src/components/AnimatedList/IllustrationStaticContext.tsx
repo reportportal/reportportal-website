@@ -12,10 +12,10 @@ const IllustrationStaticContext = createContext(false);
  */
 const SelfScalingContext = createContext<(() => void) | null>(null);
 
-export const IllustrationStaticProvider: FC<{ children: ReactNode; onSelfScaling?: () => void }> = ({
-  children,
-  onSelfScaling,
-}) => (
+export const IllustrationStaticProvider: FC<{
+  children: ReactNode;
+  onSelfScaling?: () => void;
+}> = ({ children, onSelfScaling }) => (
   <IllustrationStaticContext.Provider value={true}>
     <SelfScalingContext.Provider value={onSelfScaling ?? null}>
       {children}
@@ -37,6 +37,6 @@ export const useRegisterSelfScaling = (): void => {
 
   useEffect(() => {
     notifyRef.current?.();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

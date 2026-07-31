@@ -34,27 +34,69 @@ export const TestDesignAndPlanningIcon = () => {
         fill="url(#why-e6)"
       />
       <defs>
-        <linearGradient id="why-e1" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e1"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>
-        <linearGradient id="why-e2" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e2"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>
-        <linearGradient id="why-e3" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e3"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>
-        <linearGradient id="why-e4" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e4"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>
-        <linearGradient id="why-e5" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e5"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>
-        <linearGradient id="why-e6" x1="48.0001" y1="6" x2="48.0001" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-e6"
+          x1="48.0001"
+          y1="6"
+          x2="48.0001"
+          y2="90"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>

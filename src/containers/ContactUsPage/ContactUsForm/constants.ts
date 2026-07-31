@@ -8,7 +8,7 @@ export const REASON_OPTIONS = [
   { label: 'Pricing details', value: 'pricing' },
   { label: 'Free Trial', value: 'free_trial' },
   { label: 'Technical Support', value: 'support' },
-  { label: 'Other — I\'ll describe below', value: 'other' },
+  { label: "Other — I'll describe below", value: 'other' },
 ] as const;
 
 export type ReasonValue = (typeof REASON_OPTIONS)[number]['value'];

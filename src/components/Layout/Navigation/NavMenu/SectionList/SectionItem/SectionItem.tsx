@@ -29,7 +29,17 @@ export type SectionItemProps =
   | (SectionItemBaseProps & { icon: ContentfulAsset | ReactElement | string; iconClass?: never });
 
 export const SectionItem: FC<SectionItemProps> = props => {
-  const { title, link, icon, hoverIcon, iconClass, text, className = '', mode = 'primary', badge } = props;
+  const {
+    title,
+    link,
+    icon,
+    hoverIcon,
+    iconClass,
+    text,
+    className = '',
+    mode = 'primary',
+    badge,
+  } = props;
 
   const getBlocksWith = createBemBlockBuilder(['section-item', className]);
   const shouldDisplayArrow = mode === 'secondary' && isAbsoluteURL(link.url);

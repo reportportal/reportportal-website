@@ -28,7 +28,8 @@ export const BENEFITS_ITEMS = [
   },
   {
     title: 'Key metrics and KPI',
-    description: 'With widgets and dashboards, you can quickly overview the project or dive into details for faster decision-making.',
+    description:
+      'With widgets and dashboards, you can quickly overview the project or dive into details for faster decision-making.',
     image: feature6,
     link: '/features/#widgets-dashboards',
   },

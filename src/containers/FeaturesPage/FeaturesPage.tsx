@@ -14,11 +14,11 @@ import SuccessIcon from '@app/svg/success.inline.svg';
 import { Link } from '@app/components/Link';
 import { SupportedFrameworks } from '@app/components/SupportedFrameworks';
 import { Banner } from '@app/components/Banner';
-import { FeaturesCta } from './components/FeaturesCta';
 import { Faq } from '@app/components/Faq';
 import { FooterContent } from '@app/components/Layout';
 import { useScrollIntoViewHandler } from '@app/hooks/useScrollIntoViewHandler';
 
+import { FeaturesCta } from './components/FeaturesCta';
 import { EnterpriseIntegrationsSection } from './components/EnterpriseIntegrationsSection';
 import { FeatureIllustration } from './components/FeatureIllustration';
 import { FEATURES_LIST, NAVIGATION_LIST } from './constants';
@@ -31,7 +31,9 @@ export const FeaturesPage: FC = () => {
   const scrollIntoViewHandler = useScrollIntoViewHandler();
   const handleScroll = () => {
     const itemList = document.querySelectorAll(
-      `.${getBlocksWith('__features-list-item-container')}, .${getBlocksWith('__features-list-item-container--full-width')}`,
+      `.${getBlocksWith('__features-list-item-container')}, .${getBlocksWith(
+        '__features-list-item-container--full-width',
+      )}`,
     );
 
     let activeIndex: number | null = null;
@@ -77,6 +79,15 @@ export const FeaturesPage: FC = () => {
   const menuItemActiveClassName = getBlocksWith('__features-navigation-item--active');
   const featureItemClassName = getBlocksWith('__features-navigation-item');
 
+  let featuresExplorerTop: string | undefined;
+  if (isDesktop) {
+    if (scrollDirection === 'up') {
+      featuresExplorerTop = `-${featuresBlockStickyPositionWithHeader}px`;
+    } else {
+      featuresExplorerTop = `-${featuresBlockStickyPosition}px`;
+    }
+  }
+
   const setHistoryValue = val => window.history.replaceState(null, '', `/features${val}`);
 
   useEffect(() => {
@@ -86,9 +97,7 @@ export const FeaturesPage: FC = () => {
     if (endTopPosition == null) return;
 
     const effectiveDistance =
-      scrollDirection === 'up'
-        ? endTopPosition - headerHeight - offset
-        : endTopPosition - offset;
+      scrollDirection === 'up' ? endTopPosition - headerHeight - offset : endTopPosition - offset;
 
     const shouldBeSticky = effectiveDistance > 0;
 
@@ -163,11 +172,7 @@ export const FeaturesPage: FC = () => {
         className={getBlocksWith('__features-explorer')}
         style={{
           position: isDesktop && isFeaturesMenuSticky ? 'sticky' : 'relative',
-          top: isDesktop
-            ? scrollDirection === 'up'
-              ? `-${featuresBlockStickyPositionWithHeader}px`
-              : `-${featuresBlockStickyPosition}px`
-            : undefined,
+          top: featuresExplorerTop,
         }}
       >
         <h2
@@ -198,7 +203,7 @@ export const FeaturesPage: FC = () => {
       </div>
       <div className={getBlocksWith('__features-list')}>
         {FEATURES_LIST.filter(f => f.layout !== 'full-width').map(
-          ({ id, link, title, description, image, isPremium, bullets, cta }) => (
+          ({ id, link, title, description, isPremium, bullets, cta }) => (
             <div className={getBlocksWith('__features-list-item-container')} key={id} id={id}>
               <div
                 className={classNames(getBlocksWith('__features-list-item'), 'container')}

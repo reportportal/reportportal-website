@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useInView } from '@app/hooks/useInView';
-import { useIllustrationStatic, useRegisterSelfScaling } from '@app/components/AnimatedList/IllustrationStaticContext';
+import {
+  useIllustrationStatic,
+  useRegisterSelfScaling,
+} from '@app/components/AnimatedList/IllustrationStaticContext';
 
 export const DashboardsReportingIllustration: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,7 +16,7 @@ export const DashboardsReportingIllustration: FC = () => {
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!container || !canvas) return;
+    if (!container || !canvas) return undefined;
 
     const NATURAL_W = 596;
     const NATURAL_H = 448;
@@ -47,18 +50,28 @@ export const DashboardsReportingIllustration: FC = () => {
           })}
           style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
         >
-
           {/* HEADER */}
           <div className="dr-hdr">
             <span className="dr-hdr-title">Dashboard — Release 12.4</span>
             <div className="dr-date-filter">
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
                 <rect x="1" y="2" width="9" height="8" rx="1.5" stroke="#8791AB" strokeWidth="1" />
-                <path d="M3.5 1v2M7.5 1v2M1 5h9" stroke="#8791AB" strokeWidth="1" strokeLinecap="round" />
+                <path
+                  d="M3.5 1v2M7.5 1v2M1 5h9"
+                  stroke="#8791AB"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                />
               </svg>
               Jan 16 – Feb 14, 2025
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <path d="M2 3.5L4.5 6L7 3.5" stroke="#8791AB" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 3.5L4.5 6L7 3.5"
+                  stroke="#8791AB"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <div className="dr-add-btn">
@@ -71,7 +84,6 @@ export const DashboardsReportingIllustration: FC = () => {
 
           {/* BODY */}
           <div className="dr-body">
-
             {/* KPI ROW */}
             <div className="dr-kpi-row">
               <div className="dr-kpi">
@@ -80,7 +92,13 @@ export const DashboardsReportingIllustration: FC = () => {
                   <span className="dr-kpi-val dr-kpi-val--dark">230</span>
                   <span className="dr-kpi-arrow">
                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <path d="M5.5 8.5V2.5M3 5L5.5 2.5L8 5" stroke="#00916A" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M5.5 8.5V2.5M3 5L5.5 2.5L8 5"
+                        stroke="#00916A"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </span>
                 </div>
@@ -91,7 +109,13 @@ export const DashboardsReportingIllustration: FC = () => {
                   <span className="dr-kpi-val dr-kpi-val--pass">72%</span>
                   <span className="dr-kpi-arrow">
                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <path d="M5.5 8.5V2.5M3 5L5.5 2.5L8 5" stroke="#00916A" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M5.5 8.5V2.5M3 5L5.5 2.5L8 5"
+                        stroke="#00916A"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </span>
                 </div>
@@ -102,7 +126,13 @@ export const DashboardsReportingIllustration: FC = () => {
                   <span className="dr-kpi-val dr-kpi-val--dark">47</span>
                   <span className="dr-kpi-arrow">
                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <path d="M5.5 2.5V8.5M3 6L5.5 8.5L8 6" stroke="#00916A" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M5.5 2.5V8.5M3 6L5.5 8.5L8 6"
+                        stroke="#00916A"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </span>
                 </div>
@@ -111,7 +141,6 @@ export const DashboardsReportingIllustration: FC = () => {
 
             {/* CHARTS ROW */}
             <div className="dr-charts-row">
-
               {/* LINE / AREA CHART */}
               <div className="dr-widget dr-area-w">
                 <div className="dr-w-title">Launches · Last 7 Days</div>
@@ -131,9 +160,15 @@ export const DashboardsReportingIllustration: FC = () => {
                       </clipPath>
                     </defs>
 
-                    <text x="0" y="16"  fill="#C0CCD8" style={{ fontSize: '7.5px' }}>200</text>
-                    <text x="0" y="57"  fill="#C0CCD8" style={{ fontSize: '7.5px' }}>130</text>
-                    <text x="0" y="97"  fill="#C0CCD8" style={{ fontSize: '7.5px' }}>60</text>
+                    <text x="0" y="16" fill="#C0CCD8" style={{ fontSize: '7.5px' }}>
+                      200
+                    </text>
+                    <text x="0" y="57" fill="#C0CCD8" style={{ fontSize: '7.5px' }}>
+                      130
+                    </text>
+                    <text x="0" y="97" fill="#C0CCD8" style={{ fontSize: '7.5px' }}>
+                      60
+                    </text>
 
                     <line x1="26" y1="12" x2="384" y2="12" stroke="#EEF3F8" strokeWidth=".5" />
                     <line x1="26" y1="54" x2="384" y2="54" stroke="#EEF3F8" strokeWidth=".5" />
@@ -155,22 +190,127 @@ export const DashboardsReportingIllustration: FC = () => {
                     </g>
 
                     <g className="dr-chart-dots">
-                      <circle cx="28"  cy="79" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
-                      <circle cx="87"  cy="55" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
-                      <circle cx="146" cy="59" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
-                      <circle cx="205" cy="33" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
-                      <circle cx="264" cy="43" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
-                      <circle cx="323" cy="6"  r="4.5" fill="#009DBB" stroke="#fff" strokeWidth="1.5" />
-                      <circle cx="382" cy="22" r="2.8" fill="#fff" stroke="#009DBB" strokeWidth="1.5" />
+                      <circle
+                        cx="28"
+                        cy="79"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="87"
+                        cy="55"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="146"
+                        cy="59"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="205"
+                        cy="33"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="264"
+                        cy="43"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="323"
+                        cy="6"
+                        r="4.5"
+                        fill="#009DBB"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx="382"
+                        cy="22"
+                        r="2.8"
+                        fill="#fff"
+                        stroke="#009DBB"
+                        strokeWidth="1.5"
+                      />
                     </g>
 
-                    <text x="28"  y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Mon</text>
-                    <text x="87"  y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Tue</text>
-                    <text x="146" y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Wed</text>
-                    <text x="205" y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Thu</text>
-                    <text x="264" y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Fri</text>
-                    <text x="323" y="116" textAnchor="middle" fill="#009DBB" style={{ fontSize: '7.5px', fontWeight: 700 }}>Sat</text>
-                    <text x="382" y="116" textAnchor="middle" fill="#B0BCC8" style={{ fontSize: '7.5px' }}>Sun</text>
+                    <text
+                      x="28"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Mon
+                    </text>
+                    <text
+                      x="87"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Tue
+                    </text>
+                    <text
+                      x="146"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Wed
+                    </text>
+                    <text
+                      x="205"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Thu
+                    </text>
+                    <text
+                      x="264"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Fri
+                    </text>
+                    <text
+                      x="323"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#009DBB"
+                      style={{ fontSize: '7.5px', fontWeight: 700 }}
+                    >
+                      Sat
+                    </text>
+                    <text
+                      x="382"
+                      y="116"
+                      textAnchor="middle"
+                      fill="#B0BCC8"
+                      style={{ fontSize: '7.5px' }}
+                    >
+                      Sun
+                    </text>
                   </svg>
                 </div>
               </div>
@@ -182,19 +322,65 @@ export const DashboardsReportingIllustration: FC = () => {
                   <svg viewBox="0 0 104 104" fill="none" className="dr-donut-svg">
                     <circle cx="52" cy="52" r="38" stroke="#EEF3F8" strokeWidth="13" fill="none" />
                     <g className="dr-donut-segs">
-                      <circle cx="52" cy="52" r="38" stroke="#00B884" strokeWidth="13" fill="none"
-                        strokeDasharray="138.5 100.3" transform="rotate(-90 52 52)" />
-                      <circle cx="52" cy="52" r="38" stroke="#C8373A" strokeWidth="13" fill="none"
-                        strokeDasharray="23.9 214.9" transform="rotate(118.8 52 52)" />
-                      <circle cx="52" cy="52" r="38" stroke="#C8D4DC" strokeWidth="13" fill="none"
-                        strokeDasharray="28.7 210.1" transform="rotate(154.8 52 52)" />
-                      <circle cx="52" cy="52" r="38" stroke="#E4EEF5" strokeWidth="13" fill="none"
-                        strokeDasharray="47.75 191.0" transform="rotate(198 52 52)" />
+                      <circle
+                        cx="52"
+                        cy="52"
+                        r="38"
+                        stroke="#00B884"
+                        strokeWidth="13"
+                        fill="none"
+                        strokeDasharray="138.5 100.3"
+                        transform="rotate(-90 52 52)"
+                      />
+                      <circle
+                        cx="52"
+                        cy="52"
+                        r="38"
+                        stroke="#C8373A"
+                        strokeWidth="13"
+                        fill="none"
+                        strokeDasharray="23.9 214.9"
+                        transform="rotate(118.8 52 52)"
+                      />
+                      <circle
+                        cx="52"
+                        cy="52"
+                        r="38"
+                        stroke="#C8D4DC"
+                        strokeWidth="13"
+                        fill="none"
+                        strokeDasharray="28.7 210.1"
+                        transform="rotate(154.8 52 52)"
+                      />
+                      <circle
+                        cx="52"
+                        cy="52"
+                        r="38"
+                        stroke="#E4EEF5"
+                        strokeWidth="13"
+                        fill="none"
+                        strokeDasharray="47.75 191.0"
+                        transform="rotate(198 52 52)"
+                      />
                     </g>
-                    <text x="52" y="54" textAnchor="middle" fill="#1A2740"
-                      style={{ fontSize: '14px', fontWeight: 800 }}>1 191</text>
-                    <text x="52" y="64" textAnchor="middle" fill="#8791AB"
-                      style={{ fontSize: '6px', letterSpacing: '.06em' }}>TESTS</text>
+                    <text
+                      x="52"
+                      y="54"
+                      textAnchor="middle"
+                      fill="#1A2740"
+                      style={{ fontSize: '14px', fontWeight: 800 }}
+                    >
+                      1 191
+                    </text>
+                    <text
+                      x="52"
+                      y="64"
+                      textAnchor="middle"
+                      fill="#8791AB"
+                      style={{ fontSize: '6px', letterSpacing: '.06em' }}
+                    >
+                      TESTS
+                    </text>
                   </svg>
                   <div className="dr-d-leg">
                     <div className="dr-d-li">
@@ -216,7 +402,6 @@ export const DashboardsReportingIllustration: FC = () => {
                   </div>
                 </div>
               </div>
-
             </div>
 
             {/* TABLE */}
@@ -237,33 +422,40 @@ export const DashboardsReportingIllustration: FC = () => {
                   <span className="dr-tw-name">Login — Session Error</span>
                   <span className="dr-tw-cnt">32</span>
                   <span />
-                  <div className="dr-bar-t"><div className="dr-bar-f" /></div>
+                  <div className="dr-bar-t">
+                    <div className="dr-bar-f" />
+                  </div>
                   <span className="dr-tw-pct">84%</span>
                 </div>
                 <div className="dr-tw-row">
                   <span className="dr-tw-name">OAuth — Google SSO</span>
                   <span className="dr-tw-cnt">24</span>
                   <span />
-                  <div className="dr-bar-t"><div className="dr-bar-f" /></div>
+                  <div className="dr-bar-t">
+                    <div className="dr-bar-f" />
+                  </div>
                   <span className="dr-tw-pct">64%</span>
                 </div>
                 <div className="dr-tw-row">
                   <span className="dr-tw-name">Endpoint Load Test</span>
                   <span className="dr-tw-cnt">17</span>
                   <span />
-                  <div className="dr-bar-t"><div className="dr-bar-f" /></div>
+                  <div className="dr-bar-t">
+                    <div className="dr-bar-f" />
+                  </div>
                   <span className="dr-tw-pct">46%</span>
                 </div>
                 <div className="dr-tw-row">
                   <span className="dr-tw-name">Remember Me — Checkbox</span>
                   <span className="dr-tw-cnt">12</span>
                   <span />
-                  <div className="dr-bar-t"><div className="dr-bar-f" /></div>
+                  <div className="dr-bar-t">
+                    <div className="dr-bar-f" />
+                  </div>
                   <span className="dr-tw-pct">31%</span>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

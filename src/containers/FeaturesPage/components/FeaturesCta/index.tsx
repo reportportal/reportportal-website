@@ -10,11 +10,10 @@ const getBlocksWith = createBemBlockBuilder(['features-cta']);
 export const FeaturesCta: FC = () => (
   <section className={getBlocksWith()}>
     <div className={classNames(getBlocksWith('__inner'), 'container')}>
-      <h2 className={getBlocksWith('__title')}>
-        Ready to transform your testing workflow?
-      </h2>
+      <h2 className={getBlocksWith('__title')}>Ready to transform your testing workflow?</h2>
       <p className={getBlocksWith('__subtitle')}>
-        Join thousands of teams using ReportPortal to deliver quality software faster. Start your free trial or request a demo today.
+        Join thousands of teams using ReportPortal to deliver quality software faster. Start your
+        free trial or request a demo today.
       </p>
       <div className={getBlocksWith('__button-group')}>
         <Link

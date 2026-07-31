@@ -33,8 +33,8 @@ export const OpenSource: FC = () => (
       <div className={getBlocksWith('__heading')}>
         <h2>Open source, built to scale</h2>
         <p className={getBlocksWith('__description')}>
-          Deploy ReportPortal in your own environment, keep full control over your data,
-          and scale on your terms with flexible customization and integration.
+          Deploy ReportPortal in your own environment, keep full control over your data, and scale
+          on your terms with flexible customization and integration.
         </p>
       </div>
 
@@ -74,11 +74,7 @@ export const OpenSource: FC = () => (
           >
             Self-host for free
           </Link>
-          <Link
-            className="btn btn--outline btn--large"
-            to="/pricing/"
-            data-gtm="explore_premium"
-          >
+          <Link className="btn btn--outline btn--large" to="/pricing/" data-gtm="explore_premium">
             Explore premium
           </Link>
         </div>

@@ -3,7 +3,6 @@ import { createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 import { LinkedCard } from '@app/components/LinkedCard';
 import { Faq } from '@app/components/Faq';
-
 import {
   ManualLaunchIllustration,
   MilestonesIllustration,
@@ -32,7 +31,9 @@ export const TestManagementPage: FC = () => (
         <div className={getBlocksWith('__hero-heading')}>
           <h1>TEST MANAGEMENT</h1>
           <h2>
-            Design. Plan. Execute.<br />All inside ReportPortal.
+            Design. Plan. Execute.
+            <br />
+            All inside ReportPortal.
           </h2>
           <p className={getBlocksWith('__hero-description')}>
             Test Management System that integrates seamlessly with your automation results and
@@ -60,7 +61,9 @@ export const TestManagementPage: FC = () => (
         <div className={getBlocksWith('__organize-inner')}>
           <h2>Organize with flexibility</h2>
           <p className={getBlocksWith('__organize-subtitle')}>
-            Create and organise test cases using templates, folders, and tags. Let AI agents connect via MCP Server to suggest coverage gaps or missing scenarios without touching your structure.
+            Create and organise test cases using templates, folders, and tags. Let AI agents connect
+            via MCP Server to suggest coverage gaps or missing scenarios without touching your
+            structure.
           </p>
           <div className={getBlocksWith('__organize-mockup')}>
             <TestCaseLibrary />
@@ -109,11 +112,9 @@ export const TestManagementPage: FC = () => (
 
     {/* Ready to unify your testing? */}
     <section className={getBlocksWith('__cta')}>
-<div className="container">
+      <div className="container">
         <div className={getBlocksWith('__cta-inner')}>
-          <h2 className={getBlocksWith('__cta-heading')}>
-            Ready to unify your testing?
-          </h2>
+          <h2 className={getBlocksWith('__cta-heading')}>Ready to unify your testing?</h2>
           <p className={getBlocksWith('__cta-subtitle')}>
             Join teams who manage their entire testing lifecycle in ReportPortal: from manual test
             cases to AI-generated test runs, all in one place.

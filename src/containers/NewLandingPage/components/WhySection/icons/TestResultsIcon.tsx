@@ -10,7 +10,14 @@ export const TestResultsIcon: FC = () => {
         clipRule="evenodd"
       />
       <defs>
-        <linearGradient id="why-b" x1="48" x2="48" y1="3.011" y2="93" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="why-b"
+          x1="48"
+          x2="48"
+          y1="3.011"
+          y2="93"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#00B4D5" />
           <stop offset="1" stopColor="#AEC3FF" />
         </linearGradient>

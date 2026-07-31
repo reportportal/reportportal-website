@@ -59,7 +59,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         // `reason` / `reason_other` are captured in the UI only. The Salesforce
         // field mapping (real field name + endpoint validation) is still pending,
         // so they are intentionally NOT sent yet — to be wired with the backend.
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
         const postData = {
           ...formValues,
@@ -91,7 +91,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   // Pre-fill the inquiry reason from a URL param, e.g. /contact-us/general/?reason=free_trial
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const urlReason = new URLSearchParams(window.location.search).get('reason') as ReasonValue | null;
+    const urlReason = new URLSearchParams(window.location.search).get(
+      'reason',
+    ) as ReasonValue | null;
     if (urlReason && REASON_OPTIONS.some(o => o.value === urlReason)) {
       setFieldValue('reason', urlReason);
     }
@@ -118,8 +120,20 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
                 value={values.reason || undefined}
                 placeholder="Choose your inquiry type"
                 suffixIcon={
-                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L6 6.5L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L6 6.5L11 1"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 }
                 onChange={(value: ReasonValue) => setFieldValue('reason', value)}
@@ -127,7 +141,13 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               />
             </div>
           )}
-          <FormInput name="first_name" label="First name" required placeholder="Jane" maxLength={40} />
+          <FormInput
+            name="first_name"
+            label="First name"
+            required
+            placeholder="Jane"
+            maxLength={40}
+          />
           <FormInput name="last_name" label="Last name" required placeholder="Doe" maxLength={80} />
           <FormInput
             name="email"

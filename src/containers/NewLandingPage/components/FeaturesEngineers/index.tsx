@@ -32,11 +32,7 @@ export const FeaturesEngineers: FC = () => (
     sectionClassName="features-engineers-section"
     data={FEATURES_DATA}
   >
-    <Link
-      className="btn btn--primary btn--large"
-      to="/features/"
-      data-gtm="explore_features"
-    >
+    <Link className="btn btn--primary btn--large" to="/features/" data-gtm="explore_features">
       Explore all features
     </Link>
   </AnimatedList>

@@ -17,10 +17,26 @@ const TEMP_GENERAL_MESSAGE = (
   <>
     <p>Ready to connect? Find the right option for your needs:</p>
     <ul>
-      <li><p><strong>Request a Demo</strong> — get a personalized walkthrough of ReportPortal.</p></li>
-      <li><p><strong>Pricing details</strong> — find a plan that fits your team&apos;s scale and needs.</p></li>
-      <li><p><strong>Free Trial</strong> — get hands-on with ReportPortal, no commitment required.</p></li>
-      <li><p><strong>Technical Support</strong> — get help from our team with setup or integration.</p></li>
+      <li>
+        <p>
+          <strong>Request a Demo</strong> — get a personalized walkthrough of ReportPortal.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Pricing details</strong> — find a plan that fits your team&apos;s scale and needs.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Free Trial</strong> — get hands-on with ReportPortal, no commitment required.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Technical Support</strong> — get help from our team with setup or integration.
+        </p>
+      </li>
     </ul>
   </>
 );
@@ -45,11 +61,12 @@ export const ContactUsDetails: FC<
     ) : null;
 
   // TODO: remove TEMP_GENERAL_MESSAGE condition once Contentful content is updated
-  const messageInfo = !planType && !priceInfo && isGeneralContact
-    ? TEMP_GENERAL_MESSAGE
-    : renderRichText(message, {
-        renderText: formatTextFromContentfulRichTextFieldWithLineBreaks,
-      });
+  const messageInfo =
+    !planType && !priceInfo && isGeneralContact
+      ? TEMP_GENERAL_MESSAGE
+      : renderRichText(message, {
+          renderText: formatTextFromContentfulRichTextFieldWithLineBreaks,
+        });
 
   const isMessageAtTop = messagePosition === 'top';
   const detailsInfo = isMessageAtTop ? [messageInfo, priceInfo] : [priceInfo, messageInfo];

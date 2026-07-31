@@ -11,7 +11,7 @@ export const AiPoweredAnalysisIllustration: FC = () => {
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!container || !canvas) return;
+    if (!container || !canvas) return undefined;
 
     const NATURAL_W = 596;
     const NATURAL_H = 472;
@@ -33,18 +33,20 @@ export const AiPoweredAnalysisIllustration: FC = () => {
 
   // ── JS animation sequence (starts when in viewport, desktop only) ───────
   useEffect(() => {
-    if (!isVisible) return;
-    if (typeof window !== 'undefined' && window.innerWidth < 1239) return;
+    if (!isVisible) return undefined;
+    if (typeof window !== 'undefined' && window.innerWidth < 1239) return undefined;
 
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) return undefined;
 
     const timers: ReturnType<typeof setTimeout>[] = [];
     let cancelled = false;
 
     const getEl = (id: string) => container.querySelector<HTMLElement>(`#qg-${id}`);
     const addTimer = (fn: () => void, ms: number) => {
-      const tid = setTimeout(() => { if (!cancelled) fn(); }, ms);
+      const tid = setTimeout(() => {
+        if (!cancelled) fn();
+      }, ms);
       timers.push(tid);
       return tid;
     };
@@ -141,39 +143,156 @@ export const AiPoweredAnalysisIllustration: FC = () => {
           })}
           style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
         >
-
           {/* HEADER */}
           <div className="qg-hdr">
-            <span style={{ fontSize: '15px', fontWeight: 800, color: '#1A2740', flex: 1 }}>Quality Gates</span>
-            <span style={{ fontSize: '9.5px', fontWeight: 700, color: '#5F8A9A', background: '#EDF5FA', border: '0.5px solid #C2D8E4', borderRadius: '5px', padding: '3px 9px', whiteSpace: 'nowrap' }}>Release 12.4</span>
+            <span style={{ fontSize: '15px', fontWeight: 800, color: '#1A2740', flex: 1 }}>
+              Quality Gates
+            </span>
+            <span
+              style={{
+                fontSize: '9.5px',
+                fontWeight: 700,
+                color: '#5F8A9A',
+                background: '#EDF5FA',
+                border: '0.5px solid #C2D8E4',
+                borderRadius: '5px',
+                padding: '3px 9px',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Release 12.4
+            </span>
           </div>
 
           {/* COVERAGE BAR */}
           <div className="qg-bar-wrap">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '7px' }}>
-              <span style={{ fontSize: '9px', fontWeight: 700, color: '#8791AB', textTransform: 'uppercase', letterSpacing: '.07em' }}>Coverage</span>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '7px',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '9px',
+                  fontWeight: 700,
+                  color: '#8791AB',
+                  textTransform: 'uppercase',
+                  letterSpacing: '.07em',
+                }}
+              >
+                Coverage
+              </span>
             </div>
-            <div style={{ height: '14px', borderRadius: '4px', overflow: 'hidden', display: 'flex', border: '0.5px solid #DCE9F0', background: '#E4EEF5' }}>
-              <div className="qg-seg qg-seg--pass" style={{ '--w': '58%' } as React.CSSProperties} />
-              <div className="qg-seg qg-seg--fail" style={{ '--w': '10%' } as React.CSSProperties} />
-              <div className="qg-seg qg-seg--skip" style={{ '--w': '12%' } as React.CSSProperties} />
+            <div
+              style={{
+                height: '14px',
+                borderRadius: '4px',
+                overflow: 'hidden',
+                display: 'flex',
+                border: '0.5px solid #DCE9F0',
+                background: '#E4EEF5',
+              }}
+            >
+              <div
+                className="qg-seg qg-seg--pass"
+                style={{ '--w': '58%' } as React.CSSProperties}
+              />
+              <div
+                className="qg-seg qg-seg--fail"
+                style={{ '--w': '10%' } as React.CSSProperties}
+              />
+              <div
+                className="qg-seg qg-seg--skip"
+                style={{ '--w': '12%' } as React.CSSProperties}
+              />
               <div className="qg-seg qg-seg--uncov" />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '8.5px', fontWeight: 600 }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00916A', flexShrink: 0 }} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '8.5px',
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: '#00916A',
+                    flexShrink: 0,
+                  }}
+                />
                 <span style={{ color: '#5F7A8A' }}>Passed 58%</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '8.5px', fontWeight: 600 }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C8373A', flexShrink: 0 }} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '8.5px',
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: '#C8373A',
+                    flexShrink: 0,
+                  }}
+                />
                 <span style={{ color: '#C8373A' }}>Failed 10%</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '8.5px', fontWeight: 600 }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C8D4DC', flexShrink: 0 }} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '8.5px',
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: '#C8D4DC',
+                    flexShrink: 0,
+                  }}
+                />
                 <span style={{ color: '#8791AB' }}>Skipped 12%</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '8.5px', fontWeight: 600, color: '#8791AB', marginLeft: 'auto' }}>
-                <div style={{ width: '12px', height: '8px', borderRadius: '1px', flexShrink: 0, background: 'repeating-linear-gradient(135deg,#D8E4EC 0,#D8E4EC 2px,#EEF3F8 2px,#EEF3F8 4px)', border: '0.5px solid #D0DCE6' }} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '8.5px',
+                  fontWeight: 600,
+                  color: '#8791AB',
+                  marginLeft: 'auto',
+                }}
+              >
+                <div
+                  style={{
+                    width: '12px',
+                    height: '8px',
+                    borderRadius: '1px',
+                    flexShrink: 0,
+                    background:
+                      'repeating-linear-gradient(135deg,#D8E4EC 0,#D8E4EC 2px,#EEF3F8 2px,#EEF3F8 4px)',
+                    border: '0.5px solid #D0DCE6',
+                  }}
+                />
                 Not executed 20%
               </div>
             </div>
@@ -181,79 +300,122 @@ export const AiPoweredAnalysisIllustration: FC = () => {
 
           {/* RULES */}
           <div className="qg-rules">
-
             <div className="qg-rule-row" id="qg-r1">
               <div className="qg-light" id="qg-l1">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path className="qg-ck" d="M2.5 5.5L4.5 7.5L8.5 3.5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    className="qg-ck"
+                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Manual Test Coverage</div>
                 <div className="qg-rule-meta">Threshold ≥ 70%</div>
               </div>
-              <div className="qg-rule-val" id="qg-rv1">73%</div>
+              <div className="qg-rule-val" id="qg-rv1">
+                73%
+              </div>
             </div>
 
             <div className="qg-rule-row" id="qg-r2">
               <div className="qg-light" id="qg-l2">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path className="qg-ck" d="M2.5 5.5L4.5 7.5L8.5 3.5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    className="qg-ck"
+                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Automated Pass Rate</div>
                 <div className="qg-rule-meta">Threshold ≥ 90%</div>
               </div>
-              <div className="qg-rule-val" id="qg-rv2">94%</div>
+              <div className="qg-rule-val" id="qg-rv2">
+                94%
+              </div>
             </div>
 
             <div className="qg-rule-row" id="qg-r3">
               <div className="qg-light" id="qg-l3">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path className="qg-ck" d="M2.5 5.5L4.5 7.5L8.5 3.5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    className="qg-ck"
+                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                   <path className="qg-dk" d="M3 5.5h5" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Flaky Test Rate</div>
-                <div className="qg-rule-meta">Threshold ≤ 5% · <span style={{ fontWeight: 700 }}>Non-blocking</span></div>
+                <div className="qg-rule-meta">
+                  Threshold ≤ 5% · <span style={{ fontWeight: 700 }}>Non-blocking</span>
+                </div>
               </div>
-              <div className="qg-rule-val" id="qg-rv3">8%</div>
+              <div className="qg-rule-val" id="qg-rv3">
+                8%
+              </div>
             </div>
 
             <div className="qg-rule-row" id="qg-r4">
               <div className="qg-light" id="qg-l4">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path className="qg-ck" d="M2.5 5.5L4.5 7.5L8.5 3.5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    className="qg-ck"
+                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Milestone Readiness</div>
                 <div className="qg-rule-meta">Threshold ≥ 80%</div>
               </div>
-              <div className="qg-rule-val" id="qg-rv4">85%</div>
+              <div className="qg-rule-val" id="qg-rv4">
+                85%
+              </div>
             </div>
 
             <div className="qg-rule-row" id="qg-r5">
               <div className="qg-light" id="qg-l5">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path className="qg-ck" d="M2.5 5.5L4.5 7.5L8.5 3.5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    className="qg-ck"
+                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Critical Test Failures</div>
                 <div className="qg-rule-meta">Threshold = 0</div>
               </div>
-              <div className="qg-rule-val" id="qg-rv5">0</div>
+              <div className="qg-rule-val" id="qg-rv5">
+                0
+              </div>
             </div>
-
           </div>
 
           {/* AI ROW */}
           <div className="qg-ai-row" id="qg-ai-row">
             <div className="qg-ai-badge">✦ AI</div>
-            <div className="qg-ai-text">Flaky test rate above threshold but non-blocking. 4 of 5 gates passed — no blockers, release window is clear.</div>
+            <div className="qg-ai-text">
+              Flaky test rate above threshold but non-blocking. 4 of 5 gates passed — no blockers,
+              release window is clear.
+            </div>
           </div>
 
           {/* GO FOOTER */}
@@ -271,23 +433,72 @@ export const AiPoweredAnalysisIllustration: FC = () => {
             </div>
             <div className="qg-ready-badge" id="qg-ready-badge">
               <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-                <rect x="5.5" y="5.5" width="29" height="29" rx="7" transform="rotate(45 20 20)" fill="#00C878" />
-                <rect x="7" y="7" width="26" height="26" rx="6.5" transform="rotate(45 20 20)" fill="url(#qg-dg)" opacity=".3" />
-                <path d="M13 20.5L17.5 25L27 15" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                <rect
+                  x="5.5"
+                  y="5.5"
+                  width="29"
+                  height="29"
+                  rx="7"
+                  transform="rotate(45 20 20)"
+                  fill="#00C878"
+                />
+                <rect
+                  x="7"
+                  y="7"
+                  width="26"
+                  height="26"
+                  rx="6.5"
+                  transform="rotate(45 20 20)"
+                  fill="url(#qg-dg)"
+                  opacity=".3"
+                />
+                <path
+                  d="M13 20.5L17.5 25L27 15"
+                  stroke="#fff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
                 <defs>
-                  <linearGradient id="qg-dg" x1="20" y1="2" x2="20" y2="38" gradientUnits="userSpaceOnUse">
+                  <linearGradient
+                    id="qg-dg"
+                    x1="20"
+                    y1="2"
+                    x2="20"
+                    y2="38"
+                    gradientUnits="userSpaceOnUse"
+                  >
                     <stop stopColor="#fff" />
                     <stop offset="1" stopColor="#fff" stopOpacity="0" />
                   </linearGradient>
                 </defs>
               </svg>
               <div>
-                <div style={{ fontSize: '12px', fontWeight: 800, color: '#00784E', letterSpacing: '.04em', lineHeight: 1 }}>Ready</div>
-                <div style={{ fontSize: '8px', fontWeight: 600, color: '#5AA880', letterSpacing: '.02em', marginTop: '1px' }}>Auto-approved</div>
+                <div
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 800,
+                    color: '#00784E',
+                    letterSpacing: '.04em',
+                    lineHeight: 1,
+                  }}
+                >
+                  Ready
+                </div>
+                <div
+                  style={{
+                    fontSize: '8px',
+                    fontWeight: 600,
+                    color: '#5AA880',
+                    letterSpacing: '.02em',
+                    marginTop: '1px',
+                  }}
+                >
+                  Auto-approved
+                </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

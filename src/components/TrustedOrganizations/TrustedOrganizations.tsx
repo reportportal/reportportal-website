@@ -20,9 +20,7 @@ export const TrustedOrganizations: FC = () => {
 
   return (
     <div className={getBlocksWith()}>
-      <div className={getBlocksWith('__title')}>
-        Trusted by leading companies
-      </div>
+      <div className={getBlocksWith('__title')}>Trusted by leading companies</div>
       <div className={getBlocksWith('__icons-wrapper')}>
         <div className={getBlocksWith('__icons')}>
           {firstRow.map(({ secondaryLogo, id }) => (

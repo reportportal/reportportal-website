@@ -45,14 +45,24 @@ export const FEATURES_LIST: Feature[] = [
     title: 'AI capabilities for the full testing lifecycle',
     description:
       'Our MCP server acts as the central intelligence core, enabling powerful AI capabilities across your entire testing pipeline — from test design to release decision.',
-    bullets: 
-    [
+    bullets: [
       'Seamless connection to your stack without migration',
       'Automatic analysis of failures to find patterns & root causes',
       'ML triage that lets you focus on fixes, not analysis',
-      <>Integration with <Link className="link" to="https://test.io/ai-in-qa/agentic-qa">Agentic QA</Link> for fully autonomous testing</>,
+      <>
+        Integration with{' '}
+        <Link className="link" to="https://test.io/ai-in-qa/agentic-qa">
+          Agentic QA
+        </Link>{' '}
+        for fully autonomous testing
+      </>,
     ],
-    cta: [{ text: 'Learn more', link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/' }],
+    cta: [
+      {
+        text: 'Learn more',
+        link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/',
+      },
+    ],
   },
   {
     id: 'test-planning-design',
@@ -63,7 +73,13 @@ export const FEATURES_LIST: Feature[] = [
       'Folder-based organization for test cases',
       'Rich text editor with attachments support',
       'Test Plans and Manual Launches management',
-      <>Cloud testing on real devices via <Link className="link" to="https://mobitru.com/">Mobitru</Link> integration</>,
+      <>
+        Cloud testing on real devices via{' '}
+        <Link className="link" to="https://mobitru.com/">
+          Mobitru
+        </Link>{' '}
+        integration
+      </>,
     ],
     cta: [{ text: 'Learn more', link: '/test-management/' }],
   },
@@ -77,7 +93,9 @@ export const FEATURES_LIST: Feature[] = [
       'Real-time test execution tracking',
       'Historical trend analysis across releases',
     ],
-    cta: [{ text: 'Learn more', link: 'https://reportportal.io/docs/features/UnifiedTestReporting/' }],
+    cta: [
+      { text: 'Learn more', link: 'https://reportportal.io/docs/features/UnifiedTestReporting/' },
+    ],
   },
   {
     id: 'ai-powered-analysis',
@@ -90,7 +108,10 @@ export const FEATURES_LIST: Feature[] = [
       'Configurable Quality Gates for release decisions',
     ],
     cta: [
-      { text: 'AI-triage', link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/' },
+      {
+        text: 'AI-triage',
+        link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/',
+      },
       { text: 'Quality Gates', link: 'https://reportportal.io/docs/features/QualityGates/' },
     ],
   },
@@ -104,7 +125,12 @@ export const FEATURES_LIST: Feature[] = [
       'Real-time metrics and trend visualizations',
       'Shareable reports for stakeholders',
     ],
-    cta: [{ text: 'Learn more', link: 'https://reportportal.io/docs/features/VisualisationOfTestResults/' }],
+    cta: [
+      {
+        text: 'Learn more',
+        link: 'https://reportportal.io/docs/features/VisualisationOfTestResults/',
+      },
+    ],
   },
   {
     id: 'enterprise-integrations',

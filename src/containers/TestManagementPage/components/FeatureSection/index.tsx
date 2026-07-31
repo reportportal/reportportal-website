@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, Fragment } from 'react';
+import React, { FC, ReactNode } from 'react';
 import classNames from 'classnames';
 import { createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
@@ -17,7 +17,6 @@ interface FeatureSectionProps {
 }
 
 export const FeatureSection: FC<FeatureSectionProps> = ({
-
   title,
   description,
   bullets,
@@ -31,7 +30,6 @@ export const FeatureSection: FC<FeatureSectionProps> = ({
       })}
     >
       <div className={getBlocksWith('__leading')}>
-    
         <h2>{title}</h2>
         <p className={getBlocksWith('__description')}>{description}</p>
         <ul className={getBlocksWith('__bullets')}>
@@ -42,7 +40,9 @@ export const FeatureSection: FC<FeatureSectionProps> = ({
             </li>
           ))}
         </ul>
-        <Link className="btn btn--outline btn--large" to="#">Learn more</Link>
+        <Link className="btn btn--outline btn--large" to="#">
+          Learn more
+        </Link>
       </div>
       <div
         className={classNames(getBlocksWith('__image'), {
