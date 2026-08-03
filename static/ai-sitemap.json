@@ -37,6 +37,11 @@
           "description": "Enhance your testing process by utilizing our on-demand automation tools, infrastructure, hardware, and expert resources."
         },
         {
+          "title": "Test Management System — ReportPortal",
+          "url": "https://reportportal.io/test-management/",
+          "description": "Plan, design, and execute tests inside ReportPortal. A unified Test Management System with Test Case Library, Milestones, Test Plans, and Manual Executions."
+        },
+        {
           "title": "Testing as a Service",
           "url": "https://reportportal.io/testing-as-a-service/",
           "description": "Optimize your testing costs with our on-demand software, hardware, and expert resources."
@@ -85,6 +90,11 @@
           "title": "Benefits of ReportPortal for the AI and Software Sector",
           "url": "https://reportportal.io/blog/benefits-of-reportportal-for-the-ai-and-software-sector/",
           "description": "ReportPortal transforms AI and software QA with automated insights, scalable test management, and smarter decision-making."
+        },
+        {
+          "title": "Benefits of ReportPortal for the gaming sector",
+          "url": "https://reportportal.io/blog/benefits-of-reportportal-for-the-gaming-sector/",
+          "description": "Improve game quality with our test reporting tool: centralize test results, accelerate defect analysis, and support faster game releases."
         },
         {
           "title": "Benefits of ReportPortal for the insurance sector",
@@ -185,6 +195,11 @@
           "title": "Improving test failure analysis with pattern rules",
           "url": "https://reportportal.io/blog/improving-test-failure-analysis-with-pattern-rules/",
           "description": "Set pattern rules to quickly identify and resolve test failures with our test results reporting service."
+        },
+        {
+          "title": "Introducing Organizations: A new way to structure testing at scale",
+          "url": "https://reportportal.io/blog/introducing-organizations-a-new-way-to-structure-testing-at-scale/",
+          "description": "Organize enterprise testing with ReportPortal Organizations, featuring project hierarchy, data isolation, role-based access, and centralized retention settings."
         },
         {
           "title": "Moving logs from PostgreSQL to Elastic",
@@ -320,6 +335,11 @@
           "title": "The Real Price of Free: what self-hosting ReportPortal actually costs",
           "url": "https://reportportal.io/blog/the-real-price-of-free-what-self-hosting-reportportal-actually-costs/",
           "description": "Going On-Prem with our test results dashboard? Understand the full cost in time, tools, and resources before choosing."
+        },
+        {
+          "title": "Think Complete: Test Management is now inside ReportPortal",
+          "url": "https://reportportal.io/blog/think-complete-test-management-is-now-inside-reportportal/",
+          "description": "Finally, manage manual and automated testing in one place with ReportPortal’s built-in Test Management System."
         },
         {
           "title": "Tips and tricks for successful CI/CD",
