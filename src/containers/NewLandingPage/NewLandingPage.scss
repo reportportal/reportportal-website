@@ -1,0 +1,25 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.new-landing-page {
+  overflow: hidden;
+
+  // Desktop only: SVG provides the rich blue hero + octagon background
+  // for hero, trusted-by, and why-section as one visual unit.
+  // Mobile/tablet: each section uses its own background (hero has --gradient-primary).
+  // background-size: 100% auto keeps SVG = viewport width so octagon edges
+  // align with the clip-path on the marquee (both use the same 12.4% ratio).
+  &__hero-trusted {
+    @include m.breakpoint(v.$desktop-sm) {
+      background-image: url('/svg/HomeBackgroundHero.svg');
+      background-position: center top;
+      background-repeat: no-repeat;
+
+      // Fixed 2560px width matches SVG intrinsic size.
+      // On viewports < 2560px the image is cropped left/right (not scaled),
+      // keeping the hexagon always ~1199px wide and aligned with .container.
+      // On viewports >= 2560px the image stretches to fill — 100% fallback.
+      background-size: max(100%, 2560px) auto;
+    }
+  }
+}

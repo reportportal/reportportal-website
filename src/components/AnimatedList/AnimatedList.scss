@@ -2,20 +2,26 @@
 @use 'src/styles/variables' as v;
 
 .animated-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
   padding-top: 80px;
   padding-bottom: 80px;
 
   @include m.breakpoint(v.$tablet-sm-exact) {
-    gap: 48px;
     padding-top: 120px;
     padding-bottom: 120px;
   }
 
-  @include m.breakpoint(v.$desktop-sm) {
-    gap: 64px;
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      gap: 48px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      gap: 64px;
+    }
   }
 
   h2 {
@@ -43,6 +49,16 @@
     margin: 16px auto 0;
     text-align: center;
     color: var(--text-service);
+  }
+
+  &__intro {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+    @include m.font-scale(base);
+
+    max-width: 640px;
+    margin: 16px auto 0;
+    text-align: center;
+    color: var(--color-primary-700);
   }
 
   &__content {
@@ -102,7 +118,7 @@
 .animated-list {
   @include m.breakpoint(v.$desktop-sm) {
     display: flex;
-    gap: 24px;
+    gap: 64px;
     height: 518px;
 
     &.animated-list--reversed {
@@ -130,6 +146,61 @@
         display: block;
       }
     }
+  }
+
+  &__illustration-panel {
+    display: none;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      // Unified canvas width for all illustrations rendered inside the panel.
+      // 650 px = exact match for RealTime NATURAL_W, near-match for QualityGates
+      // (670) — minimal 0.97x downscale. Smaller naturals (572, 596) scale up
+      // by ≤13 % for visual uniformity across all six illustrations.
+      // JS-scaled illustrations must NOT use Math.min(1, ...) — uniform width
+      // wins over absolute pixel-perfect crispness for landing-page composition.
+      display: flex;
+      flex: 1;
+      align-items: flex-start;
+      justify-content: center;
+      min-width: 0;
+      max-width: 650px;
+    }
+  }
+
+  &__mobile-illustration {
+    display: block;
+    border-bottom: 1px solid var(--purple-grey);
+    padding: 16px 0 24px;
+    list-style: none;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      display: none;
+    }
+
+    // Freeze all animations to their final state so illustrations
+    // appear fully rendered without playing entrance sequences
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation-delay: -9999s !important;
+      animation-iteration-count: 1 !important;
+      animation-fill-mode: both !important;
+    }
+  }
+
+  &__mobile-illustration-outer {
+    // Unified canvas width on mobile/tablet — same 650 px target as the
+    // desktop __illustration-panel. Keeps illustrations visually consistent
+    // across breakpoints (only the height varies proportionally based on
+    // each illustration's natural aspect ratio).
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  &__mobile-illustration-inner {
+    display: inline-block;
   }
 
   &__item {
@@ -162,6 +233,12 @@
 
     &:last-child {
       border-bottom: none;
+    }
+
+    .linked-card {
+      border: 1px solid var(--purple-grey);
+      box-shadow: none;
+      background: var(--bg-light-grey);
     }
   }
 

@@ -12,7 +12,7 @@ export const BenefitsForBusiness: FC = () => (
   >
     <Link
       className="btn btn--primary btn--large temporary-hide"
-      to="/contact-us/general/"
+      to="/contact-us/general/?reason=free_trial"
       data-gtm="start_free_trial"
     >
       Start free trial

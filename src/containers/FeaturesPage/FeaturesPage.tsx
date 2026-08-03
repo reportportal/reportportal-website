@@ -1,32 +1,27 @@
-import React, { useCallback, useEffect, useRef, useState, FC, MouseEvent } from 'react';
-import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
+import React, { useEffect, useRef, useState, FC } from 'react';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { useScroll } from 'ahooks';
-import { motion } from 'framer-motion';
 import classNames from 'classnames';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
+import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import {
   createBemBlockBuilder,
   MEDIA_DESKTOP_SM,
   iconsCommon,
-  easeInOutOpacityScaleAnimationProps,
-  heroBackgroundAnimationProps,
-  getEaseInOutTransition,
+  DOCUMENTATION_URL,
 } from '@app/utils';
+import SuccessIcon from '@app/svg/success.inline.svg';
 import { Link } from '@app/components/Link';
-import { ProcessIntegration } from '@app/components/ProcessIntegration';
 import { SupportedFrameworks } from '@app/components/SupportedFrameworks';
-import { ArrowLink } from '@app/components/ArrowLink';
 import { Banner } from '@app/components/Banner';
-import { StartTestingWithReportPortal } from '@app/components/StartTestingWithReportPortal';
 import { Faq } from '@app/components/Faq';
 import { FooterContent } from '@app/components/Layout';
 import { useScrollIntoViewHandler } from '@app/hooks/useScrollIntoViewHandler';
-import { AnimatedHeader } from '@app/components/AnimatedHeader';
-import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
-import { useInView } from '@app/hooks/useInView';
 
-import { FEATURES_LIST, FEATURES_FAQ_ITEMS, NAVIGATION_LIST } from './constants';
+import { FeaturesCta } from './components/FeaturesCta';
+import { EnterpriseIntegrationsSection } from './components/EnterpriseIntegrationsSection';
+import { FeatureIllustration } from './components/FeatureIllustration';
+import { FEATURES_LIST, NAVIGATION_LIST } from './constants';
 
 import './FeaturesPage.scss';
 
@@ -34,30 +29,11 @@ const getBlocksWith = createBemBlockBuilder(['features-page']);
 
 export const FeaturesPage: FC = () => {
   const scrollIntoViewHandler = useScrollIntoViewHandler();
-  const [heroImageRef, isHeroImageInView] = useInView();
-
-  const getHeroImageAnimation = useMotionEnterAnimation(easeInOutOpacityScaleAnimationProps);
-  const getBackgroundAnimation = useMotionEnterAnimation(heroBackgroundAnimationProps);
-
-  const location = useLocation();
-  const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
-  const [activeElement, setActiveElement] = useState(location.hash);
-  const processIntegrationRef = useRef<null | HTMLDivElement>(null);
-
-  const setHistoryValue = useCallback(
-    (hashFragment: string) => {
-      window.history.replaceState(
-        null,
-        '',
-        `${location.pathname}${location.search}${hashFragment}`,
-      );
-    },
-    [location.pathname, location.search],
-  );
-
-  const handleScroll = useCallback(() => {
+  const handleScroll = () => {
     const itemList = document.querySelectorAll(
-      `.${getBlocksWith('__features-list-item-container')}`,
+      `.${getBlocksWith('__features-list-item-container')}, .${getBlocksWith(
+        '__features-list-item-container--full-width',
+      )}`,
     );
 
     let activeIndex: number | null = null;
@@ -67,7 +43,9 @@ export const FeaturesPage: FC = () => {
       const rect = itemList[i].getBoundingClientRect();
 
       const value = Math.abs(Math.round(rect.top));
-      const scrollThreshold = 50;
+      // Threshold must exceed header (76px) + sticky features nav (~50px) + scroll-margin-top (64px)
+      // so the section activates correctly after anchor navigation lands.
+      const scrollThreshold = 200;
 
       if (value <= scrollThreshold) {
         activeIndex = i;
@@ -83,8 +61,12 @@ export const FeaturesPage: FC = () => {
         setHistoryValue(anchor);
       }
     }
-  }, [activeElement, setHistoryValue]);
+  };
 
+  const location = useLocation();
+  const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
+  const [activeElement, setActiveElement] = useState(location.hash);
+  const featuresEndRef = useRef<null | HTMLDivElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
   const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
@@ -97,63 +79,86 @@ export const FeaturesPage: FC = () => {
   const menuItemActiveClassName = getBlocksWith('__features-navigation-item--active');
   const featureItemClassName = getBlocksWith('__features-navigation-item');
 
+  let featuresExplorerTop: string | undefined;
+  if (isDesktop) {
+    if (scrollDirection === 'up') {
+      featuresExplorerTop = `-${featuresBlockStickyPositionWithHeader}px`;
+    } else {
+      featuresExplorerTop = `-${featuresBlockStickyPosition}px`;
+    }
+  }
+
+  const setHistoryValue = val => window.history.replaceState(null, '', `/features${val}`);
+
   useEffect(() => {
-    const processIntegrationTopPosition =
-      processIntegrationRef.current?.getBoundingClientRect().top;
+    const endTopPosition = featuresEndRef.current?.getBoundingClientRect().top;
     const offset = 100;
 
-    let isStickyPositionReached: boolean = false;
+    if (endTopPosition == null) return;
 
-    if (processIntegrationTopPosition) {
-      isStickyPositionReached =
-        (scrollDirection === 'up'
-          ? processIntegrationTopPosition - headerHeight - offset
-          : processIntegrationTopPosition - offset) > 0;
-    }
+    const effectiveDistance =
+      scrollDirection === 'up' ? endTopPosition - headerHeight - offset : endTopPosition - offset;
 
-    if (isStickyPositionReached && isFeaturesMenuSticky !== isStickyPositionReached) {
-      setIsFeaturesMenuSticky(!isFeaturesMenuSticky);
+    const shouldBeSticky = effectiveDistance > 0;
+
+    if (isFeaturesMenuSticky !== shouldBeSticky) {
+      setIsFeaturesMenuSticky(shouldBeSticky);
     }
   }, [scroll, scrollDirection, isFeaturesMenuSticky]);
 
-  const handleNavClick = useCallback(
-    (event: MouseEvent, anchor: string) => {
-      event.preventDefault();
+  const handleNavClick = (event, anchor) => {
+    event.preventDefault();
 
-      scrollIntoViewHandler(anchor.slice(1));
+    scrollIntoViewHandler(anchor.slice(1));
+  };
+
+  const collapsableList = [
+    {
+      key: 1,
+      label: 'What is meant by "Premium feature"?',
+      children: (
+        <>
+          <p>
+            Premium feature is an advanced feature which comes on top of Free Open Source edition.
+            It comes at no cost with SaaS offering and included into the &quot;160&quot; Managed
+            Services package.
+          </p>
+          <p>
+            See the{' '}
+            <Link to={`${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures`} className="link">
+              List of features
+            </Link>{' '}
+            and their description.
+          </p>
+        </>
+      ),
     },
-    [scrollIntoViewHandler],
-  );
+    {
+      key: 2,
+      label: 'What capabilities does Rest API provide?',
+      children: (
+        <p>
+          REST API enables users to easily integrate any testing framework or third-party tool with
+          ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
+          merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
+          update the statuses in the pipeline, generate custom reports and many more.
+        </p>
+      ),
+    },
+  ];
 
   return (
     <div className={getBlocksWith()}>
-      <motion.div
-        className={getBlocksWith('__hero')}
-        {...getBackgroundAnimation({ isInView: isHeroImageInView })}
-      >
+      <div className={getBlocksWith('__hero')}>
         <div className="container">
           <div className={getBlocksWith('__hero-heading')}>
-            <AnimatedHeader headerLevel={1} delay={0.3}>
-              Features
-            </AnimatedHeader>
-            <AnimatedHeader
-              delay={0.3}
-              transition={{
-                ...getEaseInOutTransition(0.7),
-              }}
-            >
-              Empower your testing process with ReportPortal
-            </AnimatedHeader>
+            <h1>Features</h1>
+            <h2>Empower your testing process with ReportPortal</h2>
           </div>
           <div className={getBlocksWith('__hero-dashboard')}>
-            <motion.img
+            <img
               src={iconsCommon.dashboard}
-              ref={heroImageRef}
               alt=""
-              {...getHeroImageAnimation({
-                delay: 0.3,
-                isInView: isHeroImageInView,
-              })}
               onLoad={() => {
                 if (activeElement) {
                   scrollIntoViewHandler(activeElement.slice(1));
@@ -162,15 +167,12 @@ export const FeaturesPage: FC = () => {
             />
           </div>
         </div>
-      </motion.div>
+      </div>
       <div
         className={getBlocksWith('__features-explorer')}
         style={{
           position: isDesktop && isFeaturesMenuSticky ? 'sticky' : 'relative',
-          top:
-            scrollDirection === 'up'
-              ? `-${featuresBlockStickyPositionWithHeader}px`
-              : `-${featuresBlockStickyPosition}px`,
+          top: featuresExplorerTop,
         }}
       >
         <h2
@@ -192,7 +194,7 @@ export const FeaturesPage: FC = () => {
                 key={name}
                 onClick={event => handleNavClick(event, link)}
               >
-                <span>{id}</span>
+                <span>{id}.</span>
                 <span>{name}</span>
               </Link>
             ))}
@@ -200,44 +202,67 @@ export const FeaturesPage: FC = () => {
         </div>
       </div>
       <div className={getBlocksWith('__features-list')}>
-        {FEATURES_LIST.map(({ id, link, title, description, image, isPremium }) => (
-          <div className={getBlocksWith('__features-list-item-container')} key={id} id={id}>
-            <div
-              className={classNames(getBlocksWith('__features-list-item'), 'container')}
-              key={title}
-            >
-              <div className={getBlocksWith('__features-list-item-leading')}>
-                {isPremium && (
-                  <span className={getBlocksWith('__features-list-item-premium')}>
-                    Premium feature
-                  </span>
-                )}
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <ArrowLink
-                  mode="primary"
-                  to={link}
-                  text="Learn more"
-                  srOnlySuffix={` about ${title}`}
-                />
-              </div>
+        {FEATURES_LIST.filter(f => f.layout !== 'full-width').map(
+          ({ id, link, title, description, isPremium, bullets, cta }) => (
+            <div className={getBlocksWith('__features-list-item-container')} key={id} id={id}>
+              <div
+                className={classNames(getBlocksWith('__features-list-item'), 'container')}
+                key={title}
+              >
+                <div className={getBlocksWith('__features-list-item-leading')}>
+                  {isPremium && (
+                    <span className={getBlocksWith('__features-list-item-premium')}>
+                      Premium feature
+                    </span>
+                  )}
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                  {bullets && bullets.length > 0 && (
+                    <ul className={getBlocksWith('__features-list-item-bullets')}>
+                      {bullets.map((bullet, i) => (
+                        <li key={i}>
+                          <SuccessIcon
+                            className={getBlocksWith('__features-list-item-bullet-icon')}
+                          />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <div className={getBlocksWith('__features-list-item-cta')}>
+                    {(cta || (link ? [{ text: 'Learn more', link }] : [])).map(c => (
+                      <Link key={c.link} className="btn btn--outline btn--large" to={c.link}>
+                        {c.text}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
-              <div className={getBlocksWith('__features-list-item-trailing')}>
-                <img src={image} alt="" />
+                <div className={getBlocksWith('__features-list-item-trailing')}>
+                  <FeatureIllustration name={id} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
-      <ProcessIntegration ref={processIntegrationRef} />
-      <div className={getBlocksWith('__frameworks')}>
+      {FEATURES_LIST.filter(f => f.layout === 'full-width').map(feature => (
+        <div
+          key={feature.id}
+          id={feature.id}
+          className={getBlocksWith('__features-list-item-container--full-width')}
+        >
+          <EnterpriseIntegrationsSection feature={feature} />
+        </div>
+      ))}
+      <div className={getBlocksWith('__frameworks')} ref={featuresEndRef}>
         <h2>Supported frameworks</h2>
         <h3>Explore supported frameworks by language</h3>
         <SupportedFrameworks />
       </div>
-      <StartTestingWithReportPortal />
+      <FeaturesCta />
       <div className={classNames(getBlocksWith('__faq'), 'container')}>
-        <Faq items={FEATURES_FAQ_ITEMS} showMoreInfoLink={false} />
+        <Faq items={collapsableList} showMoreInfoLink={false} />
       </div>
       <FooterContent>
         <div className={getBlocksWith('__banner')}>

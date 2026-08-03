@@ -26,21 +26,19 @@ const fields = [
   {
     name: 'first_name',
     regex: textFieldRegex,
-    message: 'Please check your First name',
+    message: 'Please check your first name',
   },
   {
     name: 'last_name',
     regex: textFieldRegex,
-    message: 'Please check your Last name',
+    message: 'Please check your last name',
   },
   {
     name: 'email',
     regex: EMAIL_VALIDATION_REGEX,
     message: 'Please check your email',
   },
-  {
-    name: 'company',
-  },
+  // `company` is optional (no asterisk in the design) — intentionally not validated.
 ];
 
 export const validate = values =>

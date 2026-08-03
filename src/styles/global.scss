@@ -6,6 +6,13 @@
 
 html,
 body {
+  // overflow-x: clip — hides horizontal overflow WITHOUT creating a scrolling
+  // context. Unlike `hidden`, `clip` does NOT break position: sticky on
+  // descendants. This is essential because Navigation uses position: sticky
+  // via useScrollDirection hook, which silently broke when previously
+  // `overflow-x: hidden` was applied here.
+  // Browser support: Chrome 90+, Firefox 81+, Safari 16+ (~96 % globally).
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
@@ -141,6 +148,28 @@ input:-webkit-autofill {
 .no-transitions *::before,
 .no-transitions *::after {
   transition: none !important;
+}
+
+// Suppress all UI chrome (cookie banners, floating buttons, headers, footers)
+// when the page is loaded inside an <iframe> with ?iframe=true.
+// The `is-iframe` class is applied by gatsby-browser.ts on initial render.
+body.is-iframe {
+  // OneTrust / CookiePro consent SDK
+  #onetrust-consent-sdk,
+  #onetrust-banner-sdk,
+  #onetrust-pc-sdk,
+  #ot-sdk-btn-floating,
+  .optanon-alert-box-wrapper {
+    display: none !important;
+  }
+
+  // Generic fallback for any element whose class contains "cookie" or "consent"
+  [class*='cookie'],
+  [class*='consent'],
+  [id*='cookie'],
+  [id*='consent'] {
+    display: none !important;
+  }
 }
 
 @keyframes progressAnimation {

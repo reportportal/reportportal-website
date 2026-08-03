@@ -10,6 +10,7 @@
 - [Installation guide](https://reportportal.io/installation/): Three steps to get started with our test automation dashboard.
 - [Quality Engineering Consulting](https://reportportal.io/qe-consulting/): Achieve a product-quality transformation with our outstanding Quality Engineering Consulting.
 - [Test Automation as a Service](https://reportportal.io/test-automation-as-a-service/): Enhance your testing process by utilizing our on-demand automation tools, infrastructure, hardware, and expert resources.
+- [Test Management System — ReportPortal](https://reportportal.io/test-management/): Plan, design, and execute tests inside ReportPortal. A unified Test Management System with Test Case Library, Milestones, Test Plans, and Manual Executions.
 - [Testing as a Service](https://reportportal.io/testing-as-a-service/): Optimize your testing costs with our on-demand software, hardware, and expert resources.
 
 ## Blog
@@ -22,6 +23,7 @@
 - [Benefits of ReportPortal for healthcare sector](https://reportportal.io/blog/benefits-of-reportportal-for-healthcare-sector/): Discover how our test automation reporting tool enhances healthcare software testing with secure data management, AI-driven analysis, and compliance.
 - [Benefits of ReportPortal for telecom sector](https://reportportal.io/blog/benefits-of-reportportal-for-telecom-sector/): Our test results dashboard helps telecom providers centralize test results, handle high-volume workflows, and gain clear release readiness insights.
 - [Benefits of ReportPortal for the AI and Software Sector](https://reportportal.io/blog/benefits-of-reportportal-for-the-ai-and-software-sector/): ReportPortal transforms AI and software QA with automated insights, scalable test management, and smarter decision-making.
+- [Benefits of ReportPortal for the gaming sector](https://reportportal.io/blog/benefits-of-reportportal-for-the-gaming-sector/): Improve game quality with our test reporting tool: centralize test results, accelerate defect analysis, and support faster game releases.
 - [Benefits of ReportPortal for the insurance sector](https://reportportal.io/blog/benefits-of-reportportal-for-the-insurance-sector/): Learn how ReportPortal streamlines insurance testing with scalable test analytics, regulatory compliance, and faster defect analysis.
 - [Benefits of ReportPortal for the logistics sector](https://reportportal.io/blog/benefits-of-reportportal-for-the-logistics-sector/): Improve logistics software quality with our test automation reporting dashboard: centralized testing, AI insights, and stable supply chain operations.
 - [Benefits of ReportPortal for the media sector](https://reportportal.io/blog/benefits-of-reportportal-for-the-media-sector/): Improve media software quality with centralized test analytics, AI failure clustering, and CI/CD support in ReportPortal.
@@ -42,6 +44,7 @@
 - [How to create test report with ReportPortal](https://reportportal.io/blog/how-to-create-test-report-with-reportportal/): Use widgets in our test automation dashboard for efficient test reports and actionable insights.
 - [How we use AI](https://reportportal.io/blog/How-we-use-AI/): Let's examine how ReportPortal utilizes the power of AI to be a robust end-to-end testing reporting tool.
 - [Improving test failure analysis with pattern rules](https://reportportal.io/blog/improving-test-failure-analysis-with-pattern-rules/): Set pattern rules to quickly identify and resolve test failures with our test results reporting service.
+- [Introducing Organizations: A new way to structure testing at scale](https://reportportal.io/blog/introducing-organizations-a-new-way-to-structure-testing-at-scale/): Organize enterprise testing with ReportPortal Organizations, featuring project hierarchy, data isolation, role-based access, and centralized retention settings.
 - [Moving logs from PostgreSQL to Elastic](https://reportportal.io/blog/double-entry-in-5.7.2/): Discover why we utilize ElasticSearch and Data Streams, and explore the benefits they offer to users.
 - [New approach to versions naming](https://reportportal.io/blog/new-approach-to-versions-naming/): We've opted to revisit our versioning models and release flow, aiming to provide greater flexibility in feature delivery for our test automation reporting dashboard.
 - [Performance improvements in 5.7.3](https://reportportal.io/blog/performance-improvements-in-5-7-3/): Discover some performance optimizations included in version 5.7.3.
@@ -69,6 +72,7 @@
 - [Test results visualization](https://reportportal.io/blog/test-results-visualization/): Boost your automated testing efficiency with ReportPortal: clear reports, stability metrics, and bottleneck detection.
 - [Tester vs Quality Engineer: what’s the difference?](https://reportportal.io/blog/tester-vs-quality-engineer-whats-the-difference/): Tester vs. Quality Engineer: What’s the difference? Learn how these roles work together to ensure software quality.
 - [The Real Price of Free: what self-hosting ReportPortal actually costs](https://reportportal.io/blog/the-real-price-of-free-what-self-hosting-reportportal-actually-costs/): Going On-Prem with our test results dashboard? Understand the full cost in time, tools, and resources before choosing.
+- [Think Complete: Test Management is now inside ReportPortal](https://reportportal.io/blog/think-complete-test-management-is-now-inside-reportportal/): Finally, manage manual and automated testing in one place with ReportPortal’s built-in Test Management System.
 - [Tips and tricks for successful CI/CD](https://reportportal.io/blog/tips-and-tricks-for-successful-ci-cd/): Uncover best practices, expert insights, and proven strategies to streamline your development pipeline.
 - [Tips to get ReportPortal benefits](https://reportportal.io/blog/Tips-to-get-ReportPortal-benefits/): Unlock the full potential of our powerful test automation reporting tool with these valuable tips.
 - [Top CI/CD tools](https://reportportal.io/blog/top-ci-cd-tools/): Explore top CI/CD tools to automate workflows and streamline your development with our test automation metrics dashboard.

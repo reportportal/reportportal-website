@@ -79,3 +79,11 @@ Thumbs.db
 
 # Visual Studio Code files
 .vscode/*
+.vercel
+
+# Local Claude / agent settings
+.claude/
+
+PERFORMANCE_AUDIT.md
+static/antd.min.css
+static/svg/test.txt

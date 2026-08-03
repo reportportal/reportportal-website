@@ -11,6 +11,7 @@
     @include m.font-scale(medium);
 
     margin: 0;
+    text-align: center;
     color: var(--text-primary);
 
     @include m.breakpoint(v.$tablet-sm-exact) {
