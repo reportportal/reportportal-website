@@ -58,7 +58,7 @@
     text-align: left;
     cursor: pointer;
 
-    &:hover:not(&--active) {
+    &:hover:not(.benefits-business__item--active) {
       background: var(--bg-grey2);
     }
 

@@ -75,11 +75,6 @@
     padding: 24px 0;
     text-align: center;
 
-    // Mobile: horizontal divider between stacked stats
-    & + & {
-      border-top: 1px solid var(--purple-grey);
-    }
-
     @include m.breakpoint(v.$tablet-sm-exact) {
       width: auto;
       padding: 0 40px;
@@ -97,6 +92,11 @@
         border-top: none;
         border-left: 1px solid var(--purple-grey);
       }
+    }
+
+    // Mobile: horizontal divider between stacked stats
+    & + & {
+      border-top: 1px solid var(--purple-grey);
     }
   }
 

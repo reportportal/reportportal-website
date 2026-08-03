@@ -101,7 +101,6 @@ $start-delay: 0.3s; // Global delay before the illustration starts appearing
 // Root block
 // ---------------------------------------------------------------------------
 .tcl {
-  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   // Illustration-specific color tokens (mockup UI palette, not page tokens)
   --tcl-nav: #1c2a40;
   --tcl-nav-border: rgb(0 157 187 / 0.2);
@@ -128,6 +127,7 @@ $start-delay: 0.3s; // Global delay before the illustration starts appearing
 
   // Make all text right-aligned by default
   text-align: left;
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   // ---------------------------------------------------------------------------
@@ -316,37 +316,6 @@ $start-delay: 0.3s; // Global delay before the illustration starts appearing
     .d5,
     .d6 {
       animation-play-state: running;
-    }
-  }
-
-  // Respect reduced-motion preference
-  @media (prefers-reduced-motion: reduce) {
-    opacity: 1; // Ensure visible if motion is reduced
-
-    .np,
-    .fp,
-    .lp,
-    .dp,
-    .fr,
-    .tr,
-    .ab,
-    .d1,
-    .d2,
-    .d3,
-    .d4,
-    .d5,
-    .d6 {
-      opacity: 1 !important;
-      transform: none !important;
-      animation: none !important;
-    }
-
-    .card.act {
-      animation: none !important;
-    }
-
-    .ab {
-      display: none;
     }
   }
 
@@ -891,5 +860,36 @@ $start-delay: 0.3s; // Global delay before the illustration starts appearing
     font-size: 10px;
     font-weight: 800;
     cursor: default;
+  }
+
+  // Respect reduced-motion preference
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1; // Ensure visible if motion is reduced
+
+    .np,
+    .fp,
+    .lp,
+    .dp,
+    .fr,
+    .tr,
+    .ab,
+    .d1,
+    .d2,
+    .d3,
+    .d4,
+    .d5,
+    .d6 {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+
+    .card.act {
+      animation: none !important;
+    }
+
+    .ab {
+      display: none;
+    }
   }
 }

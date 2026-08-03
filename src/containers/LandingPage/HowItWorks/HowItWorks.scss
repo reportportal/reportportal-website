@@ -18,7 +18,7 @@
 }
 
 // ---------------------------------------------------------------------------
-// Scoped dark-theme tokens (not in the global design system)
+// Section root
 // ---------------------------------------------------------------------------
 .how-it-works {
   --hiw-bg: #0b1220;
@@ -34,12 +34,7 @@
   --hiw-card-title: #d8eeff;
   --hiw-card-desc: #3f5472;
   --hiw-card-hover: rgb(255 255 255 / 0.02);
-}
 
-// ---------------------------------------------------------------------------
-// Section root
-// ---------------------------------------------------------------------------
-.how-it-works {
   position: relative;
   display: flex;
   flex-direction: column;

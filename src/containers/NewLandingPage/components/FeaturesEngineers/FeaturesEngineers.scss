@@ -241,7 +241,7 @@
     text-align: left;
     cursor: pointer;
 
-    &:hover:not(&--active) {
+    &:hover:not(.features-engineers__item--active) {
       background: var(--white);
     }
 

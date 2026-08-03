@@ -29,14 +29,12 @@
     background-image: url('/svg/RP-Pattern-top.svg');
     background-position: top center;
     mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
   }
 
   &__pattern-bottom {
     bottom: 0;
     background-image: url('/svg/RP-Pattern-bottom.svg');
     background-position: bottom center;
-    mask-image: linear-gradient(to top, black 0%, transparent 100%);
     mask-image: linear-gradient(to top, black 0%, transparent 100%);
   }
 

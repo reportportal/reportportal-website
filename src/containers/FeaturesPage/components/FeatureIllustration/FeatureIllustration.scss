@@ -75,8 +75,8 @@
 // ── AI Agents Illustration component ─────────────────────────────────────────
 
 .ai-agents-illustration {
-  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
   width: 100%;
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
 
   &__inner {
     position: relative;
@@ -228,8 +228,8 @@
 }
 
 .feature-illustration {
-  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
 
   &__window {
     border: 1px solid var(--purple-grey);
@@ -460,8 +460,8 @@
 // ── Canvas: --animate triggers all sequences ─────────────────────────────────
 
 .test-planning-illustration {
-  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
 
   &__inner {
     position: relative;
@@ -739,8 +739,8 @@
 // ── Canvas: --animate triggers all sequences ─────────────────────────────────
 
 .unified-reporting-illustration {
-  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
 
   &__inner {
     position: relative;
@@ -998,13 +998,7 @@
 
   &--uncovered {
     flex: 1;
-    background: repeating-linear-gradient(
-      135deg,
-      #f0f5f8 0,
-      #f0f5f8 3px,
-      #e4eef5 3px,
-      #e4eef5 6px
-    );
+    background: repeating-linear-gradient(135deg, #f0f5f8 0, #f0f5f8 3px, #e4eef5 3px, #e4eef5 6px);
   }
 }
 
@@ -1254,8 +1248,8 @@
 // ── Component shell ───────────────────────────────────────────────────────────
 
 .ai-pa-illustration {
-  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
 
   &__inner {
     position: relative;
@@ -1722,8 +1716,8 @@
 // ── Component shell ───────────────────────────────────────────────────────────
 
 .dr-illustration {
-  line-height: 1.25; // illu-base — tuned to github.io base lh
   width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
 
   &__inner {
     position: relative;

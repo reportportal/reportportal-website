@@ -54,11 +54,6 @@
     gap: 16px;
     width: 100%;
 
-    a {
-      justify-content: center;
-      width: 100%;
-    }
-
     @include m.breakpoint(v.$tablet-sm-exact) {
       flex-direction: row;
       width: auto;
@@ -66,6 +61,11 @@
       a {
         width: auto;
       }
+    }
+
+    a {
+      justify-content: center;
+      width: 100%;
     }
   }
 }

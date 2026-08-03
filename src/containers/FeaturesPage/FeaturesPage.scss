@@ -307,6 +307,30 @@
   @include m.breakpoint(v.$desktop-sm) {
     max-width: 45%;
   }
+
+  h3 {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(large);
+
+    margin: 0 0 16px;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-bottom: 24px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
+  }
+
+  p {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-base);
+
+    margin: 0 0 24px;
+    color: var(--text-primary);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -344,38 +368,18 @@
 }
 
 // ---------------------------------------------------------------------------
-// Typography inside leading — mirrors feature-section h2 / __description
-// ---------------------------------------------------------------------------
-.features-page__features-list-item-leading {
-  h3 {
-    @include m.font-poppins(v.$fw-bold);
-    @include m.font-scale(large);
-
-    margin: 0 0 16px;
-    color: var(--text-primary);
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      margin-bottom: 24px;
-    }
-
-    @include m.breakpoint(v.$desktop-sm) {
-      @include m.font-scale(x3-large);
-    }
-  }
-
-  p {
-    @include m.font-noto-sans();
-    @include m.font-scale(x-base);
-
-    margin: 0 0 24px;
-    color: var(--text-primary);
-  }
-}
-
-// ---------------------------------------------------------------------------
 // CTA buttons — mirrors .feature-section__leading .btn--large
 // ---------------------------------------------------------------------------
 .features-page__features-list-item-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    margin-top: 32px;
+  }
+
   .btn--large {
     max-width: 280px;
   }
@@ -588,18 +592,4 @@
   min-width: 20px;
   height: 20px;
   color: var(--color-primary-500);
-}
-
-// ---------------------------------------------------------------------------
-// Feature item — multi-CTA row
-// ---------------------------------------------------------------------------
-.features-page__features-list-item-cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 24px;
-
-  @include m.breakpoint(v.$desktop-sm) {
-    margin-top: 32px;
-  }
 }
