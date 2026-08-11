@@ -248,6 +248,9 @@
   }
 
   &__certificates {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: repeat(3, auto);
     gap: 16px;
     margin-top: 24px;
 
