@@ -11,6 +11,7 @@ yarn-debug.log*
 yarn-error.log*
 static/github.json
 static/youtube.json
+static/stats.json
 
 # Runtime data
 pids

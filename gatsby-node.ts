@@ -47,12 +47,17 @@ interface SlackConversationInfoResponse {
   error?: string;
 }
 
+/** Timeout in milliseconds for all statistics API calls (10 seconds) */
+const STATS_API_TIMEOUT = 10000;
+
 async function fetchGitHubStars(): Promise<Repos> {
   const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
     console.info('[stats] GITHUB_TOKEN not set — using status.reportportal.io/github/stars.');
-    const response = await axios.get<Repos>('https://status.reportportal.io/github/stars');
+    const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
+      timeout: STATS_API_TIMEOUT,
+    });
 
     return response.data;
   }
@@ -61,6 +66,7 @@ async function fetchGitHubStars(): Promise<Repos> {
     const response = await axios.get<{ stargazers_count: number }>(
       'https://api.github.com/repos/reportportal/reportportal',
       {
+        timeout: STATS_API_TIMEOUT,
         headers: {
           Accept: 'application/vnd.github+json',
           Authorization: `token ${token}`,
@@ -75,18 +81,24 @@ async function fetchGitHubStars(): Promise<Repos> {
   } catch (err) {
     console.warn(
       '[stats] GitHub API call failed — falling back to status.reportportal.io/github/stars.',
-      err,
     );
 
-    const response = await axios.get<Repos>('https://status.reportportal.io/github/stars');
-
-    return response.data;
+    try {
+      const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
+        timeout: STATS_API_TIMEOUT,
+      });
+      return response.data;
+    } catch {
+      console.warn('[stats] Fallback GitHub source also failed.');
+      throw err;
+    }
   }
 }
 
 async function fetchDockerHubPulls(): Promise<number> {
   const response = await axios.get<{ pull_count: number }>(
     'https://hub.docker.com/v2/repositories/reportportal/service-api/',
+    { timeout: STATS_API_TIMEOUT },
   );
 
   return response.data.pull_count || 0;
@@ -117,6 +129,7 @@ async function fetchSlackMembers(): Promise<number | null> {
   const response = await axios.get<SlackConversationInfoResponse>(
     `https://slack.com/api/conversations.info?channel=${channelId}&include_num_members=true`,
     {
+      timeout: STATS_API_TIMEOUT,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -129,7 +142,8 @@ async function fetchSlackMembers(): Promise<number | null> {
     return null;
   }
 
-  return response.data.channel?.num_members ?? 0;
+  // Return null if Slack didn't return member count, so existing value is preserved
+  return response.data.channel?.num_members ?? null;
 }
 
 interface ContactUsDto {
@@ -184,10 +198,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
     console.info(
       `[stats] Written stats.json — downloads: ${downloads}, slackMembers: ${slackMembers}`,
     );
-  } catch (err) {
+  } catch {
     console.warn(
       '[stats] Failed to fetch live community stats — falling back to values already in static/stats.json.',
-      err,
     );
   }
 
