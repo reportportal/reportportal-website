@@ -3,8 +3,10 @@ import Marquee from 'react-fast-marquee';
 import classNames from 'classnames';
 import { createBemBlockBuilder, COMMON_MARQUEE_PROPS } from '@app/utils';
 import { useClientCarouselItems } from '@app/hooks/useClientCarouselItems';
+import { formatShortNumberParts } from '@app/utils/formatShortNumber';
 
-import { STATS } from './constants';
+import statsData from '../../../../../static/stats.json';
+import { STATIC_STATS } from './constants';
 
 import './TrustedBy.scss';
 
@@ -13,6 +15,15 @@ const getBlocksWith = createBemBlockBuilder(['trusted-by']);
 // Repeat items 3× so total width always exceeds the viewport,
 // preventing the gap react-fast-marquee shows when items don't fill the track.
 const REPEAT_COUNT = 3;
+
+const { digits: downloadDigits, suffix: downloadSuffix } = formatShortNumberParts(
+  statsData.downloads,
+);
+
+const ALL_STATS = [
+  ...STATIC_STATS,
+  { digits: downloadDigits, suffix: downloadSuffix, label: 'Downloads' },
+];
 
 export const TrustedBy: FC = () => {
   const { allSlidesItems } = useClientCarouselItems();
@@ -39,7 +50,7 @@ export const TrustedBy: FC = () => {
       </div>
 
       <div className={classNames(getBlocksWith('__stats'), 'container')}>
-        {STATS.map(({ digits, suffix, label }) => (
+        {ALL_STATS.map(({ digits, suffix, label }) => (
           <div className={getBlocksWith('__stat')} key={label}>
             <span className={getBlocksWith('__stat-value')}>
               <span className={getBlocksWith('__stat-digits')}>{digits}</span>

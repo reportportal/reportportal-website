@@ -4,17 +4,13 @@ export interface StatCard {
   label: string;
 }
 
-export const STAT_CARDS: StatCard[] = [
-  { iconKey: 'star', value: '2K', label: 'GitHub stars' },
-  { iconKey: 'fork', value: '500+', label: 'Forks' },
-  { iconKey: 'contributors', value: '8.7K+', label: 'Community members' },
-];
-
 export interface FeatureItem {
   iconKey: 'opensource' | 'community' | 'core';
   title: string;
   description: string;
 }
+
+export const FORKS_CARD: StatCard = { iconKey: 'fork', value: '500+', label: 'Forks' };
 
 export const FEATURE_LIST: FeatureItem[] = [
   {
