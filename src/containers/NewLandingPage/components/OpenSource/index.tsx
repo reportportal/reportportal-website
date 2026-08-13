@@ -27,13 +27,20 @@ const FEATURE_ICONS: Record<FeatureItem['iconKey'], React.FC> = {
 const STAT_CARDS: StatCard[] = [
   {
     iconKey: 'star',
-    value: formatShortNumber(githubStats.repos.reportportal),
+    value: (() => {
+      const raw = githubStats.repos.reportportal;
+      const num = Number(raw);
+
+      return formatShortNumber(Number.isFinite(num) ? num : 0);
+    })(),
     label: 'GitHub stars',
   },
   FORKS_CARD,
   {
     iconKey: 'contributors',
-    value: formatShortNumber(statsData.slackMembers),
+    value: formatShortNumber(
+      Number.isFinite(Number(statsData.slackMembers)) ? Number(statsData.slackMembers) : 0,
+    ),
     label: 'Community members',
   },
 ];

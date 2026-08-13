@@ -16,9 +16,12 @@ export const Hero: FC = () => {
     () =>
       STATISTICS.map(statistic => {
         if (statistic.entities === 'Stars on GitHub') {
+          const raw = githubStats.repos.reportportal;
+          const value = Number(raw);
+
           return {
             ...statistic,
-            quantity: formatShortNumber(githubStats.repos.reportportal),
+            quantity: formatShortNumber(Number.isFinite(value) ? value : 0),
           };
         }
 
