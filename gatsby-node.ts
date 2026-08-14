@@ -95,13 +95,33 @@ async function fetchGitHubStars(): Promise<Repos> {
   }
 }
 
-async function fetchDockerHubPulls(): Promise<number> {
-  const response = await axios.get<{ pull_count: number }>(
-    'https://hub.docker.com/v2/repositories/reportportal/service-api/',
-    { timeout: STATS_API_TIMEOUT },
-  );
+function readExistingDockerHubPulls(): number {
+  try {
+    const content = JSON.parse(fs.readFileSync('static/stats.json', 'utf8')) as {
+      downloads?: number;
+    };
 
-  return response.data.pull_count || 0;
+    return content.downloads ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+async function fetchDockerHubPulls(): Promise<number> {
+  try {
+    const response = await axios.get<{ pull_count: number }>(
+      'https://hub.docker.com/v2/repositories/reportportal/service-api/',
+      { timeout: STATS_API_TIMEOUT },
+    );
+
+    return response.data.pull_count || 0;
+  } catch (err) {
+    console.warn(
+      '[stats] Docker Hub API call failed — keeping existing value from static/stats.json.',
+    );
+
+    return readExistingDockerHubPulls();
+  }
 }
 
 function readExistingSlackMembers(): number {
