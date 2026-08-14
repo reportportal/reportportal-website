@@ -51,10 +51,10 @@ interface SlackConversationInfoResponse {
 const STATS_API_TIMEOUT = 10000;
 
 async function fetchGitHubStars(): Promise<Repos> {
-  const token = process.env.GITHUB_TOKEN;
+  const token = process.env.RP_GITHUB_STATS;
 
   if (!token) {
-    console.info('[stats] GITHUB_TOKEN not set — using status.reportportal.io/github/stars.');
+    console.info('[stats] RP_GITHUB_STATS not set — using status.reportportal.io/github/stars.');
     const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
       timeout: STATS_API_TIMEOUT,
     });
