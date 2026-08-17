@@ -3,8 +3,11 @@ import classNames from 'classnames';
 import { createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 import { ArrowLink } from '@app/components/ArrowLink';
+import { formatShortNumber } from '@app/utils/formatShortNumber';
 
-import { STAT_CARDS, FEATURE_LIST, FeatureItem } from './constants';
+import githubStats from '../../../../../static/github.json';
+import statsData from '../../../../../static/stats.json';
+import { FORKS_CARD, FEATURE_LIST, FeatureItem, StatCard } from './constants';
 import OpenSourceIcon from './svg/open-source-icon.inline.svg';
 import GitIcon from './svg/git-icon.inline.svg';
 import FeatureOpensourceIcon from './svg/feature-opensource.inline.svg';
@@ -20,6 +23,27 @@ const FEATURE_ICONS: Record<FeatureItem['iconKey'], React.FC> = {
   community: FeatureCommunityIcon,
   core: FeatureCoreIcon,
 };
+
+const STAT_CARDS: StatCard[] = [
+  {
+    iconKey: 'star',
+    value: (() => {
+      const raw = githubStats.repos.reportportal;
+      const num = Number(raw);
+
+      return formatShortNumber(Number.isFinite(num) ? num : 0);
+    })(),
+    label: 'GitHub stars',
+  },
+  FORKS_CARD,
+  {
+    iconKey: 'contributors',
+    value: formatShortNumber(
+      Number.isFinite(Number(statsData.slackMembers)) ? Number(statsData.slackMembers) : 0,
+    ),
+    label: 'Community members',
+  },
+];
 
 export const OpenSource: FC = () => (
   <section className={getBlocksWith()}>

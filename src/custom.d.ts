@@ -26,3 +26,23 @@ declare module 'react-scroll' {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const Link: ComponentType<any>;
 }
+
+/** Generated at build time by gatsby-node.ts */
+declare module '*/static/github.json' {
+  interface RepoStats {
+    total: number;
+    repos: Record<string, number | string>;
+  }
+  const content: RepoStats;
+  export default content;
+}
+
+/** Generated at build time by gatsby-node.ts */
+declare module '*/static/stats.json' {
+  interface CommunityStats {
+    downloads: number;
+    slackMembers: number;
+  }
+  const content: CommunityStats;
+  export default content;
+}

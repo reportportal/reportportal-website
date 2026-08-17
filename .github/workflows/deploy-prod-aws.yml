@@ -82,6 +82,9 @@ jobs:
           echo GATSBY_MAILCHIMP_LIST_ID=${{ env.GATSBY_MAILCHIMP_LIST_ID }} >> .env.production
           echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env.production
           echo GATSBY_ENABLE_VWO=false >> .env.production
+          echo SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }} >> .env.production
+          echo SLACK_CHANNEL_ID=${{ secrets.SLACK_CHANNEL_ID }} >> .env.production
+          echo RP_GITHUB_STATS=${{ secrets.STATS_GITHUB_TOKEN }} >> .env.production
 
       - name: Build the source code
         run: npm run build

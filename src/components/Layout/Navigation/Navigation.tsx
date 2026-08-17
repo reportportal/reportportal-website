@@ -9,9 +9,7 @@ import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useHasMounted } from '@app/hooks/useHasMounted';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import githubStats from '../../../../static/github.json'; // Will be generated at build time
+import githubStats from '../../../../static/github.json';
 import {
   SolutionsMenu,
   ProductMenu,

@@ -36,7 +36,149 @@ interface CaseTypeDto {
 
 interface Repos {
   total: number;
-  repos: Record<string, string>;
+  repos: Record<string, number | string>;
+}
+
+interface SlackConversationInfoResponse {
+  ok: boolean;
+  channel?: {
+    num_members: number;
+  };
+  error?: string;
+}
+
+/** Timeout in milliseconds for all statistics API calls (10 seconds) */
+const STATS_API_TIMEOUT = 10000;
+
+async function fetchGitHubStars(): Promise<Repos> {
+  const token = process.env.RP_GITHUB_STATS;
+
+  const fetchFallback = async (): Promise<Repos> => {
+    console.info('[stats] Using status.reportportal.io/github/stars.');
+
+    const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
+      timeout: STATS_API_TIMEOUT,
+    });
+
+    return response.data;
+  };
+
+  if (!token) {
+    console.info('[stats] RP_GITHUB_STATS not set — using status.reportportal.io/github/stars.');
+
+    return fetchFallback();
+  }
+
+  try {
+    const response = await axios.get<{ stargazers_count: number }>(
+      'https://api.github.com/repos/reportportal/reportportal',
+      {
+        timeout: STATS_API_TIMEOUT,
+        headers: {
+          Accept: 'application/vnd.github+json',
+          Authorization: `token ${token}`,
+        },
+      },
+    );
+
+    const stars = response.data.stargazers_count;
+
+    console.info(`[stats] GitHub stars fetched via api.github.com: ${stars}`);
+
+    return {
+      total: stars,
+      repos: {
+        reportportal: stars,
+      },
+    };
+  } catch (err) {
+    console.warn(
+      '[stats] GitHub API call failed — falling back to status.reportportal.io/github/stars.',
+    );
+
+    try {
+      return await fetchFallback();
+    } catch {
+      console.warn('[stats] Fallback GitHub source also failed.');
+      throw err;
+    }
+  }
+}
+
+function readExistingDockerHubPulls(): number {
+  try {
+    const content = JSON.parse(fs.readFileSync('static/stats.json', 'utf8')) as {
+      downloads?: number;
+    };
+
+    return content.downloads ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+async function fetchDockerHubPulls(): Promise<number> {
+  try {
+    const response = await axios.get<{ pull_count: number }>(
+      'https://hub.docker.com/v2/repositories/reportportal/service-api/',
+      { timeout: STATS_API_TIMEOUT },
+    );
+
+    return response.data.pull_count || 0;
+  } catch (err) {
+    console.warn(
+      '[stats] Docker Hub API call failed — keeping existing value from static/stats.json.',
+    );
+
+    return readExistingDockerHubPulls();
+  }
+}
+
+function readExistingSlackMembers(): number {
+  try {
+    const content = JSON.parse(fs.readFileSync('static/stats.json', 'utf8')) as {
+      slackMembers?: number;
+    };
+
+    return content.slackMembers ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+async function fetchSlackMembers(): Promise<number | null> {
+  const token = process.env.SLACK_BOT_TOKEN;
+  const channelId = process.env.SLACK_CHANNEL_ID;
+
+  if (!token || !channelId) {
+    console.info('[stats] SLACK_BOT_TOKEN / SLACK_CHANNEL_ID not set — keeping existing value.');
+
+    return null;
+  }
+
+  try {
+    const response = await axios.get<SlackConversationInfoResponse>(
+      `https://slack.com/api/conversations.info?channel=${channelId}&include_num_members=true`,
+      {
+        timeout: STATS_API_TIMEOUT,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (!response.data.ok) {
+      console.warn(`[stats] Slack API error: "${response.data.error}" — keeping existing value.`);
+
+      return null;
+    }
+
+    return response.data.channel?.num_members ?? null;
+  } catch (err) {
+    console.warn('[stats] Slack API request failed — keeping existing value.');
+
+    return null;
+  }
 }
 
 interface ContactUsDto {
@@ -68,11 +210,12 @@ export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = ({ actions
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  await axios
-    .get('https://status.reportportal.io/github/stars')
-    .then((response: { data: Repos }) => response.data)
+  await fetchGitHubStars()
     .then((data: Repos) => {
       fs.writeFileSync('static/github.json', JSON.stringify(data));
+    })
+    .catch(err => {
+      console.warn('[stats] Failed to fetch GitHub stars — skipping github.json write.', err);
     });
 
   await axios
@@ -81,6 +224,24 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
     .then(data => {
       fs.writeFileSync('static/youtube.json', JSON.stringify(data || []));
     });
+
+  try {
+    const [downloads, liveSlackMembers] = await Promise.all([
+      fetchDockerHubPulls(),
+      fetchSlackMembers(),
+    ]);
+
+    const slackMembers = liveSlackMembers ?? readExistingSlackMembers();
+
+    fs.writeFileSync('static/stats.json', JSON.stringify({ downloads, slackMembers }));
+    console.info(
+      `[stats] Written stats.json — downloads: ${downloads}, slackMembers: ${slackMembers}`,
+    );
+  } catch {
+    console.warn(
+      '[stats] Failed to fetch live community stats — falling back to values already in static/stats.json.',
+    );
+  }
 
   const blogPost = path.resolve('./src/templates/blog-post/blog-post.tsx');
 
