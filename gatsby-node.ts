@@ -210,9 +210,13 @@ export const onCreateBabelConfig: GatsbyNode['onCreateBabelConfig'] = ({ actions
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  await fetchGitHubStars().then((data: Repos) => {
-    fs.writeFileSync('static/github.json', JSON.stringify(data));
-  });
+  await fetchGitHubStars()
+    .then((data: Repos) => {
+      fs.writeFileSync('static/github.json', JSON.stringify(data));
+    })
+    .catch(err => {
+      console.warn('[stats] Failed to fetch GitHub stars — skipping github.json write.', err);
+    });
 
   await axios
     .get('https://status.reportportal.io/youtube?count=12')
