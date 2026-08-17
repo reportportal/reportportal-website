@@ -53,13 +53,20 @@ const STATS_API_TIMEOUT = 10000;
 async function fetchGitHubStars(): Promise<Repos> {
   const token = process.env.RP_GITHUB_STATS;
 
-  if (!token) {
-    console.info('[stats] RP_GITHUB_STATS not set — using status.reportportal.io/github/stars.');
+  const fetchFallback = async (): Promise<Repos> => {
+    console.info('[stats] Using status.reportportal.io/github/stars.');
+
     const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
       timeout: STATS_API_TIMEOUT,
     });
 
     return response.data;
+  };
+
+  if (!token) {
+    console.info('[stats] RP_GITHUB_STATS not set — using status.reportportal.io/github/stars.');
+
+    return fetchFallback();
   }
 
   try {
@@ -73,21 +80,24 @@ async function fetchGitHubStars(): Promise<Repos> {
         },
       },
     );
+
     const stars = response.data.stargazers_count;
 
     console.info(`[stats] GitHub stars fetched via api.github.com: ${stars}`);
 
-    return { total: stars, repos: { reportportal: stars } };
+    return {
+      total: stars,
+      repos: {
+        reportportal: stars,
+      },
+    };
   } catch (err) {
     console.warn(
       '[stats] GitHub API call failed — falling back to status.reportportal.io/github/stars.',
     );
 
     try {
-      const response = await axios.get<Repos>('https://status.reportportal.io/github/stars', {
-        timeout: STATS_API_TIMEOUT,
-      });
-      return response.data;
+      return await fetchFallback();
     } catch {
       console.warn('[stats] Fallback GitHub source also failed.');
       throw err;
@@ -146,24 +156,29 @@ async function fetchSlackMembers(): Promise<number | null> {
     return null;
   }
 
-  const response = await axios.get<SlackConversationInfoResponse>(
-    `https://slack.com/api/conversations.info?channel=${channelId}&include_num_members=true`,
-    {
-      timeout: STATS_API_TIMEOUT,
-      headers: {
-        Authorization: `Bearer ${token}`,
+  try {
+    const response = await axios.get<SlackConversationInfoResponse>(
+      `https://slack.com/api/conversations.info?channel=${channelId}&include_num_members=true`,
+      {
+        timeout: STATS_API_TIMEOUT,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    },
-  );
+    );
 
-  if (!response.data.ok) {
-    console.warn(`[stats] Slack API error: "${response.data.error}" — keeping existing value.`);
+    if (!response.data.ok) {
+      console.warn(`[stats] Slack API error: "${response.data.error}" — keeping existing value.`);
+
+      return null;
+    }
+
+    return response.data.channel?.num_members ?? null;
+  } catch (err) {
+    console.warn('[stats] Slack API request failed — keeping existing value.');
 
     return null;
   }
-
-  // Return null if Slack didn't return member count, so existing value is preserved
-  return response.data.channel?.num_members ?? null;
 }
 
 interface ContactUsDto {
