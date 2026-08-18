@@ -13,16 +13,18 @@
  *   2_016      → "2K+"     (truncated)
  */
 export const formatShortNumber = (num: number): string => {
-  if (num >= 1_000_000) {
-    const value = Math.floor(num / 100_000) / 10;
-    const suffix = num % 1_000_000 === 0 ? 'M' : 'M+';
+  if (num >= 999_950) {
+    const value = Math.round(num / 100_000) / 10;
+    const roundedNumber = value * 1_000_000;
+    const suffix = num > roundedNumber ? 'M+' : 'M';
 
     return `${value}${suffix}`;
   }
 
   if (num >= 1_000) {
-    const value = Math.floor(num / 100) / 10;
-    const suffix = num % 1_000 === 0 ? 'K' : 'K+';
+    const value = Math.round(num / 100) / 10;
+    const roundedNumber = value * 1_000;
+    const suffix = num > roundedNumber ? 'K+' : 'K';
 
     return `${value}${suffix}`;
   }
@@ -41,16 +43,18 @@ export const formatShortNumber = (num: number): string => {
  *   8_705      → { digits: "8.7", suffix: "K+" }
  */
 export const formatShortNumberParts = (num: number): { digits: string; suffix: string } => {
-  if (num >= 1_000_000) {
-    const value = Math.floor(num / 100_000) / 10;
-    const suffix = num % 1_000_000 === 0 ? 'M' : 'M+';
+  if (num >= 999_950) {
+    const value = Math.round(num / 100_000) / 10;
+    const roundedNumber = value * 1_000_000;
+    const suffix = num > roundedNumber ? 'M+' : 'M';
 
     return { digits: `${value}`, suffix };
   }
 
   if (num >= 1_000) {
-    const value = Math.floor(num / 100) / 10;
-    const suffix = num % 1_000 === 0 ? 'K' : 'K+';
+    const value = Math.round(num / 100) / 10;
+    const roundedNumber = value * 1_000;
+    const suffix = num > roundedNumber ? 'K+' : 'K';
 
     return { digits: `${value}`, suffix };
   }
