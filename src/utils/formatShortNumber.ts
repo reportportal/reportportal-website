@@ -13,7 +13,7 @@
  *   2_016      → "2K+"     (truncated)
  */
 export const formatShortNumber = (num: number): string => {
-  if (num >= 1_000_000) {
+  if (num >= 999_950) {
     const value = Math.round(num / 100_000) / 10;
     const roundedNumber = value * 1_000_000;
     const suffix = num > roundedNumber ? 'M+' : 'M';
@@ -43,7 +43,7 @@ export const formatShortNumber = (num: number): string => {
  *   8_705      → { digits: "8.7", suffix: "K+" }
  */
 export const formatShortNumberParts = (num: number): { digits: string; suffix: string } => {
-  if (num >= 1_000_000) {
+  if (num >= 999_950) {
     const value = Math.round(num / 100_000) / 10;
     const roundedNumber = value * 1_000_000;
     const suffix = num > roundedNumber ? 'M+' : 'M';
