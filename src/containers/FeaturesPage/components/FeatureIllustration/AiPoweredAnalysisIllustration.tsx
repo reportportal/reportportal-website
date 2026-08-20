@@ -501,6 +501,10 @@ export const AiPoweredAnalysisIllustration: FC = () => {
           </div>
         </div>
       </div>
+      <span className="ai-pa-illustration__disclaimer">
+        <span>Quality Gates currently evaluate automated test results only.</span>
+        <span>Milestones and manual testing — in upcoming releases.</span>
+      </span>
     </div>
   );
 };

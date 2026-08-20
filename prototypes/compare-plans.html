@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ComparePlans — current vs updated</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS — 1:1 with src/styles/css-variables.scss
+   ============================================================ */
+:root {
+  --header-height:     76px;
+  --color-primary-600: #009dbb;
+  --color-primary-700: #0081a7;
+  --color-primary-100: #ebfbff;
+  --text-primary:      #2f3c5f;
+  --text-grey:         #5f6578;
+  --text-service:      #8791ab;
+  --text-light-grey:   #c3c8d5;
+  --white:             #fff;
+  --bg-grey2:          #f4f5fa;
+  --purple-grey:       #edeff6;
+  --graphics-jade:     #00b884;
+  --graphics-orchid:   #bb66e1;
+  --graphics-amber:    #ffc800;
+  --dark:              #222b45;
+  --gradient-primary:  linear-gradient(55deg, var(--color-primary-700) 19.29%, var(--color-primary-600) 90.72%);
+  --size-max-width:    1200px;
+
+  --desc-width:        360px;
+  --desc-line-height:  24px;
+  --col-line-height:   24px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { margin: 0; background: var(--white); }
+
+
+/* ============================================================
+   VARIANT SWITCHER (prototype chrome, not part of the site)
+   ============================================================ */
+.switcher {
+  display: flex; justify-content: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--purple-grey);
+  font-family: 'Noto Sans', Arial, sans-serif; font-size: 13px;
+}
+.seg { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--bg-grey2); }
+.seg button {
+  padding: 7px 20px; border: 0; border-radius: 999px; background: transparent;
+  cursor: pointer; font: inherit; font-weight: 600; color: var(--text-grey);
+}
+.seg button[aria-pressed="true"] { background: var(--white); color: var(--text-primary); box-shadow: 0 1px 3px rgb(0 45 55 / 0.16); }
+
+/* ============================================================
+   SITE STYLES — ported from ComparePlans.scss (desktop ≥1239px)
+   ============================================================ */
+.container { max-width: calc(var(--size-max-width) + 48px); margin: 0 auto; padding: 0 24px; }
+
+.compare { padding: 120px 0; background: linear-gradient(180deg, #f4f5fa 0%, #fff 100%); }
+
+.compare__title {
+  display: flex; align-items: center; justify-content: center; margin-bottom: 54px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 600; font-size: 48px; line-height: 64px;
+  text-align: center; color: var(--text-primary);
+}
+
+/*  sticky header.
+    NOTE for implementation: on the real site the nav hides on scroll down and
+    slides back on scroll up, so `top` cannot stay at 0 — it has to switch to
+    var(--header-height) whenever the nav is visible, driven by the existing
+    useScrollDirection hook. Here it is plain sticky, there is no nav to dodge. */
+.compare__tab-header {
+  position: sticky; top: 0; z-index: 5;
+  padding: 16px 32px 16px 64px; margin-bottom: 16px;
+  background: var(--bg-grey2); color: var(--text-primary);
+  transition: top 0.3s, box-shadow 0.3s;
+}
+.compare__tab-header--stuck { box-shadow: 0 6px 16px rgb(0 45 55 / 0.08); }
+.compare__tab-header .compare__row-title,
+.compare__tab-header .compare__row-title-col {
+  font-family: Poppins, Arial, sans-serif; font-weight: 600; font-size: 20px; line-height: 1.5;
+}
+/*  «Features» вирівняно з заголовками секцій (54px), а не з назвами рядків (86px).
+    Відʼємний margin рухає лише перший елемент — space-between тримає колонки на місці. */
+.compare__tab-header .compare__row-title { margin-left: -32px; }
+
+.compare__badge-note {
+  display: flex; align-items: baseline;
+  margin: 20px 0 0;
+  font-family: Poppins, Arial, sans-serif; font-size: 16px; line-height: 24px; color: var(--text-service);
+}
+.compare__badge-note b { color: var(--text-grey); }
+.compare__badge-note .chip { flex: 0 0 auto; margin: 0 8px 0 0; }
+body[data-variant="current"] .compare__badge-note { display: none; }
+body[data-variant="current"] .pricing-card__popular { background: var(--graphics-amber); }
+/*  PricingCard.scss: description margin-bottom 40px, ul margin 40px 0 49px 16px
+    + padding-left 12px. The tighter spacing is part of the proposal.          */
+body[data-variant="current"] .pricing-card__description { margin-bottom: 40px; }
+body[data-variant="current"] .pricing-card ul { margin: 40px 0 49px 16px; padding-left: 12px; }
+
+.compare__container {
+  border-radius: 16px; padding-top: 24px; overflow: hidden;
+  box-shadow: 0 8px 16px rgb(0 45 55 / 0.12); background: var(--white);
+}
+
+.rp-item { padding: 0 32px; background: var(--white); }
+.rp-item:nth-child(even) { background: #f8fafd; }
+.rp-item:last-child { background: var(--white); }
+
+/*  row pitch: 6 + 12 + 24 + 12 + 6 = 60px  (was 6 + 19 + 30 + 19 + 6 = 80px).
+    Row titles moved from 20px/regular to font-scale('base') 16px/24px semi-bold —
+    both are existing steps of the scale, nothing new introduced.                     */
+.rp-header { display: flex; align-items: flex-start; padding: 6px 0; cursor: pointer; user-select: none; }
+.rp-item[data-open="true"] .rp-header { padding-bottom: 0; }
+.rp-header:focus-visible { outline: 2px solid var(--color-primary-600); outline-offset: 2px; }
+
+/*  chevron aligned to the title line in both states:
+    12px (row padding-top) + (24 - 24) / 2 = 12px                                     */
+.rp-expand-icon {
+  flex: 0 0 auto; margin: 12px 12px 0 -5px; width: 24px; height: 24px;
+  transform: rotate(-90deg); transition: transform 0.3s;
+}
+.rp-item[data-open="true"] .rp-expand-icon { transform: rotate(0deg); }
+.rp-header-content { flex: 1 1 auto; min-width: 0; }
+
+.compare__row {
+  font-family: 'Noto Sans', Arial, sans-serif; font-weight: 400;
+  font-size: 16px; line-height: 24px; padding: 12px 0;
+}
+.rp-item[data-open="true"] .compare__row { padding-bottom: 0; }
+
+.compare__row-title-wrapper { display: flex; align-items: center; justify-content: space-between; }
+
+.compare__row-title {
+  flex: 0 1 auto; align-self: flex-start; width: 36%;
+  font-family: 'Noto Sans', Arial, sans-serif; font-weight: 600;
+  font-size: 16px; line-height: 24px; color: var(--text-primary);
+}
+.compare__row-title-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); width: 65%; }
+.compare__row-title-col {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  text-align: center; color: var(--text-primary);
+  font-family: 'Noto Sans', Arial, sans-serif; font-weight: 400;
+  font-size: 16px; line-height: var(--col-line-height); white-space: normal;
+}
+.compare__row-title-col .green { color: #00b884; font-weight: 700; }
+.compare__mark-icon { margin-left: 4px; }
+.compare__cross-icon { margin-bottom: -2px; }
+.compare__row-title-col svg:not(.ext-icon) { display: block; margin: 0 auto; }
+
+.rp-content { display: none; }
+.rp-item[data-open="true"] .rp-content { display: block; }
+.rp-content-box { padding: 7px 16px 16px; }
+.compare__content { margin-top: 0; }
+
+.compare__description {
+  font-family: Poppins, Arial, sans-serif; font-weight: 400;
+  font-size: 16px; line-height: var(--desc-line-height);
+  margin: 4px 8px 0 15px; white-space: pre-wrap; color: var(--text-service);
+}
+.compare__description p { margin: 0; }
+.compare__description p + p { margin-top: 16px; }
+.compare__description-anchor {
+  display: inline-block; margin-bottom: -1px; border-bottom: 2px solid transparent;
+  color: var(--color-primary-600); text-decoration: none;
+}
+.compare__description-anchor:hover { border-bottom-color: var(--color-primary-600); transition: all 0.4s ease-out; }
+
+/*  external-link icon — src/svg/externalLinkArrow.inline.svg, the same one the
+    footer already uses next to Terms & Conditions.                          */
+.ext-icon { flex: 0 0 auto; margin-left: 4px; vertical-align: -3px; }
+.visually-hidden {
+  position: absolute; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  width: 1px; height: 1px; margin: -1px; padding: 0; white-space: nowrap;
+}
+
+/* ⇩ the layout property that differs between variants ⇩ */
+.compare__description-full-width { width: var(--desc-width); max-width: 100%; }
+
+/*  1:1 with .section-list__title — NavMenu/SectionList/SectionList.scss:11
+    Poppins semi-bold, font-scale('small'), uppercase, --text-service.       */
+.rp-section-row {
+  padding: 16px 0 8px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 600;
+  font-size: 14px; line-height: 24px;
+  text-transform: uppercase; color: var(--text-service);
+}
+
+.rp-footer { display: flex; align-items: center; padding: 16px 0 24px 31px; }
+/*  The 36% block keeps the same geometry as a row, so *billed quarterly lands
+    right next to the CTAs. Only the link is pulled out onto the section-heading
+    edge — see .rp-footer__terms below.                                          */
+.rp-footer__note {
+  display: flex; justify-content: space-between; align-items: baseline;
+  width: 36%; font-family: Poppins, Arial, sans-serif; font-weight: 400;
+  font-size: 16px; line-height: 24px; color: var(--text-service);
+}
+/*  8px here + 8px of the button cell padding = the same 16px gap the plan
+    buttons have between each other.                                        */
+.rp-footer__note div { margin-right: 8px; }
+/*  only the link steps out to the left edge; *billed quarterly stays pinned to
+    the right of the block by justify-content: space-between.                    */
+.rp-footer__terms {
+  display: inline-flex; align-items: center; margin-left: -31px;
+  border-bottom: 1px solid transparent; color: var(--color-primary-600); text-decoration: none;
+  transition: var(--basic-transition, all 0.3s ease-in-out);
+}
+.rp-footer__terms:hover { border-bottom-color: var(--color-primary-600); }
+/*  buttons fill their column, so all three are the same width and the gaps
+    between them are equal. The 8px cell padding keeps each button centred on
+    the same axis as the plan column above it — a grid `gap` would nudge the
+    outer two inwards.                                                        */
+.rp-footer__ctas { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); width: 65%; }
+.rp-footer__cta { padding: 0 8px; }
+.rp-footer__cta .btn { display: block; width: 100%; padding-right: 12px; padding-left: 12px; }
+.btn {
+  display: inline-block; padding: 12px 24px; border-radius: 8px; text-align: center;
+  font-family: 'Noto Sans', Arial, sans-serif; font-weight: 600; font-size: 16px; line-height: 24px;
+  text-decoration: none; cursor: pointer; transition: all 0.3s ease-in-out;
+}
+.btn--primary { border: 1px solid var(--color-primary-600); background: var(--color-primary-600); color: var(--white); }
+.btn--outline { border: 1px solid var(--color-primary-600); background: transparent; color: var(--color-primary-600); }
+
+/* ============================================================
+   NEW — requires changes in the ComparePlans code
+   ============================================================ */
+/* Add-on — a plain text link, same style as the links inside descriptions.
+   No new UI element is introduced.                                          */
+.cell-addon {
+  display: inline-flex; align-items: center;
+  margin-bottom: -1px; border-bottom: 2px solid transparent;
+  font-size: 16px; line-height: var(--col-line-height);
+  color: var(--color-primary-600); text-decoration: none;
+}
+a.cell-addon:hover { border-bottom-color: var(--color-primary-600); transition: all 0.4s ease-out; }
+.cell-req { display: flex; flex-direction: column; align-items: center; }
+.cell-req__note { margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--text-service); }
+
+/*  1:1 with .section-list-badge — src/components/Layout/Navigation/NavMenu/SectionList/SectionList.scss:101
+    When implementing, do not duplicate these styles: extract the badge into a shared
+    component and reuse it in both the navigation and here.                            */
+.chip {
+  display: inline-flex; align-items: center;
+  margin-left: 10px; padding: 0 8px; border-radius: 16px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 600;
+  font-size: 12px; line-height: 20px;
+  white-space: nowrap; vertical-align: 3px;
+}
+.chip--new     { background: rgb(0 184 132 / 0.1);   color: var(--graphics-jade); }
+.chip--premium { background: rgb(187 102 225 / 0.1); color: var(--graphics-orchid); }
+body[data-variant="current"] .chip { display: none; }
+
+.desc-meta { margin-top: 10px; font-size: 12px; line-height: 18px; color: var(--text-light-grey); }
+
+
+/* ============================================================
+   PRICING CARDS — ported from PricingCard.scss / PricingCards.scss
+   ============================================================ */
+.plan-switch { display: flex; justify-content: center; padding-top: 48px; }
+.pricing-cards {
+  display: flex; flex-flow: row nowrap; place-content: center center;
+  gap: 40px 20px; margin: 40px 16px 0; padding-bottom: 80px;
+}
+.pricing-card {
+  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  width: 100%; max-width: 387px; border-radius: 15px; padding: 32px;
+  box-shadow: 0 4px 16px rgb(16 46 52 / 0.1); background: var(--white);
+  transition: box-shadow 0.4s ease-out;
+}
+.pricing-card:hover { box-shadow: 0 8px 24px rgb(57 109 120 / 0.3); }
+.pricing-card__popular {
+  position: absolute; top: -15px; left: 50%; z-index: 2; width: 198px; transform: translateX(-50%);
+  font-family: Poppins, Arial, sans-serif; font-weight: 600; font-size: 14px; line-height: 24px;
+  border-radius: 15px; padding: 4px 30px; background: var(--graphics-jade);
+  text-align: center; text-transform: uppercase; color: var(--white);
+}
+.pricing-card__title {
+  font-family: Poppins, Arial, sans-serif; font-weight: 700; font-size: 32px; line-height: 48px;
+  text-align: center; color: var(--dark);
+}
+.pricing-card__description {
+  font-family: 'Noto Sans', Arial, sans-serif; font-size: 16px; line-height: 24px;
+  height: 80px; margin: 8px 0 24px; text-align: center; white-space: pre-wrap; color: var(--text-primary);
+}
+.pricing-card ul {
+  position: relative; margin: 24px 0 28px; padding-left: 0;
+  list-style: none; white-space: pre-wrap;
+}
+.pricing-card li {
+  position: relative; margin-bottom: 8px; padding-left: 26px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 500; font-size: 16px; line-height: 24px;
+  color: var(--text-primary);
+}
+.pricing-card li::before {
+  position: absolute; top: 6px; left: 0; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--gradient-primary); content: '';
+}
+.pricing-card__bottom-panel { text-align: center; }
+.pricing-card__price {
+  font-family: 'Noto Sans', Arial, sans-serif; margin-bottom: 24px; color: var(--text-primary);
+}
+.pricing-card__price-value {
+  display: inline-block; margin-right: 5px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.4;
+}
+.pricing-card__price-old {
+  display: inline-block; margin-right: 8px;
+  font-family: Poppins, Arial, sans-serif; font-weight: 400; font-size: 20px; line-height: 1.4;
+  text-decoration: line-through; color: var(--text-light-grey);
+}
+.pricing-card__price-period { white-space: pre-wrap; color: var(--text-service); }
+.pricing-card .btn { width: 100%; margin: 0 auto; padding: 18px 32px; border-radius: 4px; }
+.pricing-card .btn--primary { border: none; background: var(--gradient-primary); color: var(--white); }
+.pricing-card .btn--outline { border: 1px solid var(--color-primary-600); background: transparent; color: var(--color-primary-600); }
+
+/*  CURRENT — the highlight is positional: "first bullet of the first card",
+    whatever it says (PricingCards.scss). Reorder the bullets and it moves.   */
+body[data-variant="current"] .pricing-cards > .pricing-card:first-child li:first-child {
+  font-family: Poppins, Arial, sans-serif; font-weight: 700; color: var(--graphics-jade);
+}
+/*  UPDATED — code delta 2: the highlight follows rich-text bold, so the editor
+    decides which line stands out and it survives reordering.                 */
+body[data-variant="updated"] .pricing-card li b {
+  font-weight: 700; color: var(--graphics-jade);
+}
+
+/* ============================================================
+   CURRENT VARIANT — restores the live site exactly.
+   Everything above describes the proposed version; these rules
+   put the "Current" tab back to what reportportal.io ships today.
+   ============================================================ */
+body[data-variant="current"] { --desc-width: 360px; --col-line-height: 24px; }
+body[data-variant="current"] .compare__tab-header {
+  position: static; padding: 0 54px 32px 86px; margin-bottom: 0;
+  background: none; box-shadow: none;
+}
+body[data-variant="current"] .compare__tab-header .compare__row-title { margin-left: 0; }
+body[data-variant="current"] .rp-item { padding: 0 54px; }
+body[data-variant="current"] .rp-expand-icon { margin-top: 22px; }
+body[data-variant="current"] .compare__row { font-size: 20px; line-height: 1.5; padding: 19px 0; }
+body[data-variant="current"] .compare__row-title { font-weight: 400; font-size: 20px; line-height: 1.5; }
+body[data-variant="current"] .compare__description { font-size: 14px; }
+body[data-variant="current"] .rp-section-row {
+  padding: 24px 0 12px;
+  font-family: 'Noto Sans', Arial, sans-serif; font-size: 16px;
+  text-transform: none; color: var(--text-primary);
+}
+body[data-variant="current"] .rp-footer { padding: 24px 0 32px; }
+body[data-variant="current"] .rp-footer__note {
+  display: flex; justify-content: space-between;
+  width: 39%; margin: 0; font-weight: 500;
+}
+body[data-variant="current"] .rp-footer__terms { margin-left: 0; }
+body[data-variant="current"] .rp-footer__note div { margin-right: 16px; }
+body[data-variant="current"] .rp-footer__cta { padding: 0; }
+body[data-variant="current"] .rp-footer__cta .btn {
+  display: inline-block; width: auto; padding-right: 24px; padding-left: 24px;
+}
+
+/* ============================================================
+   DEMO SUMMARY — stakeholder reference, not part of the site
+   ============================================================ */
+.legend { margin: 40px auto 0; max-width: var(--size-max-width); font-family: 'Noto Sans', Arial, sans-serif; }
+body:not([data-variant="analysis"]) .legend { display: none; }
+body[data-variant="analysis"] .plan-switch,
+body[data-variant="analysis"] .pricing-cards,
+body[data-variant="analysis"] .compare__title,
+body[data-variant="analysis"] .compare__table { display: none; }
+body[data-variant="analysis"] .compare { padding-top: 56px; }
+.demo__h1 {
+  margin: 0 0 8px; font-family: Poppins, Arial, sans-serif; font-weight: 600;
+  font-size: 32px; line-height: 48px; color: var(--text-primary);
+}
+.demo__lead { margin: 0 0 32px; font-size: 14px; line-height: 22px; color: var(--text-service); }
+
+.demo__kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.demo__kpi {
+  padding: 18px 20px; border-radius: 12px; background: var(--white);
+  box-shadow: 0 4px 12px rgb(0 45 55 / 0.08);
+}
+.demo__kpi-val {
+  font-family: Poppins, Arial, sans-serif; font-weight: 700; font-size: 26px; line-height: 34px;
+  color: var(--color-primary-700);
+}
+.demo__kpi-lbl { margin-top: 2px; font-size: 12px; line-height: 18px; color: var(--text-service); }
+
+.demo__card {
+  margin-bottom: 24px; padding: 24px 28px; border-radius: 12px; background: var(--white);
+  box-shadow: 0 4px 12px rgb(0 45 55 / 0.08);
+}
+.demo__card h3 {
+  margin: 0 0 4px; font-family: Poppins, Arial, sans-serif; font-weight: 600;
+  font-size: 18px; line-height: 26px; color: var(--text-primary);
+}
+.demo__card p.sub { margin: 0 0 16px; font-size: 12px; line-height: 18px; color: var(--text-service); }
+
+table.demo__t { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 20px; }
+table.demo__t th {
+  padding: 0 12px 8px 0; border-bottom: 1px solid var(--purple-grey);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  text-align: left; color: var(--text-service);
+}
+table.demo__t td { padding: 10px 12px 10px 0; border-bottom: 1px solid #f2f4f9; vertical-align: top; color: var(--text-grey); }
+table.demo__t td:first-child { font-weight: 600; color: var(--text-primary); }
+table.demo__t tr:last-child td { border-bottom: 0; }
+table.demo__t td.num, table.demo__t th.num { text-align: center; }
+table.demo__t tr.us td { background: var(--color-primary-100); font-weight: 600; color: var(--text-primary); }
+
+.demo__take { margin: 16px 0 0; padding-left: 18px; font-size: 13px; line-height: 21px; color: var(--text-grey); }
+.demo__take li { margin-bottom: 6px; }
+.demo__take b { color: var(--text-primary); }
+.demo__note { margin-top: 14px; font-size: 12px; line-height: 18px; color: var(--text-service); }
+.yes { color: #00795a; font-weight: 700; }
+.no  { color: var(--text-light-grey); font-weight: 700; }
+</style>
+</head>
+<body data-variant="current">
+
+
+<div class="switcher">
+  <div class="seg" id="variantSeg">
+    <button type="button" data-variant="current" aria-pressed="true">Current</button>
+    <button type="button" data-variant="updated" aria-pressed="false">Updated</button>
+    <button type="button" data-variant="analysis" aria-pressed="false">Analysis</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="plan-switch">
+    <div class="seg" id="planSeg">
+      <button type="button" data-plan="quarterly" aria-pressed="false">Quarterly</button>
+      <button type="button" data-plan="yearly" aria-pressed="true">Yearly (Save 5%)</button>
+    </div>
+  </div>
+  <div class="pricing-cards" id="cards"></div>
+</div>
+
+<section class="compare">
+  <div class="container">
+    <div class="compare__title" id="compareTitle">Compare plans</div>
+
+    <div class="compare__table">
+    <span id="stickySentinel"></span>
+    <div class="compare__tab-header" id="tabHeader">
+      <div class="compare__row-title-wrapper">
+        <div class="compare__row-title">Features</div>
+        <div class="compare__row-title-cols">
+          <div class="compare__row-title-col">Startup</div>
+          <div class="compare__row-title-col">Business</div>
+          <div class="compare__row-title-col">Enterprise</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare__container" id="table"></div>
+    </div>
+
+    <div class="legend" id="legend"></div>
+  </div>
+</section>
+
+<script>
+/* ==========================================================================
+   VARIANT 1 — CURRENT. Reconstructed from the Contentful “SaaS Compare Plan” entry.
+   ========================================================================== */
+const CURRENT = [
+  { title: 'Main functionality', items: [
+    { name: 'Instance type', plans: ['Shared', 'Individual', 'Individual'], desc: [
+      'Shared instance is used by more than one tenant/client.\nTenants access is restricted to the project space owned by them.\nCost-effective option.',
+      'Dedicated instance is hosted for one tenant/client only.\nNo shared database and infrastructure — better for data isolation, availability, security and company-based authorization.'] },
+    { name: 'Data storage', plans: ['100 Gb.', '1 Tb.', 'Extended storage'], desc: ['Data storage defines how much data can be pulled into ReportPortal and saved in the database (PostgreSQL) and binary storage (MinIO). The Data storage is divided between PostgreSQL (launches + tests + logs) and MinIO (attachments) in the ratio you need. On a daily basis, the system calculates the stored data and gradually deletes overuse in both the database and binary storage.'] },
+    { name: 'Data retention', plans: ['up to 12 months', 'up to 5 years', 'Extended retention policy'], desc: [
+      'Data retention defines how long your test results can be stored in ReportPortal.',
+      'The data is removed when the retention policy is exceeded or in case of usage over the storage limit (whichever occurs first).'] },
+    { name: 'Technical Support Points', plans: [5, 10, 'Dedicated specialist'], desc: ['A Technical Support Point (pre-paid) is a blended rate used in the subscription package, which consists of Application Support specialist time. It can be used for integration, configuration and feature-related queries.'] },
+    { name: 'Additional technical support', plans: ['150$/h', '150$/h', '150$/h'], desc: ['If your usage exceeds the specified quantity of Technical Support Points included in the subscription package, you will need to pay for the exceeding amount at pay-as-you-go system.'] },
+    { name: 'Project spaces', plans: [1, 'Multiple', 'Unlimited'], desc: ['Project space is an isolated online workspace where you can import and analyse test results, create dashboards, work individually or together with your team, etc.'] },
+    { name: 'Service Level Availability', plans: ['95%', '99%', '99%'], desc: ['Service Level Availability is a minimum percentage of service uptime in a year.'] },
+    { name: 'Access to the database, ElasticSearch and monitoring', plans: [false, 'Upon request', 'Upon request'], desc: ['This is the ability to review all data stored in the database and search index, and to receive alerts in case of performance issues on the instance.'] },
+    { name: 'Unlimited number of users', plans: [true, true, true], desc: ['There are no limits in number of users associated with plans and tiers.'] },
+    { name: 'Free trial', plans: [true, true, true], desc: ['Free trial period of 30 days, associated with the Startup tier.'] },
+    { name: 'Customization', plans: [false, false, true], desc: ['Customization refers to the ability to modify the service to meet specific business requirements (e.g. tailored functionality, views and flows).'] },
+    { name: 'Availability of backups to on-premises storage', plans: [false, true, true], desc: ["This is the ability to make a copy of data and transfer it to your infrastructure regularly, in case it's required by the security policy of your organization."] },
+    { name: 'Data migration from on-premises instance', plans: [false, true, true], desc: ['This means availability of data migration, which helps to transfer data from your in-house deployment to the cloud.'] },
+    { name: 'Choosing deployment region', plans: [false, true, true], desc: ['Choosing deployment region means that you will be able to pick your deployment region to get the best possible performance and eliminate network delays from your testing infrastructure to SaaS instance.'] },
+    { name: 'Site-to-site VPN', plans: [false, true, true], desc: ['A site-to-site VPN is a connection between SaaS infrastructure and your corporate network to leverage an internet connection for private traffic.'] },
+    { name: 'IP whitelisting', plans: [false, true, true], desc: ['IP whitelisting is granting access to the infrastructure only to specific IP addresses, to avoid public exposure.'] },
+    { name: 'Real-time analytics', plans: [true, true, true], desc: ['ReportPortal provides real-time analytics capabilities, which save time thanks to the fast reaction of the team.\nThere is no need to wait until execution will be completed, so you can start analysis in a couple of seconds.'] },
+    { name: 'Single sign-on (SSO) authentication via OKTA SAML, Azure AD', plans: [false, true, true], desc: ['SSO means an authentication scheme that permits users to securely log in to multiple systems using only one set of credentials.'] },
+    { name: 'Authentication via LDAP or AD', plans: [false, true, true], desc: ['Available authentication and user authorization via LDAP or Active Directory information.'] },
+    { name: 'Auto analysis', plans: [true, true, true], desc: ['Machine Learning based algorithms trained on your historical data of investigated failures, which reduces team efforts to triage failed reports.'] },
+    { name: 'Open reporting API', plans: [true, true, true], descHtml: 'ReportPortal API allows to push and pull data into and from third party tools (PowerBI, Grafana, etc) and create customisations.\nExtensive <a class="compare__description-anchor" href="#">developers guides</a> to integrate with a home-grown solution/framework.' },
+    { name: 'Administration at Project Level', plans: [true, true, true], desc: ['This means access to the project settings including permission to import, edit, delete project data and add/invite/assign/unassign users on the project.'] }
+  ]},
+  { title: 'Premium features', items: [
+    { name: 'Quality Gates', plans: [true, true, true], premium: true, desc: [
+      'Quality Gates is a premium feature helping to automate decisions on top of test execution results and set up a feedback loop into your CI/CD toolchain.',
+      'Rule-based approach helps to form an unambiguous verdict of passed/failed executions using extensive information from reports attributes.'] }
+  ]}
+];
+
+/* ==========================================================================
+   VARIANT 2 — UPDATED. 7 sections, renamed rows, new rows, quotas instead of ✓.
+   premium → orchid chip (paid plugins, mirrors the badge in the product)
+   new     → jade chip (genuinely new features only)
+   ========================================================================== */
+const ADDON = { t: 'addon', label: 'Add-on', href: '#service-packages' };
+const REQ   = { t: 'req',   label: 'Upon request' };
+
+const UPDATED = [
+  { title: 'Workspace & capacity', items: [
+    { name: 'Instance type', plans: ['Shared', 'Individual', 'Individual'],
+      desc: ['Shared instance is used by more than one tenant/client — a cost-effective option.\nIndividual instance is hosted for you only: no shared database or infrastructure.'] },
+    { name: 'Organizations', plans: [false, true, true], new: true, premium: true,
+      desc: ['Create and manage multiple organizations, each grouping projects, teams, and departments under one unified enterprise umbrella.'] },
+    { name: 'Project spaces', plans: ['Unlimited', 'Unlimited', 'Unlimited'], was: 'Project spaces — 1 / Multiple / Unlimited',
+      desc: ['An isolated workspace with its own settings, integrations and data. There is no cap on the number of spaces on any plan.'] },
+    { name: 'Users', plans: ['Unlimited', 'Unlimited', 'Unlimited'], was: 'Unlimited number of users',
+      desc: ['No limits on the number of users on any plan. Seats are not counted and not billed.'] },
+    { name: 'Data storage', plans: ['100 GB', '1 TB', 'Custom'],
+      desc: ['How much data you can keep in ReportPortal, split between the database (launches, tests, logs) and binary storage (attachments) in the ratio you need.'] },
+    { name: 'Data retention', plans: ['Up to 12 months', 'Up to 5 years', 'Custom'],
+      desc: ['How long test results stay available. Data is removed when the retention period or the storage limit is reached — whichever comes first.'] }
+  ]},
+
+  { title: 'Test management & reporting', items: [
+    { name: 'Test management', plans: [true, true, true], new: true,
+      descHtml: 'Folder-based test case library with a rich text editor and attachments, Test Plans, Manual Launches and Milestones — alongside your automated results in the same project.\n<a class="compare__description-anchor" href="#">Learn more</a>' },
+    { name: 'Test executions', plans: [true, REQ, REQ], new: true, premium: true,
+      desc: ['One unified view of every test case across automated and agentic launches, with filtering and export of detailed reports for further analysis.'] },
+    { name: 'Reporting & analytics', plans: [true, true, true], was: 'Real-time analytics',
+      descHtml: 'Real-time results, widgets and dashboards, plus historical trend analysis across releases — available while the launch is still running.\n<a class="compare__description-anchor" href="#">See all reporting features</a>' },
+    { name: 'REST API', plans: [true, true, true], was: 'Open reporting API',
+      descHtml: 'Push and pull test, user, project and statistics data — for PowerBI, Grafana or your own tooling.\n<a class="compare__description-anchor" href="#">Developer guides</a>' }
+  ]},
+
+  { title: 'AI analysis & release decisions', items: [
+    { name: 'MCP Server', plans: [true, true, true], new: true,
+      descHtml: 'Connects AI agents to your ReportPortal data — test structure, coverage and results — so they can work inside your pipeline without migration.\n<a class="compare__description-anchor" href="#">Learn more</a>' },
+    { name: 'AI failure reason detection', plans: [true, true, true], was: 'Auto analysis',
+      descHtml: 'ML models trained on your own history of investigated failures automatically triage new failed results and detect patterns across runs.\n<a class="compare__description-anchor" href="#">Learn more</a>' },
+    { name: 'Quality Gates', plans: [true, true, true], premium: true,
+      desc: ['Rule-based pass/fail verdicts on top of execution results, wired back into your CI/CD pipeline as a feedback loop.'] }
+  ]},
+
+  { title: 'Integrations', items: [
+    { name: 'Test framework agents', plans: ['All included', 'All included', 'All included'],
+      descHtml: 'Official reporting agents for JUnit, TestNG, pytest, Playwright, Cypress, Jest, Cucumber, NUnit, RobotFramework and many more — every agent works on every plan.\n<a class="compare__description-anchor" href="#">All agents</a>' },
+    { name: 'Integrations', plans: [true, true, true],
+      descHtml: 'Bug tracking — Jira Server, Jira Cloud, Azure DevOps, GitLab, Monday, Rally.\nCI/CD — Jenkins, GitLab CI, GitHub Actions.\nNotifications — Email, Slack, Telegram.\nImport — JUnit, RobotFramework.\nPlus Sauce Labs and Mobitru for real-device sessions.\nAll of these are free plugins, included in the open source distribution.\n<a class="compare__description-anchor" href="#">All integrations</a>' },
+    { name: 'Microsoft Teams notifications', plans: [true, true, true], new: true, premium: true,
+      desc: ['Real-time updates on launch completion directly in your Teams channel. Unlike the Email, Slack and Telegram plugins, this one is part of the paid offering.'] }
+  ]},
+
+  { title: 'Security & access', items: [
+    { name: 'Role-based access control', plans: [true, true, true], was: 'Administration at Project Level',
+      desc: ['Assign roles per Organization and permissions per project: who can import, edit and delete data, and who can invite or remove users.'] },
+    { name: 'GitHub authentication', plans: [true, true, true],
+      desc: ['Sign in with GitHub OAuth. Free on every plan and part of the open source distribution.'] },
+    { name: 'Single sign-on (SSO)', plans: [false, true, true], premium: true, was: 'Single sign-on (SSO) authentication via OKTA SAML, Azure AD',
+      desc: ['Log in through your identity provider via SAML 2.0, with setup guides for Okta and Azure.'] },
+    { name: 'LDAP', plans: [false, true, true], premium: true, was: 'Authentication via LDAP or AD',
+      desc: ['Authenticate and authorise users against your existing company directory.'] },
+    { name: 'SCIM provisioning', plans: [false, REQ, REQ], premium: true,
+      desc: ['Automatically create, update and deactivate users and groups from your identity provider.'] },
+    { name: 'IP allowlist', plans: [false, true, true], was: 'IP whitelisting',
+      desc: ['Restrict access to your instance to a defined set of IP addresses, avoiding public exposure.'] },
+    { name: 'Site-to-site VPN', plans: [false, true, true],
+      desc: ['A private connection between your corporate network and the ReportPortal infrastructure.'] },
+    { name: 'Deployment region', plans: [false, true, true], was: 'Choosing deployment region',
+      desc: ['Pick the region your instance runs in — to meet data-residency requirements and cut network latency from your CI.'] },
+    { name: 'Database & monitoring access', plans: [false, REQ, REQ], was: 'Access to the database, ElasticSearch and monitoring',
+      desc: ['Direct access to your data in PostgreSQL and the OpenSearch index, plus alerts on instance performance issues.'] }
+  ]},
+
+  { title: 'Support & SLA', items: [
+    { name: 'Uptime commitment', plans: ['95%', '99%', '99%'], was: 'Service Level Availability',
+      desc: ['The minimum availability we commit to over a calendar year — a contractual floor, not a measured figure.\nFor reference, 95% works out to roughly 18 days over a year and 99% to about 4 days.'] },
+    { name: 'Support hours included', plans: ['5', '10', 'Dedicated specialist'], was: 'Technical Support Points',
+      desc: ['Pre-paid hours of Application Support specialist time for integration, configuration and feature questions.'] },
+    { name: 'Extra support', plans: ['$150/h', '$150/h', '$150/h'], was: 'Additional technical support',
+      desc: ['Once the included hours are used up, additional support is billed pay-as-you-go.'] },
+    { name: 'Free trial', plans: ['30 days', 'On Startup tier', 'On Startup tier'],
+      desc: ['30 days with no credit card required. The trial runs on the Startup tier and its limits apply.'] }
+  ]},
+
+  { title: 'Services & migration', items: [
+    { name: 'Data migration from self-hosted', plans: [false, true, true], was: 'Data migration from on-premises instance',
+      desc: ['We transfer your existing data from an in-house deployment into the cloud instance.'] },
+    { name: 'Backups to your own storage', plans: [false, true, true], was: 'Availability of backups to on-premises storage',
+      desc: ['Regular copies of your data delivered to your own infrastructure, when your security policy requires it.'] },
+    { name: 'Customization', plans: [ADDON, ADDON, true], was: 'Customization — ✗ / ✗ / ✓',
+      descHtml: 'Tailored functionality, views and workflows built for you: plugin and widget implementation, heavy UI customization, integration with a new test framework, and dedicated interfaces with custom business logic.\nIncluded on Enterprise; available on the other plans through Service Packages.\n<a class="compare__description-anchor" href="#">See Service Packages</a>' },
+    { name: 'Professional services', plans: [ADDON, ADDON, ADDON], was: 'Onboarding, training & custom development',
+      descHtml: 'ReportPortal training, help with day-to-day queries and support for your existing test framework.\nDeployment on AWS with the database, deployment into highly restricted or air-gapped environments, and performance monitoring configuration.\nDelivered through Service Packages and billed in support hours.\n<a class="compare__description-anchor" href="#">See Service Packages</a>' }
+  ]}
+];
+
+
+/* ==========================================================================
+   PRICING CARDS — shaped exactly like ContentfulOfferingPlan:
+   title · description · features (rich text) · isPopular · pricingInfo ·
+   price { currency, period, quarterly, yearly, yearlyDescription } · cta
+   Everything below is editable in the CMS unless marked otherwise.
+   ========================================================================== */
+const PLANS_CURRENT = [
+  {
+    title: 'Startup',
+    description: 'Access to a project space in a multi-tenant setup with all the premium \nfeatures included',
+    features: ['Free trial period of 30 days', '100 GB', 'Up to 12 months of data retention',
+               'Unlimited number of users', 'Shared instance', 'Premium features: \nQuality Gates'],
+    price: { currency: '$', period: 'month', quarterly: 599, yearly: 569 },
+    cta: { title: 'Start 30-day free trial', type: 'primary' },
+  },
+  {
+    title: 'Business', isPopular: true,
+    description: 'Dedicated instance for you only complemented by security hardening options, extended storage\nand retention policy',
+    features: ['Individual instance', '1 TB', 'Up to 5 years of data retention',
+               'Unlimited number of users', 'Free trial (Startup tier)', 'Premium features: \nQuality Gates'],
+    price: { currency: '$', period: 'month', quarterly: 2799, yearly: 2659 },
+    cta: { title: 'Contact us', type: 'primary' },
+  },
+  {
+    title: 'Enterprise',
+    description: 'Custom offering combined with SaaS business plan and packages \nof Managed services',
+    features: ['Individual instance + Services', 'Extended storage', 'Extended retention policy',
+               'Unlimited number of users', 'Free trial (Startup tier)', 'Premium features: \nQuality Gates'],
+    pricingInfo: 'Let\u2019s talk',
+    cta: { title: 'Get a quote', type: 'outline' },
+  },
+];
+
+/*  <b> = rich-text bold. In the proposed version bold drives the green highlight,
+    so it marks both the inheritance label and the trial line.                  */
+const PLANS_UPDATED = [
+  {
+    title: 'Startup',
+    description: 'A fully managed organization space\nfor multiple projects. We run hosting,\nbackups, monitoring and upgrades.',
+    features: ['<b>30-day free trial</b>',
+               'Shared instance',
+               '100 GB · 12 months retention',
+               'Test management & AI triage',
+               'Premium features: Quality Gates, Test executions, MS Teams'],
+    price: {
+      currency: '$', period: 'month', quarterly: 599, yearly: 569,
+      /* code delta 1 — field already in the GraphQL fragment, ignored by the component today */
+      quarterlyDescription: 'per month, billed quarterly,\nunlimited users',
+      yearlyDescription: 'per month, billed quarterly,\nunlimited users',
+    },
+    cta: { title: 'Start 30-day free trial', type: 'primary' },
+  },
+  {
+    title: 'Business', isPopular: true,
+    description: 'A dedicated instance with enterprise\nsecurity controls, extended storage\nand retention.',
+    features: ['Everything in <b>Startup</b>, upgraded:',
+               'Dedicated instance',
+               '1 TB · 5 years retention',
+               'Deployment region & IP allowlist',
+               'Premium features: Organizations, SSO, LDAP, SCIM'],
+    price: {
+      currency: '$', period: 'month', quarterly: 2799, yearly: 2659,
+      quarterlyDescription: 'per month, billed quarterly,\nunlimited users',
+      yearlyDescription: 'per month, billed quarterly,\nunlimited users',
+    },
+    cta: { title: 'Contact us', type: 'primary' },
+  },
+  {
+    title: 'Enterprise',
+    description: 'A custom offering that combines the\nBusiness plan with packages of\nManaged services.',
+    features: ['Everything in <b>Business</b>, upgraded:',
+               'Dedicated instance + Services',
+               'Custom storage & retention',
+               'Dedicated support specialist',
+               'Managed services & customization included'],
+    pricingInfo: 'Let\u2019s talk',
+    /* the caption carries the same two lines as the other cards, so the price
+       block is the same height and “Let’s talk” lines up with $569 / $2,659 */
+    price: {
+      quarterlyDescription: 'custom pricing for your team,\nunlimited users',
+      yearlyDescription: 'custom pricing for your team,\nunlimited users',
+    },
+    cta: { title: 'Get a quote', type: 'outline' },
+  },
+];
+
+let planType = 'yearly';
+
+function renderCards(plans) {
+  document.getElementById('cards').innerHTML = plans.map(p => `
+    <div class="pricing-card">
+      <div>
+        ${p.isPopular ? '<div class="pricing-card__popular">Top choice</div>' : ''}
+        <div class="pricing-card__title">${esc(p.title)}</div>
+        <div class="pricing-card__description">${esc(p.description)}</div>
+        <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      </div>
+      <div class="pricing-card__bottom-panel">
+        <div class="pricing-card__price">
+          ${p.pricingInfo
+            ? `<span class="pricing-card__price-value">${esc(p.pricingInfo)}</span>`
+            : `${/* code delta 3: show what the yearly rate saves against the quarterly one */''}
+               ${isUpdated() && planType === 'yearly' && p.price.quarterly > p.price.yearly
+                 ? `<span class="pricing-card__price-old">${p.price.currency}${p.price.quarterly.toLocaleString('en-US')}</span>`
+                 : ''}
+               <span class="pricing-card__price-value">${p.price.currency}${p.price[planType].toLocaleString('en-US')}</span>`}
+          ${/* code delta 1: the caption renders for a number and for “Let’s talk” alike */''}
+          ${p.price?.[planType + 'Description']
+            ? `<div class="pricing-card__price-period">${esc(p.price[planType + 'Description'])}</div>`
+            : p.price && !p.pricingInfo
+              ? `<div class="pricing-card__price-period">for package per ${esc(p.price.period)}</div>`
+              : ''}
+        </div>
+        <a class="btn btn--${p.cta.type} btn--large" href="#">${esc(p.cta.title)}</a>
+      </div>
+    </div>`).join('');
+}
+
+const NOTE = '*billed quarterly';
+const NOTE_LINK = { title: 'Terms & Conditions', href: '/legal/terms/' };
+const CTAS = [
+  { title: 'Start free trial', titleUpdated: 'Start 30-day free trial', type: 'outline' },
+  { title: 'Contact us', type: 'primary' },
+  { title: 'Get a quote', type: 'outline' }
+];
+
+const CHEVRON = '<svg class="rp-expand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 9.5L12 15l5.5-5.5" stroke="#2f3c5f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const MARK = '<span class="compare__mark-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Included"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#00b884" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+const CROSS = '<span class="compare__cross-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Not included"><path d="M7 7l10 10M17 7L7 17" stroke="#c3c8d5" stroke-width="2.2" stroke-linecap="round"/></svg></span>';
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* every link in the table points to another page — open in a new tab and announce it
+   with an icon plus screen-reader text */
+const EXT_ICON = '<svg class="ext-icon" width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.81846 4C7.4491 4 7.14967 4.29943 7.14967 4.66879C7.14967 5.03815 7.4491 5.33758 7.81846 5.33758H10.2166L3.69588 11.8583C3.43471 12.1195 3.43471 12.5429 3.69588 12.8041C3.95706 13.0653 4.38052 13.0653 4.6417 12.8041L11.1624 6.2834V8.68154C11.1624 9.0509 11.4618 9.35033 11.8312 9.35033C12.2006 9.35033 12.5 9.0509 12.5 8.68154V4.66879C12.5 4.29943 12.2006 4 11.8312 4H7.81846Z" fill="currentColor"/></svg>';
+const EXT_SR = '<span class="visually-hidden"> (opens in a new tab)</span>';
+const EXT_ATTRS = 'target="_blank" rel="noopener noreferrer"';
+
+const isUpdated = () => document.body.dataset.variant === 'updated';
+
+/* appends target/rel + the icon to every <a> inside a row description */
+const withExtIcon = html => !isUpdated() ? html : html.replace(
+  /<a class="([^"]*)" href="([^"]*)">([\s\S]*?)<\/a>/g,
+  (_, cls, href, text) => `<a class="${cls}" href="${href}" ${EXT_ATTRS}>${text}${EXT_ICON}${EXT_SR}</a>`,
+);
+
+function cell(v) {
+  if (typeof v === 'boolean') return v ? MARK : CROSS;
+  if (v && typeof v === 'object') {
+    if (v.t === 'addon') return `<div><a class="cell-addon" href="${v.href}" ${EXT_ATTRS}>${esc(v.label)}${EXT_ICON}${EXT_SR}</a></div>`;
+    if (v.t === 'req')   return `<div class="cell-req">${MARK}<span class="cell-req__note">${esc(v.label)}</span></div>`;
+  }
+  return `<div>${esc(v)}</div>`;
+}
+const cols = plans => plans.map(v => `<div class="compare__row-title-col">${cell(v)}</div>`).join('');
+
+function chips(item) {
+  let out = '';
+  if (item.premium)  out += '<span class="chip chip--premium">PREMIUM</span>';
+  else if (item.new) out += '<span class="chip chip--new">NEW</span>';
+  return out;
+}
+
+function descBody(item) {
+  const body = item.descHtml
+    ? withExtIcon(item.descHtml.split('\n').map(p => `<p>${p}</p>`).join(''))
+    : (item.desc || []).map(p => `<p>${esc(p)}</p>`).join('');
+  return body + (item.was ? `<div class="desc-meta">Previously: “${esc(item.was)}”</div>` : '');
+}
+
+const renderRow = (item, open) => `
+  <div class="rp-item" data-open="${open}">
+    <div class="rp-header" role="button" tabindex="0" aria-expanded="${open}">
+      ${CHEVRON}
+      <div class="rp-header-content">
+        <div class="compare__row">
+          <div class="compare__row-title-wrapper">
+            <div class="compare__row-title">${esc(item.name)}${chips(item)}</div>
+            <div class="compare__row-title-cols">${cols(item.plans)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rp-content"><div class="rp-content-box"><div class="compare__content">
+      <div class="compare__description compare__description-full-width">${descBody(item)}</div>
+    </div></div></div>
+  </div>`;
+
+const BADGE_NOTE = `
+  <div class="compare__badge-note">
+    <span class="chip chip--premium">PREMIUM</span>
+    <span>— these features are not part of the open source version. No extra charge on paid plans. <a class="compare__description-anchor" href="#premium-features" ${EXT_ATTRS}>See all Premium features${EXT_ICON}${EXT_SR}</a></span>
+  </div>`;
+
+const renderFooter = hasPremium => `
+  <div class="rp-item">${hasPremium ? BADGE_NOTE : ''}<div class="rp-footer">
+    <div class="rp-footer__note">
+      <a class="rp-footer__terms" href="${NOTE_LINK.href}"${isUpdated() ? ` ${EXT_ATTRS}` : ''}>${esc(NOTE_LINK.title)}${EXT_ICON}${isUpdated() ? EXT_SR : ''}</a>
+      <div>${esc(NOTE)}</div>
+    </div>
+    <div class="rp-footer__ctas">
+      ${CTAS.map(c => `<div class="rp-footer__cta"><a class="btn btn--${c.type}" href="#">${esc(isUpdated() && c.titleUpdated ? c.titleUpdated : c.title)}</a></div>`).join('')}
+    </div>
+  </div></div>`;
+
+/* in the current code the FIRST section heading is not rendered on desktop (sectionIndex !== 0) */
+function render(data, hideFirstSectionTitle) {
+  let first = true;
+  document.getElementById('table').innerHTML = data.map((section, si) => {
+    const head = (si === 0 && hideFirstSectionTitle)
+      ? ''
+      : `<div class="rp-item"><div class="rp-section-row">${esc(section.title)}</div></div>`;
+    const rows = section.items.map(item => { const h = renderRow(item, first); first = false; return h; }).join('');
+    return head + rows;
+  }).join('') + renderFooter(data.some(s => s.items.some(i => i.premium)));
+}
+
+const LEGEND = `
+  <h1 class="demo__h1">Pricing page — proposed changes</h1>
+  <p class="demo__lead">Everything below compares reportportal.io/pricing/saas as it ships today with the “Updated” tab. Switch tabs to see either version.</p>
+
+  <div class="demo__kpis">
+    <div class="demo__kpi"><div class="demo__kpi-val">2 → 7</div><div class="demo__kpi-lbl">Sections</div></div>
+    <div class="demo__kpi"><div class="demo__kpi-val">22 → 8</div><div class="demo__kpi-lbl">Rows in the largest section</div></div>
+    <div class="demo__kpi"><div class="demo__kpi-val">+10</div><div class="demo__kpi-lbl">Capabilities named on the pricing page for the first time</div></div>
+    <div class="demo__kpi"><div class="demo__kpi-val">−25%</div><div class="demo__kpi-lbl">Table height, without hiding a single row</div></div>
+  </div>
+
+  <div class="demo__card">
+    <h3>What changed &amp; why</h3>
+    <p class="sub">23 rows in 2 sections → 33 rows in 7 sections</p>
+    <table class="demo__t">
+      <tr><th style="width:34%">Change</th><th>Why</th></tr>
+      <tr><td>Split into 7 semantic sections</td><td>One 22-row bucket mixed quotas, security, support and product features. Buyers scan by category, not alphabetically.</td></tr>
+      <tr><td>Dissolved “Premium features”</td><td>It held a single row (Quality Gates) that was available on every plan — the word “premium” signalled nothing.</td></tr>
+      <tr><td>Users reads “Unlimited”, not a ✓</td><td>The row was three checkmarks and the name repeated the value (“Unlimited number of users”). A checkmark answers “does this exist”; the word answers the question people actually have — “is there a cap?”. Same treatment for Project spaces.</td></tr>
+      <tr><td>Added “AI analysis &amp; release decisions”</td><td>MCP Server, AI failure reason detection and Quality Gates ship today but appeared nowhere in pricing. Not called “automation” — Quality Gates is a rule engine producing a go/no-go verdict, not an automation feature. Five of six competitors list AI explicitly.</td></tr>
+      <tr><td>Added Test management</td><td>Our flagship TMS capability — free and in open source — was invisible to anyone comparing plans.</td></tr>
+      <tr><td>Services are sellable from the table</td><td>The site has one “Customization” row at ✗/✗/✓ and no mention of Service Packages at all. Customization now reads Add-on/Add-on/✓ — the work is buyable on any plan — and a Professional services row lists what the packages actually cover: training, deployment help, air-gapped installs, monitoring setup.</td></tr>
+      <tr><td>Integrations added</td><td>The table never mentioned a single integration — not the framework agents, not Jira, not CI. Three rows now cover it: framework agents (“All included”, no count to keep in sync), one catch-all row naming every plugin in its description, and Microsoft Teams on its own because it is the only paid one.</td></tr>
+      <tr><td>Buyer-facing naming</td><td>“Administration at Project Level” → Role-based access control · “IP whitelisting” → IP allowlist · “Auto analysis” → AI failure reason detection · “Authentication via LDAP or AD” → LDAP, Active Directory is being dropped · “Service Level Availability” → Uptime commitment · “Compare packages” → Compare plans, matching the SaaS Plans tab.</td></tr>
+      <tr><td>Uptime stated in days, not just a percentage</td><td>“Service Level Availability … a minimum percentage of service uptime in a year” left the reader to work out what 95% costs them. The row now says it is a contractual floor rather than a measured figure, and converts it: roughly 18 days a year at 95%, about 4 at 99%. That also turns a defensive number into the strongest upgrade argument in the table.</td></tr>
+      <tr><td>“Extended” → “Custom”</td><td>Enterprise storage and retention read “Extended storage” / “Extended retention policy”, which states no quantity. Competitors write “Unlimited” or “No limit”; ours are negotiated, so “Custom” is the accurate word.</td></tr>
+      <tr><td>Added the PREMIUM badge</td><td>The table has no badges today. This one is existing product vocabulary — the Instance plugins screen already badges LDAP Auth, SAML Auth, Teams and Test Executions as PREMIUM. Reusing it keeps product and pricing page consistent for the open-source users who make up the top of the funnel. The footnote under the table removes the “costs extra” reading without overclaiming: premium features are outside the open source distribution, availability is what the columns already show, and where a plan includes them they cost nothing extra. The footnote also links to the full premium feature list in the docs — that page is planned for the next documentation release, so the URL is still a placeholder.</td></tr>
+      <tr><td>New cell states</td><td><span class="cell-addon">Add-on</span> is a plain text link to Service Packages — no new UI element, it reuses the link style already in the table. “Upon request” now renders as a ✓ with the note underneath — the feature is available, it just needs to be switched on, instead of reading like a hidden cost.</td></tr>
+      <tr><td>Every link opens in a new tab, and says so</td><td>All links in the table now carry an external-link icon, <code>rel="noopener"</code> and a screen-reader note. Losing the pricing page mid-comparison is a real drop-off risk, and an icon alone tells a screen reader nothing.</td></tr>
+      <tr><td>Description 33% → 720px, 14px → 16px</td><td>Width per the Figma spec — long descriptions ran eight lines in a narrow column with two thirds of the row empty. 16px is the existing <code>font-scale('base')</code> step, paired with its own 24px leading; at that size 720px holds ~80 characters, inside the comfortable reading range.</td></tr>
+      <tr><td>Column values 24px → 20px leading</td><td>Per the Figma spec — tightens rows where a value wraps to two lines.</td></tr>
+      <tr><td>Row pitch 80px → 60px</td><td>Row titles were 20px regular — heading-sized. Now 16px semi-bold, both existing steps of the type scale, with padding at 12px instead of 19px. Section headings and the footer tightened to match. The table loses roughly a full screen of scroll without hiding a single row. Competitors run 40–64px pitch; none of the six puts an expandable description in the row at all.</td></tr>
+      <tr><td>Horizontal padding 54px → 32px, “Features” on the section-heading axis</td><td>Follows the vertical tightening. “Features” now sits on the same left edge as the section headings and the <code>*billed quarterly</code> note, instead of being indented by the chevron gutter.</td></tr>
+      <tr><td>Section headings reuse the nav style</td><td>Same rule as <code>.section-list__title</code> in the navigation menu — Poppins semi-bold, 14px, uppercase, <code>--text-service</code>. One eyebrow style across the site instead of two.</td></tr>
+      <tr><td>Footer CTAs equal width, equal gaps</td><td>Buttons fill their column, so all three match. The gap comes from cell padding rather than a grid <code>gap</code>, which would nudge the outer two off the plan-column axis.</td></tr>
+      <tr><td>Sticky table header</td><td>Plan names stay visible while scrolling 33 rows. It cannot simply be <code>top: 0</code> — the site nav hides on scroll down and slides back on scroll up, so the header would be covered. Its offset is bound to the nav state and should read the existing <code>useScrollDirection</code> hook rather than a second scroll listener.</td></tr>
+    </table>
+    <div class="demo__note">
+      Fixed along the way — <b>Project spaces / Business</b> showed “Multiple” although there is no limit (our most expensive self-serve tier was understating itself), and
+      <b>“ElasticSearch”</b> was corrected to <b>OpenSearch</b>, which is what actually ships.
+    </div>
+  </div>
+
+  <div class="demo__card">
+    <h3>How competitors present pricing</h3>
+    <p class="sub">Reviewed August 2026 — pricing pages of the six closest tools</p>
+    <table class="demo__t">
+      <tr>
+        <th style="width:20%">Tool</th><th class="num">Sections</th><th class="num">AI / MCP row</th>
+        <th class="num">“Add-on” state</th><th class="num">Free tier</th><th>Pricing model</th>
+      </tr>
+      <tr><td>Qase</td><td class="num">8</td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="yes">Yes</span></td><td>$35 / seat / mo</td></tr>
+      <tr><td>TestRail</td><td class="num">6</td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="no">No</span></td><td>$37–74 / seat / mo</td></tr>
+      <tr><td>Testmo</td><td class="num">5</td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="no">No</span></td><td class="num"><span class="no">No</span></td><td>$99–599 per 25 users</td></tr>
+      <tr><td>Currents</td><td class="num">11</td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="no">No</span></td><td class="num"><span class="no">No</span></td><td>Usage — per test result</td></tr>
+      <tr><td>BrowserStack Test Management</td><td class="num">n/a</td><td class="num"><span class="yes">Yes</span></td><td class="num"><span class="no">No</span></td><td class="num"><span class="yes">Yes</span></td><td>Free ≤5 users · $149–249 / mo per 5 users</td></tr>
+      <tr><td>Allure TestOps</td><td class="num">—</td><td class="num"><span class="no">No</span></td><td class="num"><span class="no">No</span></td><td class="num"><span class="no">No</span></td><td>$30–39 / seat / mo</td></tr>
+      <tr class="us"><td>ReportPortal</td><td class="num">2 → 7</td><td class="num">none → 3 rows</td><td class="num">none → yes</td><td class="num">Self-host</td><td>$569–2,659 per instance</td></tr>
+    </table>
+    <ul class="demo__take">
+      <li><b>Grouping is the norm.</b> Every competitor with a plan-comparison table uses 5–11 semantic sections. We used 2.</li>
+      <li><b>AI is table stakes on the pricing page.</b> Five of six name AI or MCP explicitly. BrowserStack ships eight named AI agents, including Test Case Generator and Test Failure Analysis. We shipped AI triage and MCP and listed neither.</li>
+      <li><b>BrowserStack is the sharpest pressure on our Startup tier.</b> Free for up to 5 users with unlimited test cases and projects, 10 GB storage, AI test-case generation and two-way Jira binding. Our Startup is $569/mo — the table has to justify that gap explicitly, not imply it.</li>
+      <li><b>BrowserStack does not compare its own plans — it compares itself to competitors.</b> Their headline table is “BrowserStack Free Plan vs Other Test Management Tools”. Aggressive, and worth knowing they aim it at tools like us.</li>
+      <li><b>A third cell state is standard.</b> Qase and TestRail use “Add-on” to sell services from inside the table — for us that is Service Packages.</li>
+      <li><b>Per-instance pricing is our differentiator.</b> Everyone else charges per seat or per user block. Unlimited users is a real advantage and deserves a named row.</li>
+      <li><b>Allure TestOps has no compare table at all</b> — just a per-seat price list. Closest competitor by product, weakest pricing page.</li>
+    </ul>
+    <div class="demo__note">
+      Sources — vendor pricing pages, read August 2026. BrowserStack tier prices come from third-party trackers:
+      their pricing page is product-tabbed and too large to parse reliably, so treat $149 / $249 as indicative and confirm before quoting externally.
+    </div>
+  </div>
+
+
+  <div class="demo__card">
+    <h3>How competitors build plan cards</h3>
+    <p class="sub">Same six tools, looking at the cards rather than the compare table</p>
+    <table class="demo__t">
+      <tr>
+        <th style="width:30%">Pattern</th><th style="width:38%">Who uses it</th><th>Where we stand</th>
+      </tr>
+      <tr><td>Inheritance label</td><td>Qase · TestRail · n8n</td><td>Missing — three of our six bullets repeat across all cards. We use “upgraded:” rather than “plus:”, because 1 TB replaces 100 GB, it does not add to it. Qase and n8n both get this wrong; TestRail avoids it by keeping quotas out of the cards entirely.</td></tr>
+      <tr><td>Billing term next to the price</td><td>Qase “$42 billed monthly” · n8n “20€/mo, billed annually”</td><td>Missing — and it matters more for us than for them: invoicing is quarterly on every plan, so the number on the card is a third of what the first invoice will be</td></tr>
+      <tr><td>Per-unit price on the card</td><td>All six — per seat, per user, or per user block</td><td>We are the only per-package price. Without naming the unit the number is not comparable</td></tr>
+      <tr><td>Two CTAs on the recommended plan</td><td>TestRail — “Talk to sales” + “Start Free Trial”</td><td>Missing — our TOP CHOICE plan has only “Contact us”</td></tr>
+      <tr><td>Trial reassurance microcopy</td><td>n8n “No credit card required” · Qase “no obligation or credit card”</td><td>Missing</td></tr>
+      <tr><td>Separate “Add-ons” block</td><td>Qase — collaborator seats, dedicated cluster, custom domain</td><td>Missing — Service Packages appear nowhere on the cards</td></tr>
+      <tr><td>Headline usage metric</td><td>n8n prints executions larger than the feature list</td><td>Our equivalent is unlimited users, and it is not surfaced</td></tr>
+      <tr><td>Free or entry tier on the card</td><td>Qase · BrowserStack (free up to 5 users)</td><td>Ours is open source, and the cards never mention it</td></tr>
+    </table>
+    <ul class="demo__take">
+      <li><b>The unit is the whole argument.</b> Every competitor card carries a per-seat price, so a reader converts ours into per-seat by instinct. At 30 people Qase is $1,050/mo and TestRail $1,110/mo against our $569 flat — we win, and the card never says so.</li>
+      <li><b>TestRail already solved our badge conflict.</b> Two CTAs on one card — sales for procurement, self-serve for the evaluator — removes the contradiction between TOP CHOICE and a “Contact us”-only path.</li>
+      <li><b>Qase’s add-ons block is the precedent for Service Packages.</b> They sell collaborator seats and dedicated clusters from the card, not only from the table.</li>
+      <li><b>Nobody publishes an uptime percentage on a pricing page.</b> All six use “SLA” to mean support response time — Qase 24/5, TestRail 2-hour and 1-hour, n8n “dedicated support with SLA”. Uptime commitments sit in a Trust Center or the legal terms. Our 95% is 18 days of allowed downtime a year and 99% about 4, against the 99.9% buyers treat as the default — a number that loses deals and never wins one. It stays in the table and is not carried onto the cards — and it is now spelled out in days, because the reader does that arithmetic anyway. Stated plainly it also turns into an upgrade argument: roughly 18 days a year down to about 4 is a fivefold improvement, which reads far stronger than “95% → 99%”.</li>
+      <li><b>“Extended” is not a quantity.</b> Qase writes “Unlimited”, TestRail “No Limit” with a footnote, n8n “Unlimited”, BrowserStack “lifetime retention”. Enterprise storage and retention are negotiated, so “Custom” is the honest word — “up to unlimited” contradicts itself.</li>
+      <li><b>The Quarterly/Yearly switch is a commitment term, not a billing cadence.</b> Invoicing is quarterly on every plan, so the caption reads the same in both states — the switch changes the rate, not how you are billed. Worth saying on the card: $569 shown, $1,707 invoiced.</li>
+      <li><b>“Let’s talk” is fine</b> — Qase uses the same words, but pairs it with “Custom pricing for your team” so the price slot carries information instead of repeating the button.</li>
+    </ul>
+  </div>
+
+  <div class="demo__card">
+    <h3>Still to decide</h3>
+    <table class="demo__t">
+      <tr><td style="width:34%">Code changes required</td><td>First section heading is hidden on desktop (<code>sectionIndex !== 0</code>) · <code>Add-on</code> and “✓ + Upon request” cell states in <code>Columns.tsx</code> · description width and size in <code>ComparePlans.scss</code> · external-link icon and <code>target</code>/<code>rel</code> on the rich-text renderer · Terms link in the table footer · footer aligned to the chevron gutter · both heading strings</td></tr>
+      <tr><td>Plan cards — code needed</td><td><b>1.</b> Wire up <code>price.yearlyDescription</code> / <code>quarterlyDescription</code>. Both are already requested in the GraphQL fragment and ignored by <code>PricingCard.tsx</code>, which hardcodes “for package per month”. That one field carries the strongest argument on the page — unlimited users, no per-seat pricing. <b>2.</b> Replace the positional green-bullet rule in <code>PricingCards.scss</code> (<code>&gt; div:first-child li:first-child</code>) with one driven by rich-text bold, so the editor picks the highlighted line and it survives reordering. Everything else on the cards — titles, descriptions, all bullets, prices, badge, CTA labels and button types — is Contentful only.</td></tr>
+      <tr><td>Plan cards — clean the data before shipping delta 1</td><td><code>PricingCard</code> is shared by Service Packages, the three accelerator pages and Sponsors. <code>pricingInfo</code> is set on exactly one plan in the whole space — SaaS Enterprise — so the “caption next to Let’s talk” change touches nothing else. But <code>quarterlyDescription</code> / <code>yearlyDescription</code> are already filled on <b>[SaaS] Startup Plan</b> with stale copy from the old per-user model: <code>{{currency}}20 per user</code> and <code>{{currency}}19 per user</code>. Wire the fields up without clearing those and the live Startup card starts showing “$20 per user” under $569. Also note the <code>{{currency}}</code> placeholder is not handled anywhere in the code — it would render literally.</td></tr>
+      <tr><td>Plan cards — the component is shared</td><td><code>PricingCard</code> also renders Service Packages and the three accelerator pages through <code>OfferPageWrapper</code>. Checked each proposed change against them: the price caption falls back to the hardcoded string because only <code>[SaaS] Startup Plan</code> has those fields filled; the “Let’s talk” caption never fires because <code>pricingInfo</code> exists on one plan only; the struck-through price never fires because Silver, Gold and Platinum store <code>quarterly: 0</code> — the condition is written as <code>quarterly &gt; yearly</code> so it stays correct if someone fills that field later. One rule needs care: <b>the green highlight must be scoped to <code>.pricing-cards li b</code></b>. Service Packages puts its big “50 / 150 / 600” numbers in <code>&lt;b&gt;</code> inside <code>__features &gt; p</code>, so a bare <code>b</code> selector would turn them green.</td></tr>
+      <tr><td>Plan cards — product decision</td><td><code>TOP CHOICE</code> sits on Business while its CTA is “Contact us”: the plan we recommend has the highest-friction path, and the badge fights the button. Either Business gets a self-serve trial or the badge moves.</td></tr>
+      <tr><td>Contentful stays as it is</td><td>The <code>plans</code> field is still one JSON string per row. A compound cell is just an object inside that array — <code>[false, {"value": true, "note": "Upon request"}, …]</code> — so <code>JSON.parse</code> keeps working and no content type changes.</td></tr>
+      <tr><td>Everything else</td><td>Renaming, regrouping, new rows and cell values are Contentful-only — no release needed</td></tr>
+      <tr><td>Badges</td><td>Both reuse the existing nav badge — <code>.section-list-badge</code> in <code>SectionList.scss</code>. Extract it into a shared component instead of duplicating the styles. <span class="chip chip--new">NEW</span> uses <code>--graphics-jade</code>, <span class="chip chip--premium">PREMIUM</span> uses <code>--graphics-orchid</code>; both variables already exist in <code>css-variables.scss</code>, so nothing new needs adding.</td></tr>
+      <tr><td>Heading wording</td><td>“Compare packages” is hardcoded in <code>ComparePlans.tsx</code>, while the mobile label in the same file already says “Compare plans”. Both need to say Compare plans.</td></tr>
+    </table>
+  </div>`;
+
+const table = document.getElementById('table');
+const toggle = item => {
+  const open = item.dataset.open !== 'true';
+  item.dataset.open = String(open);
+  item.querySelector('.rp-header').setAttribute('aria-expanded', String(open));
+};
+table.addEventListener('click', e => {
+  if (e.target.closest('.compare__description-anchor, .cell-addon')) return;
+  const h = e.target.closest('.rp-header'); if (h) toggle(h.closest('.rp-item'));
+});
+table.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const h = e.target.closest('.rp-header'); if (h) { e.preventDefault(); toggle(h.closest('.rp-item')); }
+});
+
+const PRESETS = {
+  current: { data: CURRENT, cards: PLANS_CURRENT, hideFirst: true,  width: 360, descLh: 24, colLh: 24 },
+  updated: { data: UPDATED, cards: PLANS_UPDATED, hideFirst: false, width: 720, descLh: 24, colLh: 20 },
+  analysis: { width: 720, descLh: 24, colLh: 20 }
+};
+const root = document.documentElement;
+
+function applyVariant(name) {
+  const p = PRESETS[name];
+  document.body.dataset.variant = name;
+  document.querySelectorAll('#variantSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.variant === name)));
+  if (name !== 'analysis') {
+    document.getElementById('compareTitle').textContent = name === 'updated' ? 'Compare plans' : 'Compare packages';
+  }
+  if (p.cards) renderCards(p.cards);
+  if (p.data) render(p.data, p.hideFirst);
+  root.style.setProperty('--desc-width', p.width + 'px');
+  root.style.setProperty('--desc-line-height', p.descLh + 'px');
+  root.style.setProperty('--col-line-height', p.colLh + 'px');
+  document.getElementById('legend').innerHTML = name === 'analysis' ? LEGEND : '';
+}
+
+document.getElementById('planSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  planType = b.dataset.plan;
+  document.querySelectorAll('#planSeg button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.plan === planType)));
+  renderCards(PRESETS[document.body.dataset.variant].cards);
+});
+
+document.getElementById('variantSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (b) applyVariant(b.dataset.variant);
+});
+
+applyVariant('current');
+
+/* ── shadow appears once the table header sticks ── */
+const tabHeader = document.getElementById('tabHeader');
+function onScroll() {
+  tabHeader.classList.toggle('compare__tab-header--stuck', tabHeader.getBoundingClientRect().top <= 1);
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+</script>
+</body>
+</html>

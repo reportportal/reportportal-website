@@ -17,14 +17,14 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     step: '02',
     title: 'Plan',
     description:
-      'Organise test cases, assign ownership, and set up quality gates so every sprint starts with clear objectives.',
+      'Organize test cases into milestones and test plans, and track coverage so every sprint starts with clear objectives.',
     agenticNote: 'Agents assist in scoping and prioritizing what to test next.',
   },
   {
     step: '03',
     title: 'Execute',
     description:
-      'Run automated and manual tests across any framework, environment, or CI/CD pipeline in real time.',
+      'Run manual and automated tests across any framework, environment, or CI/CD pipeline in real time.',
     agenticNote: 'Connects to your CI/CD — no migration needed.',
   },
   {

@@ -25,7 +25,7 @@ const BENEFITS_DATA = BENEFITS_ITEMS.map((item, index) => ({
 export const BenefitsBusiness: FC = () => (
   <AnimatedList
     title="Benefits for business"
-    subtitle="Empower QA Managers & Leads with AI agents that act on your behalf — across every stage of testing."
+    subtitle="Reduce testing costs, improve software quality, and accelerate releases — with AI agents that give QA Managers & Leads greater visibility, control, and confidence."
     data={BENEFITS_DATA}
   >
     <Link

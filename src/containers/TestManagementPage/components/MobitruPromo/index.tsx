@@ -19,10 +19,10 @@ export const MobitruPromo: FC = () => (
   <section className={getBlocksWith()}>
     <div className={classNames(getBlocksWith('__inner'), 'container')}>
       <div className={getBlocksWith('__text')}>
-        <h2 className={getBlocksWith('__title')}>Cloud devices for manual testing</h2>
+        <h2 className={getBlocksWith('__title')}>Cloud devices for your testing needs</h2>
         <p className={getBlocksWith('__subtitle')}>
           Access real iOS, Android, and desktop devices directly from your test session — no
-          hardware, no setup. All results are captured in ReportPortal automatically.
+          hardware, no setup.
         </p>
         <ul className={getBlocksWith('__bullets')}>
           {BULLETS.map(bullet => (

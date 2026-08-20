@@ -1,7 +1,6 @@
-import React, { FC, useCallback } from 'react';
-import { useAtom } from 'jotai';
+import React, { FC } from 'react';
 import classNames from 'classnames';
-import { createBemBlockBuilder, watchProductOverviewAtom } from '@app/utils';
+import { createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 
 import { ReleaseDecisionIllustration } from './components/ReleaseDecisionIllustration';
@@ -11,13 +10,6 @@ import './HeroSection.scss';
 const getBlocksWith = createBemBlockBuilder(['hero-section']);
 
 export const HeroSection: FC = () => {
-  const [, setWatchProductOverviewState] = useAtom(watchProductOverviewAtom);
-
-  const toggleVideoOpen = useCallback(
-    () => setWatchProductOverviewState(({ isOpen }) => ({ isOpen: !isOpen })),
-    [setWatchProductOverviewState],
-  );
-
   return (
     <section className={getBlocksWith()}>
       <div className={getBlocksWith('__bg')} />
@@ -47,6 +39,7 @@ export const HeroSection: FC = () => {
             >
               Start free trial
             </Link>
+            {/* Hidden until the new product overview video is recorded — EPMRPP-118544
             <button
               className={getBlocksWith('__watch-video')}
               onClick={toggleVideoOpen}
@@ -55,6 +48,7 @@ export const HeroSection: FC = () => {
               <span className={getBlocksWith('__play-icon')} aria-hidden="true" />
               <span>Watch video</span>
             </button>
+            */}
           </div>
         </div>
 

@@ -4,12 +4,7 @@ import { useScroll } from 'ahooks';
 import classNames from 'classnames';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
-import {
-  createBemBlockBuilder,
-  MEDIA_DESKTOP_SM,
-  iconsCommon,
-  DOCUMENTATION_URL,
-} from '@app/utils';
+import { createBemBlockBuilder, MEDIA_DESKTOP_SM, iconsCommon } from '@app/utils';
 import SuccessIcon from '@app/svg/success.inline.svg';
 import { Link } from '@app/components/Link';
 import { SupportedFrameworks } from '@app/components/SupportedFrameworks';
@@ -21,7 +16,7 @@ import { useScrollIntoViewHandler } from '@app/hooks/useScrollIntoViewHandler';
 import { FeaturesCta } from './components/FeaturesCta';
 import { EnterpriseIntegrationsSection } from './components/EnterpriseIntegrationsSection';
 import { FeatureIllustration } from './components/FeatureIllustration';
-import { FEATURES_LIST, NAVIGATION_LIST } from './constants';
+import { FEATURES_FAQ_ITEMS, FEATURES_LIST, NAVIGATION_LIST } from './constants';
 
 import './FeaturesPage.scss';
 
@@ -111,41 +106,6 @@ export const FeaturesPage: FC = () => {
 
     scrollIntoViewHandler(anchor.slice(1));
   };
-
-  const collapsableList = [
-    {
-      key: 1,
-      label: 'What is meant by "Premium feature"?',
-      children: (
-        <>
-          <p>
-            Premium feature is an advanced feature which comes on top of Free Open Source edition.
-            It comes at no cost with SaaS offering and included into the &quot;160&quot; Managed
-            Services package.
-          </p>
-          <p>
-            See the{' '}
-            <Link to={`${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures`} className="link">
-              List of features
-            </Link>{' '}
-            and their description.
-          </p>
-        </>
-      ),
-    },
-    {
-      key: 2,
-      label: 'What capabilities does Rest API provide?',
-      children: (
-        <p>
-          REST API enables users to easily integrate any testing framework or third-party tool with
-          ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
-          merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
-          update the statuses in the pipeline, generate custom reports and many more.
-        </p>
-      ),
-    },
-  ];
 
   return (
     <div className={getBlocksWith()}>
@@ -262,7 +222,7 @@ export const FeaturesPage: FC = () => {
       </div>
       <FeaturesCta />
       <div className={classNames(getBlocksWith('__faq'), 'container')}>
-        <Faq items={collapsableList} showMoreInfoLink={false} />
+        <Faq items={FEATURES_FAQ_ITEMS} showMoreInfoLink={false} />
       </div>
       <FooterContent>
         <div className={getBlocksWith('__banner')}>

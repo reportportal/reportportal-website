@@ -16,7 +16,7 @@ export const FEATURE_LIST: FeatureItem[] = [
   {
     iconKey: 'opensource',
     title: 'Free open source core',
-    description: 'Self-host for free — add premium features and plugins when you need them',
+    description: 'Self-host for free with available plugins — add premium features on demand',
   },
   {
     iconKey: 'community',

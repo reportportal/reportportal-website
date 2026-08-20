@@ -1272,6 +1272,20 @@
       animation: qgFadeIn 0.35s ease both 0.05s;
     }
   }
+
+  &__disclaimer {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-small);
+
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--text-service);
+
+    span {
+      display: block;
+    }
+  }
 }
 
 // ── Structural classes ────────────────────────────────────────────────────────

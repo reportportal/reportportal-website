@@ -154,6 +154,24 @@
 // Illustration wrapper — centres the scene card
 // ---------------------------------------------------------------------------
 
+.quality-gates-illus-wrap {
+  width: 100%;
+
+  &__disclaimer {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-small);
+
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    color: var(--text-service);
+
+    span {
+      display: block;
+    }
+  }
+}
+
 .quality-gates-illus {
   width: 100%;
   line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs

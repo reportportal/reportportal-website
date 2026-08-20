@@ -27,24 +27,24 @@ export const FAQ_ITEMS = [
     key: '5',
     label: 'Can I import test cases from TestRail, Xray, or other tools?',
     children:
-      'Import from popular formats such as CSV, TestRail XML, and Xray is on the roadmap. In the meantime, you can build and organise your test case library natively in ReportPortal using templates, folder hierarchies, and tags — or let AI agents generate an initial test suite based on your requirements.',
+      'Import from popular formats such as CSV, TestRail XML, and Xray is on the roadmap. In the meantime, you can build and organize your test case library natively in ReportPortal using templates, folder hierarchies, and tags — or let AI agents generate an initial test suite based on your requirements.',
   },
 ];
 
 export const BENEFITS = [
   {
-    id: 'unified-view',
-    title: 'Unified view',
+    id: 'coverage',
+    title: 'Coverage',
     description:
-      'See manual and auto tests in one dashboard. No more switching between tools to get the full picture.',
-    icon: '/svg/benefits/benefit-unified-view.svg',
+      'Track coverage across requirements and releases. Spot untested areas before they reach production.',
+    icon: '/svg/benefits/benefit-coverage.svg',
     iconColor: '#5577FF',
   },
   {
     id: 'no-extra-cost',
     title: 'No extra cost',
     description:
-      'Included in your ReportPortal instance. No additional licenses or subscriptions required. Available for free in the OpenSource version.',
+      'Included in your ReportPortal instance — no extra licenses. Free in the OpenSource version.',
     icon: '/svg/benefits/benefit-no-extra-cost.svg',
     iconColor: '#00B884',
   },
@@ -52,7 +52,7 @@ export const BENEFITS = [
     id: 'traceability',
     title: 'Traceability',
     description:
-      'Link bugs directly to your BTS for better tracking. Associate test cases to requirements and defects seamlessly to enhance your workflow.',
+      'Link failures directly to your Bug Tracking System and tie test cases to requirements and defects.',
     icon: '/svg/benefits/benefit-traceability.svg',
     iconColor: '#009DBB',
   },
@@ -60,7 +60,7 @@ export const BENEFITS = [
     id: 'ai-ready',
     title: 'AI-ready',
     description:
-      'Connect AI agents through MCP Server to enhance your manual and automated scope. ReportPortal shows all results in one view.',
+      'Connect AI agents via MCP to analyze test data, automate workflows, and surface actionable insights.',
     icon: '/svg/benefits/benefit-ai-ready.svg',
     iconColor: '#BB66E1',
   },
