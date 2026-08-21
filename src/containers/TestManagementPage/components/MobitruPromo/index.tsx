@@ -11,7 +11,7 @@ const getBlocksWith = createBemBlockBuilder(['mobitru-promo']);
 
 const BULLETS = [
   'Real mobile and tablet devices on iOS & Android',
-  'Cross-browser testing on Chrome, Firefox, Safari, and more',
+  'Cross-browser testing',
   'Network emulation and performance metrics included',
 ];
 
