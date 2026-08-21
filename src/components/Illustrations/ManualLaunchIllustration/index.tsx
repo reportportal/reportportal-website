@@ -251,7 +251,7 @@ export const ManualLaunchIllustration: FC = () => {
         >
           {/* ── Header ──────────────────────────────────────────────────── */}
           <div className="manual-launch__hdr">
-            <span style={{ fontSize: '15px', fontWeight: 800, color: '#1A2740', flex: 1 }}>
+            <span style={{ fontSize: '15px', fontWeight: 600, color: '#1A2740', flex: 1 }}>
               User Login — Successful
             </span>
 
@@ -263,7 +263,7 @@ export const ManualLaunchIllustration: FC = () => {
                     padding: '5px 14px',
                     borderRadius: '6px',
                     fontSize: '11px',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     cursor: 'default',
                     border: '1.5px solid #D4DAE6',
                     background: '#F0F2F5',
@@ -281,7 +281,7 @@ export const ManualLaunchIllustration: FC = () => {
                     padding: '5px 14px',
                     borderRadius: '6px',
                     fontSize: '11px',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     cursor: 'default',
                     border: '1.5px solid #C8373A',
                     background: '#C8373A',
@@ -296,7 +296,7 @@ export const ManualLaunchIllustration: FC = () => {
                     padding: '5px 14px',
                     borderRadius: '6px',
                     fontSize: '11px',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     cursor: 'default',
                     border: '1.5px solid #B2E4CE',
                     background: '#E8F7F0',
@@ -369,7 +369,7 @@ export const ManualLaunchIllustration: FC = () => {
                 }}
               >
                 <span style={{ fontSize: '8px', color: '#009DBB' }}>▼</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#2F3C5F' }}>Steps</span>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#2F3C5F' }}>Steps</span>
               </div>
               {/* Table header */}
               <div
@@ -423,7 +423,7 @@ export const ManualLaunchIllustration: FC = () => {
                   'manual-launch__step-row--visible': stepsVisible[0],
                 })}
               >
-                <span style={{ fontSize: '11px', fontWeight: 700, color: '#009DBB' }}>1</span>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#009DBB' }}>1</span>
                 <span style={{ fontSize: '10.5px', color: '#2F3C5F', lineHeight: 1.5 }}>
                   Navigate to the login page
                 </span>
@@ -459,7 +459,7 @@ export const ManualLaunchIllustration: FC = () => {
                   'manual-launch__step-row--visible': stepsVisible[1],
                 })}
               >
-                <span style={{ fontSize: '11px', fontWeight: 700, color: '#009DBB' }}>2</span>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#009DBB' }}>2</span>
                 <span style={{ fontSize: '10.5px', color: '#2F3C5F', lineHeight: 1.5 }}>
                   Enter a valid email in the email field
                 </span>
@@ -495,7 +495,7 @@ export const ManualLaunchIllustration: FC = () => {
                   'manual-launch__step-row--visible': stepsVisible[2],
                 })}
               >
-                <span style={{ fontSize: '11px', fontWeight: 700, color: '#009DBB' }}>3</span>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#009DBB' }}>3</span>
                 <span style={{ fontSize: '10.5px', color: '#2F3C5F', lineHeight: 1.5 }}>
                   Enter a valid password in the password field
                 </span>
@@ -531,7 +531,7 @@ export const ManualLaunchIllustration: FC = () => {
                   'manual-launch__step-row--visible': stepsVisible[3],
                 })}
               >
-                <span style={{ fontSize: '11px', fontWeight: 700, color: '#009DBB' }}>4</span>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#009DBB' }}>4</span>
                 <span style={{ fontSize: '10.5px', color: '#2F3C5F', lineHeight: 1.5 }}>
                   Click the &ldquo;Sign In&rdquo; button
                 </span>
@@ -573,7 +573,7 @@ export const ManualLaunchIllustration: FC = () => {
                 }}
               >
                 <span style={{ fontSize: '8px', color: '#009DBB' }}>▼</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#2F3C5F' }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#2F3C5F' }}>
                   Linked to BTS
                 </span>
               </div>
@@ -586,7 +586,7 @@ export const ManualLaunchIllustration: FC = () => {
                   flexWrap: 'wrap',
                 }}
               >
-                <span style={{ fontSize: '10px', fontWeight: 700, color: '#2F3C5F' }}>Issues:</span>
+                <span style={{ fontSize: '10px', fontWeight: 600, color: '#2F3C5F' }}>Issues:</span>
                 <span
                   className={classNames('manual-launch__bts-tag', {
                     'manual-launch__bts-tag--visible': btag1,
@@ -679,7 +679,7 @@ export const ManualLaunchIllustration: FC = () => {
                 }}
               >
                 <span style={{ fontSize: '8px', color: '#009DBB' }}>▼</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#2F3C5F' }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#2F3C5F' }}>
                   Execution Comment
                 </span>
               </div>

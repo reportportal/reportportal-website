@@ -1,0 +1,611 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+@keyframes sc-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sc-shieldIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sc-badgePop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.4);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes sc-cardBackL {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.95;
+  }
+}
+
+@keyframes sc-cardBackR {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.95;
+  }
+}
+
+@keyframes sc-cardFront {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes sc-rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sc-wideIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sc-titleIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sc-borderDraw {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: var(--perim);
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+.security-illus {
+  // Container — width = parent. JS ResizeObserver scales the .scene canvas
+  // inside via transform: scale() to fit this width. Height is set
+  // dynamically by JS based on NATURAL_H * scale.
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
+  font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif;
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Reset <strong> — AnimatedList globally applies Poppins 20px to strong,
+  // which bleeds into the illustration and breaks text layout.
+  strong {
+    line-height: inherit !important;
+    color: inherit;
+    font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif !important;
+    font-size: inherit !important;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Scene
+  // ---------------------------------------------------------------------------
+
+  .scene {
+    // Fixed natural size — scaled by JS via transform: scale() inside the
+    // parent .security-illus container. All inner children (.content,
+    // .dep-back-*, .soc, .shield-*) keep their pixel-perfect coordinates
+    // relative to this 640×504 canvas and scale uniformly.
+    position: relative;
+    width: 640px;
+    height: 504px;
+    border-radius: 14px;
+    transform-origin: top left;
+    animation: sc-fadeIn 0.35s ease both;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Shield fill SVG
+  // ---------------------------------------------------------------------------
+
+  .shield-svg {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 99%;
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: none;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Shield animated border
+  // ---------------------------------------------------------------------------
+
+  .shield-border-svg {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 95%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .shield-outer-border {
+    opacity: 0;
+    fill: none;
+    stroke: url('#borderGrad');
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+
+    &.draw {
+      animation: sc-borderDraw 1.4s cubic-bezier(0.25, 0.1, 0.2, 1) forwards;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SOC2 badge
+  // ---------------------------------------------------------------------------
+
+  .soc {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    box-shadow: 0 6px 24px rgb(10 90 160 / 0.35), 0 2px 8px rgb(10 90 160 / 0.2);
+    background: linear-gradient(160deg, #1a8fc8 0%, #0d6eaa 40%, #0a5a9a 100%);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.4);
+    cursor: default;
+
+    &.on {
+      animation: sc-badgePop 0.44s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+  }
+
+  .soc-a {
+    margin-bottom: 2px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    color: rgb(255 255 255 / 0.85);
+    font-size: 7.5px;
+    font-weight: 700;
+  }
+
+  .soc-line {
+    width: 36px;
+    height: 0.5px;
+    margin-bottom: 3px;
+    background: rgb(255 255 255 / 0.45);
+  }
+
+  .soc-s {
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Content area
+  // ---------------------------------------------------------------------------
+
+  .content {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 588px;
+    padding: 70px 0 18px;
+    transform: translateX(-50%);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Deployment cards
+  // ---------------------------------------------------------------------------
+
+  .dep-stage {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    height: 112px;
+  }
+
+  .dep-back {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 168px;
+    border: 0.5px solid #dde8f0;
+    border-radius: 10px;
+    padding: 12px 13px;
+    box-shadow: 0 2px 8px rgb(0 80 120 / 0.08);
+    background: #fff;
+    opacity: 0;
+    cursor: default;
+  }
+
+  .dep-back-l {
+    left: 28px;
+    transform: perspective(560px) rotateY(24deg) scale(1) translateY(14px);
+    transform-origin: right center;
+
+    &.on {
+      animation: sc-cardBackL 0.34s ease forwards;
+    }
+  }
+
+  .dep-back-r {
+    right: 28px;
+    transform: perspective(560px) rotateY(-24deg) scale(1) translateY(14px);
+    transform-origin: left center;
+
+    &.on {
+      animation: sc-cardBackR 0.34s ease forwards;
+    }
+  }
+
+  .dep-front {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 218px;
+    border: 0.5px solid #c4e4f2;
+    border-radius: 12px;
+    padding: 13px 15px;
+    box-shadow: 0 6px 22px rgb(0 120 180 / 0.14), 0 1px 4px rgb(0 80 120 / 0.08);
+    background: #fff;
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+    cursor: default;
+
+    &.on {
+      animation: sc-cardFront 0.38s cubic-bezier(0.22, 0.68, 0, 1.1) 0.01s forwards;
+    }
+  }
+
+  .dep-ico {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .di-n {
+    background: #f0f4f8;
+  }
+
+  .di-a {
+    background: #ddf0f8;
+  }
+
+  .dep-nm {
+    color: #8091a0;
+    font-size: 9.5px;
+    font-weight: 700;
+  }
+
+  .dep-nm-a {
+    color: #005a7a;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .dep-desc {
+    line-height: 1.4;
+    color: #9faab8;
+    font-size: 8.5px;
+  }
+
+  .dep-desc-a {
+    color: #4a8a9a;
+    font-size: 9px;
+  }
+
+  .dep-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1px;
+    color: #009dbb;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  // ---------------------------------------------------------------------------
+  // History title
+  // ---------------------------------------------------------------------------
+
+  .hist-title {
+    width: 100%;
+    opacity: 0;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #8791ab;
+    font-size: 9px;
+    font-weight: 800;
+
+    &.on {
+      animation: sc-titleIn 0.3s ease forwards;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // User rows
+  // ---------------------------------------------------------------------------
+
+  .rows-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .urow {
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 8px 12px;
+    box-shadow: 0 1px 16px rgb(0 80 120 / 0.14);
+    background: #fff;
+    opacity: 0;
+    cursor: default;
+
+    &.on {
+      animation: sc-rowIn 0.28s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
+    }
+  }
+
+  .uav {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .av-ad {
+    background: #c8373a;
+  }
+
+  .av-mg {
+    background: #7c6bb0;
+  }
+
+  .av-ed {
+    background: #009dbb;
+  }
+
+  .av-vw {
+    background: #8791ab;
+  }
+
+  .u-name {
+    flex-shrink: 0;
+    width: 79px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #1a2740;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .u-pill {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    border-radius: 5px;
+    padding: 3px 0;
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  .rp-ad {
+    border: 0.5px solid #a8dcf0;
+    background: #eaf7fb;
+    color: #0081a7;
+  }
+
+  .rp-mg {
+    border: 0.5px solid #bbbfff;
+    background: #edeeff;
+    color: #45c;
+  }
+
+  .rp-ed {
+    border: 0.5px solid #8adcb4;
+    background: #e8f8f0;
+    color: #00915a;
+  }
+
+  .rp-vw {
+    border: 0.5px solid #c8d4dc;
+    background: #f2f4f6;
+    color: #6a7a8a;
+  }
+
+  .u-action {
+    flex: 1;
+    min-width: 0;
+    padding-left: 16px;
+    line-height: 1.4;
+    color: #3d5268;
+    font-size: 11px;
+
+    strong {
+      color: #2a3c54;
+      font-weight: 600;
+    }
+  }
+
+  .u-time {
+    flex-shrink: 0;
+    width: 64px;
+    margin-left: 10px;
+    text-align: right;
+    white-space: nowrap;
+    color: #9faab8;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Wide bottom card
+  // ---------------------------------------------------------------------------
+
+  .wide-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 0.5px solid #e4eef6;
+    border-radius: 9px;
+    padding: 8px 12px;
+    box-shadow: 0 1px 16px rgb(0 80 120 / 0.14);
+    background: rgb(255 255 255 / 0.9);
+    opacity: 0;
+    cursor: default;
+
+    &.on {
+      animation: sc-wideIn 0.3s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
+    }
+  }
+
+  .w-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border: 0.5px solid #f0c8c8;
+    border-radius: 50%;
+    background: #fef0f0;
+  }
+
+  .w-txt {
+    flex: 1;
+    color: #3d5268;
+    font-size: 11px;
+
+    strong {
+      color: #c8373a;
+      font-weight: 700;
+    }
+  }
+
+  .w-time {
+    flex-shrink: 0;
+    margin-left: 10px;
+    color: #9faab8;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Static mode — skip entrance animations, show final state immediately
+  // ---------------------------------------------------------------------------
+
+  &--static {
+    .scene {
+      opacity: 1;
+      animation: none;
+    }
+
+    // .shield-svg is always visible (opacity: 1), no override needed
+  }
+}

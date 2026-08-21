@@ -24,7 +24,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     step: '03',
     title: 'Execute',
     description:
-      'Run manual and automated tests across any framework, environment, or CI/CD pipeline in real time.',
+      'Run manual, automated and agentic tests across any framework, environment, or CI/CD pipeline.',
     agenticNote: 'Connects to your CI/CD — no migration needed.',
   },
   {

@@ -13,7 +13,7 @@ export const WhySection: FC = () => (
     <div className={classNames(getBlocksWith('__inner'), 'container')}>
       <h2 className={getBlocksWith('__title')}>Why ReportPortal?</h2>
       <p className={getBlocksWith('__subtitle')}>
-        The only platform that unifies Automation, Manual and Agentic testing — with connected AI
+        The only platform that unifies Automated, Manual and Agentic testing — with connected AI
         Agents that analyze, triage and report at every stage.
       </p>
 

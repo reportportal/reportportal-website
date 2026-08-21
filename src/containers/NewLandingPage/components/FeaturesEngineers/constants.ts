@@ -8,7 +8,7 @@ export const FEATURES_ITEMS = [
   {
     title: 'Single-entry point & unified test reporting',
     description:
-      'Centralize all your manual and automated test results in one place for a complete, unified view of your quality.',
+      'Centralize manual, automated and agentic test results for a unified view of your quality.',
     image: feature1,
     link: '/test-management/',
   },

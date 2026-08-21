@@ -1,0 +1,2191 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+// ── AI Agents Illustration keyframes ─────────────────────────────────────────
+
+@keyframes aiAgentsFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aiAgentsHubIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+
+  68% {
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes aiAgentsNodeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  68% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes aiAgentsChipIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+
+  65% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aiAgentsPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.18;
+  }
+}
+
+// ── AI Agents Illustration component ─────────────────────────────────────────
+
+.ai-agents-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  // ── Canvas (fixed 572×428, scaled via JS ResizeObserver) ─────────────────
+  &__canvas {
+    position: relative;
+    width: 572px;
+    height: 428px;
+    border-radius: 16px;
+    background: none;
+    overflow: visible;
+    animation: aiAgentsFadeIn 0.35s ease both 0.05s;
+  }
+
+  // ── MCP Hub circle ────────────────────────────────────────────────────────
+  &__mcp-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0 6px 28px rgb(85 44 170 / 0.38), 0 0 0 14px rgb(102 68 187 / 0.08),
+      0 0 0 28px rgb(102 68 187 / 0.04);
+    background: linear-gradient(148deg, #7c5dd4 0%, #5230a8 100%);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+
+  &__hub-icon {
+    margin-bottom: 8px;
+  }
+
+  &__hub-label {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    font-size: 14px;
+  }
+
+  &__hub-sub {
+    line-height: 1.3;
+    color: rgb(255 255 255 / 0.5);
+    font-size: 12px;
+  }
+
+  // ── Stage cards ───────────────────────────────────────────────────────────
+  &__stage-card {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    width: 196px;
+    border-radius: 20px;
+    padding: 13px 15px 13px 13px;
+    box-shadow: 0 6px 24px rgb(0 40 100 / 0.1), 0 1px 4px rgb(0 40 100 / 0.05);
+    background: var(--white);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  &__card-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__card-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 0.5px solid #d4dcf0;
+    border-radius: 8px;
+    background: #f0f5fb;
+  }
+
+  &__card-name {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+
+    flex: 1;
+    line-height: 1.15;
+    color: var(--text-primary);
+    font-size: 14px;
+  }
+
+  // ── Agent badge ───────────────────────────────────────────────────────────
+  &__agent-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 0.5px solid #d0bcfa;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: #f0eaff;
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  &__agent-dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9370d8;
+    animation: aiAgentsPulse 1.4s ease infinite;
+  }
+
+  &__agent-lbl {
+    white-space: nowrap;
+    color: #7a52c0;
+    font-size: 9.5px;
+    font-weight: 700;
+  }
+
+  // ── Card hint ─────────────────────────────────────────────────────────────
+  &__card-hint {
+    line-height: 1.5;
+    color: var(--text-service);
+    font-size: 11.5px;
+  }
+
+  // ── Reduced motion ────────────────────────────────────────────────────────
+  @media (prefers-reduced-motion: reduce) {
+    &__canvas {
+      animation: none;
+    }
+
+    &__agent-dot {
+      animation: none;
+    }
+  }
+}
+
+.feature-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
+
+  &__window {
+    border: 1px solid var(--purple-grey);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgb(47 60 95 / 0.08);
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  &__window-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--purple-grey);
+    padding: 10px 16px;
+    background: var(--bg-grey2);
+  }
+
+  &__dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-light-grey);
+
+    &:nth-child(1) {
+      background: #ff5f57;
+    }
+
+    &:nth-child(2) {
+      background: #febc2e;
+    }
+
+    &:nth-child(3) {
+      background: #28c840;
+    }
+  }
+
+  &__address-bar {
+    flex: 1;
+    height: 20px;
+    margin-left: 8px;
+    border: 1px solid var(--purple-grey);
+    border-radius: 4px;
+    background: var(--white);
+  }
+
+  &__content {
+    display: flex;
+    height: 300px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      height: 360px;
+    }
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 6px;
+    width: 140px;
+    border-right: 1px solid var(--purple-grey);
+    padding: 16px 12px;
+    background: var(--bg-grey2);
+  }
+
+  &__sidebar-item {
+    height: 28px;
+    border-radius: 6px;
+    background: var(--purple-grey);
+
+    &--active {
+      border-left: 3px solid var(--color-primary-700);
+      background: var(--color-primary-100);
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--purple-grey);
+    padding: 12px 16px;
+  }
+
+  &__toolbar-title {
+    width: 140px;
+    height: 16px;
+    border-radius: 4px;
+    background: var(--purple-grey);
+  }
+
+  &__toolbar-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__btn {
+    width: 72px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--purple-grey);
+
+    &--primary {
+      background: var(--color-primary-200);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 16px;
+    overflow: hidden;
+  }
+
+  &__row {
+    height: 36px;
+    border: 1px solid var(--purple-grey);
+    border-radius: 6px;
+    background: var(--bg-grey2);
+
+    &--highlight {
+      border-color: var(--color-primary-200);
+      background: var(--color-primary-100);
+    }
+  }
+}
+
+// ── Test Planning (Milestones) Illustration ───────────────────────────────────
+
+@keyframes msIlluFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes msIlluSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes msIlluExpandDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    max-height: 620px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes msIlluBarFill {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--bar-w);
+  }
+}
+
+@keyframes msIlluChevronRot {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+// ── Animated elements — hidden by default (desktop only) ────────────────────
+
+.ms-illu-expand {
+  overflow: hidden;
+}
+
+.ms-illu-chev {
+  display: inline-block;
+}
+
+@include m.breakpoint(v.$desktop-sm) {
+  .ms-illu-hdr,
+  .ms-illu-ms1,
+  .ms-illu-ms2,
+  .ms-illu-ms3,
+  .ms-illu-ms4,
+  .ms-illu-pr,
+  .ms-illu-ctp {
+    opacity: 0;
+  }
+
+  .ms-illu-expand {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .ms-illu-bar-fill {
+    width: 0;
+  }
+}
+
+// ── Canvas: --animate triggers all sequences ─────────────────────────────────
+
+.test-planning-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 4px 28px rgb(0 80 120 / 0.14);
+    overflow: hidden;
+  }
+
+  &__canvas {
+    display: flex;
+    width: 760px;
+    height: 564px;
+    overflow: hidden;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      opacity: 0;
+    }
+
+    &--animate {
+      @include m.breakpoint(v.$desktop-sm) {
+        animation: msIlluFadeIn 0.4s ease both 0.05s;
+
+        .ms-illu-hdr {
+          animation: msIlluSlideUp 0.4s ease both 0.15s;
+        }
+
+        .ms-illu-ms1 {
+          animation: msIlluSlideUp 0.38s ease both 0.3s;
+        }
+
+        .ms-illu-ms2 {
+          animation: msIlluSlideUp 0.38s ease both 0.5s;
+        }
+
+        .ms-illu-ms3 {
+          animation: msIlluSlideUp 0.38s ease both 0.7s;
+        }
+
+        .ms-illu-ms4 {
+          animation: msIlluSlideUp 0.38s ease both 0.9s;
+        }
+
+        .ms-illu-chev {
+          animation: msIlluChevronRot 0.3s ease both 1.15s;
+        }
+
+        .ms-illu-expand {
+          animation: msIlluExpandDown 0.55s cubic-bezier(0.22, 0.68, 0, 1.1) both 1.2s;
+        }
+
+        // col-hdr is nth-child(1), so PR rows start at nth-child(2)
+        .ms-illu-pr:nth-child(2) {
+          animation: msIlluSlideUp 0.28s ease both 1.4s;
+        }
+
+        .ms-illu-pr:nth-child(3) {
+          animation: msIlluSlideUp 0.28s ease both 1.52s;
+        }
+
+        .ms-illu-pr:nth-child(4) {
+          animation: msIlluSlideUp 0.28s ease both 1.63s;
+        }
+
+        .ms-illu-pr:nth-child(5) {
+          animation: msIlluSlideUp 0.28s ease both 1.74s;
+        }
+
+        .ms-illu-pr:nth-child(6) {
+          animation: msIlluSlideUp 0.28s ease both 1.85s;
+        }
+
+        .ms-illu-ctp {
+          animation: msIlluSlideUp 0.28s ease both 1.96s;
+        }
+
+        .ms-illu-bf1 {
+          animation: msIlluBarFill 0.6s ease both 1.5s;
+        }
+
+        .ms-illu-bf2 {
+          animation: msIlluBarFill 0.6s ease both 1.62s;
+        }
+
+        .ms-illu-bf3 {
+          animation: msIlluBarFill 0.6s ease both 1.73s;
+        }
+
+        .ms-illu-bf4 {
+          animation: msIlluBarFill 0.6s ease both 1.84s;
+        }
+
+        .ms-illu-bf5 {
+          animation: msIlluBarFill 0.6s ease both 1.95s;
+        }
+      }
+    }
+  }
+}
+
+// ── Structural helper classes ─────────────────────────────────────────────────
+
+.ms-illu-nb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+  border-radius: 5px;
+
+  &--on {
+    background: rgb(0 180 213 / 0.2);
+  }
+}
+
+.ms-illu-ms-row {
+  border: 0.5px solid #e8edf5;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgb(0 80 120 / 0.05);
+  background: #fff;
+  overflow: hidden;
+}
+
+.ms-illu-ms-hdr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: default;
+}
+
+.ms-illu-pill {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: 90px;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: default;
+}
+
+.ms-illu-pr-row {
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid #eef3f8;
+  padding: 9px 32px;
+}
+
+.ms-illu-col-hdr {
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid #dce9f0;
+  padding: 6px 32px;
+  background: #f0f6fa;
+}
+
+.ms-illu-cl {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8791ab;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.ms-illu-bar-track {
+  flex-shrink: 0;
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e4eef5;
+  overflow: hidden;
+}
+
+.ms-illu-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: #009dbb;
+}
+
+// ── Unified Reporting Illustration ───────────────────────────────────────────
+
+@keyframes urIlluFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes urIlluSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes urIlluRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes urIlluBarGrow {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--bar-w);
+  }
+}
+
+@keyframes urIlluChipPop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ── Animated elements — hidden by default (desktop only) ────────────────────
+
+@include m.breakpoint(v.$desktop-sm) {
+  .ur-illu-hdr,
+  .ur-illu-cov-section,
+  .ur-illu-ch1,
+  .ur-illu-ch2,
+  .ur-illu-ch3 {
+    opacity: 0;
+  }
+
+  .ur-illu-mc1,
+  .ur-illu-mc2,
+  .ur-illu-mc3,
+  .ur-illu-mc4 {
+    opacity: 0;
+  }
+
+  .ur-illu-seg--pass,
+  .ur-illu-seg--fail,
+  .ur-illu-seg--skip {
+    width: 0;
+  }
+
+  .ur-illu-seg--uncovered {
+    opacity: 0;
+  }
+
+  .ur-illu-res-row {
+    opacity: 0;
+  }
+}
+
+// ── Canvas: --animate triggers all sequences ─────────────────────────────────
+
+.unified-reporting-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 36px rgb(0 80 120 / 0.14);
+    overflow: hidden;
+  }
+
+  &__canvas {
+    display: flex;
+    width: 596px;
+    height: 424px;
+    overflow: hidden;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      opacity: 0;
+    }
+
+    &--animate {
+      @include m.breakpoint(v.$desktop-sm) {
+        animation: urIlluFadeIn 0.4s ease both 0.05s;
+
+        .ur-illu-hdr {
+          animation: urIlluSlideUp 0.4s ease both 0.1s;
+        }
+
+        .ur-illu-mc1 {
+          animation: urIlluChipPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.28s;
+        }
+
+        .ur-illu-mc2 {
+          animation: urIlluChipPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.38s;
+        }
+
+        .ur-illu-mc3 {
+          animation: urIlluChipPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.47s;
+        }
+
+        .ur-illu-mc4 {
+          animation: urIlluChipPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.56s;
+        }
+
+        .ur-illu-cov-section {
+          animation: urIlluSlideUp 0.38s ease both 0.28s;
+        }
+
+        .ur-illu-seg--pass {
+          animation: urIlluBarGrow 0.7s ease both 0.45s;
+        }
+
+        .ur-illu-seg--fail {
+          animation: urIlluBarGrow 0.45s ease both 0.62s;
+        }
+
+        .ur-illu-seg--skip {
+          animation: urIlluBarGrow 0.35s ease both 0.74s;
+        }
+
+        .ur-illu-seg--uncovered {
+          animation: urIlluFadeIn 0.4s ease both 0.85s;
+        }
+
+        .ur-illu-ch1 {
+          animation: urIlluSlideUp 0.3s ease both 0.5s;
+        }
+
+        .ur-illu-ch2 {
+          animation: urIlluSlideUp 0.3s ease both 0.54s;
+        }
+
+        .ur-illu-ch3 {
+          animation: urIlluSlideUp 0.3s ease both 0.58s;
+        }
+
+        .ur-illu-mr1 {
+          animation: urIlluRowIn 0.24s ease both 0.56s;
+        }
+
+        .ur-illu-mr2 {
+          animation: urIlluRowIn 0.24s ease both 0.65s;
+        }
+
+        .ur-illu-mr3 {
+          animation: urIlluRowIn 0.24s ease both 0.74s;
+        }
+
+        .ur-illu-mr4 {
+          animation: urIlluRowIn 0.24s ease both 0.83s;
+        }
+
+        .ur-illu-mr5 {
+          animation: urIlluRowIn 0.24s ease both 0.92s;
+        }
+
+        .ur-illu-mr6 {
+          animation: urIlluRowIn 0.24s ease both 1.01s;
+        }
+
+        .ur-illu-ar1 {
+          animation: urIlluRowIn 0.24s ease both 0.6s;
+        }
+
+        .ur-illu-ar2 {
+          animation: urIlluRowIn 0.24s ease both 0.69s;
+        }
+
+        .ur-illu-ar3 {
+          animation: urIlluRowIn 0.24s ease both 0.78s;
+        }
+
+        .ur-illu-ar4 {
+          animation: urIlluRowIn 0.24s ease both 0.87s;
+        }
+
+        .ur-illu-ar5 {
+          animation: urIlluRowIn 0.24s ease both 0.96s;
+        }
+
+        .ur-illu-ar6 {
+          animation: urIlluRowIn 0.24s ease both 1.05s;
+        }
+
+        .ur-illu-gr1 {
+          animation: urIlluRowIn 0.24s ease both 0.64s;
+        }
+
+        .ur-illu-gr2 {
+          animation: urIlluRowIn 0.24s ease both 0.73s;
+        }
+
+        .ur-illu-gr3 {
+          animation: urIlluRowIn 0.24s ease both 0.82s;
+        }
+
+        .ur-illu-gr4 {
+          animation: urIlluRowIn 0.24s ease both 0.91s;
+        }
+
+        .ur-illu-gr5 {
+          animation: urIlluRowIn 0.24s ease both 1s;
+        }
+
+        .ur-illu-gr6 {
+          animation: urIlluRowIn 0.24s ease both 1.09s;
+        }
+      }
+    }
+  }
+}
+
+// ── Structural helper classes ─────────────────────────────────────────────────
+
+.ur-illu-nb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+  border-radius: 5px;
+
+  &--on {
+    background: rgb(0 180 213 / 0.2);
+  }
+}
+
+.ur-illu-hdr {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 9px;
+  border-bottom: 0.5px solid #d8e4ee;
+  padding: 10px 16px;
+  background: #fff;
+}
+
+.ur-illu-m-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  border: 0.5px solid #e0eaf2;
+  border-radius: 7px;
+  padding: 7px 10px;
+  background: #f5f8fb;
+
+  &--pass {
+    border-color: #b8e8d0;
+    background: #f0fbf6;
+  }
+
+  &--fail {
+    border-color: #f0c8c8;
+    background: #fef4f4;
+  }
+
+  &--skip {
+    border-color: #d8e2ea;
+    background: #f4f6f8;
+  }
+}
+
+.ur-illu-m-val {
+  line-height: 1;
+  color: #1a2740;
+  font-size: 15px;
+  font-weight: 800;
+
+  &--pass {
+    color: #00916a;
+  }
+
+  &--fail {
+    color: #c8373a;
+  }
+
+  &--skip {
+    color: #8791ab;
+  }
+}
+
+.ur-illu-m-lbl {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8791ab;
+  font-size: 8.5px;
+  font-weight: 600;
+}
+
+.ur-illu-cov-section {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  border-bottom: 0.5px solid #d8e4ee;
+  padding: 10px 16px 12px;
+  background: #fff;
+}
+
+.ur-illu-seg {
+  flex-shrink: 0;
+  height: 100%;
+
+  &--pass {
+    background: #00b884;
+  }
+
+  &--fail {
+    background: #c8373a;
+  }
+
+  &--skip {
+    background: #c8d4dc;
+  }
+
+  &--uncovered {
+    flex: 1;
+    background: repeating-linear-gradient(135deg, #f0f5f8 0, #f0f5f8 3px, #e4eef5 3px, #e4eef5 6px);
+  }
+}
+
+.ur-illu-col {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  border-right: 0.5px solid #dce9f0;
+  overflow: hidden;
+
+  &--last {
+    border-right: none;
+  }
+}
+
+.ur-illu-col-hdr {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 0.5px solid #dce9f0;
+  padding: 7px 10px;
+  background: #f0f6fa;
+}
+
+.ur-illu-col-hdr-lbl {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #8791ab;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.ur-illu-badge {
+  flex-shrink: 0;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 8.5px;
+  font-weight: 700;
+
+  &--manual {
+    border: 0.5px solid #c8ceff;
+    background: #eef0ff;
+    color: #56c;
+  }
+
+  &--auto {
+    border: 0.5px solid #b2e4ee;
+    background: #ebf8fb;
+    color: #0081a7;
+  }
+
+  &--agent {
+    border: 0.5px solid #c8b4f0;
+    background: #f0eaff;
+    color: #64b;
+  }
+}
+
+.ur-illu-col-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.ur-illu-res-row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 0.5px solid #eef3f8;
+  padding: 8px 10px;
+}
+
+.ur-illu-res-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #2f3c5f;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.ur-illu-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  &--pass {
+    background: #00b884;
+  }
+
+  &--fail {
+    background: #c8373a;
+  }
+
+  &--skip {
+    background: #c8d4dc;
+  }
+}
+
+// ── AI Powered Analysis (Quality Gates) Illustration ─────────────────────────
+
+@keyframes qgFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes qgSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qgRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qgBarGrow {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--w);
+  }
+}
+
+@keyframes qgCheckDraw {
+  from {
+    stroke-dashoffset: 22;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes qgAiIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qgGoPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qgCirclePass {
+  0% {
+    box-shadow: inset 0 0 0 1.5px #c8d4dc;
+    background: #fff;
+  }
+
+  60% {
+    box-shadow: inset 0 0 0 1.5px #00b884;
+    background: #e8f9f1;
+  }
+
+  100% {
+    box-shadow: inset 0 0 0 1.5px #00b884;
+    background: #e8f9f1;
+  }
+}
+
+@keyframes qgCircleWarn {
+  0% {
+    box-shadow: inset 0 0 0 1.5px #c8d4dc;
+    background: #fff;
+  }
+
+  60% {
+    box-shadow: inset 0 0 0 1.5px #f5a623;
+    background: #fff4e6;
+  }
+
+  100% {
+    box-shadow: inset 0 0 0 1.5px #f5a623;
+    background: #fff4e6;
+  }
+}
+
+@keyframes qgRowWarn {
+  from {
+    background: #fff;
+  }
+
+  to {
+    background: #fffcf5;
+  }
+}
+
+@keyframes qgValWarn {
+  from {
+    border-color: #dde4ec;
+    background: #eef2f6;
+    color: #8797a8;
+  }
+
+  to {
+    border-color: #f5d08a;
+    background: #fff4e0;
+    color: #a06000;
+  }
+}
+
+// ── Component shell ───────────────────────────────────────────────────────────
+
+.ai-pa-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 36px rgb(0 80 120 / 0.14);
+    overflow: hidden;
+  }
+
+  &__canvas {
+    display: flex;
+    flex-direction: column;
+    width: 596px;
+    height: 472px;
+    background: #fff;
+    overflow: hidden;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      opacity: 0;
+      animation: qgFadeIn 0.35s ease both 0.05s;
+    }
+  }
+
+  &__disclaimer {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-small);
+
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--text-service);
+
+    span {
+      display: block;
+    }
+  }
+}
+
+// ── Structural classes ────────────────────────────────────────────────────────
+
+.qg-hdr {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 0.5px solid #e0eaf2;
+  padding: 14px 20px 13px;
+  background: #fff;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    animation: qgSlideUp 0.38s ease both 0.1s;
+  }
+}
+
+.qg-bar-wrap {
+  flex-shrink: 0;
+  border-bottom: 0.5px solid #e4eaf2;
+  padding: 12px 20px 13px;
+  background: #fafcfe;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    animation: qgSlideUp 0.35s ease both 0.2s;
+  }
+}
+
+.qg-seg {
+  flex-shrink: 0;
+  height: 100%;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    &--pass {
+      width: 0;
+      animation: qgBarGrow 0.7s ease both 0.42s;
+    }
+
+    &--fail {
+      width: 0;
+      animation: qgBarGrow 0.4s ease both 0.62s;
+    }
+
+    &--skip {
+      width: 0;
+      animation: qgBarGrow 0.3s ease both 0.76s;
+    }
+
+    &--uncov {
+      opacity: 0;
+      animation: qgFadeIn 0.3s ease both 0.88s;
+    }
+  }
+
+  &--pass {
+    --w: 58%;
+
+    width: var(--w);
+    background: #00916a;
+  }
+
+  &--fail {
+    --w: 10%;
+
+    width: var(--w);
+    background: #c8373a;
+  }
+
+  &--skip {
+    --w: 12%;
+
+    width: var(--w);
+    background: #c8d4dc;
+  }
+
+  &--uncov {
+    flex: 1;
+    background: repeating-linear-gradient(135deg, #f0f5f8 0, #f0f5f8 3px, #e4eef5 3px, #e4eef5 6px);
+  }
+}
+
+.qg-rules {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: #fff;
+}
+
+.qg-rule-row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 0.5px solid #eef3f8;
+  padding: 0 20px;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    opacity: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.qg-row--warn-bg {
+    animation: qgRowWarn 0.4s ease forwards;
+  }
+}
+
+.qg-light {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px #c8d4dc;
+  background: #fff;
+
+  &--pass {
+    animation: qgCirclePass 0.32s ease forwards;
+  }
+
+  &--warn {
+    animation: qgCircleWarn 0.32s ease forwards;
+  }
+}
+
+.qg-ck {
+  transition: none;
+  stroke-dasharray: 22;
+  stroke: #c8d4dc;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    stroke-dashoffset: 22;
+  }
+
+  .qg-light--pass & {
+    animation: qgCheckDraw 0.3s ease 0.1s forwards;
+    stroke: #00916a;
+  }
+
+  .qg-light--warn & {
+    opacity: 0;
+  }
+}
+
+.qg-dk {
+  opacity: 0;
+  transition: none;
+  stroke: #c8d4dc;
+
+  .qg-light--warn & {
+    opacity: 1;
+    stroke: #f5a623;
+  }
+}
+
+.qg-rule-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.qg-rule-name {
+  margin-bottom: 2px;
+  color: #2f3c5f;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.qg-rule-meta {
+  color: #a0adb8;
+  font-size: 9px;
+}
+
+.qg-rule-val {
+  flex-shrink: 0;
+  border: 0.5px solid #dde4ec;
+  border-radius: 4px;
+  padding: 2px 9px;
+  background: #eef2f6;
+  color: #8797a8;
+  font-size: 11px;
+  font-weight: 700;
+
+  &.qg-val--pass {
+    border-color: #b2e4ce;
+    background: #ebf9f3;
+    transition: color 0.3s, background 0.3s, border-color 0.3s;
+    color: #00916a;
+  }
+
+  &.qg-val--warn {
+    animation: qgValWarn 0.4s ease forwards;
+  }
+}
+
+.qg-ai-row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 7px;
+  border-top: 0.5px solid #e4eaf6;
+  padding: 9px 20px;
+  background: #fafbff;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    opacity: 0;
+  }
+}
+
+.qg-ai-badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 3px;
+  margin-top: 1px;
+  border: 0.5px solid #c8b4f0;
+  border-radius: 4px;
+  padding: 2px 7px;
+  background: #f0eaff;
+  white-space: nowrap;
+  color: #64b;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.qg-ai-text {
+  line-height: 1.55;
+  color: #5f7a8a;
+  font-size: 9.5px;
+}
+
+.qg-footer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 14px;
+  border-top: 0.5px solid #d8e4ee;
+  padding: 13px 20px;
+  background: #fff;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    opacity: 0;
+  }
+
+  &.qg-footer--show {
+    animation: qgGoPop 0.42s cubic-bezier(0.22, 0.68, 0, 1.1) forwards;
+  }
+}
+
+.qg-mini-lights {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+}
+
+.qg-ml {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #dde4ec;
+
+  &--amber {
+    background: radial-gradient(circle at 38% 34%, #ffd060, #f5a623);
+  }
+
+  &.qg-ml--on {
+    background: radial-gradient(circle at 38% 34%, #00e080, #00c272);
+  }
+}
+
+.qg-go-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.qg-go-label {
+  letter-spacing: 0.02em;
+  color: #1a2740;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.qg-go-sub {
+  margin-top: 2px;
+  color: #8797a8;
+  font-size: 12px;
+}
+
+.qg-ready-badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 9px;
+  border: 0.5px solid #7dcfab;
+  border-radius: 10px;
+  padding: 8px 16px 8px 12px;
+  background: #e8f9f1;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    opacity: 0;
+  }
+
+  &.qg-ready-badge--show {
+    animation: qgGoPop 0.44s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+}
+
+// ── Dashboards & Reporting Illustration ──────────────────────────────────────
+
+@keyframes drFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drChipPop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes drRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drBarGrow {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--w);
+  }
+}
+
+@keyframes drSecUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drPathDraw {
+  from {
+    stroke-dashoffset: 700;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drAreaFd {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drSegFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+// ── Default hidden states (desktop only) ─────────────────────────────────────
+
+@include m.breakpoint(v.$desktop-sm) {
+  .dr-hdr,
+  .dr-kpi,
+  .dr-area-w,
+  .dr-donut-w,
+  .dr-tbl-w,
+  .dr-tw-row,
+  .dr-chart-area {
+    opacity: 0;
+  }
+
+  .dr-chart-dots circle,
+  .dr-donut-segs circle {
+    opacity: 0;
+  }
+
+  .dr-chart-path {
+    stroke-dasharray: 700;
+    stroke-dashoffset: 700;
+  }
+
+  .dr-bar-f {
+    width: 0;
+  }
+}
+
+// ── Component shell ───────────────────────────────────────────────────────────
+
+.dr-illustration {
+  width: 100%;
+  line-height: 1.25; // illu-base — tuned to github.io base lh
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 4px 28px rgb(0 80 120 / 0.14);
+    overflow: hidden;
+  }
+
+  &__canvas {
+    display: flex;
+    flex-direction: column;
+    width: 596px;
+    height: 448px;
+    background: #f5f8fb;
+    overflow: hidden;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      opacity: 0;
+    }
+
+    &--animate {
+      @include m.breakpoint(v.$desktop-sm) {
+        animation: drFadeIn 0.4s ease both 0.05s;
+
+        .dr-hdr {
+          animation: drSlideUp 0.38s ease both 0.1s;
+        }
+
+        .dr-kpi:nth-child(1) {
+          animation: drChipPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.26s;
+        }
+
+        .dr-kpi:nth-child(2) {
+          animation: drChipPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.38s;
+        }
+
+        .dr-kpi:nth-child(3) {
+          animation: drChipPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.5s;
+        }
+
+        .dr-area-w {
+          animation: drSecUp 0.38s ease both 0.72s;
+        }
+
+        .dr-donut-w {
+          animation: drSecUp 0.38s ease both 0.86s;
+        }
+
+        .dr-tbl-w {
+          animation: drSecUp 0.38s ease both 0.98s;
+        }
+
+        .dr-chart-path {
+          animation: drPathDraw 0.95s ease both 0.76s;
+        }
+
+        .dr-chart-area {
+          animation: drAreaFd 0.45s ease both 1.5s;
+        }
+
+        .dr-chart-dots circle:nth-child(1) {
+          animation: drChipPop 0.2s ease both 1.58s;
+        }
+
+        .dr-chart-dots circle:nth-child(2) {
+          animation: drChipPop 0.2s ease both 1.66s;
+        }
+
+        .dr-chart-dots circle:nth-child(3) {
+          animation: drChipPop 0.2s ease both 1.74s;
+        }
+
+        .dr-chart-dots circle:nth-child(4) {
+          animation: drChipPop 0.2s ease both 1.82s;
+        }
+
+        .dr-chart-dots circle:nth-child(5) {
+          animation: drChipPop 0.2s ease both 1.9s;
+        }
+
+        .dr-chart-dots circle:nth-child(6) {
+          animation: drChipPop 0.25s ease both 1.98s;
+        }
+
+        .dr-chart-dots circle:nth-child(7) {
+          animation: drChipPop 0.2s ease both 2.06s;
+        }
+
+        .dr-donut-segs circle:nth-child(1) {
+          animation: drSegFade 0.32s ease both 0.88s;
+        }
+
+        .dr-donut-segs circle:nth-child(2) {
+          animation: drSegFade 0.32s ease both 1.04s;
+        }
+
+        .dr-donut-segs circle:nth-child(3) {
+          animation: drSegFade 0.32s ease both 1.17s;
+        }
+
+        .dr-donut-segs circle:nth-child(4) {
+          animation: drSegFade 0.32s ease both 1.29s;
+        }
+
+        .dr-tw-row:nth-child(1) {
+          animation: drRowIn 0.22s ease both 1.08s;
+        }
+
+        .dr-tw-row:nth-child(2) {
+          animation: drRowIn 0.22s ease both 1.16s;
+        }
+
+        .dr-tw-row:nth-child(3) {
+          animation: drRowIn 0.22s ease both 1.24s;
+        }
+
+        .dr-tw-row:nth-child(4) {
+          animation: drRowIn 0.22s ease both 1.32s;
+        }
+
+        .dr-tw-row:nth-child(1) .dr-bar-f {
+          --w: 100%;
+
+          animation: drBarGrow 0.5s ease both 1.22s;
+        }
+
+        .dr-tw-row:nth-child(2) .dr-bar-f {
+          --w: 75%;
+
+          animation: drBarGrow 0.5s ease both 1.3s;
+        }
+
+        .dr-tw-row:nth-child(3) .dr-bar-f {
+          --w: 53%;
+
+          animation: drBarGrow 0.5s ease both 1.38s;
+        }
+
+        .dr-tw-row:nth-child(4) .dr-bar-f {
+          --w: 37%;
+
+          animation: drBarGrow 0.5s ease both 1.46s;
+        }
+      }
+    }
+  }
+}
+
+// ── Structural classes ────────────────────────────────────────────────────────
+
+.dr-hdr {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  border-bottom: 0.5px solid #d8e4ee;
+  padding: 0 20px;
+  background: #fff;
+}
+
+.dr-hdr-title {
+  flex: 1;
+  color: #1a2740;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.dr-date-filter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 0.5px solid #d4dce8;
+  border-radius: 6px;
+  padding: 5px 10px;
+  background: #f4f8fa;
+  color: #5f7a8a;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.dr-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 6px;
+  padding: 6px 12px;
+  box-shadow: 0 2px 8px rgb(0 157 187 / 0.25);
+  background: #009dbb;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.dr-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.dr-kpi-row {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+  height: 46px;
+}
+
+.dr-kpi {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  border: 0.5px solid #e2ebf2;
+  border-radius: 8px;
+  padding: 6px 12px;
+  background: #fff;
+}
+
+.dr-kpi-lbl {
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #8791ab;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.dr-kpi-bottom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+}
+
+.dr-kpi-val {
+  line-height: 1;
+  font-size: 17px;
+  font-weight: 800;
+
+  &--dark {
+    color: #1a2740;
+  }
+
+  &--pass {
+    color: #00916a;
+  }
+}
+
+.dr-kpi-arrow {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.dr-charts-row {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+  height: 140px;
+}
+
+.dr-widget {
+  border: 0.5px solid #e2ebf2;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.dr-area-w {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 10px 12px 0;
+}
+
+.dr-donut-w {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 216px;
+  padding: 10px 13px;
+}
+
+.dr-w-title {
+  flex-shrink: 0;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8791ab;
+  font-size: 8.5px;
+  font-weight: 700;
+}
+
+.dr-donut-body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.dr-donut-svg {
+  flex-shrink: 0;
+  width: 104px;
+  height: 104px;
+}
+
+.dr-d-leg {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.dr-d-li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  span {
+    color: #5f7a8a;
+    font-size: 9px;
+    font-weight: 600;
+  }
+}
+
+.dr-d-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+
+  &--pass {
+    background: #00b884;
+  }
+
+  &--fail {
+    background: #c8373a;
+  }
+
+  &--skip {
+    background: #c8d4dc;
+  }
+
+  &--empty {
+    border: 0.5px solid #c8d4dc;
+    background: #e4eef5;
+  }
+}
+
+.dr-tbl-w {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border: 0.5px solid #e2ebf2;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.dr-tw-top {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-bottom: 0.5px solid #dce9f0;
+  padding: 12px 14px;
+}
+
+.dr-tw-ttl {
+  flex: 1;
+  color: #1a2740;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.dr-tw-link {
+  color: #009dbb;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.dr-tw-cols {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 1fr 42px 16px 72px 40px;
+  border-bottom: 0.5px solid #e2ebf2;
+  padding: 4px 14px;
+  background: #f4f7fa;
+}
+
+.dr-tw-ch {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8791ab;
+  font-size: 7.5px;
+  font-weight: 700;
+
+  &--r {
+    text-align: right;
+  }
+}
+
+.dr-tw-rows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dr-tw-row {
+  display: grid;
+  flex: 1;
+  align-items: center;
+  grid-template-columns: 1fr 42px 16px 72px 40px;
+  border-top: 0.5px solid #eef3f8;
+  padding: 0 14px;
+}
+
+.dr-tw-name {
+  color: #2f3c5f;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.dr-tw-cnt {
+  text-align: right;
+  color: #5f7a8a;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.dr-bar-t {
+  height: 4px;
+  border-radius: 2px;
+  background: #eef3f8;
+  overflow: hidden;
+}
+
+.dr-bar-f {
+  height: 100%;
+  border-radius: 2px;
+  background: #f5a623;
+  opacity: 0.85;
+}
+
+.dr-tw-pct {
+  text-align: right;
+  color: #5f7a8a;
+  font-size: 10.5px;
+  font-weight: 700;
+}

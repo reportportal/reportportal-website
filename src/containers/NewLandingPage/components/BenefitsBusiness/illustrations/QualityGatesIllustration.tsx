@@ -230,7 +230,7 @@ export const QualityGatesIllustration: FC = () => {
                   <div className="rule-name">Flaky Test Rate</div>
                   <div className="rule-meta">
                     {'Threshold ≤ 5% · '}
-                    <span id="nb-label" style={{ fontWeight: 700 }}>
+                    <span id="nb-label" style={{ fontWeight: 600 }}>
                       Non-blocking
                     </span>
                   </div>

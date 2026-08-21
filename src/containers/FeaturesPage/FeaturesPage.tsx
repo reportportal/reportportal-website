@@ -62,6 +62,7 @@ export const FeaturesPage: FC = () => {
   const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
   const [activeElement, setActiveElement] = useState(location.hash);
   const featuresEndRef = useRef<null | HTMLDivElement>(null);
+  const heroImageRef = useRef<null | HTMLImageElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
   const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
@@ -107,6 +108,38 @@ export const FeaturesPage: FC = () => {
     scrollIntoViewHandler(anchor.slice(1));
   };
 
+  // Smooth-scroll to the anchor the page was opened with (e.g. the nav menu
+  // links to "/features/#ai-capabilities" from another page). `gatsby-browser`
+  // lands us at the top first, so this scroll is what the user actually sees.
+  //
+  // The hero image defines the offset of everything below it — measuring the
+  // anchor before it has loaded would give a stale position, so wait for it.
+  // Its `onLoad` alone is not enough: a cached image can finish loading before
+  // React attaches the handler, and the scroll would never fire.
+  useEffect(() => {
+    const hash = location.hash;
+
+    if (!hash) {
+      return undefined;
+    }
+
+    const image = heroImageRef.current;
+    const scrollToAnchor = () => scrollIntoViewHandler(hash.slice(1));
+
+    if (!image || image.complete) {
+      const frame = requestAnimationFrame(scrollToAnchor);
+
+      return () => cancelAnimationFrame(frame);
+    }
+
+    image.addEventListener('load', scrollToAnchor, { once: true });
+
+    return () => image.removeEventListener('load', scrollToAnchor);
+    // Runs once on mount for the hash the page was opened with. In-page nav
+    // clicks are handled by handleNavClick, not by this effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className={getBlocksWith()}>
       <div className={getBlocksWith('__hero')}>
@@ -116,15 +149,7 @@ export const FeaturesPage: FC = () => {
             <h2>Empower your testing process with ReportPortal</h2>
           </div>
           <div className={getBlocksWith('__hero-dashboard')}>
-            <img
-              src={iconsCommon.dashboard}
-              alt=""
-              onLoad={() => {
-                if (activeElement) {
-                  scrollIntoViewHandler(activeElement.slice(1));
-                }
-              }}
-            />
+            <img ref={heroImageRef} src={iconsCommon.dashboard} alt="" />
           </div>
         </div>
       </div>

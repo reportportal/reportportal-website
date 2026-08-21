@@ -100,7 +100,7 @@ export const FEATURES_LIST: Feature[] = [
     id: 'ai-powered-analysis',
     title: 'AI-powered analysis & release readiness',
     description:
-      'AI agents automatically classify failures and surface root causes. Quality Gates turn analysis into go/no-go decisions — without manual review.',
+      'AI automatically classifies failures and surfaces root causes. Quality Gates turn analysis into go/no-go decisions — without manual review.',
     bullets: [
       'Automatic failure categorization with ML',
       'Pattern detection across test runs',
@@ -171,14 +171,13 @@ export const FEATURES_FAQ_ITEMS = [
     children: (
       <>
         <p>
-          A Launch is a single test execution reported into ReportPortal — the equivalent of a
-          &quot;test run&quot; in most test management tools. It groups all suites, tests and steps
-          from one run together with their logs, screenshots and attachments.
+          A Launch is a test run in ReportPortal. It brings together tests, steps, logs,
+          screenshots, and other results from a single testing session.
         </p>
         <p>
-          Launches can be reported automatically by your CI pipeline, created manually when
-          executing test cases by hand, or produced by AI agents. You can compare them, merge them,
-          re-run them and track history across releases.
+          Launches can contain results from automated tests, manual test execution, or agentic
+          testing. You can review and analyze results, compare runs, merge launches, rerun tests,
+          and track testing history over time.
         </p>
       </>
     ),
