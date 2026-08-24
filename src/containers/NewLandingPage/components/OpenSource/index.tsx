@@ -4,10 +4,11 @@ import { createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 import { ArrowLink } from '@app/components/ArrowLink';
 import { formatShortNumber } from '@app/utils/formatShortNumber';
+import { useLandingStats } from '@app/hooks/useLandingStats';
 
 import githubStats from '../../../../../static/github.json';
 import statsData from '../../../../../static/stats.json';
-import { FORKS_CARD, FEATURE_LIST, FeatureItem, StatCard } from './constants';
+import { FEATURE_LIST, FeatureItem, StatCard } from './constants';
 import OpenSourceIcon from './svg/open-source-icon.inline.svg';
 import GitIcon from './svg/git-icon.inline.svg';
 import FeatureOpensourceIcon from './svg/feature-opensource.inline.svg';
@@ -24,92 +25,96 @@ const FEATURE_ICONS: Record<FeatureItem['iconKey'], React.FC> = {
   core: FeatureCoreIcon,
 };
 
-const STAT_CARDS: StatCard[] = [
-  {
-    iconKey: 'star',
-    value: (() => {
-      const raw = githubStats.repos.reportportal;
-      const num = Number(raw);
+export const OpenSource: FC = () => {
+  const { forksValue } = useLandingStats();
 
-      return formatShortNumber(Number.isFinite(num) ? num : 0);
-    })(),
-    label: 'GitHub stars',
-  },
-  FORKS_CARD,
-  {
-    iconKey: 'contributors',
-    value: formatShortNumber(
-      Number.isFinite(Number(statsData.slackMembers)) ? Number(statsData.slackMembers) : 0,
-    ),
-    label: 'Community members',
-  },
-];
+  const STAT_CARDS: StatCard[] = [
+    {
+      iconKey: 'star',
+      value: (() => {
+        const raw = githubStats.repos.reportportal;
+        const num = Number(raw);
 
-export const OpenSource: FC = () => (
-  <section className={getBlocksWith()}>
-    <span className={getBlocksWith('__deco-git')} aria-hidden="true">
-      <GitIcon />
-    </span>
-    <span className={getBlocksWith('__deco-os')} aria-hidden="true">
-      <OpenSourceIcon />
-    </span>
-    <div className={classNames(getBlocksWith('__inner'), 'container')}>
-      <div className={getBlocksWith('__heading')}>
-        <h2>Open source, built to scale</h2>
-        <p className={getBlocksWith('__description')}>
-          Deploy ReportPortal in your own environment, keep full control over your data, and scale
-          on your terms with flexible customization and integration.
-        </p>
-      </div>
+        return formatShortNumber(Number.isFinite(num) ? num : 0);
+      })(),
+      label: 'GitHub stars',
+    },
+    { iconKey: 'fork', value: forksValue, label: 'Forks' },
+    {
+      iconKey: 'contributors',
+      value: formatShortNumber(
+        Number.isFinite(Number(statsData.slackMembers)) ? Number(statsData.slackMembers) : 0,
+      ),
+      label: 'Community members',
+    },
+  ];
 
-      <div className={getBlocksWith('__stats')}>
-        {STAT_CARDS.map(({ value, label }) => (
-          <div className={getBlocksWith('__stat')} key={label}>
-            <strong className={getBlocksWith('__stat-value')}>{value}</strong>
-            <span className={getBlocksWith('__stat-label')}>{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className={getBlocksWith('__feature-card')}>
-        {FEATURE_LIST.map(({ iconKey, title, description }) => {
-          const Icon = FEATURE_ICONS[iconKey];
-
-          return (
-            <div className={getBlocksWith('__feature-item')} key={title}>
-              <span className={getBlocksWith('__feature-icon')} aria-hidden="true">
-                <Icon />
-              </span>
-              <span className={getBlocksWith('__feature-text')}>
-                <strong className={getBlocksWith('__feature-title')}>{title}</strong>
-                <p className={getBlocksWith('__feature-description')}>{description}</p>
-              </span>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className={getBlocksWith('__actions')}>
-        <div className={getBlocksWith('__actions-buttons')}>
-          <Link
-            className="btn btn--primary btn--large"
-            to="/installation/"
-            data-gtm="self_host_free"
-          >
-            Self-host for free
-          </Link>
-          <Link className="btn btn--outline btn--large" to="/pricing/" data-gtm="explore_premium">
-            Explore premium
-          </Link>
+  return (
+    <section className={getBlocksWith()}>
+      <span className={getBlocksWith('__deco-git')} aria-hidden="true">
+        <GitIcon />
+      </span>
+      <span className={getBlocksWith('__deco-os')} aria-hidden="true">
+        <OpenSourceIcon />
+      </span>
+      <div className={classNames(getBlocksWith('__inner'), 'container')}>
+        <div className={getBlocksWith('__heading')}>
+          <h2>Open source, built to scale</h2>
+          <p className={getBlocksWith('__description')}>
+            Deploy ReportPortal in your own environment, keep full control over your data, and scale
+            on your terms with flexible customization and integration.
+          </p>
         </div>
-        <ArrowLink
-          text="Join our community"
-          mode="primary"
-          to="/community/"
-          data-gtm="join_community"
-          className={getBlocksWith('__community-link')}
-        />
+
+        <div className={getBlocksWith('__stats')}>
+          {STAT_CARDS.map(({ value, label }) => (
+            <div className={getBlocksWith('__stat')} key={label}>
+              <strong className={getBlocksWith('__stat-value')}>{value}</strong>
+              <span className={getBlocksWith('__stat-label')}>{label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className={getBlocksWith('__feature-card')}>
+          {FEATURE_LIST.map(({ iconKey, title, description }) => {
+            const Icon = FEATURE_ICONS[iconKey];
+
+            return (
+              <div className={getBlocksWith('__feature-item')} key={title}>
+                <span className={getBlocksWith('__feature-icon')} aria-hidden="true">
+                  <Icon />
+                </span>
+                <span className={getBlocksWith('__feature-text')}>
+                  <strong className={getBlocksWith('__feature-title')}>{title}</strong>
+                  <p className={getBlocksWith('__feature-description')}>{description}</p>
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={getBlocksWith('__actions')}>
+          <div className={getBlocksWith('__actions-buttons')}>
+            <Link
+              className="btn btn--primary btn--large"
+              to="/installation/"
+              data-gtm="self_host_free"
+            >
+              Self-host for free
+            </Link>
+            <Link className="btn btn--outline btn--large" to="/pricing/" data-gtm="explore_premium">
+              Explore premium
+            </Link>
+          </div>
+          <ArrowLink
+            text="Join our community"
+            mode="primary"
+            to="/community/"
+            data-gtm="join_community"
+            className={getBlocksWith('__community-link')}
+          />
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};

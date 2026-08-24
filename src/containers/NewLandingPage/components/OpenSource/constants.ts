@@ -10,8 +10,6 @@ export interface FeatureItem {
   description: string;
 }
 
-export const FORKS_CARD: StatCard = { iconKey: 'fork', value: '500+', label: 'Forks' };
-
 export const FEATURE_LIST: FeatureItem[] = [
   {
     iconKey: 'opensource',
