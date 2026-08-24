@@ -12,11 +12,19 @@ interface LandingStatsQueryDto {
   allContentfulLandingStats: { nodes: LandingStatsDto[] };
 }
 
+// Used if the "Landing Stats" entry is missing/unpublished in Contentful,
+// so a build never crashes on a missing CMS entry.
+const FALLBACK_LANDING_STATS: LandingStatsDto = {
+  teamsWorldwideDigits: '1.7',
+  teamsWorldwideSuffix: 'K+',
+  launchesPerYearDigits: '85',
+  launchesPerYearSuffix: 'M+',
+  forksValue: '500+',
+};
+
 export const useLandingStats = (): LandingStatsDto => {
   const {
-    allContentfulLandingStats: {
-      nodes: [landingStats],
-    },
+    allContentfulLandingStats: { nodes },
   } = useStaticQuery<LandingStatsQueryDto>(graphql`
     query ContentfulLandingStatsQuery {
       allContentfulLandingStats(limit: 1) {
@@ -31,5 +39,5 @@ export const useLandingStats = (): LandingStatsDto => {
     }
   `);
 
-  return landingStats;
+  return nodes[0] ?? FALLBACK_LANDING_STATS;
 };
