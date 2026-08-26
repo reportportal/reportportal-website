@@ -1,5 +1,20 @@
 # ReportPortal Landing — Claude Code Instructions
 
+## Working state (local, not committed)
+
+@HANDOFF.md
+
+`HANDOFF.md` holds the current working state: active branch, in-progress task,
+recent decisions, known pitfalls. It is gitignored and local-only.
+
+**Keep it current.** After finishing any meaningful unit of work — a fix that
+took more than one step, a deploy, a branch switch, a decision about approach,
+a newly discovered pitfall — update `HANDOFF.md` without being asked. Update the
+`Останнє оновлення` date at the same time. Keep it short: replace stale entries
+rather than appending. If the file is missing, the instruction simply does not apply.
+
+---
+
 ## Project Overview
 - **Site:** reportportal.github.io
 - **Stack:** Gatsby + React + TypeScript + SCSS
