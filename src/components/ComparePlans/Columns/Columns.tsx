@@ -1,8 +1,18 @@
 import React, { FC } from 'react';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
 import { isBoolean, isString } from 'lodash';
-import { createBemBlockBuilder, FormattedComparePlansItemDto, MEDIA_DESKTOP_SM } from '@app/utils';
+import {
+  ComparePlanCell,
+  createBemBlockBuilder,
+  FormattedComparePlansItemDto,
+  isComparePlanCellLink,
+  isComparePlanCellWithNote,
+  MEDIA_DESKTOP_SM,
+} from '@app/utils';
+import { Link } from '@app/components/Link';
+import { Badge } from '@app/components/Badge';
 
+import { ROW_BADGES } from '../constants';
 import MarkIcon from './icons/mark.inline.svg';
 import CrossIcon from './icons/cross.inline.svg';
 import { TextWithColor } from './TextWithColor';
@@ -15,6 +25,22 @@ interface ColumnsProps {
 }
 
 const getBlocksWith = createBemBlockBuilder(['compare']);
+
+const getShortValue = (columnValue: ComparePlanCell) => {
+  if (isBoolean(columnValue)) {
+    return '';
+  }
+
+  if (isComparePlanCellWithNote(columnValue)) {
+    return columnValue.note;
+  }
+
+  if (isComparePlanCellLink(columnValue)) {
+    return columnValue.label;
+  }
+
+  return String(columnValue);
+};
 
 export const Columns: FC<ColumnsProps> = ({ title = '', cols }) => {
   const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
@@ -34,13 +60,41 @@ export const Columns: FC<ColumnsProps> = ({ title = '', cols }) => {
 
   return (
     <div className={getBlocksWith('__row-title-wrapper')}>
-      {title && <div className={getBlocksWith('__row-title')}>{title}</div>}
+      {title && (
+        <div className={getBlocksWith('__row-title')}>
+          {title}
+          {ROW_BADGES[title] && (
+            <Badge className={getBlocksWith('__badge')} variant={ROW_BADGES[title]} />
+          )}
+        </div>
+      )}
       {isColumnsVisible && (
         <div className={getBlocksWith('__row-title-cols')}>
           {cols.map((columnValue, index) => {
             const getRenderedValue = () => {
               if (isBoolean(columnValue)) {
                 return getMark(columnValue);
+              }
+
+              // The feature is there, it just has to be switched on for you.
+              if (isComparePlanCellWithNote(columnValue)) {
+                return (
+                  <div className={getBlocksWith('__cell-note')}>
+                    {getMark(columnValue.value)}
+                    <span className={getBlocksWith('__cell-note-text')}>{columnValue.note}</span>
+                  </div>
+                );
+              }
+
+              // Sells Service Packages from inside the table.
+              if (isComparePlanCellLink(columnValue)) {
+                return (
+                  <div>
+                    <Link className={getBlocksWith('__cell-link')} to={columnValue.url}>
+                      {columnValue.label}
+                    </Link>
+                  </div>
+                );
               }
 
               if (isString(columnValue)) {
@@ -54,7 +108,7 @@ export const Columns: FC<ColumnsProps> = ({ title = '', cols }) => {
               <div
                 key={index}
                 className={getBlocksWith('__row-title-col')}
-                data-short={columnValue}
+                data-short={getShortValue(columnValue)}
               >
                 {getRenderedValue()}
               </div>

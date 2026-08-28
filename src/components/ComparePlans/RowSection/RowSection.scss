@@ -1,6 +1,14 @@
 @use 'src/styles/mixins' as m;
 @use 'src/styles/variables' as v;
 
+// A table row starts its content after antd's chevron: a 24px icon plus the
+// 12px `padding-inline-end` antd puts on `.ant-collapse-expand-icon`. The footer
+// has no chevron, so its row is that much wider — and since the plan block is
+// 65% of whatever it sits in, 65% of a wider box reaches further left and the
+// buttons stop lining up with the columns above. Re-creating the gutter here
+// makes both boxes identical, so the same percentage lands in the same place.
+$chevron-gutter: 36px;
+
 .row-section {
   margin: 3px 0 4px;
   text-align: center;
@@ -22,6 +30,64 @@
       display: block;
     }
 
+    // Below desktop the footer stacks: the plan CTAs come first, because that
+    // is where the reader lands after the comparison, and the fine print
+    // follows. On desktop it stays a single row, buttons under their columns.
+    .compare__row-title-wrapper {
+      // The container centres a single shrink-to-fit child, which was fine when
+      // that child was just the Terms line. The CTAs need the full width to
+      // divide between them, so the wrapper has to stop shrinking.
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+
+      @include m.breakpoint(v.$desktop-sm) {
+        flex-direction: row;
+        gap: 0;
+        padding-left: $chevron-gutter;
+      }
+    }
+
+    .row-section__row-title-footer {
+      order: 2;
+
+      // Cancels the gutter for the fine print only, so Terms & Conditions stays
+      // level with the "Features" heading instead of following the row names.
+      @include m.breakpoint(v.$desktop-sm) {
+        order: 0;
+        margin-left: -$chevron-gutter;
+      }
+    }
+
+    // The cell is a grid so plan values can share a row in the table body. In
+    // the footer it holds a label stacked over a button, so below desktop it
+    // has to be a plain block or the two end up side by side.
+    .compare__row-title-col {
+      display: block;
+
+      @include m.breakpoint(v.$desktop-sm) {
+        display: grid;
+      }
+    }
+
+    // Mobile stacks one CTA per row. From tablet up there is room for the three
+    // plans side by side, which mirrors how the cards above are laid out.
+    .compare__row-title-cols-visible {
+      display: grid;
+      order: 1;
+      grid-template-columns: 1fr;
+      gap: 16px;
+
+      @include m.breakpoint(v.$tablet-sm-exact) {
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      }
+
+      @include m.breakpoint(v.$desktop-sm) {
+        order: 0;
+        gap: 0;
+      }
+    }
+
     a {
       display: flex;
       align-items: center;
@@ -32,30 +98,56 @@
     }
   }
 
+  // Same eyebrow treatment as .section-list__title in the navigation menu, so
+  // the site has one style for a group label instead of two.
   &__title {
+    @include m.font-poppins(v.$fw-semi-bold);
+
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-primary);
+    color: var(--text-service);
   }
 
   &__buttons-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    // The grid column decides the width, so all three buttons match and the
+    // gaps between them are equal. A fixed 148px could not hold "Start 30-day
+    // free trial" — with white-space: nowrap the label ran past its own border.
+    @include m.breakpoint(v.$desktop-sm) {
+      padding: 0 8px;
+    }
   }
 
   &__button {
+    // `.row-section__container a` above turns every link in the footer into a
+    // flex box for the Terms & Conditions icon, which left-aligns the button
+    // label once the button is wider than its text.
+    justify-content: center;
     width: 100%;
-    max-width: 148px;
     padding: 16px 5px;
+  }
+
+  // The plan a button belongs to. Only needed below desktop — see FooterColumn.
+  &__button-plan {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale(base);
+
+    margin-bottom: 8px;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$desktop-sm) {
+      display: none;
+    }
   }
 
   &__features {
     @include m.breakpoint(v.$desktop-sm) {
-      @include m.font-scale();
+      @include m.font-scale(small);
 
-      padding: 20px 0;
-      font-weight: 600;
+      font-weight: v.$fw-semi-bold;
     }
   }
 

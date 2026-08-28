@@ -1,58 +1,29 @@
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
 import { PricingCard } from '@app/components/PricingCard';
-import {
-  createBemBlockBuilder,
-  easeInOutOpacityScaleAnimationProps,
-  OfferingPlansDto,
-  PropsWithAnimation,
-} from '@app/utils';
-import { useInView } from '@app/hooks/useInView';
-import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
+import { createBemBlockBuilder, OfferingPlansDto } from '@app/utils';
 
 import './PricingCards.scss';
 
 interface PricingCardsProps {
   plans: OfferingPlansDto;
   isYearlyPlanType: boolean;
-  isAnimationEnabled?: boolean;
 }
 
 const getBlocksWith = createBemBlockBuilder(['pricing-cards']);
 
-export const PricingCards: FC<PropsWithAnimation<PricingCardsProps>> = ({
-  plans,
-  isYearlyPlanType,
-  isAnimationEnabled,
-}) => {
+/**
+ * No framer-motion, for the same reason as PricingHero: the cards sit in the
+ * first fold on a page whose whole purpose is the prices. Fading them in after
+ * a 0.6s delay meant the one thing the visitor came for arrived last.
+ */
+export const PricingCards: FC<PricingCardsProps> = ({ plans, isYearlyPlanType }) => {
   const planType = isYearlyPlanType ? 'yearly' : 'quarterly';
-  const [cardsRef, isInView] = useInView();
-
-  const getAnimation = useMotionEnterAnimation(
-    easeInOutOpacityScaleAnimationProps,
-    isAnimationEnabled,
-  );
 
   return (
-    <motion.div
-      className={getBlocksWith()}
-      ref={cardsRef}
-      {...getAnimation({
-        isInView,
-        delay: 0.6,
-        additionalEffects: {
-          hiddenAdditional: {
-            y: 50,
-          },
-          enterAdditional: {
-            y: 0,
-          },
-        },
-      })}
-    >
+    <div className={getBlocksWith()}>
       {plans.items.map(plan => (
         <PricingCard key={plan.title} plan={plan} planType={planType} />
       ))}
-    </motion.div>
+    </div>
   );
 };

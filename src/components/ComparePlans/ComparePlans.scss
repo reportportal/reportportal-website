@@ -64,7 +64,6 @@
 
     @include m.breakpoint(v.$desktop-sm) {
       border-radius: 16px;
-      padding-top: 24px;
       box-shadow: 0 8px 16px rgb(0 45 55 / 0.12);
       background: var(--white);
     }
@@ -77,13 +76,14 @@
       }
     }
 
-    .ant-collapse-item:not(:has(.row-section)) {
+    .ant-collapse-item:not(:has(.row-section, .row-section__title)) {
       margin-bottom: 20px;
       border-radius: 8px;
       box-shadow: 0 8px 16px rgb(0 45 55 / 0.12);
 
       @include m.breakpoint(v.$desktop-sm) {
         margin-bottom: 0;
+        border-radius: 0;
         box-shadow: none;
       }
 
@@ -129,63 +129,116 @@
       background: var(--white);
     }
 
-    .ant-collapse-item:nth-child(even) {
+    // Rows live inside a section panel now, so the zebra is scoped to the inner
+    // collapse. It starts on grey: the first stripe is what separates a section
+    // from its heading, which is why there is no divider under the label.
+    .compare__section-rows > .ant-collapse-item:nth-child(odd) {
       @include m.breakpoint(v.$desktop-sm) {
         background: #f8fafd;
       }
     }
 
-    .ant-collapse-item:last-child {
-      @include m.breakpoint(v.$desktop-sm) {
-        background: var(--white);
-      }
-    }
-
-    .ant-collapse-item-active {
-      @include m.breakpoint(v.$desktop-sm) {
-        .compare__row,
-        .ant-collapse-header {
+    .compare__section-rows > .ant-collapse-item-active {
+      > .ant-collapse-header .compare__row,
+      > .ant-collapse-header {
+        @include m.breakpoint(v.$desktop-sm) {
           padding-bottom: 0 !important;
         }
-
-        .ant-collapse-content-box {
-          padding-top: 7px !important;
-        }
       }
 
-      .ant-collapse-content-box {
+      > .ant-collapse-content > .ant-collapse-content-box {
         padding-top: 0 !important;
 
+        // Slightly more than the description's 12px top margin: the row name
+        // above sits on its own line-height, which already reads as a gap,
+        // while below the description the stripe ends flat.
         @include m.breakpoint(v.$desktop-sm) {
-          .ant-collapse-content-box {
-            padding-top: 7px !important;
-          }
+          padding-bottom: 16px !important;
         }
       }
     }
   }
 
-  .ant-collapse-item {
-    padding: 4px 0;
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      padding: 11px 0;
-    }
+  // The outer collapse holds sections and the footer; the inner one holds rows.
+  // Horizontal padding belongs to the rows so their background stripes still
+  // run the full width of the card.
+  .compare__section-rows > .ant-collapse-item {
+    padding: 16px 0;
 
     @include m.breakpoint(v.$desktop-sm) {
-      padding: 0 54px;
+      padding: 0 32px;
     }
+  }
+
+  // A section panel is only a wrapper — antd's content padding would indent
+  // every row inside it.
+  .compare__section-rows,
+  .ant-collapse-item:has(
+      > .ant-collapse-content > .ant-collapse-content-box > .compare__section-rows
+    )
+    > .ant-collapse-content
+    > .ant-collapse-content-box {
+    padding: 0 !important;
   }
 
   .ant-collapse-item-disabled .ant-collapse-header {
     cursor: auto;
   }
 
-  .ant-collapse-header:has(.row-section) {
-    @include m.font-noto-sans(v.$fw-semi-bold);
-    @include m.font-scale(base);
+  // The header centres its children, but its height changes when the row opens
+  // (the active-state rules zero the bottom padding), so a centred chevron
+  // drifts against the row name. Anchor both to the top instead and offset the
+  // icon by the row's own top padding — they then stay aligned at any height.
+  .compare__section-rows > .ant-collapse-item > .ant-collapse-header {
+    @include m.breakpoint(v.$desktop-sm) {
+      align-items: flex-start;
 
+      .ant-collapse-expand-icon {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  // Matched on `.row-section__title` rather than `.row-section`: the latter is
+  // dropped on desktop, where RowSection swaps in `.row-section__features`, and
+  // .ant-collapse-no-arrow would then win and strip the heading's left padding.
+  // Below desktop the heading is centred (see .row-section). antd parks the
+  // chevron at the far right by giving the header text `margin-inline-end:
+  // auto`, so both that and the flex grow have to go; centring the header
+  // itself then keeps the label in place with the icon beside it — the same
+  // arrangement as the "Compare plans" title.
+  .ant-collapse-header:has(.row-section__title) {
     align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      justify-content: flex-start;
+      padding: 32px 32px 8px;
+    }
+
+    .ant-collapse-header-text {
+      flex: 0 1 auto;
+      margin-inline-end: 0;
+    }
+
+    .ant-collapse-expand-icon {
+      padding-inline-start: 8px;
+    }
+  }
+
+  // A section heading is a label, not a row — it should not sit on its own
+  // white block inside the card.
+  .ant-collapse-item:has(> .ant-collapse-header .row-section__title) {
+    background: transparent;
+  }
+
+  .ant-collapse-item:has(.row-section__row-title-footer) {
+    background: transparent;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      background: var(--white);
+    }
   }
 
   .ant-collapse-header:has(.row-section__row-title-footer) {
@@ -193,20 +246,27 @@
 
     @include m.breakpoint(v.$desktop-sm) {
       padding-top: 24px;
-      padding-bottom: 12px;
+      padding-bottom: 24px;
     }
   }
 
   .ant-collapse-no-arrow:has(.row-section__row-title-footer) {
-    padding: 0;
+    padding-top: 16px;
 
     @include m.breakpoint(v.$desktop-sm) {
-      padding: 0 54px;
+      padding: 0 32px;
     }
   }
 
   &__title {
     @include title();
+  }
+
+  // Placement only — the badge itself is @app/components/Badge. The row title is
+  // a plain block, so the chip needs its own gap and a nudge to sit on the text.
+  &__badge {
+    margin-left: 8px;
+    vertical-align: 2px;
   }
 
   &__title-arrow {
@@ -229,10 +289,12 @@
       }
 
       &-last-item {
-        margin: 16px 0;
+        // Extra room at the bottom: the plan values used to sit flush against
+        // the edge of the card on mobile.
+        margin: 16px 0 24px;
 
         @include m.breakpoint(v.$tablet-sm-exact) {
-          margin: 10px 0 12px;
+          margin: 10px 0 24px;
         }
 
         .compare__row-title-cols {
@@ -245,16 +307,49 @@
       }
     }
 
+    &-header-sentinel {
+      height: 1px;
+      margin-bottom: -1px;
+      pointer-events: none;
+    }
+
     &-header {
       @include m.breakpoint(v.$desktop-sm) {
-        padding: 0 54px 32px 86px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        padding: 16px 32px 16px 64px;
+        background: transparent;
+        transition: top 0.3s ease-in-out, background-color 0.3s ease-in-out;
         color: var(--text-primary);
+      }
+
+      // Only once the header overlaps the rows does it need a surface of its
+      // own to stay readable.
+      &--stuck {
+        @include m.breakpoint(v.$desktop-sm) {
+          background: var(--bg-grey2);
+        }
+      }
+
+      // The navigation slides back in on scroll up, so the header steps down to
+      // sit under it instead of being covered.
+      &--below-nav {
+        @include m.breakpoint(v.$desktop-sm) {
+          top: var(--header-height);
+        }
       }
 
       .compare__row-title {
         @include m.breakpoint(v.$desktop-sm) {
           @include m.font-poppins(v.$fw-semi-bold);
           @include m.font-scale(medium);
+
+          // Lines "Features" up with the section headings rather than with the
+          // row names, which are indented by the chevron gutter. A negative
+          // margin moves only this item; space-between keeps the plan columns
+          // exactly where they are.
+          margin-left: -32px;
         }
 
         &-col {
@@ -295,7 +390,6 @@
 
     &--arrow-bottom {
       @include m.breakpoint(v.$desktop-sm) {
-        margin-top: 16px;
         transform: rotate(180deg);
       }
     }
@@ -308,27 +402,38 @@
     @include m.breakpoint(v.$tablet-sm-exact) {
       margin-top: 0;
     }
+
+    // The gap around the description is set once, by the content box below and
+    // the description's own top margin. Nothing else may add to it.
+    @include m.breakpoint(v.$desktop-sm) {
+      margin-bottom: 0;
+    }
   }
 
   &__row {
     @include m.font-noto-sans();
     @include m.font-scale(medium);
 
+    // Row pitch drops from 80px to 60px: 6 + 12 + 24 + 12 + 6. Row names were
+    // 20px regular — heading-sized for a table row. Both values below are
+    // existing steps of the scale, nothing new is introduced.
     @include m.breakpoint(v.$desktop-sm) {
-      padding: 19px 0;
+      @include m.font-scale(base);
+
+      padding: 12px 0;
     }
 
     &-title {
-      @include m.font-poppins(v.$fw-regular);
-      @include m.font-scale(small);
+      @include m.font-poppins(v.$fw-semi-bold);
+      @include m.font-scale(base);
 
       flex: 2;
       align-self: flex-start;
       color: var(--text-primary);
 
       @include m.breakpoint(v.$desktop-sm) {
-        @include m.font-noto-sans();
-        @include m.font-scale(medium);
+        @include m.font-noto-sans(v.$fw-semi-bold);
+        @include m.font-scale(base);
 
         flex: 0 1 auto;
         width: 36%;
@@ -372,6 +477,7 @@
         width: 100%;
 
         @include m.breakpoint(v.$desktop-sm) {
+          flex-shrink: 0;
           width: 65%;
         }
 
@@ -410,7 +516,7 @@
 
   &__description {
     @include m.font-poppins();
-    @include m.font-scale(small);
+    @include m.font-scale(base);
 
     margin-top: 4px;
     margin-right: 8px;
@@ -418,7 +524,10 @@
     white-space: pre-wrap;
     color: var(--text-service);
 
+    // Pairs with the content box's bottom padding — the two are the only things
+    // spacing the description, so they can be read as one number.
     @include m.breakpoint(v.$desktop-sm) {
+      margin-top: 12px;
       margin-left: 15px;
     }
 
@@ -444,8 +553,11 @@
       }
     }
 
+    // Named "full width" but pinned to a third of the row, which left long
+    // descriptions running eight lines with two thirds of the row empty.
+    // 720px per the Figma spec, ~80 characters at 16px.
     &-full-width {
-      width: 33%;
+      max-width: 720px;
     }
   }
 
@@ -477,9 +589,40 @@
     margin-bottom: -2px;
   }
 
+  // A tick with a caption underneath: the feature is available, it just has to
+  // be switched on. Reads better than a bare "Upon request", which looked like
+  // a hidden cost.
+  &__cell-note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-text {
+      @include m.font-scale(small);
+
+      margin-top: 2px;
+      color: var(--text-service);
+    }
+  }
+
+  // Cross-sells Service Packages from inside the table. Deliberately styled as
+  // a plain text link rather than a button — no new UI element.
+  &__cell-link {
+    display: inline-block;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    color: var(--color-primary-600);
+
+    &:hover {
+      border-bottom-color: var(--color-primary-600);
+      transition: var(--basic-transition);
+      color: var(--color-primary-600);
+    }
+  }
+
   &-narrow {
     .compare__description-full-width {
-      width: 28%;
+      max-width: 720px;
     }
 
     .compare__row-title {

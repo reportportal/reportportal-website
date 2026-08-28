@@ -1,0 +1,23 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.badge {
+  @include m.font-poppins(v.$fw-semi-bold);
+  @include m.font-scale(x-small);
+
+  display: inline-flex;
+  align-items: center;
+  border-radius: 16px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white);
+
+  &--new {
+    background: var(--graphics-jade);
+  }
+
+  &--premium {
+    background: var(--graphics-orchid);
+  }
+}

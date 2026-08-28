@@ -88,6 +88,41 @@ export interface ComparePlansItemDto {
   plans: string;
 }
 
+/**
+ * A cell of the compare table. The `plans` field in Contentful is a text field
+ * holding a JSON array with one entry per plan column.
+ *
+ *   true / false        renders a tick or a cross
+ *   "1 TB" / 5          renders as text
+ *   { value, note }     renders a tick with a caption underneath
+ *   { label, url }      renders a link, used to cross-sell Service Packages
+ *
+ * The two object shapes are additions — every value that worked before still
+ * renders exactly as it did.
+ */
+export interface ComparePlanCellWithNote {
+  value: boolean;
+  note: string;
+}
+
+export interface ComparePlanCellLink {
+  label: string;
+  url: string;
+}
+
+export type ComparePlanCell =
+  | string
+  | number
+  | boolean
+  | ComparePlanCellWithNote
+  | ComparePlanCellLink;
+
+export const isComparePlanCellWithNote = (cell: ComparePlanCell): cell is ComparePlanCellWithNote =>
+  typeof cell === 'object' && cell !== null && 'value' in cell;
+
+export const isComparePlanCellLink = (cell: ComparePlanCell): cell is ComparePlanCellLink =>
+  typeof cell === 'object' && cell !== null && 'url' in cell;
+
 export interface OfferingPlanPrice {
   currency: string;
   period: string;
@@ -95,6 +130,11 @@ export interface OfferingPlanPrice {
   monthly?: number;
   quarterly?: number;
   yearly?: number;
+  // Caption under the price, per billing period. Already present in Contentful
+  // and in the GraphQL fragment; the card used to ignore both.
+  monthlyDescription?: string;
+  quarterlyDescription?: string;
+  yearlyDescription?: string;
 }
 
 export interface OfferingPlanDto {
