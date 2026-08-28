@@ -1,8 +1,11 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
+import { Badge } from '@app/components/Badge';
 import { ComparePlanCell, createBemBlockBuilder, FormattedComparePlansDto } from '@app/utils';
 import LinkArrow from '@app/svg/externalLinkArrow.inline.svg';
+
+import { PREMIUM_LEGEND } from '../../constants';
 
 import '../../ComparePlans.scss';
 import '../RowSection.scss';
@@ -23,6 +26,18 @@ const withPlanSuffix = (name: string) => (/\bplans?$/i.test(name.trim()) ? name 
 
 export const FooterColumn: FC<FooterColumnsProps> = ({ ctas, note, planNames }) => (
   <div className={getBlocksWith('', '__container')}>
+    {/* A badge with no key is a puzzle. This is also where the table answers the
+        question the badge raises — whether PREMIUM costs extra. */}
+    <div className={getBlocksWith('__legend')}>
+      <Badge variant="premium" />
+      <span>
+        {PREMIUM_LEGEND.text}{' '}
+        <Link to={PREMIUM_LEGEND.linkUrl}>
+          {PREMIUM_LEGEND.linkTitle}
+          <LinkArrow />
+        </Link>
+      </span>
+    </div>
     <div className={getBlocksWithCompare('__row-title-wrapper')}>
       <div className={getBlocksWith('__row-title', '__row-title-footer')}>
         <Link to="/legal/terms/">

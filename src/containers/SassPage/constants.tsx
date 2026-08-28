@@ -1,6 +1,11 @@
 import React from 'react';
 import { FAQSchemaItem, OfferSchemaParams, extractText } from '@app/components/StructuredData';
+import { Link } from '@app/components/Link';
 
+/**
+ * These answers are also published as schema.org FAQPage markup (see
+ * `saas.tsx`), so anything wrong here is wrong in Google's results too.
+ */
 export const FAQ_ITEMS = [
   {
     key: 1,
@@ -8,114 +13,136 @@ export const FAQ_ITEMS = [
     children: (
       <>
         <div>
-          As soon as you sign up and sign in, your free trial is considered to be activated.
+          The trial starts the moment you sign in for the first time and runs for 30 days. No credit
+          card is required, and you are under no obligation to continue afterwards.
         </div>
         <div>
-          Your free trial lasts for 30 days and gives users access to all of the features of
-          ReportPortal. As the free trial is associated with the Startup tier, all the limitations
-          of the Startup tier (data storage, data retention policy) are applicable to the free trial
-          period.
+          It gives you every feature of ReportPortal on the Startup tier, so the Startup limits on
+          data storage and retention apply for the duration.
         </div>
-        <div>*applies only to the Startup tier</div>
+        <div>
+          Each customer is eligible for one trial, on their first organization. If you have already
+          created an organization, or been invited to someone else&apos;s, the trial is no longer
+          available.
+        </div>
       </>
     ),
   },
   {
     key: 2,
-    label: 'How many times can I get the free trial?',
+    label: 'What happens when the free trial ends?',
     children: (
       <>
-        <div>ReportPortal customers are eligible for one free trial only.</div>
         <div>
-          Also, the free trial is only available for your first project (you won&apos;t be able to
-          get the free trial if you&apos;ve already created a project or if you&apos;ve been invited
-          to other projects before).
+          Subscribe on or before the last day of the trial and nothing changes — everything you
+          reported during the trial stays where it is.
         </div>
-        <div>*applies only to the Startup tier</div>
+        <div>
+          If you do not, your Organization and the Project(s) in it switch to read-only mode for one
+          month. Every feature keeps working except reporting: you can read, analyse and export what
+          is already there, but no new results can be sent in. Subscribing at any point during that
+          month restores full access.
+        </div>
+        <div>After that month without a subscription, the data is deleted.</div>
       </>
     ),
   },
   {
     key: 3,
-    label: 'Do I need to provide credit card details to get the free trial?',
+    label: 'How am I billed?',
     children: (
       <>
-        <div>No, the free trial doesn&apos;t require your card details.</div>
         <div>
-          It is absolutely free and you are not obliged to keep using ReportPortal after the free
-          trial. But in order to continue the usage of the application, you should accomplish the
-          payment for the next term.
+          In advance, at the start of each billing period. The prices on this page are per month,
+          and invoicing is quarterly at a minimum — longer prepayment periods, such as six months or
+          a year up front, can be arranged.
         </div>
-        <div>*applies only to the Startup tier</div>
+        <div>
+          The yearly option is a twelve-month commitment rather than a different invoice schedule.
+          It brings the monthly rate down by around 5%; the quarterly option commits you for three
+          months.
+        </div>
       </>
     ),
   },
   {
     key: 4,
-    label: 'What happens when the free trial period ends?',
+    label: 'Can I change my plan later?',
     children: (
       <>
         <div>
-          In case you purchase a subscription on the day of the end of the free trial or before it,
-          you will be able to proceed using ReportPortal. All the data reported during the free
-          trial period will stay safe and remain on your project.
+          Yes, at any time, in either direction. Write to{' '}
+          <Link to="mailto:support@reportportal.io">support@reportportal.io</Link> and we will
+          arrange it.
         </div>
         <div>
-          If you do not purchase a subscription to one of the billing plans by the end of the trial
-          or earlier, your project will be switched to read-only mode until you activate the
-          subscription. Read-only mode means that during the next month after the end of the free
-          trial, you will be able to use all the features except reporting functionality — you
-          won&apos;t be able to report any new data into ReportPortal.
+          Moving to a larger plan is the usual reason people get in touch — more storage, a longer
+          retention period, or a dedicated instance.
         </div>
-        <div>
-          If the subscription is still not activated during the month after the end of the free
-          trial, all your project data will be erased.
-        </div>
-        <div>*applies only to Startup tier</div>
       </>
     ),
   },
   {
     key: 5,
-    label: 'How is my subscription charged?',
+    label: 'What happens if a subscription is not renewed?',
     children: (
       <>
-        <div>You will be charged at the beginning of each billing period.</div>
         <div>
-          If you opt for a monthly plan, your minimum commitment is 3 months. Thus, you will be
-          charged on the first day of the new quarterly billing cycle.
+          The same as at the end of the trial. On the first day of the unpaid billing cycle your
+          Organization and the Project(s) in it switch to read-only for one month — everything
+          remains readable, but no new results can be reported.
         </div>
-        <div>
-          If you are on a yearly plan, you will be charged on the first day of the new yearly cycle
-          - either quarterly or annually in advance / bi-annually.
-        </div>
+        <div>If the subscription is still not active after that month, the data is deleted.</div>
       </>
     ),
   },
   {
     key: 6,
-    label: 'Can I change the billing plan at any time?',
+    label: 'Are users and projects really unlimited?',
     children: (
-      <div>
-        <div>You may change your subscription plan at any time.</div>
+      <>
         <div>
-          Just reach out to us via email available on the Contact tab in Billing Settings of your
-          Project.
+          Yes, on every plan. We do not charge per seat and we do not cap the number of project
+          spaces — invite your whole team, including people who only ever read dashboards.
         </div>
-      </div>
+        <div>
+          What differs between plans is capacity and infrastructure: how much data you can store,
+          how long it is kept, and whether your instance is shared or dedicated.
+        </div>
+      </>
     ),
   },
   {
     key: 7,
-    label: 'What happens when a subscription expires?',
+    label: 'What happens if I reach my data storage limit?',
     children: (
       <>
         <div>
-          In case of no payment, the project will be switched to &quot;read-only&quot; mode on the
-          first day of the next billing cycle. During the next month, you&apos;ll be able to use all
-          the features of the application except reporting functionality.
+          Nothing breaks and reporting does not stop. The system measures stored data daily and
+          gradually removes the oldest data above the limit, across both the database and the
+          attachment storage.
         </div>
-        <div>After one month, all your project data will be erased.</div>
+        <div>
+          Data is also removed once it passes your retention period — whichever comes first. If you
+          are consistently near the limit, that is usually the point to move to a larger plan.
+        </div>
+      </>
+    ),
+  },
+  {
+    key: 8,
+    label: 'What does “Upon request” mean in the comparison table?',
+    children: (
+      <>
+        <div>
+          The feature is part of that plan, but it is set up for you rather than switched on by
+          default — typically because it has to be configured against your own systems or your
+          dedicated instance.
+        </div>
+        <div>
+          There is no additional charge — it is included in the plan. Contact us and we will arrange
+          it for your instance.
+        </div>
       </>
     ),
   },
@@ -126,19 +153,27 @@ export const SAAS_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FAQ_ITEMS.map(({ label, ch
   answer: extractText(children),
 }));
 
+/**
+ * Published as schema.org Offer markup, which is what Google shows next to the
+ * page. The figures are the monthly rate on the yearly plan — the view the page
+ * opens on — and they are duplicated from Contentful, so they have to be
+ * updated by hand whenever the plans change there. They sat at $49 and $249
+ * long after the real prices had moved; see the follow-up about deriving these
+ * from the same source as the cards.
+ */
 export const SAAS_OFFERS: OfferSchemaParams[] = [
   {
     name: 'Startup',
-    price: '49',
+    price: '569',
     priceCurrency: 'USD',
-    description: 'SaaS Startup plan for small teams',
+    description: 'SaaS Startup plan — per month, billed quarterly, unlimited users',
     url: '/contact-us/saas/startup-plan',
   },
   {
     name: 'Business',
-    price: '249',
+    price: '2659',
     priceCurrency: 'USD',
-    description: 'SaaS Business plan for growing teams',
+    description: 'SaaS Business plan — per month, billed quarterly, unlimited users',
     url: '/contact-us/saas/business-plan',
   },
   {

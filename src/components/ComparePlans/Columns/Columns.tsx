@@ -12,7 +12,7 @@ import {
 import { Link } from '@app/components/Link';
 import { Badge } from '@app/components/Badge';
 
-import { ROW_BADGES } from '../constants';
+import { CELL_VALUES_WITH_TICK, ROW_BADGES } from '../constants';
 import MarkIcon from './icons/mark.inline.svg';
 import CrossIcon from './icons/cross.inline.svg';
 import { TextWithColor } from './TextWithColor';
@@ -25,6 +25,13 @@ interface ColumnsProps {
 }
 
 const getBlocksWith = createBemBlockBuilder(['compare']);
+
+// Turns the agreed plain-text values into the tick-with-caption shape, so both
+// the rendering and the mobile `data-short` label read from one normalised cell.
+const normalizeCell = (columnValue: ComparePlanCell): ComparePlanCell =>
+  isString(columnValue) && CELL_VALUES_WITH_TICK.includes(columnValue)
+    ? { value: true, note: columnValue }
+    : columnValue;
 
 const getShortValue = (columnValue: ComparePlanCell) => {
   if (isBoolean(columnValue)) {
@@ -70,7 +77,9 @@ export const Columns: FC<ColumnsProps> = ({ title = '', cols }) => {
       )}
       {isColumnsVisible && (
         <div className={getBlocksWith('__row-title-cols')}>
-          {cols.map((columnValue, index) => {
+          {cols.map((rawColumnValue, index) => {
+            const columnValue = normalizeCell(rawColumnValue);
+
             const getRenderedValue = () => {
               if (isBoolean(columnValue)) {
                 return getMark(columnValue);

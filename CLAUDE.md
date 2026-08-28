@@ -10,12 +10,21 @@ recent decisions, known pitfalls. It is gitignored and local-only.
 **Keep it current.** After finishing any meaningful unit of work — a fix that
 took more than one step, a deploy, a branch switch, a decision about approach,
 a newly discovered pitfall — update `HANDOFF.md` without being asked. Update the
-`Останнє оновлення` date at the same time. Keep it short: replace stale entries
+`Last updated` date at the same time. Keep it short: replace stale entries
 rather than appending. If the file is missing, the instruction simply does not apply.
 
 ---
 
+## Language convention (applies to every task)
+
+All code, comments, commit messages, PR titles and descriptions, and project
+documentation must be written in **English**. This includes `HANDOFF.md` and any
+notes the agent writes. Only the live chat with the designer is in Ukrainian.
+
+---
+
 ## Project Overview
+
 - **Site:** reportportal.github.io
 - **Stack:** Gatsby + React + TypeScript + SCSS
 - **UI Library:** Ant Design
@@ -37,6 +46,7 @@ rather than appending. If the file is missing, the instruction simply does not a
 ## CSS Variables — Strict Rules (no exceptions)
 
 ### Never create local CSS variables
+
 Do NOT define CSS custom properties inside component `.scss` files.
 Do NOT define `:root` blocks anywhere except `src/styles/css-variables.scss`.
 Do NOT create scoped variables like:
@@ -50,18 +60,24 @@ Do NOT create scoped variables like:
 ```
 
 ### Always use existing globals
+
 Before using any color, spacing, or typography value —
 search `src/styles/` for an existing variable first.
 
 ```scss
 // ✅ CORRECT
 .my-section {
-  &__title { color: var(--text-primary); }
-  &__subtitle { color: var(--text-grey); }
+  &__title {
+    color: var(--text-primary);
+  }
+  &__subtitle {
+    color: var(--text-grey);
+  }
 }
 ```
 
 ### Color lookup table (use this before hardcoding anything)
+
 ```
 #2f3c5f → var(--text-primary)
 #5f6578 → var(--text-grey)
@@ -79,6 +95,7 @@ search `src/styles/` for an existing variable first.
 ```
 
 ### If a color has no global equivalent
+
 Add it to `src/styles/css-variables.scss` in the `:root` block
 with a semantic name — NOT tied to a component.
 
@@ -90,6 +107,7 @@ with a semantic name — NOT tied to a component.
 ```
 
 ### Typography — never hardcode
+
 ```scss
 // ❌ WRONG
 font-size: 32px;
@@ -103,7 +121,9 @@ font-weight: 700;
 ```
 
 ### Self-check before finishing any task
+
 Before completing, run this mental checklist:
+
 - [ ] No hardcoded hex colors anywhere in new `.scss` files
 - [ ] No locally defined CSS custom properties in components
 - [ ] No hardcoded `font-size`, `line-height`, `font-family` values
@@ -114,6 +134,7 @@ Before completing, run this mental checklist:
 ## SCSS Structure
 
 Every SCSS file must follow this order:
+
 ```scss
 @use 'src/styles/mixins' as m;
 @use 'src/styles/variables' as v;
@@ -126,27 +147,30 @@ Every SCSS file must follow this order:
 ```
 
 ### Breakpoints (only these three)
+
 ```scss
 // mobile: 360px — base, no media query needed
 // tablet:
 @include m.breakpoint(v.$tablet-sm-exact); // 768px
 // desktop:
-@include m.breakpoint(v.$desktop-sm);      // 1239px
+@include m.breakpoint(v.$desktop-sm); // 1239px
 ```
 
 ### Font mixins
+
 ```scss
-@include m.font-noto-sans();                    // body text
-@include m.font-noto-sans(v.$fw-semi-bold);     // semi-bold body
-@include m.font-poppins(v.$fw-bold);            // headings
-@include m.roboto-mono();                       // code/mono
+@include m.font-noto-sans(); // body text
+@include m.font-noto-sans(v.$fw-semi-bold); // semi-bold body
+@include m.font-poppins(v.$fw-bold); // headings
+@include m.roboto-mono(); // code/mono
 ```
 
 ### Font scale
+
 ```scss
-@include m.font-scale('base');      // 16px
-@include m.font-scale('medium');    // 20px
-@include m.font-scale('large');     // 32px
+@include m.font-scale('base'); // 16px
+@include m.font-scale('medium'); // 20px
+@include m.font-scale('large'); // 32px
 @include m.font-scale('x3-large'); // 48px
 // Full scale: s-small, x-small, small, base, medium,
 // x2-medium, x3-medium, x4-medium, large, x2-large, x3-large, x4-large
@@ -155,6 +179,7 @@ Every SCSS file must follow this order:
 ---
 
 ## CSS Variables
+
 ```css
 /* Primary colors */
 --color-primary-800: #005a6e
@@ -193,6 +218,7 @@ Every SCSS file must follow this order:
 ## Component Patterns
 
 ### BEM via createBemBlockBuilder
+
 ```tsx
 const getBlocksWith = createBemBlockBuilder(['my-section']);
 
@@ -202,23 +228,27 @@ const getBlocksWith = createBemBlockBuilder(['my-section']);
 ```
 
 ### Page container (max-width 1200px)
+
 ```tsx
 <div className="container">...</div>
 ```
 
 ### Links
+
 ```tsx
 import { Link } from '@app/components/Link';
-<Link to="/some-path">text</Link>
+<Link to="/some-path">text</Link>;
 ```
 
 ### SVG icons
+
 ```tsx
 import ArrowIcon from './arrow.inline.svg';
-<ArrowIcon />
+<ArrowIcon />;
 ```
 
 ### Component type
+
 ```tsx
 export const MySection: FC = () => { ... };
 ```
@@ -226,6 +256,7 @@ export const MySection: FC = () => { ... };
 ---
 
 ## Import Order (TypeScript)
+
 ```tsx
 // 1. React + external libraries
 import React, { FC, useState } from 'react';
@@ -247,6 +278,7 @@ import './MySection.scss';
 ---
 
 ## File Structure for New Pages
+
 ```
 src/containers/NewPage/
   index.tsx           ← main component
@@ -261,7 +293,9 @@ src/containers/NewPage/
 ---
 
 ## Existing Reusable Components
+
 Before creating anything new, check if these exist:
+
 - `@app/components/Link` — all links
 - `@app/components/ArrowLink` — arrow CTA links
 - `@app/components/Banner` — CTA banners
@@ -297,7 +331,7 @@ per-illustration styles can be added via CSS attribute selectors if needed.
 ```tsx
 import { FeatureIllustration } from './components/FeatureIllustration';
 
-<FeatureIllustration name={id} />
+<FeatureIllustration name={id} />;
 ```
 
 ### To add a real illustration
@@ -381,7 +415,7 @@ Same applies to `bodyStyle` → `styles.body`, `wrapClassName` → remains OK.
 
 ### SVG: outline-only icons → `.inline.svg` (React component)
 
-Decorative illustrations weighing 50+ KB (e.g. featuresListItem*.svg) —
+Decorative illustrations weighing 50+ KB (e.g. featuresListItem\*.svg) —
 without `.inline.svg`, they are imported as a URL and the browser loads them as a
 separate request + caches them. This is better than embedding them in the JS bundle.
 
@@ -452,12 +486,12 @@ collide with any other component on the site.
   opacity: 0;
 
   &__row {
-    animation: mi-sU .4s ease both .3s;
+    animation: mi-sU 0.4s ease both 0.3s;
     animation-play-state: paused;
   }
 
   &--visible {
-    animation: mi-fI .5s ease forwards;
+    animation: mi-fI 0.5s ease forwards;
 
     .mi__row {
       animation-play-state: running;
@@ -501,17 +535,14 @@ useEffect(() => {
   return () => document.removeEventListener('visibilitychange', onChange);
 }, []);
 
-return (
-  <div className={classNames('my-illu', { 'my-illu--paused': !isTabVisible })}>
-    …
-  </div>
-);
+return <div className={classNames('my-illu', { 'my-illu--paused': !isTabVisible })}>…</div>;
 ```
 
 **Responsive — two valid patterns:**
 
 1. **CSS-only via `max-width`** — when the layout is vertical without floating
    elements (example: `MilestonesIllustration`).
+
    ```scss
    .mi {
      width: 100%;
@@ -567,7 +598,7 @@ a separate compact version.
 ```scss
 .mi__bar-fill {
   width: 0;
-  animation: mi-bF .6s ease both;
+  animation: mi-bF 0.6s ease both;
 }
 
 // or via modifiers

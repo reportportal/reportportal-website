@@ -20,9 +20,10 @@ $chevron-gutter: 36px;
 
   &__container {
     @include m.font-poppins();
-    @include m.font-scale(small);
+    @include m.font-scale(base);
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     color: var(--text-service);
 
@@ -106,6 +107,31 @@ $chevron-gutter: 36px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text-service);
+  }
+
+  // Explains the PREMIUM badge used in the table above. Sits on its own line so
+  // it reads as a key to the table rather than as part of the CTA row.
+  &__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    // The footer header already carries 24px above it; adding more here would
+    // double the gap between the last row and the legend.
+    @include m.breakpoint(v.$desktop-sm) {
+      justify-content: flex-start;
+    }
+
+    // `.row-section__container a` turns every link in the footer into a flex box
+    // for the Terms & Conditions icon. Here the link sits mid-sentence and has
+    // to stay inline with the text around it.
+    a {
+      display: inline-flex;
+      color: var(--color-primary-600);
+    }
   }
 
   &__buttons-wrapper {

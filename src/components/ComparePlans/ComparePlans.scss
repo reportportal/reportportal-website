@@ -181,6 +181,14 @@
     padding: 0 !important;
   }
 
+  // A row opens on click, so say so. antd sets this itself, but only inside a
+  // `:where()` scoped to a build-time hash that need not match the runtime one,
+  // so it cannot be relied on. Disabled panels — desktop section headings and
+  // the footer — are covered by the rule below and keep the default arrow.
+  .ant-collapse-item:not(.ant-collapse-item-disabled) > .ant-collapse-header {
+    cursor: pointer;
+  }
+
   .ant-collapse-item-disabled .ant-collapse-header {
     cursor: auto;
   }
@@ -553,11 +561,12 @@
       }
     }
 
-    // Named "full width" but pinned to a third of the row, which left long
-    // descriptions running eight lines with two thirds of the row empty.
-    // 720px per the Figma spec, ~80 characters at 16px.
+    // Named "full width" but originally pinned to a third of the row, which left
+    // long descriptions running eight lines with two thirds of the row empty.
+    // 440px is roughly the width of the feature-name column, so the text reads
+    // as belonging to it instead of sliding under the plan values.
     &-full-width {
-      max-width: 720px;
+      max-width: 440px;
     }
   }
 
