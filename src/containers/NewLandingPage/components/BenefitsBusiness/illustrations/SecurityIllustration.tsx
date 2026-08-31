@@ -339,7 +339,7 @@ export const SecurityIllustration: FC = () => {
               </svg>
             </div>
             <span className="w-txt">
-              Login attempt <strong>blocked</strong> — unrecognized IP address
+              Assign to project <strong>failed</strong> — insufficient permissions
             </span>
             <span className="w-time">1 hr ago</span>
           </div>

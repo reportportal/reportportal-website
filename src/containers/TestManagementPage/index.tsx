@@ -36,8 +36,8 @@ export const TestManagementPage: FC = () => (
             All inside ReportPortal.
           </h2>
           <p className={getBlocksWith('__hero-description')}>
-            Test Management System that integrates seamlessly with your automation results and
-            connects with AI testing agents to enrich your test scope at every stage.
+            Test Management System that integrates seamlessly with your testing results and connects
+            with AI testing agents to enrich your test scope at every stage.
           </p>
         </div>
         <div className={getBlocksWith('__hero-cta')}>
@@ -61,7 +61,7 @@ export const TestManagementPage: FC = () => (
         <div className={getBlocksWith('__organize-inner')}>
           <h2>Organize with flexibility</h2>
           <p className={getBlocksWith('__organize-subtitle')}>
-            Create and organise test cases using templates, folders, and tags. Let AI agents connect
+            Create and organize test cases using templates, folders, and tags. Let AI agents connect
             via MCP Server to suggest coverage gaps or missing scenarios without touching your
             structure.
           </p>
@@ -94,7 +94,7 @@ export const TestManagementPage: FC = () => (
           <h2>Why switch to ReportPortal?</h2>
         </div>
         <p className={getBlocksWith('__benefits-subtitle')}>
-          Built for teams who need both manual and automated testing in one unified platform.
+          Built for teams who need manual, automated, and agentic testing in one unified platform.
         </p>
       </div>
       <div className={`${getBlocksWith('__benefits-cards')} container`}>
@@ -121,7 +121,7 @@ export const TestManagementPage: FC = () => (
           </p>
           <Link
             className="btn btn--secondary btn--large"
-            to="/contact-us/general?reason=demo"
+            to="/contact-us/general/?reason=demo"
             data-gtm="test_management_request_demo"
           >
             Request a Demo

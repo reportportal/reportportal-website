@@ -44,7 +44,7 @@ export const TestPlanningIllustration: FC = () => {
           className={classNames('test-planning-illustration__canvas', {
             'test-planning-illustration__canvas--animate': isStatic || isVisible,
           })}
-          style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+          style={{ fontFamily: "'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif" }}
         >
           {/* NAV */}
           <div
@@ -186,7 +186,7 @@ export const TestPlanningIllustration: FC = () => {
                 flexShrink: 0,
               }}
             >
-              <span style={{ fontSize: '18px', fontWeight: 800, color: '#1A2740', flex: 1 }}>
+              <span style={{ fontSize: '18px', fontWeight: 600, color: '#1A2740', flex: 1 }}>
                 Milestones
               </span>
               <div
@@ -197,7 +197,7 @@ export const TestPlanningIllustration: FC = () => {
                   borderRadius: '6px',
                   fontSize: '10px',
                   color: '#009DBB',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   cursor: 'default',
                 }}
               >
@@ -261,7 +261,7 @@ export const TestPlanningIllustration: FC = () => {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#1A2740' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A2740' }}>
                       Sprint 59 — Backend Hardening
                     </div>
                     <div style={{ fontSize: '9.5px', color: '#8791AB', marginTop: '1px' }}>
@@ -269,15 +269,15 @@ export const TestPlanningIllustration: FC = () => {
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>95%</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>95%</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Covered</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>11</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>11</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Days left</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '44px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>2</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>2</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Plans</div>
                   </div>
                   <div className="ms-illu-pill" style={{ background: '#009DBB', color: '#fff' }}>
@@ -337,7 +337,7 @@ export const TestPlanningIllustration: FC = () => {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#005A6E' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#005A6E' }}>
                       Release 12.4 — Q1 Delivery
                     </div>
                     <div style={{ fontSize: '9.5px', color: '#8791AB', marginTop: '1px' }}>
@@ -345,15 +345,15 @@ export const TestPlanningIllustration: FC = () => {
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>62%</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>62%</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Covered</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>5</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>5</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Days left</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '44px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>5</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>5</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Plans</div>
                   </div>
                   <div className="ms-illu-pill" style={{ background: '#009DBB', color: '#fff' }}>
@@ -411,7 +411,7 @@ export const TestPlanningIllustration: FC = () => {
                         style={{
                           width: '32px',
                           fontSize: '11px',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           color: '#1A2740',
                           textAlign: 'right',
                         }}
@@ -450,7 +450,7 @@ export const TestPlanningIllustration: FC = () => {
                         style={{
                           width: '32px',
                           fontSize: '11px',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           color: '#1A2740',
                           textAlign: 'right',
                         }}
@@ -489,7 +489,7 @@ export const TestPlanningIllustration: FC = () => {
                         style={{
                           width: '32px',
                           fontSize: '11px',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           color: '#1A2740',
                           textAlign: 'right',
                         }}
@@ -526,7 +526,7 @@ export const TestPlanningIllustration: FC = () => {
                         style={{
                           width: '32px',
                           fontSize: '11px',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           color: '#1A2740',
                           textAlign: 'right',
                         }}
@@ -563,7 +563,7 @@ export const TestPlanningIllustration: FC = () => {
                         style={{
                           width: '32px',
                           fontSize: '11px',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           color: '#1A2740',
                           textAlign: 'right',
                         }}
@@ -580,7 +580,7 @@ export const TestPlanningIllustration: FC = () => {
                       style={{
                         fontSize: '10.5px',
                         color: '#009DBB',
-                        fontWeight: 700,
+                        fontWeight: 600,
                         cursor: 'default',
                       }}
                     >
@@ -622,7 +622,7 @@ export const TestPlanningIllustration: FC = () => {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#1A2740' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A2740' }}>
                       Plan — Q1 Testing Strategy
                     </div>
                     <div style={{ fontSize: '9.5px', color: '#8791AB', marginTop: '1px' }}>
@@ -630,15 +630,15 @@ export const TestPlanningIllustration: FC = () => {
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>92%</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>92%</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Covered</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>—</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>—</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Days left</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '44px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>3</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>3</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Plans</div>
                   </div>
                   <div
@@ -685,7 +685,7 @@ export const TestPlanningIllustration: FC = () => {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#1A2740' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A2740' }}>
                       Feature — Dark Mode Support
                     </div>
                     <div style={{ fontSize: '9.5px', color: '#8791AB', marginTop: '1px' }}>
@@ -693,15 +693,15 @@ export const TestPlanningIllustration: FC = () => {
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>88%</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>88%</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Covered</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '52px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>—</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>—</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Days left</div>
                   </div>
                   <div style={{ textAlign: 'center', minWidth: '44px' }}>
-                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740' }}>4</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740' }}>4</div>
                     <div style={{ fontSize: '9px', color: '#8791AB' }}>Plans</div>
                   </div>
                   <div

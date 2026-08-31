@@ -44,9 +44,9 @@ export const FEATURES_LIST: Feature[] = [
     id: 'ai-capabilities',
     title: 'AI capabilities for the full testing lifecycle',
     description:
-      'Our MCP server acts as the central intelligence core, enabling powerful AI capabilities across your entire testing pipeline — from test design to release decision.',
+      'Built-in ML triage detects failure patterns and root causes automatically, while AI agents connected via MCP extend automation across your pipeline — from test design to release decision.',
     bullets: [
-      'Seamless connection to your stack without migration',
+      'Seamless connection of your AI tools via MCP',
       'Automatic analysis of failures to find patterns & root causes',
       'ML triage that lets you focus on fixes, not analysis',
       <>
@@ -68,7 +68,7 @@ export const FEATURES_LIST: Feature[] = [
     id: 'test-planning-design',
     title: 'Test planning & design',
     description:
-      'A complete Test Case Management system built-in. Organize test cases in folders and plan milestones.',
+      'A complete Test Case Management system is built-in. Organize test cases into folders and plan milestones.',
     bullets: [
       'Folder-based organization for test cases',
       'Rich text editor with attachments support',
@@ -85,11 +85,10 @@ export const FEATURES_LIST: Feature[] = [
   },
   {
     id: 'unified-reporting',
-    title: 'Unified reporting & traceability',
-    description:
-      'Centralize results from both Manual and Automated runs. See the full picture of your quality in real-time.',
+    title: 'Unified test reporting & traceability',
+    description: 'Bring manual, agentic and automated test results together in one place.',
     bullets: [
-      'Combined view of manual and automated test results',
+      'Traceability from test cases to runs and defects',
       'Real-time test execution tracking',
       'Historical trend analysis across releases',
     ],
@@ -101,7 +100,7 @@ export const FEATURES_LIST: Feature[] = [
     id: 'ai-powered-analysis',
     title: 'AI-powered analysis & release readiness',
     description:
-      'AI agents automatically classify failures and surface root causes. Quality Gates turn analysis into go/no-go decisions — without manual review.',
+      'AI automatically classifies failures and surfaces root causes. Quality Gates turn analysis into go/no-go decisions — without manual review.',
     bullets: [
       'Automatic failure categorization with ML',
       'Pattern detection across test runs',
@@ -122,7 +121,7 @@ export const FEATURES_LIST: Feature[] = [
       'Visualize your data with custom widgets. Share insights with stakeholders via live dashboards.',
     bullets: [
       'Customizable dashboard widgets and layouts',
-      'Real-time metrics and trend visualizations',
+      'Real-time testing metrics and trend visualizations',
       'Shareable reports for stakeholders',
     ],
     cta: [
@@ -137,11 +136,11 @@ export const FEATURES_LIST: Feature[] = [
     title: 'Enterprise controls & integrations',
     layout: 'full-width',
     description:
-      'Connect ReportPortal to your existing stack — AI agents work inside your pipeline from day one.',
+      'Connect ReportPortal to your enterprise ecosystem with flexible integrations, centralized governance, security, and compliance-ready capabilities.',
     linkedCards: [
       {
         icon: 'jira',
-        title: 'BTS Integrations',
+        title: 'Bug Tracking Systems',
         description: 'Sync test failures to BTS tickets automatically',
       },
       {
@@ -168,13 +167,90 @@ export const FEATURES_LIST: Feature[] = [
 export const FEATURES_FAQ_ITEMS = [
   {
     key: 1,
+    label: 'What is a Launch in ReportPortal?',
+    children: (
+      <>
+        <p>
+          A Launch is a test run in ReportPortal. It brings together tests, steps, logs,
+          screenshots, and other results from a single testing session.
+        </p>
+        <p>
+          Launches can contain results from automated tests, manual test execution, or agentic
+          testing. You can review and analyze results, compare runs, merge launches, rerun tests,
+          and track testing history over time.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 2,
+    label: 'Can I use ReportPortal for manual testing, or is it automation-only?',
+    children: (
+      <>
+        <p>
+          Both. ReportPortal includes a built-in test case management system — a folder-based test
+          case library with a rich text editor and attachments, plus Test Plans, Manual Launches and
+          Milestones.
+        </p>
+        <p>
+          Manual, agentic and automated results live in the same project and roll up into the same
+          dashboards, so quality is one picture rather than several.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 3,
+    label: 'Do I need to change my tests to start using ReportPortal?',
+    children: (
+      <>
+        <p>
+          No. ReportPortal connects to your existing test framework through an agent — you add it to
+          your project and point it at your instance. Your tests, project structure and CI setup
+          stay as they are: no migration, no rewriting.
+        </p>
+        <p>
+          The same applies to AI: the MCP server exposes your test data to AI agents without moving
+          it anywhere.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 4,
+    label: 'How is ReportPortal different from TestRail, Xray or Zephyr?',
+    children: (
+      <>
+        <p>
+          Traditional test management tools are built around a manual test case repository, with
+          automation results attached afterwards. ReportPortal starts from execution data: results
+          stream in while a run is still going, ML triages failures automatically, and Quality Gates
+          turn that analysis into a go/no-go verdict for your pipeline.
+        </p>
+        <p>
+          Test case management is here too — but it sits alongside real-time analysis rather than
+          replacing it.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 5,
     label: 'What is meant by "Premium feature"?',
     children: (
       <>
         <p>
-          Premium feature is an advanced feature which comes on top of Free Open Source edition. It
-          comes at no cost with SaaS offering and included into the &quot;160&quot; Managed Services
-          package.
+          Premium features are advanced capabilities on top of the free open-source core. They come
+          at no extra cost with SaaS subscriptions and with Managed Services packages — the exact
+          set depends on your plan.
+        </p>
+        <p>
+          Currently premium: Quality Gates, Test executions, Microsoft Teams notifications,
+          Organizations, SSO, LDAP and SCIM provisioning.
+        </p>
+        <p>
+          Test management, AI failure reason detection and the MCP server are part of the core and
+          available on every plan.
         </p>
         <p>
           See the{' '}
@@ -187,15 +263,41 @@ export const FEATURES_FAQ_ITEMS = [
     ),
   },
   {
-    key: 2,
-    label: 'What capabilities does Rest API provide?',
+    key: 6,
+    label: 'Do you use my test data to train AI models?',
     children: (
-      <p>
-        REST API enables users to easily integrate any testing framework or third-party tool with
-        ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
-        merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
-        update the statuses in the pipeline, generate custom reports and many more.
-      </p>
+      <>
+        <p>
+          No. Failure reason detection uses ML models trained on your own history of investigated
+          failures, inside your own instance. Your data is never used to train shared or third-party
+          models.
+        </p>
+        <p>
+          The MCP server works the same way — it gives AI agents access to your data without copying
+          it out of ReportPortal.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: 7,
+    label: 'Where is my data stored? Can I keep it on-premises?',
+    children: (
+      <>
+        <p>
+          Yes. ReportPortal can run entirely in your own infrastructure — on-premises or in your
+          private cloud — so test data never leaves your perimeter. With Managed Services we operate
+          that instance for you, still inside your environment.
+        </p>
+        <p>
+          On{' '}
+          <Link to="/pricing/saas/" className="link">
+            SaaS
+          </Link>
+          , Business and Enterprise plans get a dedicated instance with a choice of deployment
+          region and IP allowlisting.
+        </p>
+      </>
     ),
   },
 ];

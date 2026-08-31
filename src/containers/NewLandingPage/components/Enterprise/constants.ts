@@ -18,7 +18,7 @@ export const ENTERPRISE_CARDS: EnterpriseCard[] = [
   {
     iconKey: 'contributors',
     title: 'Enterprise Scale',
-    description: 'Support for thousands of users, projects, and millions of test results',
+    description: 'Group projects into Organizations — hundreds of users, thousands of tests',
   },
   {
     iconKey: 'analytics',

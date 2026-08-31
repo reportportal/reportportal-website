@@ -72,7 +72,7 @@ export const RealTimeReportingIllustration: FC = () => {
             el.textContent = `${done} / 7 tests`;
             if (done === 7) {
               el.style.color = '#1A2740';
-              el.style.fontWeight = '800';
+              el.style.fontWeight = '600';
             }
           },
           isStatic ? 0 : ms,
@@ -117,7 +117,7 @@ export const RealTimeReportingIllustration: FC = () => {
             <div
               style={{
                 fontSize: 14,
-                fontWeight: 800,
+                fontWeight: 600,
                 color: '#1A2740',
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
@@ -485,7 +485,7 @@ export const RealTimeReportingIllustration: FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11.5, fontWeight: 700, color: '#1A2740' }}>
+                  <div style={{ fontSize: 11.5, fontWeight: 600, color: '#1A2740' }}>
                     Launch Finished
                   </div>
                   <div style={{ fontSize: 9, color: '#8791AB', marginTop: 1 }}>3.0s total</div>

@@ -141,17 +141,17 @@ export const AiPoweredAnalysisIllustration: FC = () => {
           className={classNames('ai-pa-illustration__canvas', {
             'ai-pa-illustration__canvas--animate': isVisible,
           })}
-          style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+          style={{ fontFamily: "'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif" }}
         >
           {/* HEADER */}
           <div className="qg-hdr">
-            <span style={{ fontSize: '15px', fontWeight: 800, color: '#1A2740', flex: 1 }}>
+            <span style={{ fontSize: '15px', fontWeight: 600, color: '#1A2740', flex: 1 }}>
               Quality Gates
             </span>
             <span
               style={{
                 fontSize: '9.5px',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: '#5F8A9A',
                 background: '#EDF5FA',
                 border: '0.5px solid #C2D8E4',
@@ -177,7 +177,7 @@ export const AiPoweredAnalysisIllustration: FC = () => {
               <span
                 style={{
                   fontSize: '9px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: '#8791AB',
                   textTransform: 'uppercase',
                   letterSpacing: '.07em',
@@ -358,7 +358,7 @@ export const AiPoweredAnalysisIllustration: FC = () => {
               <div className="qg-rule-body">
                 <div className="qg-rule-name">Flaky Test Rate</div>
                 <div className="qg-rule-meta">
-                  Threshold ≤ 5% · <span style={{ fontWeight: 700 }}>Non-blocking</span>
+                  Threshold ≤ 5% · <span style={{ fontWeight: 600 }}>Non-blocking</span>
                 </div>
               </div>
               <div className="qg-rule-val" id="qg-rv3">
@@ -477,7 +477,7 @@ export const AiPoweredAnalysisIllustration: FC = () => {
                 <div
                   style={{
                     fontSize: '12px',
-                    fontWeight: 800,
+                    fontWeight: 600,
                     color: '#00784E',
                     letterSpacing: '.04em',
                     lineHeight: 1,
@@ -501,6 +501,10 @@ export const AiPoweredAnalysisIllustration: FC = () => {
           </div>
         </div>
       </div>
+      <span className="ai-pa-illustration__disclaimer">
+        <span>Quality Gates currently evaluate automated test results only.</span>
+        <span>Milestones and manual testing — in upcoming releases.</span>
+      </span>
     </div>
   );
 };
