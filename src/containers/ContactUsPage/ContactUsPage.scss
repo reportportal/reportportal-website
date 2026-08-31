@@ -80,17 +80,12 @@
     }
 
     @include m.breakpoint(v.$desktop-sm) {
-      position: relative;
-      margin-top: -316px;
-      margin-right: unset;
-      margin-bottom: 115px;
-
+      &,
       &.how-did-you-hear {
-        margin-top: -172px;
-
-        &.is-submitted {
-          margin-top: -110px;
-        }
+        position: relative;
+        margin-top: -316px;
+        margin-right: unset;
+        margin-bottom: 115px;
       }
     }
     /* stylelint-enable order/order */
@@ -234,7 +229,7 @@
 
     &__subtitle {
       @include m.font-noto-sans();
-      @include m.font-scale(medium);
+      @include m.font-scale(base);
 
       margin-top: 24px;
       text-align: center;
@@ -372,12 +367,10 @@
   }
 
   &__additional-info-container {
-    order: -1;
     margin-top: 64px;
     padding-bottom: 0;
 
     @include m.breakpoint(v.$desktop-sm) {
-      order: unset;
       margin-top: 80px;
       padding-bottom: 40px;
 
@@ -425,6 +418,15 @@
       margin-bottom: 0;
     }
   }
+}
+
+.how-did-you-hear__title {
+  @include m.font-poppins(v.$fw-bold);
+  @include m.font-scale(large);
+
+  margin: 0;
+  text-align: center;
+  color: var(--text-primary);
 }
 
 .recaptcha-error {
