@@ -22,6 +22,7 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
   ...props
 }) => {
   const Element = InputElement as ElementType;
+  const { showCharCount, maxLength, ...restProps } = props;
 
   return (
     <div className={classNames('input-field', className, { error, filled: value })}>
@@ -31,11 +32,17 @@ export const InputField: FC<Omit<FormInputProps, 'name'> & { error?: string }> =
         <Element
           className={classNames('input', { 'input--select': InputElement === 'select' })}
           value={value}
-          {...omit(props, ['touched', 'initialValue', 'initialTouched', 'initialError'])}
+          maxLength={maxLength}
+          {...omit(restProps, ['touched', 'initialValue', 'initialTouched', 'initialError'])}
         >
           {children}
         </Element>
       </label>
+      {showCharCount && maxLength && (
+        <div className="char-count">
+          {(value || '').length}/{maxLength}
+        </div>
+      )}
       {error && <div className="error-message">{error}</div>}
     </div>
   );

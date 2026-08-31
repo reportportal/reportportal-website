@@ -1,4 +1,5 @@
 export const MAX_LENGTH = 255;
+export const MESSAGE_MAX_LENGTH = 1000;
 
 // TODO: replace with the real Salesforce field name when backend mapping is ready
 export const REASON_SALESFORCE_FIELD = 'reason_placeholder__c';

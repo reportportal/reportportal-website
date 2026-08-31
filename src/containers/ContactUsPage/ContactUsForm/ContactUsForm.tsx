@@ -14,7 +14,7 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
+import { MAX_LENGTH, MESSAGE_MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -78,7 +78,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         showFeedbackForm();
       } catch (error) {
-        setCustomError('Request failed. Please try again.');
+        setCustomError(
+          "We couldn't send your request. Try again, or email us directly at support@reportportal.io.",
+        );
         setIsLoading(false);
       }
     },
@@ -98,6 +100,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       setFieldValue('reason', urlReason);
     }
   }, [setFieldValue]);
+
+  // Scroll to the top of the page so the success message is visible right away,
+  // without the user having to scroll up manually.
+  useEffect(() => {
+    if (isFeedbackFormVisible && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isFeedbackFormVisible]);
 
   if (isFeedbackFormVisible) {
     return <FeedbackForm title={title} />;
@@ -169,7 +179,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               label="Tell us more"
               placeholder="Provide a brief summary of your request"
               InputElement="textarea"
-              maxLength={MAX_LENGTH}
+              maxLength={MESSAGE_MAX_LENGTH}
+              showCharCount
             />
           )}
           {isDiscussFieldShown && (
