@@ -58,9 +58,9 @@
     @include m.font-scale(x-small);
 
     margin-top: 4px;
+    text-align: right;
     line-height: 20px;
     color: var(--text-service);
-    text-align: right;
   }
 
   .error-message {

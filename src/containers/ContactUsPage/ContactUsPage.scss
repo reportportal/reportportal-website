@@ -425,8 +425,8 @@
   @include m.font-scale(large);
 
   margin: 0;
-  color: var(--text-primary);
   text-align: center;
+  color: var(--text-primary);
 }
 
 .recaptcha-error {
