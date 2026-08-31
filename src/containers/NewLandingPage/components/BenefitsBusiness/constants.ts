@@ -8,7 +8,7 @@ export const BENEFITS_ITEMS = [
   {
     title: 'Automated release readiness',
     description:
-      'See unified coverage and status across manual, automated and agentic testing in one view.',
+      'Track and evaluate automated test results to ensure release readiness and quality standards.',
     image: feature11,
     link: '/features/',
   },

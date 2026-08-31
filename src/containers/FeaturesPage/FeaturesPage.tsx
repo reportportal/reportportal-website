@@ -254,7 +254,7 @@ export const FeaturesPage: FC = () => {
           <Banner
             title="Still have questions about our features?"
             linkTitle="Contact us"
-            link="/contact-us/general"
+            link="/contact-us/general/"
           />
         </div>
       </FooterContent>

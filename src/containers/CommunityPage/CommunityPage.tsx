@@ -52,7 +52,7 @@ export const CommunityPage: FC = () => (
       </Link>
     </LinkedCardBlock>
     <YouTube />
-    <StartTestingWithReportPortal startFreeTrialUrl="/contact-us/community" />
+    <StartTestingWithReportPortal startFreeTrialUrl="/contact-us/general" />
     <LatestFromOurBlog isViewAll />
     <SubscriptionBanner />
   </div>
