@@ -56,9 +56,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
-        // `reason` / `reason_other` are captured in the UI only. The Salesforce
-        // field mapping (real field name + endpoint validation) is still pending,
-        // so they are intentionally NOT sent yet — to be wired with the backend.
+        // `reason` / `reason_other` are captured in the UI only and are NOT part of
+        // the payload yet. Wiring them up depends on the new Salesforce endpoints,
+        // which are being delivered as a separate piece of work — until then the
+        // current endpoint has no field to accept them, and sending an unknown
+        // field risks the whole submission being rejected.
+        // KNOWN GAP: text typed into "Tell us more" is therefore not delivered.
+        // Remove this destructuring and map both fields as soon as the new
+        // endpoints land.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
         const postData = {
