@@ -14,16 +14,19 @@ export const FAQ_ITEMS = [
       <>
         <div>
           The trial starts the moment you sign in for the first time and runs for 30 days. No credit
-          card is required, and you are under no obligation to continue afterwards.
+          card is required, and you do not need to pay or commit to anything after it ends.
         </div>
         <div>
-          It gives you every feature of ReportPortal on the Startup tier, so the Startup limits on
-          data storage and retention apply for the duration.
+          During the trial you get every feature included in the Startup plan, and the Startup
+          limits for data storage and retention apply for that time.
         </div>
         <div>
-          Each customer is eligible for one trial, on their first organization. If you have already
-          created an organization, or been invited to someone else&apos;s, the trial is no longer
-          available.
+          <b>One trial per customer</b>
+        </div>
+        <div>
+          Each customer can use one free trial, on their first organization — an organization being
+          your team&apos;s workspace in ReportPortal. If you have already created one, or been added
+          to someone else&apos;s, the trial is not available, because your workspace already exists.
         </div>
       </>
     ),
@@ -34,16 +37,25 @@ export const FAQ_ITEMS = [
     children: (
       <>
         <div>
-          Subscribe on or before the last day of the trial and nothing changes — everything you
-          reported during the trial stays where it is.
+          <b>If you subscribe by the last day of the trial</b>
         </div>
         <div>
-          If you do not, your Organization and the Project(s) in it switch to read-only mode for one
-          month. Every feature keeps working except reporting: you can read, analyse and export what
-          is already there, but no new results can be sent in. Subscribing at any point during that
-          month restores full access.
+          Your access continues without interruption. You keep using your projects and reporting new
+          test results, and your existing data stays available under your plan&apos;s retention
+          settings.
         </div>
-        <div>After that month without a subscription, the data is deleted.</div>
+        <div>
+          <b>If you do not subscribe</b>
+        </div>
+        <div>
+          Access to your trial projects is removed — you can no longer view existing data or report
+          new results — and your trial data and projects are deleted.
+        </div>
+        <div>
+          Export anything you want to keep before the trial ends. If you need more time to evaluate,
+          write to <Link to="mailto:support@reportportal.io">support@reportportal.io</Link> before
+          then.
+        </div>
       </>
     ),
   },
@@ -88,11 +100,15 @@ export const FAQ_ITEMS = [
     children: (
       <>
         <div>
-          The same as at the end of the trial. On the first day of the unpaid billing cycle your
-          Organization and the Project(s) in it switch to read-only for one month — everything
-          remains readable, but no new results can be reported.
+          Access to your projects ends when the subscription expires. You can no longer view
+          existing data or report new test results, and your projects and their data are then
+          deleted.
         </div>
-        <div>If the subscription is still not active after that month, the data is deleted.</div>
+        <div>
+          Export anything you want to keep before the subscription ends. If you need help with
+          renewal, write to <Link to="mailto:support@reportportal.io">support@reportportal.io</Link>{' '}
+          before then.
+        </div>
       </>
     ),
   },
@@ -117,14 +133,16 @@ export const FAQ_ITEMS = [
     label: 'What happens if I reach my data storage limit?',
     children: (
       <>
+        <div>Your account keeps working normally and reporting does not stop.</div>
         <div>
-          Nothing breaks and reporting does not stop. The system measures stored data daily and
-          gradually removes the oldest data above the limit, across both the database and the
-          attachment storage.
+          Once you reach the limit, the system checks your storage daily and removes the oldest data
+          first — test results and attachments alike. Data is also removed once it is older than
+          your retention period; whichever rule is reached first applies. Because the oldest data
+          goes first, your most recent results are the last to be affected.
         </div>
         <div>
-          Data is also removed once it passes your retention period — whichever comes first. If you
-          are consistently near the limit, that is usually the point to move to a larger plan.
+          If you are regularly close to the limit, that is usually the point to consider a larger
+          plan.
         </div>
       </>
     ),
@@ -134,15 +152,12 @@ export const FAQ_ITEMS = [
     label: 'What does “Upon request” mean in the comparison table?',
     children: (
       <>
+        <div>The feature is included in your plan — there is no extra cost.</div>
         <div>
-          The feature is part of that plan, but it is set up for you rather than switched on by
-          default — typically because it has to be configured against your own systems or your
-          dedicated instance.
+          It is not turned on automatically. We set it up for you, because it has to be connected to
+          your own systems or configured for your instance.
         </div>
-        <div>
-          There is no additional charge — it is included in the plan. Contact us and we will arrange
-          it for your instance.
-        </div>
+        <div>To get it enabled, contact us and we will set it up.</div>
       </>
     ),
   },

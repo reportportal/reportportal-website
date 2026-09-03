@@ -28,6 +28,41 @@ interface ComparePlansProps {
 
 const getBlocksWith = createBemBlockBuilder(['compare']);
 
+// Warn once per process, not once per render.
+let hasCheckedBadgeKeys = false;
+
+/**
+ * ROW_BADGES is keyed by the row name an editor types in Contentful, so a rename
+ * there silently drops a badge — which is exactly what happened to LDAP.
+ *
+ * Called from the render body rather than an effect on purpose: effects do not
+ * run during server rendering, so an effect-based check could only ever fire in
+ * a browser. This way `gatsby build` prints it too, and a missed rename shows up
+ * in the build log before it reaches staging. Silent in the browser bundle.
+ */
+const checkBadgeKeys = (sections: FormattedComparePlansDto['sections']) => {
+  if (
+    hasCheckedBadgeKeys ||
+    (process.env.NODE_ENV === 'production' && typeof window !== 'undefined')
+  ) {
+    return;
+  }
+
+  hasCheckedBadgeKeys = true;
+
+  const names = new Set(sections.flatMap(section => section.items.map(item => item.name)));
+  const orphans = Object.keys(ROW_BADGES).filter(name => !names.has(name));
+
+  if (orphans.length) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[ComparePlans] These badge keys match no row and render nothing: ${orphans.join(
+        ', ',
+      )}. Renamed in Contentful? See src/components/ComparePlans/constants.ts`,
+    );
+  }
+};
+
 export const ComparePlans: FC<ComparePlansProps> = ({
   plans: { sections, columns, ctas, note },
   isCollapsibleOnMobile = true,
@@ -71,26 +106,7 @@ export const ComparePlans: FC<ComparePlansProps> = ({
     />
   );
 
-  // ROW_BADGES is keyed by the row name an editor types in Contentful, so a
-  // rename there silently drops a badge. Surfacing it in development turns that
-  // into something someone notices the first time they open the page.
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      return;
-    }
-
-    const names = new Set(sections.flatMap(section => section.items.map(item => item.name)));
-    const orphans = Object.keys(ROW_BADGES).filter(name => !names.has(name));
-
-    if (orphans.length) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `[ComparePlans] These badge keys match no row and render nothing: ${orphans.join(
-          ', ',
-        )}. Renamed in Contentful? See src/components/ComparePlans/constants.ts`,
-      );
-    }
-  }, [sections]);
+  checkBadgeKeys(sections);
 
   const getRowKey = (sectionIndex: number, itemIndex: number) =>
     `${sections[sectionIndex].title}${sections[sectionIndex].items[itemIndex].name}`;

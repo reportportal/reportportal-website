@@ -33,7 +33,7 @@ export const CertificationCard: FC<CertificationCardProps> = ({
         <ArrowLink
           text="Learn more"
           srOnlySuffix=" about ReportPortal SOC 2 Type II audit"
-          to="/blog/reportportal-completes-soc-2-type-ii-audit/"
+          to="/blog/reportportal-renews-soc-2-type-ii-attestation-for-the-third-consecutive-year/"
           className={cn('btn btn--outline btn--large', getBlocksWith('__link'))}
         />
       )}
