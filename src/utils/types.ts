@@ -134,6 +134,7 @@ export interface ContactUsBaseConfig {
     name: string;
     value: string;
   }[];
+  title?: string;
   planType?: PlanType;
   isDiscussFieldShown?: boolean;
   areCertificatesShown?: boolean;

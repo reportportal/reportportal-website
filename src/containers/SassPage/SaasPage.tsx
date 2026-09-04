@@ -73,7 +73,7 @@ export const SaasPage: FC = () => {
         <Banner
           title="Do you still have questions?"
           linkTitle="Contact us"
-          link="/contact-us/general"
+          link="/contact-us/saas/"
         />
       </FooterContent>
     </>
