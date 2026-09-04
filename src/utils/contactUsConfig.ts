@@ -250,6 +250,19 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     ],
     isDiscussFieldShown: false,
   },
+  {
+    id: '[Service Packages]',
+    title: 'SaaS Plans',
+    url: '/contact-us/saas',
+    options: [
+      {
+        name: SALESFORCE_SOURCE_NAME,
+        value: 'Landing page / SaaS / Interest in SaaS Plans',
+      },
+      { name: LEAD_SOURCE, value: 'RP SaaS' },
+    ],
+    isDiscussFieldShown: false,
+  },
   createContactUsConfig({
     salesforceSourceName: 'RP Community',
     leadSource: 'RP Community',
