@@ -76,7 +76,7 @@
   opacity: 0;
   text-align: left;
   line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
-  font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif;
 
   // ── Animation utility classes — all paused; resume via --visible modifier
   &__hd {
@@ -308,7 +308,7 @@
     border-radius: 6px;
     padding: 5px 9px;
     font-size: 10.5px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: default;
   }
 

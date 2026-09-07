@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
-import { useAtom } from 'jotai';
-import { Link } from '@app/components/Link';
 import { ArrowLink } from '@app/components/ArrowLink';
 import { useMenuList } from '@app/hooks/useMenuList';
-import { createBemBlockBuilder, DOCUMENTATION_URL, watchProductOverviewAtom } from '@app/utils';
+import { createBemBlockBuilder, DOCUMENTATION_URL } from '@app/utils';
 
 import { MenuProps } from '../../constants';
 import { SectionList } from '../SectionList';
-import { PlayIcon } from './icons';
 import { GENERAL_LIST, FEATURES_LIST } from './constants';
 
 import '../Menu.scss';
@@ -16,7 +13,6 @@ import './ProductMenu.scss';
 export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuContainerRef }) => {
   const getBlocksWith = createBemBlockBuilder(['menu-dialog', 'menu-dialog-product']);
   const { integrations } = useMenuList();
-  const [, setWatchProductOverviewState] = useAtom(watchProductOverviewAtom);
 
   const generalList = (
     <SectionList
@@ -43,37 +39,6 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
       items={integrations}
       mode="secondary"
     />
-  );
-
-  const footer = (
-    <div className={getBlocksWith('__footer')}>
-      <div className={getBlocksWith('__footer-container')}>
-        <div className={getBlocksWith('__btn-group')}>
-          <Link
-            className="btn btn--primary temporary-hide"
-            to="/contact-us/general/?reason=free_trial"
-            data-gtm="start_free_trial"
-          >
-            Start free trial
-          </Link>
-          <Link
-            className="btn btn--outline"
-            to="/contact-us/general/"
-            data-gtm="get_a_quote_product"
-          >
-            Contact us
-          </Link>
-        </div>
-        <button
-          type="button"
-          className={getBlocksWith('__btn-text')}
-          onClick={() => setWatchProductOverviewState({ isOpen: true })}
-        >
-          <PlayIcon />
-          Watch product overview
-        </button>
-      </div>
-    </div>
   );
 
   if (!isDesktop) {
@@ -103,7 +68,6 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
           </div>
         </div>
       </div>
-      {footer}
     </div>
   );
 };

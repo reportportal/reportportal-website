@@ -198,8 +198,8 @@ export const ReleaseDecisionIllustration: FC = () => {
                     <span className="release-decision-illustration__cv">28</span>
                   </div>
                   <div className="release-decision-illustration__chip">
-                    <span className="release-decision-illustration__ck">AI Analysis</span>
-                    <span className="release-decision-illustration__cv">4m 12s</span>
+                    <span className="release-decision-illustration__ck">Auto-analyzed</span>
+                    <span className="release-decision-illustration__cv">94%</span>
                   </div>
                 </div>
                 <div className="release-decision-illustration__gates-title">

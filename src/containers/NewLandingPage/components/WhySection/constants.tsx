@@ -22,7 +22,7 @@ export const WHY_CARDS: WhyCard[] = [
     icon: <TestDesignAndPlanningIcon />,
     title: 'Test Design & Planning',
     description:
-      'Organise and prioritise test cases, track coverage, and keep your QA process aligned with business objectives.',
+      'Organize and prioritize test cases, track coverage, and keep your QA process aligned with business objectives.',
   },
   {
     icon: <TestResultsIcon />,

@@ -33,6 +33,20 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
     return false;
   }
 
+  // Cross-page anchor link (e.g. nav menu "/features/#ai-capabilities" clicked
+  // from another page). Land at the top of the destination instead of letting
+  // the browser jump straight to the anchor — the page itself then performs a
+  // smooth scroll down to it, so the user sees where they landed.
+  // Same-page hash changes are excluded: those must keep native behaviour.
+  if (
+    location?.hash &&
+    prevRouterProps?.location &&
+    prevRouterProps.location.pathname !== location.pathname
+  ) {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    return false;
+  }
+
   // Preserve scroll when navigating on the same pathname, regardless of
   // whether the query string changes (e.g., blog filters, Load More
   // pagination, or a no-op navigate that trims to the same URL). Prevents

@@ -122,7 +122,7 @@
   justify-content: flex-start;
   width: 100%;
   line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif;
 
   * {
     box-sizing: border-box;
@@ -170,7 +170,7 @@
     white-space: nowrap;
     color: #1a2740;
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .stat-chips {
@@ -183,7 +183,7 @@
     border-radius: 5px;
     padding: 4px 10px;
     font-size: 10.5px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .sc-f {
@@ -252,7 +252,7 @@
     opacity: 0;
     color: #c4cdd8;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .t-name {
@@ -308,7 +308,7 @@
     line-height: 1;
     color: #64b;
     font-size: 9px;
-    font-weight: 900;
+    font-weight: 600;
 
     &.vis {
       animation: at-starIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -332,7 +332,7 @@
     border-radius: 4px;
     letter-spacing: 0.02em;
     font-size: 9.5px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .dt-ti {
@@ -403,7 +403,7 @@
     white-space: nowrap;
     color: #64b;
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .ai-dot {
@@ -478,7 +478,7 @@
     line-height: 1;
     letter-spacing: -0.02em;
     font-size: 32px;
-    font-weight: 800;
+    font-weight: 600;
 
     &.muted {
       color: #c8d4dc;
@@ -533,7 +533,7 @@
     line-height: 1;
     color: #00784e;
     font-size: 17px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .save-lbl {

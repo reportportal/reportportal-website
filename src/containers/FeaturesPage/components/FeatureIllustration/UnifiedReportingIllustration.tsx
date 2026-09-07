@@ -48,7 +48,7 @@ export const UnifiedReportingIllustration: FC = () => {
           className={classNames('unified-reporting-illustration__canvas', {
             'unified-reporting-illustration__canvas--animate': isStatic || isVisible,
           })}
-          style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+          style={{ fontFamily: "'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif" }}
         >
           {/* NAV */}
           <div
@@ -176,7 +176,7 @@ export const UnifiedReportingIllustration: FC = () => {
             {/* HEADER */}
             <div className="ur-illu-hdr">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 800, color: '#1A2740', flex: 1 }}>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#1A2740', flex: 1 }}>
                   Release Summary
                 </span>
                 <div
@@ -189,7 +189,7 @@ export const UnifiedReportingIllustration: FC = () => {
                     background: '#fff',
                     border: '1px solid #C2D8E4',
                     fontSize: '10px',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: '#4A6070',
                     cursor: 'default',
                     flexShrink: 0,
@@ -239,7 +239,7 @@ export const UnifiedReportingIllustration: FC = () => {
               <span
                 style={{
                   fontSize: '9px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: '#8791AB',
                   textTransform: 'uppercase',
                   letterSpacing: '.07em',

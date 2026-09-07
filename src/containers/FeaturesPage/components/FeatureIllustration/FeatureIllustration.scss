@@ -205,7 +205,7 @@
     white-space: nowrap;
     color: #7a52c0;
     font-size: 9.5px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   // ── Card hint ─────────────────────────────────────────────────────────────
@@ -603,7 +603,7 @@
   border-radius: 6px;
   padding: 5px 9px;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: default;
 }
 
@@ -947,7 +947,7 @@
   line-height: 1;
   color: #1a2740;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
 
   &--pass {
     color: #00916a;
@@ -1032,7 +1032,7 @@
   letter-spacing: 0.07em;
   color: #8791ab;
   font-size: 9px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .ur-illu-badge {
@@ -1040,7 +1040,7 @@
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 8.5px;
-  font-weight: 700;
+  font-weight: 600;
 
   &--manual {
     border: 0.5px solid #c8ceff;
@@ -1272,6 +1272,20 @@
       animation: qgFadeIn 0.35s ease both 0.05s;
     }
   }
+
+  &__disclaimer {
+    @include m.font-noto-sans();
+    @include m.font-scale(x-small);
+
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--text-service);
+
+    span {
+      display: block;
+    }
+  }
 }
 
 // ── Structural classes ────────────────────────────────────────────────────────
@@ -1457,7 +1471,7 @@
   background: #eef2f6;
   color: #8797a8;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
 
   &.qg-val--pass {
     border-color: #b2e4ce;
@@ -1498,7 +1512,7 @@
   white-space: nowrap;
   color: #64b;
   font-size: 8px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .qg-ai-text {
@@ -1557,7 +1571,7 @@
   letter-spacing: 0.02em;
   color: #1a2740;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .qg-go-sub {
@@ -1884,7 +1898,7 @@
   flex: 1;
   color: #1a2740;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .dr-date-filter {
@@ -1910,7 +1924,7 @@
   background: #009dbb;
   color: #fff;
   font-size: 9.5px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dr-body {
@@ -1947,7 +1961,7 @@
   letter-spacing: 0.08em;
   color: #8791ab;
   font-size: 7px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dr-kpi-bottom {
@@ -1960,7 +1974,7 @@
 .dr-kpi-val {
   line-height: 1;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
 
   &--dark {
     color: #1a2740;
@@ -2012,7 +2026,7 @@
   letter-spacing: 0.06em;
   color: #8791ab;
   font-size: 8.5px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dr-donut-body {
@@ -2096,13 +2110,13 @@
   flex: 1;
   color: #1a2740;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .dr-tw-link {
   color: #009dbb;
   font-size: 9px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dr-tw-cols {
@@ -2119,7 +2133,7 @@
   letter-spacing: 0.06em;
   color: #8791ab;
   font-size: 7.5px;
-  font-weight: 700;
+  font-weight: 600;
 
   &--r {
     text-align: right;
@@ -2152,7 +2166,7 @@
   text-align: right;
   color: #5f7a8a;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .dr-bar-t {
@@ -2173,5 +2187,5 @@
   text-align: right;
   color: #5f7a8a;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 600;
 }

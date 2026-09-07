@@ -17,7 +17,7 @@ export const FEATURE_SECTIONS = [
   },
   {
     id: 'manual-execution',
-    title: 'Execute manual tests seamlessly',
+    title: 'Execute manual tests with ease',
     description:
       'Create manual launches to track test execution progress. Run tests manually using an intuitive flow.',
     bullets: [

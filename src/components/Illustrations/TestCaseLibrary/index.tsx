@@ -84,7 +84,7 @@ export const TestCaseLibrary: FC = () => {
             {/* Folder tree */}
             <div className="fp tcl__folders">
               <div className="tcl__folders-hd">
-                <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Folders
                 </span>
               </div>
@@ -140,7 +140,7 @@ export const TestCaseLibrary: FC = () => {
             {/* Test case list */}
             <div className="lp tcl__list">
               <div className="tcl__list-hd">
-                <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-primary)' }}>
                   All test cases
                 </span>
               </div>

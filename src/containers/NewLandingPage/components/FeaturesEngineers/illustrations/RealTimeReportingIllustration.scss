@@ -119,7 +119,7 @@
 .rt-illus {
   width: 100%;
   line-height: 1.25; // illu-base — illustrations were tuned to this; website base lh differs
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif;
 
   * {
     box-sizing: border-box;
@@ -282,7 +282,7 @@
     display: block;
     color: #1a2740;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .tmeta {
@@ -340,7 +340,7 @@
     padding: 5px 11px;
     white-space: nowrap;
     font-size: 10.5px;
-    font-weight: 700;
+    font-weight: 600;
 
     &.p {
       background: rgb(0 184 132 / 0.1);

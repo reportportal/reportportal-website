@@ -121,239 +121,245 @@ export const QualityGatesIllustration: FC = () => {
   }, [isStatic]);
 
   return (
-    <div className="quality-gates-illus" ref={containerRef}>
-      <div className="qg-canvas" ref={canvasRef}>
-        <div className="scene">
-          {/* Header */}
-          <div className="hdr">
-            <span className="hdr-title">Quality Gates</span>
-            <span className="release-tag">Release 12.4</span>
-          </div>
-
-          {/* Coverage bar */}
-          <div className="bar-wrap">
-            <div className="bar-top-row">
-              <span className="cov-title">Coverage</span>
-            </div>
-            <div className="stacked">
-              <div className="seg sp" />
-              <div className="seg sf" />
-              <div className="seg ss" />
-              <div className="su" />
-            </div>
-            <div className="leg-row">
-              <div className="leg-item">
-                <div className="leg-dot" style={{ background: '#00916A' }} />
-                <span style={{ color: '#5F7A8A' }}>Passed 58%</span>
-              </div>
-              <div className="leg-item">
-                <div className="leg-dot" style={{ background: '#C8373A' }} />
-                <span style={{ color: '#C8373A' }}>Failed 10%</span>
-              </div>
-              <div className="leg-item">
-                <div className="leg-dot" style={{ background: '#C8D4DC' }} />
-                <span style={{ color: '#8791AB' }}>Skipped 12%</span>
-              </div>
-              <div className="leg-uncov">
-                <div className="leg-hatch" />
-                Not executed 20%
-              </div>
-            </div>
-          </div>
-
-          {/* Rules */}
-          <div className="rules">
-            <div className="rule-row" id="r1">
-              <div className="light" id="l1">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path
-                    className="ck"
-                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <div className="rule-body">
-                <div className="rule-name">Manual Test Coverage</div>
-                <div className="rule-meta">Threshold ≥ 70%</div>
-              </div>
-              <div className="rule-val" id="rv1">
-                73%
-              </div>
+    <div className="quality-gates-illus-wrap">
+      <div className="quality-gates-illus" ref={containerRef}>
+        <div className="qg-canvas" ref={canvasRef}>
+          <div className="scene">
+            {/* Header */}
+            <div className="hdr">
+              <span className="hdr-title">Quality Gates</span>
+              <span className="release-tag">Release 12.4</span>
             </div>
 
-            <div className="rule-row" id="r2">
-              <div className="light" id="l2">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path
-                    className="ck"
-                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+            {/* Coverage bar */}
+            <div className="bar-wrap">
+              <div className="bar-top-row">
+                <span className="cov-title">Coverage</span>
               </div>
-              <div className="rule-body">
-                <div className="rule-name">Automated Pass Rate</div>
-                <div className="rule-meta">Threshold ≥ 90%</div>
+              <div className="stacked">
+                <div className="seg sp" />
+                <div className="seg sf" />
+                <div className="seg ss" />
+                <div className="su" />
               </div>
-              <div className="rule-val" id="rv2">
-                94%
-              </div>
-            </div>
-
-            <div className="rule-row" id="r3">
-              <div className="light" id="l3">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path
-                    className="ck"
-                    id="ck3"
-                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    className="dk"
-                    id="dk3"
-                    d="M3 5.5h5"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <div className="rule-body">
-                <div className="rule-name">Flaky Test Rate</div>
-                <div className="rule-meta">
-                  {'Threshold ≤ 5% · '}
-                  <span id="nb-label" style={{ fontWeight: 700 }}>
-                    Non-blocking
-                  </span>
+              <div className="leg-row">
+                <div className="leg-item">
+                  <div className="leg-dot" style={{ background: '#00916A' }} />
+                  <span style={{ color: '#5F7A8A' }}>Passed 58%</span>
+                </div>
+                <div className="leg-item">
+                  <div className="leg-dot" style={{ background: '#C8373A' }} />
+                  <span style={{ color: '#C8373A' }}>Failed 10%</span>
+                </div>
+                <div className="leg-item">
+                  <div className="leg-dot" style={{ background: '#C8D4DC' }} />
+                  <span style={{ color: '#8791AB' }}>Skipped 12%</span>
+                </div>
+                <div className="leg-uncov">
+                  <div className="leg-hatch" />
+                  Not executed 20%
                 </div>
               </div>
-              <div className="rule-val" id="rv3">
-                8%
+            </div>
+
+            {/* Rules */}
+            <div className="rules">
+              <div className="rule-row" id="r1">
+                <div className="light" id="l1">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      className="ck"
+                      d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="rule-body">
+                  <div className="rule-name">Manual Test Coverage</div>
+                  <div className="rule-meta">Threshold ≥ 70%</div>
+                </div>
+                <div className="rule-val" id="rv1">
+                  73%
+                </div>
+              </div>
+
+              <div className="rule-row" id="r2">
+                <div className="light" id="l2">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      className="ck"
+                      d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="rule-body">
+                  <div className="rule-name">Automated Pass Rate</div>
+                  <div className="rule-meta">Threshold ≥ 90%</div>
+                </div>
+                <div className="rule-val" id="rv2">
+                  94%
+                </div>
+              </div>
+
+              <div className="rule-row" id="r3">
+                <div className="light" id="l3">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      className="ck"
+                      id="ck3"
+                      d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      className="dk"
+                      id="dk3"
+                      d="M3 5.5h5"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+                <div className="rule-body">
+                  <div className="rule-name">Flaky Test Rate</div>
+                  <div className="rule-meta">
+                    {'Threshold ≤ 5% · '}
+                    <span id="nb-label" style={{ fontWeight: 600 }}>
+                      Non-blocking
+                    </span>
+                  </div>
+                </div>
+                <div className="rule-val" id="rv3">
+                  8%
+                </div>
+              </div>
+
+              <div className="rule-row" id="r4">
+                <div className="light" id="l4">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      className="ck"
+                      d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="rule-body">
+                  <div className="rule-name">Milestone Readiness</div>
+                  <div className="rule-meta">Threshold ≥ 80%</div>
+                </div>
+                <div className="rule-val" id="rv4">
+                  85%
+                </div>
+              </div>
+
+              <div className="rule-row" id="r5">
+                <div className="light" id="l5">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      className="ck"
+                      d="M2.5 5.5L4.5 7.5L8.5 3.5"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="rule-body">
+                  <div className="rule-name">Critical Test Failures</div>
+                  <div className="rule-meta">Threshold = 0</div>
+                </div>
+                <div className="rule-val" id="rv5">
+                  0
+                </div>
               </div>
             </div>
 
-            <div className="rule-row" id="r4">
-              <div className="light" id="l4">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            {/* AI strip */}
+            <div className="ai-row" id="aiRow">
+              <div className="ai-badge">✦ AI</div>
+              <div className="ai-text">
+                Flaky test rate above threshold but non-blocking. 4 of 5 gates passed — no blockers,
+                release window is clear.
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="go-footer" id="goFooter">
+              <div className="mini-lights">
+                <div className="ml" id="ml1" />
+                <div className="ml" id="ml2" />
+                <div className="ml amber" id="ml3" />
+                <div className="ml" id="ml4" />
+                <div className="ml" id="ml5" />
+              </div>
+              <div className="go-text">
+                <div className="go-label">Release Readiness</div>
+                <div className="go-sub">4 / 5 gates passed · 1 non-blocking skipped</div>
+              </div>
+              <div className="ready-badge" id="readyBadge">
+                <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                  <rect
+                    x="5.5"
+                    y="5.5"
+                    width="29"
+                    height="29"
+                    rx="7"
+                    transform="rotate(45 20 20)"
+                    fill="#00C878"
+                  />
+                  <rect
+                    x="7"
+                    y="7"
+                    width="26"
+                    height="26"
+                    rx="6.5"
+                    transform="rotate(45 20 20)"
+                    fill="url(#qg-dg)"
+                    opacity=".3"
+                  />
                   <path
-                    className="ck"
-                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
-                    strokeWidth="1.6"
+                    d="M13 20.5L17.5 25L27 15"
+                    stroke="#fff"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
+                  <defs>
+                    <linearGradient
+                      id="qg-dg"
+                      x1="20"
+                      y1="2"
+                      x2="20"
+                      y2="38"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#fff" />
+                      <stop offset="1" stopColor="#fff" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
                 </svg>
-              </div>
-              <div className="rule-body">
-                <div className="rule-name">Milestone Readiness</div>
-                <div className="rule-meta">Threshold ≥ 80%</div>
-              </div>
-              <div className="rule-val" id="rv4">
-                85%
-              </div>
-            </div>
-
-            <div className="rule-row" id="r5">
-              <div className="light" id="l5">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path
-                    className="ck"
-                    d="M2.5 5.5L4.5 7.5L8.5 3.5"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <div className="rule-body">
-                <div className="rule-name">Critical Test Failures</div>
-                <div className="rule-meta">Threshold = 0</div>
-              </div>
-              <div className="rule-val" id="rv5">
-                0
-              </div>
-            </div>
-          </div>
-
-          {/* AI strip */}
-          <div className="ai-row" id="aiRow">
-            <div className="ai-badge">✦ AI</div>
-            <div className="ai-text">
-              Flaky test rate above threshold but non-blocking. 4 of 5 gates passed — no blockers,
-              release window is clear.
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="go-footer" id="goFooter">
-            <div className="mini-lights">
-              <div className="ml" id="ml1" />
-              <div className="ml" id="ml2" />
-              <div className="ml amber" id="ml3" />
-              <div className="ml" id="ml4" />
-              <div className="ml" id="ml5" />
-            </div>
-            <div className="go-text">
-              <div className="go-label">Release Readiness</div>
-              <div className="go-sub">4 / 5 gates passed · 1 non-blocking skipped</div>
-            </div>
-            <div className="ready-badge" id="readyBadge">
-              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-                <rect
-                  x="5.5"
-                  y="5.5"
-                  width="29"
-                  height="29"
-                  rx="7"
-                  transform="rotate(45 20 20)"
-                  fill="#00C878"
-                />
-                <rect
-                  x="7"
-                  y="7"
-                  width="26"
-                  height="26"
-                  rx="6.5"
-                  transform="rotate(45 20 20)"
-                  fill="url(#qg-dg)"
-                  opacity=".3"
-                />
-                <path
-                  d="M13 20.5L17.5 25L27 15"
-                  stroke="#fff"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <defs>
-                  <linearGradient
-                    id="qg-dg"
-                    x1="20"
-                    y1="2"
-                    x2="20"
-                    y2="38"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#fff" />
-                    <stop offset="1" stopColor="#fff" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div>
-                <div className="ready-badge-label">Ready</div>
-                <div className="ready-badge-sub">Auto-approved</div>
+                <div>
+                  <div className="ready-badge-label">Ready</div>
+                  <div className="ready-badge-sub">Auto-approved</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <span className="quality-gates-illus-wrap__disclaimer">
+        <span>Quality Gates currently evaluate automated test results only.</span>
+        <span>Milestones and manual testing — in upcoming releases.</span>
+      </span>
     </div>
   );
 };

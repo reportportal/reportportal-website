@@ -48,7 +48,7 @@ export const DashboardsReportingIllustration: FC = () => {
           className={classNames('dr-illustration__canvas', {
             'dr-illustration__canvas--animate': isStatic || isVisible,
           })}
-          style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}
+          style={{ fontFamily: "'Noto Sans', 'Noto Sans Fallback', Arial, sans-serif" }}
         >
           {/* HEADER */}
           <div className="dr-hdr">
@@ -298,7 +298,7 @@ export const DashboardsReportingIllustration: FC = () => {
                       y="116"
                       textAnchor="middle"
                       fill="#009DBB"
-                      style={{ fontSize: '7.5px', fontWeight: 700 }}
+                      style={{ fontSize: '7.5px', fontWeight: 600 }}
                     >
                       Sat
                     </text>
@@ -368,7 +368,7 @@ export const DashboardsReportingIllustration: FC = () => {
                       y="54"
                       textAnchor="middle"
                       fill="#1A2740"
-                      style={{ fontSize: '14px', fontWeight: 800 }}
+                      style={{ fontSize: '14px', fontWeight: 600 }}
                     >
                       1 191
                     </text>

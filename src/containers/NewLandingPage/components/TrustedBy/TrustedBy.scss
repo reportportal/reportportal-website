@@ -86,17 +86,18 @@
       &:last-child {
         padding-right: 0;
       }
+    }
 
-      // Tablet+: reset horizontal divider, use vertical instead
-      & + & {
+    // Divider between stats: horizontal on mobile, vertical from tablet up.
+    // The breakpoint is nested here (not in the block above) so the reset
+    // wins the cascade — both rules have equal specificity.
+    & + & {
+      border-top: 1px solid var(--purple-grey);
+
+      @include m.breakpoint(v.$tablet-sm-exact) {
         border-top: none;
         border-left: 1px solid var(--purple-grey);
       }
-    }
-
-    // Mobile: horizontal divider between stacked stats
-    & + & {
-      border-top: 1px solid var(--purple-grey);
     }
   }
 

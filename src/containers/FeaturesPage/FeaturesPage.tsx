@@ -4,12 +4,7 @@ import { useScroll } from 'ahooks';
 import classNames from 'classnames';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
-import {
-  createBemBlockBuilder,
-  MEDIA_DESKTOP_SM,
-  iconsCommon,
-  DOCUMENTATION_URL,
-} from '@app/utils';
+import { createBemBlockBuilder, MEDIA_DESKTOP_SM, iconsCommon } from '@app/utils';
 import SuccessIcon from '@app/svg/success.inline.svg';
 import { Link } from '@app/components/Link';
 import { SupportedFrameworks } from '@app/components/SupportedFrameworks';
@@ -21,7 +16,7 @@ import { useScrollIntoViewHandler } from '@app/hooks/useScrollIntoViewHandler';
 import { FeaturesCta } from './components/FeaturesCta';
 import { EnterpriseIntegrationsSection } from './components/EnterpriseIntegrationsSection';
 import { FeatureIllustration } from './components/FeatureIllustration';
-import { FEATURES_LIST, NAVIGATION_LIST } from './constants';
+import { FEATURES_FAQ_ITEMS, FEATURES_LIST, NAVIGATION_LIST } from './constants';
 
 import './FeaturesPage.scss';
 
@@ -67,6 +62,7 @@ export const FeaturesPage: FC = () => {
   const [isFeaturesMenuSticky, setIsFeaturesMenuSticky] = useState(false);
   const [activeElement, setActiveElement] = useState(location.hash);
   const featuresEndRef = useRef<null | HTMLDivElement>(null);
+  const heroImageRef = useRef<null | HTMLImageElement>(null);
   const scrollDirection = useScrollDirection({ callbackFn: handleScroll, isMenuOpen: false });
   const scroll = useScroll();
   const isDesktop = useMediaQuerySafe(MEDIA_DESKTOP_SM);
@@ -112,40 +108,37 @@ export const FeaturesPage: FC = () => {
     scrollIntoViewHandler(anchor.slice(1));
   };
 
-  const collapsableList = [
-    {
-      key: 1,
-      label: 'What is meant by "Premium feature"?',
-      children: (
-        <>
-          <p>
-            Premium feature is an advanced feature which comes on top of Free Open Source edition.
-            It comes at no cost with SaaS offering and included into the &quot;160&quot; Managed
-            Services package.
-          </p>
-          <p>
-            See the{' '}
-            <Link to={`${DOCUMENTATION_URL}/terms-and-conditions/PremiumFeatures`} className="link">
-              List of features
-            </Link>{' '}
-            and their description.
-          </p>
-        </>
-      ),
-    },
-    {
-      key: 2,
-      label: 'What capabilities does Rest API provide?',
-      children: (
-        <p>
-          REST API enables users to easily integrate any testing framework or third-party tool with
-          ReportPortal so as to report data into ReportPortal, call analyze action, add attributes,
-          merge/update/finish launches. Besides, you can pull the data from ReportPortal in order to
-          update the statuses in the pipeline, generate custom reports and many more.
-        </p>
-      ),
-    },
-  ];
+  // Smooth-scroll to the anchor the page was opened with (e.g. the nav menu
+  // links to "/features/#ai-capabilities" from another page). `gatsby-browser`
+  // lands us at the top first, so this scroll is what the user actually sees.
+  //
+  // The hero image defines the offset of everything below it — measuring the
+  // anchor before it has loaded would give a stale position, so wait for it.
+  // Its `onLoad` alone is not enough: a cached image can finish loading before
+  // React attaches the handler, and the scroll would never fire.
+  useEffect(() => {
+    const hash = location.hash;
+
+    if (!hash) {
+      return undefined;
+    }
+
+    const image = heroImageRef.current;
+    const scrollToAnchor = () => scrollIntoViewHandler(hash.slice(1));
+
+    if (!image || image.complete) {
+      const frame = requestAnimationFrame(scrollToAnchor);
+
+      return () => cancelAnimationFrame(frame);
+    }
+
+    image.addEventListener('load', scrollToAnchor, { once: true });
+
+    return () => image.removeEventListener('load', scrollToAnchor);
+    // Runs once on mount for the hash the page was opened with. In-page nav
+    // clicks are handled by handleNavClick, not by this effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={getBlocksWith()}>
@@ -156,15 +149,7 @@ export const FeaturesPage: FC = () => {
             <h2>Empower your testing process with ReportPortal</h2>
           </div>
           <div className={getBlocksWith('__hero-dashboard')}>
-            <img
-              src={iconsCommon.dashboard}
-              alt=""
-              onLoad={() => {
-                if (activeElement) {
-                  scrollIntoViewHandler(activeElement.slice(1));
-                }
-              }}
-            />
+            <img ref={heroImageRef} src={iconsCommon.dashboard} alt="" />
           </div>
         </div>
       </div>
@@ -262,14 +247,14 @@ export const FeaturesPage: FC = () => {
       </div>
       <FeaturesCta />
       <div className={classNames(getBlocksWith('__faq'), 'container')}>
-        <Faq items={collapsableList} showMoreInfoLink={false} />
+        <Faq items={FEATURES_FAQ_ITEMS} showMoreInfoLink={false} />
       </div>
       <FooterContent>
         <div className={getBlocksWith('__banner')}>
           <Banner
             title="Still have questions about our features?"
             linkTitle="Contact us"
-            link="/contact-us/general"
+            link="/contact-us/general/"
           />
         </div>
       </FooterContent>

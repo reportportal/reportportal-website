@@ -27,7 +27,7 @@ const FEATURES_DATA = FEATURES_ITEMS.map((item, index) => ({
 export const FeaturesEngineers: FC = () => (
   <AnimatedList
     title="Features for engineers"
-    subtitle="Full-cycle testing visibility. Connect AI agents where you need them."
+    subtitle="Plan, manage, and analyze testing in one platform — with AI agents that help your team move from results to decisions faster, connected wherever you need them."
     listDesktopPosition="right"
     sectionClassName="features-engineers-section"
     data={FEATURES_DATA}

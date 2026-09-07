@@ -59,24 +59,17 @@
 
   &__subtitle {
     @include m.font-noto-sans();
-    @include m.font-scale();
+    @include m.font-scale(x-base);
 
     margin: 0 0 24px;
-    line-height: 1.6;
-    color: var(--text-grey);
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      @include m.font-scale(medium);
-
-      margin-bottom: 28px;
-    }
+    color: var(--text-primary);
   }
 
   // ── Bullet list ────────────────────────────────────────────────────────────
   &__bullets {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     margin: 0 0 32px;
     padding: 0;
     list-style: none;
@@ -87,12 +80,11 @@
 
     li {
       @include m.font-noto-sans();
-      @include m.font-scale();
+      @include m.font-scale(x-base);
 
       display: flex;
       align-items: center;
       gap: 10px;
-      line-height: 24px;
       color: var(--text-primary);
     }
   }
