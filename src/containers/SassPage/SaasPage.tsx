@@ -9,7 +9,6 @@ import { FooterContent } from '@app/components/Layout';
 import { usePricingHeroProps } from '@app/hooks/usePricingHeroProps';
 import { OfferingPlansQuery, createBemBlockBuilder, formatOfferingPlans } from '@app/utils';
 import { CertificationCard } from '@app/components/CertificationCard';
-import { useAnimationEnabledForSiblingRoutes } from '@app/hooks/useAnimationEnabledForSiblingRoutes';
 
 import { PricingCards } from './PricingCards';
 import { FAQ_ITEMS } from './constants';
@@ -20,7 +19,6 @@ const getBlocksWith = createBemBlockBuilder(['offer-page-wrapper']);
 
 export const SaasPage: FC = () => {
   const { buttons, isYearlyPlanType, togglePlanType } = usePricingHeroProps('pricing');
-  const isAnimationEnabled = useAnimationEnabledForSiblingRoutes();
   const { plans, comparePlans } = formatOfferingPlans(
     useStaticQuery<OfferingPlansQuery>(graphql`
       query {
@@ -45,20 +43,15 @@ export const SaasPage: FC = () => {
         subtitle="Flexible options for small teams to global enterprises"
         buttons={buttons}
         activeButton="SaaS"
-        description="Turn test results into decisions faster with a fully managed ReportPortal. We handle hosting, uptime, scaling, backups, monitoring, and upgrades, so you can focus on using the platform."
+        description="Fully managed ReportPortal. We handle hosting, uptime, backups, monitoring and upgrades — your team focuses on testing."
         switcherProps={{
           togglePlanType,
           isYearlyPlanType,
           messageInactive: 'Quarterly',
           messageActive: 'Yearly (Save 5%)',
         }}
-        isAnimationEnabled={isAnimationEnabled}
       />
-      <PricingCards
-        plans={plans}
-        isYearlyPlanType={isYearlyPlanType}
-        isAnimationEnabled={isAnimationEnabled}
-      />
+      <PricingCards plans={plans} isYearlyPlanType={isYearlyPlanType} />
       <ComparePlans plans={comparePlans} />
       <div className={getBlocksWith('__gradient-container')}>
         <div className="container">

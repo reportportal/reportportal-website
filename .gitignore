@@ -88,3 +88,6 @@ Thumbs.db
 PERFORMANCE_AUDIT.md
 static/antd.min.css
 static/svg/test.txt
+
+# Local agent handoff notes (personal, not for the team repo)
+HANDOFF.md

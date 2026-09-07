@@ -109,7 +109,12 @@ jobs:
       - name: Generate llms.txt and ai-sitemap.json
         run: node ./bin/gen-llms.js
 
+      # Only on develop. This step pushes to develop unconditionally, so a
+      # workflow_dispatch run from a feature branch used to try to force that
+      # branch's commits onto develop — it failed, and because the step sits
+      # before the AWS steps, the preview was never deployed either.
       - name: Commit refreshed llms.txt and ai-sitemap.json
+        if: github.ref == 'refs/heads/develop'
         run: |
           git add static/llms.txt static/ai-sitemap.json
           if git diff --cached --quiet -- static/llms.txt static/ai-sitemap.json; then
