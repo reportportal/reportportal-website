@@ -137,6 +137,11 @@
           "description": "Use the recommended settings in the Docker Compose file to prevent any deserialization issues."
         },
         {
+          "title": "Don’t Analyze the Same Failure Twice: Smarter AI Defect Triage with ReportPortal",
+          "url": "https://reportportal.io/blog/dont-analyze-the-same-failure-twice-smarter-ai-defect-triage-with-reportportal/",
+          "description": "See how AI and ReportPortal turn new test failure analysis into reusable triage knowledge for future issues."
+        },
+        {
           "title": "Effective bug tracking with ReportPortal",
           "url": "https://reportportal.io/blog/effective-bug-tracking-with-reportportal/",
           "description": "Optimize your bug tracking with ReportPortal."
