@@ -53,6 +53,16 @@
     border-color: var(--graphics-coral);
   }
 
+  .char-count {
+    @include m.font-poppins();
+    @include m.font-scale(x-small);
+
+    margin-top: 4px;
+    text-align: right;
+    line-height: 20px;
+    color: var(--text-service);
+  }
+
   .error-message {
     @include m.font-poppins();
     @include m.font-scale(small);
