@@ -14,7 +14,7 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
+import { MAX_LENGTH, MESSAGE_MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -56,9 +56,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
-        // `reason` / `reason_other` are captured in the UI only. The Salesforce
-        // field mapping (real field name + endpoint validation) is still pending,
-        // so they are intentionally NOT sent yet — to be wired with the backend.
+        // `reason` / `reason_other` are captured in the UI only and are NOT part of
+        // the payload yet. Wiring them up depends on the new Salesforce endpoints,
+        // which are being delivered as a separate piece of work — until then the
+        // current endpoint has no field to accept them, and sending an unknown
+        // field risks the whole submission being rejected.
+        // KNOWN GAP: text typed into "Tell us more" is therefore not delivered.
+        // Remove this destructuring and map both fields as soon as the new
+        // endpoints land.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
         const postData = {
@@ -78,7 +83,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         showFeedbackForm();
       } catch (error) {
-        setCustomError('Request failed. Please try again.');
+        setCustomError(
+          "We couldn't send your request. Try again, or email us directly at support@reportportal.io.",
+        );
         setIsLoading(false);
       }
     },
@@ -98,6 +105,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       setFieldValue('reason', urlReason);
     }
   }, [setFieldValue]);
+
+  // Scroll to the top of the page so the success message is visible right away,
+  // without the user having to scroll up manually.
+  useEffect(() => {
+    if (isFeedbackFormVisible && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isFeedbackFormVisible]);
 
   if (isFeedbackFormVisible) {
     return <FeedbackForm title={title} />;
@@ -169,7 +184,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               label="Tell us more"
               placeholder="Provide a brief summary of your request"
               InputElement="textarea"
-              maxLength={MAX_LENGTH}
+              maxLength={MESSAGE_MAX_LENGTH}
+              showCharCount
             />
           )}
           {isDiscussFieldShown && (

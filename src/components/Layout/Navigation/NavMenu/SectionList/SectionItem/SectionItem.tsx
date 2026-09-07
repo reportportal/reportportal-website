@@ -1,6 +1,7 @@
 import React, { CSSProperties, FC, ReactElement } from 'react';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
+import { Badge, BadgeVariant } from '@app/components/Badge';
 import {
   ContentfulAsset,
   createBemBlockBuilder,
@@ -21,7 +22,7 @@ interface SectionItemBaseProps {
   className?: string;
   isDataFromContentful?: boolean;
   mode?: 'primary' | 'secondary';
-  badge?: string;
+  badge?: BadgeVariant;
 }
 
 export type SectionItemProps =
@@ -77,7 +78,7 @@ export const SectionItem: FC<SectionItemProps> = props => {
       <div>
         <p className={getBlocksWith('-title')}>
           {title}
-          {badge && <span className={getBlocksWith('-badge')}>{badge}</span>}
+          {badge && <Badge variant={badge} />}
           {shouldDisplayArrow && <ArrowIcon className={getBlocksWith('-arrow')} />}
         </p>
         {text && <p className={getBlocksWith('-text')}>{text}</p>}

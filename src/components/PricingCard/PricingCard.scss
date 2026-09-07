@@ -100,7 +100,18 @@
     margin-bottom: 10px;
   }
 
+  &__price-previous {
+    @include m.font-poppins();
+    @include m.font-scale(medium);
+
+    display: inline-block;
+    margin-right: 8px;
+    text-decoration: line-through;
+    color: var(--text-light-grey);
+  }
+
   &__price-period {
+    white-space: pre-wrap;
     color: var(--text-service);
   }
 

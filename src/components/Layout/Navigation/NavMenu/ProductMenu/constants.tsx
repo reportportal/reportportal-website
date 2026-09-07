@@ -31,7 +31,7 @@ export const FEATURES_LIST = [
     title: 'AI capabilities for testing',
     text: 'Automate testing workflows across all stages with AI-powered agents',
     link: { title: 'AI capabilities for testing', url: '/features/#ai-capabilities' },
-    badge: 'NEW',
+    badge: 'new' as const,
   },
   {
     icon: <ReportingIcon />,
@@ -50,7 +50,7 @@ export const FEATURES_LIST = [
     title: 'Test management',
     text: 'Organize test cases, plans, milestones and execute manual launches',
     link: { title: 'Test management', url: '/test-management/' },
-    badge: 'NEW',
+    badge: 'new' as const,
   },
   {
     icon: <QualityGatesIcon />,

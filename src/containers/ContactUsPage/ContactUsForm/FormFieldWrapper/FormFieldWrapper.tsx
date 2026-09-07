@@ -10,6 +10,7 @@ export interface BaseFieldProps {
   maxLength?: number;
   value?: string;
   InputElement?: 'input' | 'textarea' | 'select';
+  showCharCount?: boolean;
 }
 
 export const FormFieldWrapper: FC<{ name: string; children: ReactElement }> = ({

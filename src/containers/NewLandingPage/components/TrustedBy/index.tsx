@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { createBemBlockBuilder, COMMON_MARQUEE_PROPS } from '@app/utils';
 import { useClientCarouselItems } from '@app/hooks/useClientCarouselItems';
 import { formatShortNumberParts } from '@app/utils/formatShortNumber';
+import { useLandingStats } from '@app/hooks/useLandingStats';
 
 import statsData from '../../../../../static/stats.json';
-import { STATIC_STATS } from './constants';
 
 import './TrustedBy.scss';
 
@@ -20,13 +20,20 @@ const { digits: downloadDigits, suffix: downloadSuffix } = formatShortNumberPart
   statsData.downloads,
 );
 
-const ALL_STATS = [
-  ...STATIC_STATS,
-  { digits: downloadDigits, suffix: downloadSuffix, label: 'Downloads' },
-];
-
 export const TrustedBy: FC = () => {
   const { allSlidesItems } = useClientCarouselItems();
+  const {
+    teamsWorldwideDigits,
+    teamsWorldwideSuffix,
+    launchesPerYearDigits,
+    launchesPerYearSuffix,
+  } = useLandingStats();
+
+  const ALL_STATS = [
+    { digits: teamsWorldwideDigits, suffix: teamsWorldwideSuffix, label: 'Teams worldwide' },
+    { digits: launchesPerYearDigits, suffix: launchesPerYearSuffix, label: 'Launches per year' },
+    { digits: downloadDigits, suffix: downloadSuffix, label: 'Downloads' },
+  ];
 
   const repeatedItems = useMemo(
     () => Array.from({ length: REPEAT_COUNT }, () => allSlidesItems).flat(),

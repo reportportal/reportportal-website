@@ -36,10 +36,10 @@ export const FeedbackForm = ({ title }) => {
   return (
     <div className={getBlocksWith('-container')}>
       <div className={classNames(getBlocksWith(), { 'is-submitted': isSubmitted })}>
-        <strong className={getBlocksWith('__title')}>Thank you</strong>
+        <h2 className={getBlocksWith('__title')}>Thank you!</h2>
         <div className={getBlocksWith('__subtitle')}>
           {!isSubmitted
-            ? "Your message is received. We'll be in touch shortly"
+            ? "Your message is received. We'll be in touch shortly. We've also sent a confirmation email — if you don't see it, please check your spam folder."
             : 'Your feedback has been received'}
         </div>
         {!isSubmitted && (

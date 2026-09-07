@@ -32,7 +32,7 @@ export const ServicePackagesPage: FC = () => {
       timeScaleData={TIME_SCALE_DATA}
       plans={plans}
       faqData={FAQ_DATA}
-      contactUsLink="/contact-us/general"
+      contactUsLink="/contact-us/service-packages/"
     />
   );
 };

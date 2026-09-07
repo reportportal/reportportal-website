@@ -94,7 +94,6 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         buttons={buttons}
         activeButton={offerType}
         description={description}
-        isAnimationEnabled={isAnimationEnabled}
         {...(!isPricingPage && { offerType })}
       />
       <motion.section

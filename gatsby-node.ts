@@ -335,7 +335,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions,
 
     const contactUsProps: ContactUsConfig = {
       ...config,
-      title: contentfulConfig.title,
+      title: config.title ?? contentfulConfig.title,
       message: contentfulConfig.message,
       messagePosition: contentfulConfig.messagePosition,
       showBillingPeriod: contentfulConfig.showBillingPeriod,

@@ -36,7 +36,7 @@ const fields = [
   {
     name: 'email',
     regex: EMAIL_VALIDATION_REGEX,
-    message: 'Please check your email',
+    message: 'Please provide a valid email (e.g. example@mail.com)',
   },
   // `company` is optional (no asterisk in the design) — intentionally not validated.
 ];
