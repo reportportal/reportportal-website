@@ -53,7 +53,6 @@ export const CommunityPage: FC = () => (
     </LinkedCardBlock>
     <YouTube />
     <StartTestingWithReportPortal />
-    <StartTestingWithReportPortal startFreeTrialUrl="/contact-us/general/?reason=free_trial" />
     <LatestFromOurBlog isViewAll />
     <SubscriptionBanner />
   </div>
