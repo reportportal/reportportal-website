@@ -30,7 +30,7 @@ $mobile-horizontal-padding: 16px;
   &__heading {
     text-align: center;
 
-    h1 {
+    h2 {
       @include features-title();
 
       max-width: 952px;
