@@ -2,7 +2,7 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import { StyleProvider } from '@ant-design/cssinjs';
 import type { GatsbyBrowser } from 'gatsby';
-import { captureTrafficAttribution } from '@app/utils';
+import { captureTrafficAttribution, markInternalNavigation } from '@app/utils';
 
 export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({ element }) =>
   React.createElement(
@@ -94,7 +94,12 @@ export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocati
   document.documentElement.classList.add('no-transitions');
 };
 
-export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
+export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = ({ prevLocation }) => {
+  // document.referrer only reflects the real page load, not this client-side
+  // route change — mark it stale before capturing so an internal navigation
+  // can never be misread as a new external referral (see trafficAttribution.ts).
+  if (prevLocation) markInternalNavigation();
+
   // Runs on initial page load and every client-side navigation. No-ops
   // internally until cookie consent is granted (see trafficAttribution.ts).
   captureTrafficAttribution();

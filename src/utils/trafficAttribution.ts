@@ -30,6 +30,17 @@ const DIRECT_ATTRIBUTION: TrafficAttribution = {
   pageReferrer: 'No',
 };
 
+// `document.referrer` only reflects the real HTTP navigation that loaded the
+// current document — Gatsby's client-side route changes never update it. So
+// once any internal client-side navigation has happened, the browser-level
+// referrer is stale and must no longer be treated as a new external signal.
+let isReferrerFresh = true;
+
+/** Call from onRouteUpdate whenever prevLocation is set (i.e. not the initial load). */
+export const markInternalNavigation = (): void => {
+  isReferrerFresh = false;
+};
+
 const stripWww = (hostname: string) => hostname.replace(/^www\./i, '').toLowerCase();
 
 const isInternalHostname = (hostname: string): boolean => {
@@ -45,9 +56,9 @@ const getSearchEngineName = (hostname: string): string | null => {
   return match ? SEARCH_ENGINE_HOSTNAMES[match] : null;
 };
 
-/** `document.referrer` as a parsed external URL, or `null` for internal/empty/invalid referrers. */
+/** `document.referrer` as a parsed external URL, or `null` for internal/empty/invalid/stale referrers. */
 const getExternalReferrerUrl = (): URL | null => {
-  if (typeof document === 'undefined' || !document.referrer) return null;
+  if (typeof document === 'undefined' || !document.referrer || !isReferrerFresh) return null;
   try {
     const url = new URL(document.referrer);
     return isInternalHostname(url.hostname) ? null : url;
@@ -90,6 +101,14 @@ const writeStoredAttribution = (attribution: TrafficAttribution): void => {
   }
 };
 
+const clearStoredAttribution = (): void => {
+  try {
+    window.localStorage.removeItem(TRAFFIC_ATTRIBUTION_STORAGE_KEY);
+  } catch {
+    // see writeStoredAttribution
+  }
+};
+
 /**
  * Runs on every page load / client-side navigation (see gatsby-browser.ts).
  * Only a genuine new signal (a UTM-tagged link, or an external referrer) may
@@ -97,7 +116,15 @@ const writeStoredAttribution = (attribution: TrafficAttribution): void => {
  * referrers leave any already-stored attribution untouched.
  */
 export const captureTrafficAttribution = (): void => {
-  if (typeof window === 'undefined' || !hasAttributionConsent()) return;
+  if (typeof window === 'undefined') return;
+
+  // Consent withdrawn (or never granted): drop anything already captured so
+  // a later form submission can never send attribution gathered without —
+  // or after losing — consent.
+  if (!hasAttributionConsent()) {
+    clearStoredAttribution();
+    return;
+  }
 
   const currentUrl = new URL(window.location.href);
   const utmSource = currentUrl.searchParams.get('utm_source');
@@ -107,10 +134,14 @@ export const captureTrafficAttribution = (): void => {
   if (utmSource) {
     const utmMedium = currentUrl.searchParams.get('utm_medium') || '(not set)';
     const utmCampaign = currentUrl.searchParams.get('utm_campaign') || '(not set)';
-    writeStoredAttribution({
-      trafficSource: `${utmSource} | ${utmMedium} | ${utmCampaign}`,
-      pageReferrer,
-    });
+    const trafficSource = `${utmSource} | ${utmMedium} | ${utmCampaign}`;
+
+    // A repeat visit from the identical campaign must not clobber the
+    // first-touch Page Referrer (e.g. a later click that arrives with no
+    // referrer at all, such as from an email client).
+    if (readStoredAttribution()?.trafficSource === trafficSource) return;
+
+    writeStoredAttribution({ trafficSource, pageReferrer });
     return;
   }
 
@@ -126,6 +157,10 @@ export const captureTrafficAttribution = (): void => {
   writeStoredAttribution({ trafficSource, pageReferrer });
 };
 
-/** Stored attribution for use in form payloads, falling back to "direct" when nothing was ever captured. */
+/**
+ * Stored attribution for use in form payloads, falling back to "direct" when
+ * nothing was ever captured — or when consent is currently withdrawn, so a
+ * form submitted right after revoking consent can never leak prior tracking.
+ */
 export const getTrafficAttribution = (): TrafficAttribution =>
-  readStoredAttribution() ?? DIRECT_ATTRIBUTION;
+  hasAttributionConsent() ? readStoredAttribution() ?? DIRECT_ATTRIBUTION : DIRECT_ATTRIBUTION;

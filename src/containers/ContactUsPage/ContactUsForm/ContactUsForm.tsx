@@ -6,7 +6,7 @@ import { Select } from 'antd';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL, getTrafficAttribution } from '@app/utils';
+import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -14,14 +14,7 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import {
-  MAX_LENGTH,
-  MESSAGE_MAX_LENGTH,
-  REASON_OPTIONS,
-  ReasonValue,
-  TRAFFIC_SOURCE_SALESFORCE_FIELD,
-  PAGE_REFERRER_SALESFORCE_FIELD,
-} from './constants';
+import { MAX_LENGTH, MESSAGE_MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -73,14 +66,16 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         // endpoints land.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
-        // Hidden, non-editable attribution values — never rendered as form
-        // inputs, always read fresh from storage at submit time.
-        const { trafficSource, pageReferrer } = getTrafficAttribution();
+        // Traffic Source / Page Referrer are captured and stored client-side
+        // (see @app/utils/trafficAttribution) but are NOT sent here yet — the
+        // Salesforce endpoint has no approved fields to accept them. Wiring
+        // them into postData is EPMRPP-119009, once the Salesforce team
+        // approves and creates the custom fields. Same reasoning as the
+        // reason/reason_other gap above: an unknown field risks the whole
+        // submission being rejected.
         const postData = {
           ...formValues,
           ...baseSalesForceValues,
-          [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
-          [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
         };
 
         if (values.wouldLikeToReceiveAds) {
