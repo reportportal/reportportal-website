@@ -17,6 +17,10 @@ declare module '*.svg' {
 interface Window {
   dataLayer: object[];
   prevLocation?: Location;
+  /** Comma-delimited active OneTrust consent category ids, e.g. ",C0001,C0004,". Set by OneTrust once consent is resolved. */
+  OnetrustActiveGroups?: string;
+  /** OneTrust's consent-change callback hook (see gatsby-ssr.tsx / gatsby-browser.ts). */
+  OptanonWrapper?: () => void;
 }
 
 declare module 'react-scroll' {

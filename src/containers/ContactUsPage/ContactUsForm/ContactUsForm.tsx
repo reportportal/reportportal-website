@@ -6,7 +6,7 @@ import { Select } from 'antd';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
+import { createBemBlockBuilder, CONTACT_US_URL, getTrafficAttribution } from '@app/utils';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -14,7 +14,14 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { MAX_LENGTH, MESSAGE_MAX_LENGTH, REASON_OPTIONS, ReasonValue } from './constants';
+import {
+  MAX_LENGTH,
+  MESSAGE_MAX_LENGTH,
+  REASON_OPTIONS,
+  ReasonValue,
+  TRAFFIC_SOURCE_SALESFORCE_FIELD,
+  PAGE_REFERRER_SALESFORCE_FIELD,
+} from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -66,9 +73,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         // endpoints land.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
+        // Hidden, non-editable attribution values — never rendered as form
+        // inputs, always read fresh from storage at submit time.
+        const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
           ...formValues,
           ...baseSalesForceValues,
+          [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
+          [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
         };
 
         if (values.wouldLikeToReceiveAds) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import { StyleProvider } from '@ant-design/cssinjs';
 import type { GatsbyBrowser } from 'gatsby';
+import { captureTrafficAttribution } from '@app/utils';
 
 export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({ element }) =>
   React.createElement(
@@ -9,6 +10,16 @@ export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({
     null,
     React.createElement(ConfigProvider, { theme: { hashed: false } }, element),
   );
+
+export const onClientEntry: GatsbyBrowser['onClientEntry'] = () => {
+  // OneTrust calls window.OptanonWrapper() whenever consent is resolved or
+  // changed (initial banner load, category toggled, preferences re-saved).
+  // Overriding the no-op stub from gatsby-ssr.tsx lets attribution capture
+  // run the moment consent is granted, even without a page navigation.
+  if (typeof window !== 'undefined') {
+    window.OptanonWrapper = () => captureTrafficAttribution();
+  }
+};
 
 export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   if (typeof window !== 'undefined' && window.history.scrollRestoration) {
@@ -84,6 +95,10 @@ export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocati
 };
 
 export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
+  // Runs on initial page load and every client-side navigation. No-ops
+  // internally until cookie consent is granted (see trafficAttribution.ts).
+  captureTrafficAttribution();
+
   // Settle one frame with transitions disabled so hover/active re-evaluation
   // after back-navigation does not fade in over 300ms (flicker), then
   // re-enable them for normal user interactions.
