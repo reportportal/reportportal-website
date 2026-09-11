@@ -12,10 +12,7 @@ export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({
   );
 
 export const onClientEntry: GatsbyBrowser['onClientEntry'] = () => {
-  // OneTrust calls window.OptanonWrapper() whenever consent is resolved or
-  // changed (initial banner load, category toggled, preferences re-saved).
-  // Overriding the no-op stub from gatsby-ssr.tsx lets attribution capture
-  // run the moment consent is granted, even without a page navigation.
+  // OneTrust calls this whenever consent changes — overrides the no-op stub in gatsby-ssr.tsx.
   if (typeof window !== 'undefined') {
     window.OptanonWrapper = () => captureTrafficAttribution();
   }
@@ -95,13 +92,8 @@ export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocati
 };
 
 export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = ({ prevLocation }) => {
-  // document.referrer only reflects the real page load, not this client-side
-  // route change — mark it stale before capturing so an internal navigation
-  // can never be misread as a new external referral (see trafficAttribution.ts).
+  // prevLocation set = client-side nav, so document.referrer is stale (trafficAttribution.ts)
   if (prevLocation) markInternalNavigation();
-
-  // Runs on initial page load and every client-side navigation. No-ops
-  // internally until cookie consent is granted (see trafficAttribution.ts).
   captureTrafficAttribution();
 
   // Settle one frame with transitions disabled so hover/active re-evaluation

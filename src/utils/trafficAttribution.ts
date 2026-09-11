@@ -1,11 +1,8 @@
 import { TRAFFIC_ATTRIBUTION_STORAGE_KEY } from './constants';
 
-// OneTrust (CookiePro) consent category gating first-party attribution storage.
-// 'C0004' is OneTrust's default "Targeting/Advertising Cookies" category id —
-// verify it matches the actual category configured for domain script
-// 77055ecd-ec2c-461a-bf1c-3e84d715e668 (gatsby-ssr.tsx) in the OneTrust admin
-// console, or by inspecting `window.OnetrustActiveGroups` in the browser after
-// accepting/rejecting each category on the live cookie banner.
+// 'C0004' is OneTrust's Targeting/Advertising category — verify against the
+// domain script config (77055ecd-ec2c-461a-bf1c-3e84d715e668, gatsby-ssr.tsx)
+// if consent gating ever looks wrong.
 const CONSENT_CATEGORY_ID = 'C0004';
 
 const SEARCH_ENGINE_HOSTNAMES: Record<string, string> = {
@@ -30,13 +27,10 @@ const DIRECT_ATTRIBUTION: TrafficAttribution = {
   pageReferrer: 'No',
 };
 
-// `document.referrer` only reflects the real HTTP navigation that loaded the
-// current document — Gatsby's client-side route changes never update it. So
-// once any internal client-side navigation has happened, the browser-level
-// referrer is stale and must no longer be treated as a new external signal.
+// document.referrer doesn't update on Gatsby client-side route changes, so it
+// goes stale after the first internal navigation (see markInternalNavigation).
 let isReferrerFresh = true;
 
-/** Call from onRouteUpdate whenever prevLocation is set (i.e. not the initial load). */
 export const markInternalNavigation = (): void => {
   isReferrerFresh = false;
 };
@@ -56,7 +50,6 @@ const getSearchEngineName = (hostname: string): string | null => {
   return match ? SEARCH_ENGINE_HOSTNAMES[match] : null;
 };
 
-/** `document.referrer` as a parsed external URL, or `null` for internal/empty/invalid/stale referrers. */
 const getExternalReferrerUrl = (): URL | null => {
   if (typeof document === 'undefined' || !document.referrer || !isReferrerFresh) return null;
   try {
@@ -67,7 +60,6 @@ const getExternalReferrerUrl = (): URL | null => {
   }
 };
 
-/** protocol + hostname (no www.) + pathname — no query params or fragments. */
 const sanitizePageReferrer = (url: URL): string =>
   `${url.protocol}//${stripWww(url.hostname)}${url.pathname}`;
 
@@ -96,8 +88,7 @@ const writeStoredAttribution = (attribution: TrafficAttribution): void => {
   try {
     window.localStorage.setItem(TRAFFIC_ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
   } catch {
-    // localStorage may be unavailable (private mode, quota, disabled) —
-    // attribution is best-effort and must never break page load or form submission.
+    // best-effort — private mode / quota / disabled storage must not break the page
   }
 };
 
@@ -109,18 +100,9 @@ const clearStoredAttribution = (): void => {
   }
 };
 
-/**
- * Runs on every page load / client-side navigation (see gatsby-browser.ts).
- * Only a genuine new signal (a UTM-tagged link, or an external referrer) may
- * write a new attribution. Internal navigation, direct visits, and empty
- * referrers leave any already-stored attribution untouched.
- */
 export const captureTrafficAttribution = (): void => {
   if (typeof window === 'undefined') return;
 
-  // Consent withdrawn (or never granted): drop anything already captured so
-  // a later form submission can never send attribution gathered without —
-  // or after losing — consent.
   if (!hasAttributionConsent()) {
     clearStoredAttribution();
     return;
@@ -136,17 +118,15 @@ export const captureTrafficAttribution = (): void => {
     const utmCampaign = currentUrl.searchParams.get('utm_campaign') || '(not set)';
     const trafficSource = `${utmSource} | ${utmMedium} | ${utmCampaign}`;
 
-    // A repeat visit from the identical campaign must not clobber the
-    // first-touch Page Referrer (e.g. a later click that arrives with no
-    // referrer at all, such as from an email client).
+    // Same campaign as already stored — skip, so a referrer-less repeat visit
+    // can't clobber the first-touch Page Referrer.
     if (readStoredAttribution()?.trafficSource === trafficSource) return;
 
     writeStoredAttribution({ trafficSource, pageReferrer });
     return;
   }
 
-  // No UTM and no external referrer: internal navigation, direct visit, or
-  // empty referrer — never overwrites existing non-direct attribution.
+  // Internal nav, direct visit, or empty referrer — leave existing attribution as-is.
   if (!externalReferrer) return;
 
   const searchEngine = getSearchEngineName(externalReferrer.hostname);
@@ -157,10 +137,5 @@ export const captureTrafficAttribution = (): void => {
   writeStoredAttribution({ trafficSource, pageReferrer });
 };
 
-/**
- * Stored attribution for use in form payloads, falling back to "direct" when
- * nothing was ever captured — or when consent is currently withdrawn, so a
- * form submitted right after revoking consent can never leak prior tracking.
- */
 export const getTrafficAttribution = (): TrafficAttribution =>
   hasAttributionConsent() ? readStoredAttribution() ?? DIRECT_ATTRIBUTION : DIRECT_ATTRIBUTION;

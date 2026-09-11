@@ -73,8 +73,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         // endpoints land.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other, ...formValues } = values;
-        // Hidden, non-editable attribution values — never rendered as form
-        // inputs, always read fresh from storage at submit time (EPMRPP-118930).
         const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
           ...formValues,
