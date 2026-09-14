@@ -11,6 +11,8 @@ export const isNewYearMode = isDateBetweenNov25AndJan15GMT3();
 
 export const ANNOUNCEMENT_CLOSED_KEY = 'wasAnnouncementClosed';
 
+export const TRAFFIC_ATTRIBUTION_STORAGE_KEY = 'rp_traffic_attribution';
+
 export const SEO_DATA = {
   index: {
     title:

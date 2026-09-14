@@ -17,6 +17,9 @@ declare module '*.svg' {
 interface Window {
   dataLayer: object[];
   prevLocation?: Location;
+  /** Comma-delimited OneTrust consent category ids, e.g. ",C0001,C0004,". */
+  OnetrustActiveGroups?: string;
+  OptanonWrapper?: () => void;
 }
 
 declare module 'react-scroll' {

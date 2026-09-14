@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import { StyleProvider } from '@ant-design/cssinjs';
 import type { GatsbyBrowser } from 'gatsby';
+import { captureTrafficAttribution, markInternalNavigation } from '@app/utils';
 
 export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({ element }) =>
   React.createElement(
@@ -9,6 +10,13 @@ export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({
     null,
     React.createElement(ConfigProvider, { theme: { hashed: false } }, element),
   );
+
+export const onClientEntry: GatsbyBrowser['onClientEntry'] = () => {
+  // OneTrust calls this whenever consent changes — overrides the no-op stub in gatsby-ssr.tsx.
+  if (typeof window !== 'undefined') {
+    window.OptanonWrapper = () => captureTrafficAttribution();
+  }
+};
 
 export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   if (typeof window !== 'undefined' && window.history.scrollRestoration) {
@@ -83,7 +91,11 @@ export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocati
   document.documentElement.classList.add('no-transitions');
 };
 
-export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
+export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = ({ prevLocation }) => {
+  // prevLocation set = client-side nav, so document.referrer is stale (trafficAttribution.ts)
+  if (prevLocation) markInternalNavigation();
+  captureTrafficAttribution();
+
   // Settle one frame with transitions disabled so hover/active re-evaluation
   // after back-navigation does not fade in over 300ms (flicker), then
   // re-enable them for normal user interactions.

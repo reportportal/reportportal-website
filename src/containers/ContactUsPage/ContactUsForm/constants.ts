@@ -1,8 +1,11 @@
 export const MAX_LENGTH = 255;
 export const MESSAGE_MAX_LENGTH = 1000;
 
-// TODO: replace with the real Salesforce field name when backend mapping is ready
-export const REASON_SALESFORCE_FIELD = 'reason_placeholder__c';
+// JSON keys the leadservice endpoint accepts, not the Salesforce field API
+// names (UserMessage__c / TrafficSource__c / PageReferrer__c) — same split as ReportPortalSource below.
+export const REASON_SALESFORCE_FIELD = 'UserMessage';
+export const TRAFFIC_SOURCE_SALESFORCE_FIELD = 'TrafficSource';
+export const PAGE_REFERRER_SALESFORCE_FIELD = 'PageReferrer';
 
 export const REASON_OPTIONS = [
   { label: 'Request a Demo', value: 'demo' },

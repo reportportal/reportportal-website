@@ -12,4 +12,5 @@ export * from './constants';
 export * from './imageSource';
 export * from './formatTextFromContentfulWithLineBreaks';
 export * from './isSameParentRoute';
+export * from './trafficAttribution';
 export * from './types';
