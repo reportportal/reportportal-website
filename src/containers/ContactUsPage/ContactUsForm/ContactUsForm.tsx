@@ -19,6 +19,7 @@ import {
   MESSAGE_MAX_LENGTH,
   REASON_OPTIONS,
   ReasonValue,
+  REASON_SALESFORCE_FIELD,
   TRAFFIC_SOURCE_SALESFORCE_FIELD,
   PAGE_REFERRER_SALESFORCE_FIELD,
 } from './constants';
@@ -63,20 +64,15 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
-        // `reason` / `reason_other` are captured in the UI only and are NOT part of
-        // the payload yet. Wiring them up depends on the new Salesforce endpoints,
-        // which are being delivered as a separate piece of work — until then the
-        // current endpoint has no field to accept them, and sending an unknown
-        // field risks the whole submission being rejected.
-        // KNOWN GAP: text typed into "Tell us more" is therefore not delivered.
-        // Remove this destructuring and map both fields as soon as the new
-        // endpoints land.
+        // `reason` only drives the Source mapping above (unchanged); `reason_other`
+        // ("Tell us more") is sent separately as UserMessage below.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
-        const { reason, reason_other, ...formValues } = values;
+        const { reason, reason_other: reasonOther, ...formValues } = values;
         const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
           ...formValues,
           ...baseSalesForceValues,
+          [REASON_SALESFORCE_FIELD]: reasonOther?.trim() || 'No',
           [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
           [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
         };
