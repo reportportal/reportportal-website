@@ -73,7 +73,7 @@ jobs:
         run: |
           touch .env.production
 
-          CONTACT_US_URL=https://testio.my.salesforce-sites.com/leadcapture
+          CONTACT_US_URL=https://testio.my.salesforce-sites.com/leadcapture/services/apexrest/leadservice
           DOCUMENTATION_URL=/docs
           GTM_ID=GTM-MK7ZHTL
           GATSBY_MAILCHIMP_LIST_ID=ca6d0eec5b
