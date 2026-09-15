@@ -27,6 +27,13 @@ const DIRECT_ATTRIBUTION: TrafficAttribution = {
   pageReferrer: 'No',
 };
 
+// Read-time only — never written to storage, so it can't be mistaken for a
+// real direct visit once consent is later granted.
+const NO_CONSENT_ATTRIBUTION: TrafficAttribution = {
+  trafficSource: 'consent not granted',
+  pageReferrer: 'No',
+};
+
 // document.referrer doesn't update on Gatsby client-side route changes, so it
 // goes stale after the first internal navigation (see markInternalNavigation).
 let isReferrerFresh = true;
@@ -138,4 +145,4 @@ export const captureTrafficAttribution = (): void => {
 };
 
 export const getTrafficAttribution = (): TrafficAttribution =>
-  hasAttributionConsent() ? readStoredAttribution() ?? DIRECT_ATTRIBUTION : DIRECT_ATTRIBUTION;
+  hasAttributionConsent() ? readStoredAttribution() ?? DIRECT_ATTRIBUTION : NO_CONSENT_ATTRIBUTION;
