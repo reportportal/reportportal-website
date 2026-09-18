@@ -18,14 +18,14 @@ export const FeaturesCta: FC = () => (
       <div className={getBlocksWith('__button-group')}>
         <Link
           className="btn btn--secondary btn--large"
-          to="/contact-us/general/?reason=free_trial"
+          to="/contact-us/general/?reason=free_trial&cta=features_free_trial"
           data-gtm="features_cta_start_trial"
         >
           Start free trial
         </Link>
         <Link
           className="btn btn--outline-2 btn--large"
-          to="/contact-us/general/?reason=demo"
+          to="/contact-us/general/?reason=demo&cta=features_demo"
           data-gtm="features_cta_request_demo"
         >
           Request demo

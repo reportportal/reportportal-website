@@ -30,7 +30,7 @@ export const BenefitsBusiness: FC = () => (
   >
     <Link
       className="btn btn--primary btn--large"
-      to="/contact-us/general/?reason=free_trial"
+      to="/contact-us/general/?reason=free_trial&cta=benefits_free_trial"
       data-gtm="start_free_trial_benefits"
     >
       Start free trial

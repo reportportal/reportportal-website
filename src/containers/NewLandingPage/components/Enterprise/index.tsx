@@ -160,7 +160,7 @@ export const Enterprise: FC = () => (
         <div className={getBlocksWith('__actions')}>
           <Link
             className="btn btn--primary btn--large"
-            to="/contact-us/general/?reason=demo"
+            to="/contact-us/general/?reason=demo&cta=enterprise_demo"
             data-gtm="request_demo_enterprise"
           >
             Request demo

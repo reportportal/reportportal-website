@@ -2,8 +2,8 @@ import { kebabCase } from 'lodash';
 
 import { ContactUsBaseConfig, PlanType } from './types';
 
-const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
-const LEAD_SOURCE = 'lead_source';
+export const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
+export const LEAD_SOURCE = 'lead_source';
 const servicePackagesAndAcceleratorsPlans = ['Silver', 'Gold', 'Platinum'];
 const availableOptions: PlanType[] = ['quarterly', 'yearly'];
 
