@@ -252,6 +252,11 @@
           "description": "Track Reqnroll test results instantly in ReportPortal. Reqnroll agent with full setup instructions."
         },
         {
+          "title": "ReportPortal 26.1: A New Approach to Roles and Permissions",
+          "url": "https://reportportal.io/blog/reportportal-26-1-a-new-approach-to-roles-and-permissions/",
+          "description": "ReportPortal 26.1: new roles and permissions, simplified access management across instances, organizations, and projects."
+        },
+        {
           "title": "ReportPortal completes SOC 2 Type II audit",
           "url": "https://reportportal.io/blog/reportportal-completes-soc-2-type-ii-audit/",
           "description": "ReportPortal confirms SOC 2 Type II compliance, ensuring high-level data security as a trusted SaaS provider."
