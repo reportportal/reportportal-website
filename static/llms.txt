@@ -55,6 +55,7 @@
 - [Reporting API Response Time](https://reportportal.io/blog/reporting-api-response-time/): Improve ReportPortal reporting speed with tips to reduce delays and boost API performance in our test reporting tool.
 - [Reporting Cypress test results to ReportPortal](https://reportportal.io/blog/reporting-cypress-test-results-to-reportportal/): Send Cypress test results to ReportPortal. Enhance your tracking with our test automation dashboard.
 - [Reporting Reqnroll test results to ReportPortal](https://reportportal.io/blog/reporting-reqnroll-test-results-to-reportportal/): Track Reqnroll test results instantly in ReportPortal. Reqnroll agent with full setup instructions.
+- [ReportPortal 26.1: A New Approach to Roles and Permissions](https://reportportal.io/blog/reportportal-26-1-a-new-approach-to-roles-and-permissions/): ReportPortal 26.1: new roles and permissions, simplified access management across instances, organizations, and projects.
 - [ReportPortal completes SOC 2 Type II audit](https://reportportal.io/blog/reportportal-completes-soc-2-type-ii-audit/): ReportPortal confirms SOC 2 Type II compliance, ensuring high-level data security as a trusted SaaS provider.
 - [ReportPortal Handbook](https://reportportal.io/blog/reportportal-handbook/): Discover the ultimate guide to ReportPortal from setup and defect triage to seamless CI/CD integration.
 - [ReportPortal integration with Playwright](https://reportportal.io/blog/reportportal-integration-with-playwright/): Monitor your Playwright test results with our test reporting dashboard.

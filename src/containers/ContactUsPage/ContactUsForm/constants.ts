@@ -16,3 +16,53 @@ export const REASON_OPTIONS = [
 ] as const;
 
 export type ReasonValue = (typeof REASON_OPTIONS)[number]['value'];
+
+export const REASON_SOURCE_MAP: Record<ReasonValue, string> = {
+  demo: 'Landing page / General / Request a Demo',
+  pricing: 'Landing page / General / Pricing details',
+  free_trial: 'Landing page / General / Free Trial',
+  support: 'Landing page / General / Technical support',
+  other: 'Landing page / General / Other',
+};
+
+export const GENERAL_SOURCE = 'Landing page / General';
+export const CUSTOM_TEXT_SOURCE = 'Landing page / General / Custom text';
+
+export const CTA_SOURCE_OVERRIDES: Record<
+  string,
+  { reason: ReasonValue; source: string; leadSource?: string }
+> = {
+  hero_free_trial: {
+    reason: 'free_trial',
+    source: 'Landing page / General / Hero / Button "Start Free Trial"',
+  },
+  benefits_free_trial: {
+    reason: 'free_trial',
+    source: 'Landing page / General / Benefits for business / Button "Start Free Trial"',
+  },
+  faster_releases_free_trial: {
+    reason: 'free_trial',
+    source: 'Landing page / General / Faster releases / Button "Start Free Trial"',
+  },
+  features_free_trial: {
+    reason: 'free_trial',
+    source: 'Landing page / General / Ready to transform / Button "Start Free Trial"',
+  },
+  enterprise_demo: {
+    reason: 'demo',
+    source: 'Landing page / General / Built for Global Enterprises/ Button "Request a Demo"',
+  },
+  features_demo: {
+    reason: 'demo',
+    source: 'Landing page / General / Ready to transform /  Button "Request a Demo"',
+  },
+  test_management_demo: {
+    reason: 'demo',
+    source: 'Landing page / General / TMS / Button "Request a Demo"',
+  },
+  community_free_trial: {
+    reason: 'free_trial',
+    source: 'Landing page / RP Community',
+    leadSource: 'RP Community',
+  },
+};

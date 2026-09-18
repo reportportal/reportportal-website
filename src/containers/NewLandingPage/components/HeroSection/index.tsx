@@ -34,7 +34,7 @@ export const HeroSection: FC = () => {
             </Link>
             <Link
               className="btn btn--outline-2 btn--large"
-              to="/contact-us/general/?reason=free_trial"
+              to="/contact-us/general/?reason=free_trial&cta=hero_free_trial"
               data-gtm="start_free_trial_hero"
             >
               Start free trial

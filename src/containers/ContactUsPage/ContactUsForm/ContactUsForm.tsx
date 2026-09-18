@@ -7,6 +7,7 @@ import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
 import { subscribeUser } from '@app/components/SubscriptionForm/utils';
 import { createBemBlockBuilder, CONTACT_US_URL, getTrafficAttribution } from '@app/utils';
+import { SALESFORCE_SOURCE_NAME, LEAD_SOURCE } from '@app/utils/contactUsConfig';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -22,6 +23,10 @@ import {
   REASON_SALESFORCE_FIELD,
   TRAFFIC_SOURCE_SALESFORCE_FIELD,
   PAGE_REFERRER_SALESFORCE_FIELD,
+  REASON_SOURCE_MAP,
+  GENERAL_SOURCE,
+  CUSTOM_TEXT_SOURCE,
+  CTA_SOURCE_OVERRIDES,
 } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
@@ -64,14 +69,35 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
-        // `reason` only drives the Source mapping above (unchanged); `reason_other`
-        // ("Tell us more") is sent separately as UserMessage below.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
         const { reason, reason_other: reasonOther, ...formValues } = values;
+
+        const sourceOverride: Record<string, string> = {};
+        if (
+          typeof window !== 'undefined' &&
+          window.location.pathname.includes('/contact-us/general')
+        ) {
+          const cta = new URLSearchParams(window.location.search).get('cta');
+          const ctaOverride = cta ? CTA_SOURCE_OVERRIDES[cta] : undefined;
+
+          if (reasonOther?.trim()) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = CUSTOM_TEXT_SOURCE;
+          } else if (ctaOverride && values.reason === ctaOverride.reason) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = ctaOverride.source;
+            if (ctaOverride.leadSource) sourceOverride[LEAD_SOURCE] = ctaOverride.leadSource;
+          } else if (values.reason) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = REASON_SOURCE_MAP[values.reason];
+          } else {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = GENERAL_SOURCE;
+          }
+        }
+
         const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
           ...formValues,
+          company: formValues.company?.trim() || 'N/A',
           ...baseSalesForceValues,
+          ...sourceOverride,
           [REASON_SALESFORCE_FIELD]: reasonOther?.trim() || 'No',
           [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
           [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
