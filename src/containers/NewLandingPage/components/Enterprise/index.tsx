@@ -168,7 +168,7 @@ export const Enterprise: FC = () => (
           <Link
             className="btn btn--outline-2 btn--large"
             to="/features/"
-            data-gtm="view_features_enterprise"
+            data-gtm="view_all_features_enterprise"
           >
             View all features
           </Link>

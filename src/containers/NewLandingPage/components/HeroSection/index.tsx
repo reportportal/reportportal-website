@@ -27,7 +27,7 @@ export const HeroSection: FC = () => {
           <div className={getBlocksWith('__actions')}>
             <Link
               className="btn btn--secondary btn--large"
-              to="https://demo.reportportal.io/"
+              to="https://demo.reportportal.io/ui/#login"
               data-gtm="try_demo"
             >
               Try demo

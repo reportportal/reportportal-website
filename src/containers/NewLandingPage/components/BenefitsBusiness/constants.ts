@@ -10,34 +10,34 @@ export const BENEFITS_ITEMS = [
     description:
       'Track and evaluate automated test results to ensure release readiness and quality standards.',
     image: feature11,
-    link: '/features/',
+    link: '/docs/analysis/quality-gates/',
   },
   {
     title: 'Test management system',
     description:
       'Plan, execute, and track manual tests alongside your automation runs — all inside ReportPortal.',
     image: feature8,
-    link: '/features/',
+    link: '/test-management/',
   },
   {
     title: 'Token-free automatic ML triage',
     description:
       'Auto-Analyzer uses ML to match failures against historical runs and assign defect types automatically — no manual review, no external agents, no extra cost.',
     image: feature10,
-    link: '/features/#ai-capabilities',
+    link: '/docs/getting-started/features/AIFailureReasonDetection/',
   },
   {
     title: 'Key metrics and KPI',
     description:
       'With widgets and dashboards, you can quickly overview the project or dive into details for faster decision-making.',
     image: feature6,
-    link: '/features/#widgets-dashboards',
+    link: '/docs/dashboards-and-visualization/ReportingAndMetricsInReportPortal/',
   },
   {
     title: 'Certified security',
     description:
       'Rely on SOC2-certified security with strong access controls, auditability, and secure deployment options.',
     image: feature12,
-    link: 'https://reportportal.io/blog/reportportal-completes-soc-2-type-ii-audit',
+    link: '/blog/reportportal-renews-soc-2-type-ii-attestation-for-the-third-consecutive-year/',
   },
 ];

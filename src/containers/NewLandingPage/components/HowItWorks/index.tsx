@@ -213,7 +213,7 @@ export const HowItWorks: FC = () => {
         <div className={getBlocksWith('__button-group')}>
           <Link
             className="btn btn--primary btn--large"
-            to="https://demo.reportportal.io/"
+            to="https://demo.reportportal.io/ui/#login"
             data-gtm="try_demo_how_it_works"
           >
             Try demo
