@@ -13,6 +13,7 @@ export const FEATURE_SECTIONS = [
       'Visualize test coverage by release',
       'Get AI-suggested test scope per milestone',
     ],
+    link: '/docs/test-management-system/milestones/',
     imagePosition: 'right' as const,
   },
   {
@@ -32,6 +33,7 @@ export const FEATURE_SECTIONS = [
       </>,
       'Run AI checks in parallel with manual execution',
     ],
+    link: '/docs/test-management-system/manual-launches/',
     imagePosition: 'left' as const,
   },
 ];

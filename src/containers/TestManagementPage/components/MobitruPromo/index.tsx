@@ -33,7 +33,10 @@ export const MobitruPromo: FC = () => (
           ))}
         </ul>
         <div className={getBlocksWith('__cta')}>
-          <Link className="btn btn--primary btn--large" to="https://mobitru.com/">
+          <Link
+            className="btn btn--primary btn--large"
+            to="/docs/integrations/infrastructure-providers/Mobitru/#cloud-devices"
+          >
             Learn more
           </Link>
           <span className={getBlocksWith('__powered')}>
