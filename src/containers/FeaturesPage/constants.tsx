@@ -60,7 +60,7 @@ export const FEATURES_LIST: Feature[] = [
     cta: [
       {
         text: 'Learn more',
-        link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/',
+        link: '/docs/getting-started/features/AICapabilities/',
       },
     ],
   },
@@ -92,9 +92,7 @@ export const FEATURES_LIST: Feature[] = [
       'Real-time test execution tracking',
       'Historical trend analysis across releases',
     ],
-    cta: [
-      { text: 'Learn more', link: 'https://reportportal.io/docs/features/UnifiedTestReporting/' },
-    ],
+    cta: [{ text: 'Learn more', link: '/docs/getting-started/features/UnifiedTestReporting/' }],
   },
   {
     id: 'ai-powered-analysis',
@@ -109,9 +107,9 @@ export const FEATURES_LIST: Feature[] = [
     cta: [
       {
         text: 'AI-triage',
-        link: 'https://reportportal.io/docs/features/AIFailureReasonDetection/',
+        link: '/docs/analysis/AutoAnalysisOfLaunches/',
       },
-      { text: 'Quality Gates', link: 'https://reportportal.io/docs/features/QualityGates/' },
+      { text: 'Quality Gates', link: '/docs/analysis/quality-gates/' },
     ],
   },
   {
@@ -127,7 +125,7 @@ export const FEATURES_LIST: Feature[] = [
     cta: [
       {
         text: 'Learn more',
-        link: 'https://reportportal.io/docs/features/VisualisationOfTestResults/',
+        link: '/docs/dashboards-and-visualization/',
       },
     ],
   },
@@ -159,7 +157,7 @@ export const FEATURES_LIST: Feature[] = [
         description: 'Keep user access in sync with your directory',
       },
     ],
-    cta: [{ text: 'View all integrations', link: 'https://reportportal.io/docs/plugins/' }],
+    cta: [{ text: 'View all integrations', link: '/docs/integrations/ManagePlugins/' }],
     integrationsStrip: true,
   },
 ];
