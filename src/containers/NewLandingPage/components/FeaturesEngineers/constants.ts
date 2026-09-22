@@ -10,34 +10,34 @@ export const FEATURES_ITEMS = [
     description:
       'Centralize manual, automated and agentic test results for a unified view of your quality.',
     image: feature1,
-    link: '/test-management/',
+    link: '/docs/getting-started/features/UnifiedTestReporting/',
   },
   {
     title: 'Real-time reporting',
     description:
       'See results as they happen — access executed test cases instantly to react faster and reduce time to triage.',
     image: feature5,
-    link: '/features/#unified-reporting',
+    link: '/docs/getting-started/features/RealTimeReporting/',
   },
   {
     title: 'AI agents for testing & ML triage',
     description:
       'Our MCP server acts as the central intelligence core, enabling AI-powered triage, root cause detection and autonomous testing — across your entire pipeline.',
     image: feature3,
-    link: '/features/#ai-capabilities',
+    link: '/blog/dont-analyze-the-same-failure-twice-smarter-ai-defect-triage-with-reportportal/',
   },
   {
     title: 'Quality gates',
     description:
       'Automate go/no-go decisions in your CI/CD pipeline by setting pass/fail thresholds on test results.',
     image: feature8,
-    link: '/features/#ai-powered-analysis',
+    link: '/docs/analysis/quality-gates/',
   },
   {
     title: 'Widgets and dashboards',
     description:
       'Build custom dashboards and widgets to track quality, spot trends and share insights with stakeholders.',
     image: feature6,
-    link: '/features/#widgets-dashboards',
+    link: '/docs/dashboards-and-visualization/',
   },
 ];

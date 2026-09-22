@@ -102,7 +102,11 @@ export const OpenSource: FC = () => {
             >
               Self-host for free
             </Link>
-            <Link className="btn btn--outline btn--large" to="/pricing/" data-gtm="explore_premium">
+            <Link
+              className="btn btn--outline btn--large"
+              to="/pricing/saas/"
+              data-gtm="explore_premium"
+            >
               Explore premium
             </Link>
           </div>

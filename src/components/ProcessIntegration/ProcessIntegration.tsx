@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import Marquee from 'react-fast-marquee';
 import { Link } from '@app/components/Link';
 import { useHomePage } from '@app/hooks/useHomePage';
-import { createBemBlockBuilder, DOCUMENTATION_URL, PropsWithAnimation } from '@app/utils';
+import { createBemBlockBuilder, PropsWithAnimation } from '@app/utils';
 
 import './ProcessIntegration.scss';
 
@@ -30,7 +30,7 @@ export const ProcessIntegration = forwardRef<HTMLDivElement, PropsWithAnimation>
           testing platforms via MCP Server — and see all results in one unified view.
         </h3>
         <div className={getBlocksWith('__link-container')}>
-          <Link className="btn btn--outline btn--large" to={`${DOCUMENTATION_URL}/plugins/`}>
+          <Link className="btn btn--outline btn--large" to="/docs/integrations/ManagePlugins/">
             See all integrations
           </Link>
         </div>

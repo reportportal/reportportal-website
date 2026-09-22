@@ -29,7 +29,7 @@ export const CtaSection: FC = () => (
         </Link>
         <Link
           className="btn btn--outline-2 btn--large"
-          to="https://demo.reportportal.io/"
+          to="https://demo.reportportal.io/ui/#login"
           data-gtm="try_demo_cta"
         >
           Try demo
