@@ -14,6 +14,7 @@ interface FeatureSectionProps {
   bullets: ReactNode[];
   imagePosition: 'left' | 'right';
   illustration?: ReactNode;
+  link?: string;
 }
 
 export const FeatureSection: FC<FeatureSectionProps> = ({
@@ -22,6 +23,7 @@ export const FeatureSection: FC<FeatureSectionProps> = ({
   bullets,
   imagePosition,
   illustration,
+  link,
 }) => (
   <section className={getBlocksWith()}>
     <div
@@ -40,7 +42,7 @@ export const FeatureSection: FC<FeatureSectionProps> = ({
             </li>
           ))}
         </ul>
-        <Link className="btn btn--outline btn--large" to="#">
+        <Link className="btn btn--outline btn--large" to={link ?? '#'}>
           Learn more
         </Link>
       </div>

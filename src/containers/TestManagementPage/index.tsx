@@ -43,7 +43,7 @@ export const TestManagementPage: FC = () => (
         <div className={getBlocksWith('__hero-cta')}>
           <Link
             className="btn btn--secondary btn--large"
-            to="/demo/"
+            to="https://demo.reportportal.io/ui/"
             data-gtm="test_management_try_demo"
           >
             Try demo
@@ -68,7 +68,7 @@ export const TestManagementPage: FC = () => (
           <div className={getBlocksWith('__organize-mockup')}>
             <TestCaseLibrary />
           </div>
-          <Link className="btn btn--outline btn--large" to="/features/">
+          <Link className="btn btn--outline btn--large" to="/docs/test-management-system/">
             Learn more
           </Link>
         </div>
