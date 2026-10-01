@@ -175,6 +175,10 @@ export const SAAS_FAQ_SCHEMA_ITEMS: FAQSchemaItem[] = FAQ_ITEMS.map(({ label, ch
  * updated by hand whenever the plans change there. They sat at $49 and $249
  * long after the real prices had moved; see the follow-up about deriving these
  * from the same source as the cards.
+ *
+ * Only plans with a public price belong here: Google rejects an Offer without
+ * `price` and `priceCurrency`. The Enterprise plan has custom pricing, so it is
+ * intentionally not listed.
  */
 export const SAAS_OFFERS: OfferSchemaParams[] = [
   {
@@ -190,10 +194,5 @@ export const SAAS_OFFERS: OfferSchemaParams[] = [
     priceCurrency: 'USD',
     description: 'SaaS Business plan — per month, billed quarterly, unlimited users',
     url: '/contact-us/saas/business-plan',
-  },
-  {
-    name: 'Enterprise',
-    description: 'SaaS Enterprise plan for large organizations with custom pricing',
-    url: '/contact-us/saas/enterprise-plan',
   },
 ];

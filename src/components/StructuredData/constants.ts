@@ -1,6 +1,7 @@
 export const SITE_URL = 'https://reportportal.io';
 export const SITE_NAME = 'ReportPortal';
 export const LOGO_URL = `${SITE_URL}/logo/logo-build.svg`;
+export const PREVIEW_IMAGE_URL = `${SITE_URL}/preview.png`;
 
 export const SOCIAL_LINKS = [
   'https://github.com/reportportal',
