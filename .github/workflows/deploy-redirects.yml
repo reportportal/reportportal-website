@@ -58,16 +58,19 @@ jobs:
           if [ ! -f docs/release-redirects.json ]; then
             echo "::warning::docs/release-redirects.json not found on docs master; applying site redirects only"
             echo '[]' > docs/release-redirects.json
+          elif ! jq -e 'type == "array"' docs/release-redirects.json >/dev/null 2>&1; then
+            echo "::warning::docs/release-redirects.json is invalid JSON or not an array; applying site redirects only"
+            echo '[]' > docs/release-redirects.json
           fi
 
-          DOCS_COUNT=$(jq '[.[] | select(.source and .target and .status)] | length' docs/release-redirects.json)
+          DOCS_COUNT=$(jq '[.[] | select(type == "object" and .source and .target and .status)] | length' docs/release-redirects.json)
           RAW_COUNT=$(jq 'length' docs/release-redirects.json)
           if [ "$RAW_COUNT" -gt 0 ] && [ "$DOCS_COUNT" -eq 0 ]; then
-            echo "::warning::docs/release-redirects.json has no Amplify-format rules; ignoring until docs regenerates it"
+            echo "::warning::docs/release-redirects.json has no Amplify-format rules; applying site redirects only"
           fi
 
           RULES=$(jq -s '
-            (.[0] | map(select(.source and .target and .status))) + .[1]
+            (.[0] | map(select(type == "object" and .source and .target and .status))) + .[1]
             | map(
                 {source, target, status}
                 + (if .condition != null and .condition != "" then {condition} else {} end)
