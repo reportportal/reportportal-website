@@ -105,6 +105,16 @@
     "status": "200"
   },
   {
+    "source": "/docs/releases/archived-releases",
+    "target": "/docs/releases/archived-releases/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/releases/archived-releases/",
+    "target": "/docs/releases/archived-releases/index.html",
+    "status": "200"
+  },
+  {
     "source": "/docs/releases/archived-releases/<version>",
     "target": "/docs/releases/archived-releases/<version>/",
     "status": "301"
