@@ -81,7 +81,11 @@ That's it! Your changes should now be live on the website. If you encounter any 
 
 ### Redirects
 
-Amplify custom redirect rules are managed via `src/redirects.json`. When a page is deleted or renamed, the CI check (`check-redirects`) will fail on the PR until the new redirect is added to that file. Upon merge to `master`, the `deploy-redirects` workflow automatically applies the full ruleset to Amplify. You can also trigger it manually via Actions → **Deploy Redirects to Amplify** → **Run workflow**.
+Amplify custom redirect rules are managed via `src/redirects.json`. When a page is deleted or renamed, the CI check (`check-redirects`) will fail on the PR until the new redirect is added to that file.
+
+Release-note redirects (archived pages, short version aliases, legacy `Release*` URLs) are generated in the [docs](https://github.com/reportportal/docs) repository as `release-redirects.json` and merged into the Amplify ruleset at deploy time. Do not add per-version `/docs/releases/...` rules to `src/redirects.json`.
+
+Upon merge to `master`, the `deploy-redirects` workflow applies the combined ruleset to Amplify. Docs production deploy also triggers this workflow after Amplify finishes, so archived-release redirects go live once the destination pages exist. You can also trigger it manually via Actions → **Deploy Redirects to Amplify** → **Run workflow**.
 
 ## Libraries
 
