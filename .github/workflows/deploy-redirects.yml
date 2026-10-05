@@ -36,17 +36,47 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Checkout docs release redirects
+        uses: actions/checkout@v4
+        with:
+          repository: reportportal/docs
+          ref: master
+          sparse-checkout: |
+            release-redirects.json
+          sparse-checkout-cone-mode: false
+          path: docs
+          persist-credentials: false
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-central-1
 
-      - name: Apply redirects to Amplify
+      - name: Merge and apply redirects to Amplify
         run: |
-          RULES=$(jq '[.[] | {source, target, status} + (if .condition != null and .condition != "" then {condition} else {} end)]' src/redirects.json)
+          if [ ! -f docs/release-redirects.json ]; then
+            echo "::warning::docs/release-redirects.json not found on docs master; applying site redirects only"
+            echo '[]' > docs/release-redirects.json
+          fi
+
+          DOCS_COUNT=$(jq '[.[] | select(.source and .target and .status)] | length' docs/release-redirects.json)
+          RAW_COUNT=$(jq 'length' docs/release-redirects.json)
+          if [ "$RAW_COUNT" -gt 0 ] && [ "$DOCS_COUNT" -eq 0 ]; then
+            echo "::warning::docs/release-redirects.json has no Amplify-format rules; ignoring until docs regenerates it"
+          fi
+
+          RULES=$(jq -s '
+            (.[0] | map(select(.source and .target and .status))) + .[1]
+            | map(
+                {source, target, status}
+                + (if .condition != null and .condition != "" then {condition} else {} end)
+              )
+          ' docs/release-redirects.json src/redirects.json)
+
           aws amplify update-app \
             --app-id ${{ secrets.AWS_AMPLIFY_APP_ID }} \
             --region eu-central-1 \
             --custom-rules "$RULES"
-          echo "Redirects applied: $(echo "$RULES" | jq 'length') rules"
+
+          echo "Redirects applied: $(echo "$RULES" | jq 'length') rules (docs: ${DOCS_COUNT}, site: $(jq 'length' src/redirects.json))"
