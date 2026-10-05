@@ -137,11 +137,6 @@
           "description": "Use the recommended settings in the Docker Compose file to prevent any deserialization issues."
         },
         {
-          "title": "Don’t Analyze the Same Failure Twice: Smarter AI Defect Triage with ReportPortal",
-          "url": "https://reportportal.io/blog/dont-analyze-the-same-failure-twice-smarter-ai-defect-triage-with-reportportal/",
-          "description": "See how AI and ReportPortal turn new test failure analysis into reusable triage knowledge for future issues."
-        },
-        {
           "title": "Effective bug tracking with ReportPortal",
           "url": "https://reportportal.io/blog/effective-bug-tracking-with-reportportal/",
           "description": "Optimize your bug tracking with ReportPortal."
@@ -250,11 +245,6 @@
           "title": "Reporting Reqnroll test results to ReportPortal",
           "url": "https://reportportal.io/blog/reporting-reqnroll-test-results-to-reportportal/",
           "description": "Track Reqnroll test results instantly in ReportPortal. Reqnroll agent with full setup instructions."
-        },
-        {
-          "title": "ReportPortal 26.1: A New Approach to Roles and Permissions",
-          "url": "https://reportportal.io/blog/reportportal-26-1-a-new-approach-to-roles-and-permissions/",
-          "description": "ReportPortal 26.1: new roles and permissions, simplified access management across instances, organizations, and projects."
         },
         {
           "title": "ReportPortal completes SOC 2 Type II audit",
