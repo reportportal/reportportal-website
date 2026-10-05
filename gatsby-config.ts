@@ -65,6 +65,10 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-sitemap',
       options: {
+        // `sitemap-index.xml` is deleted in `onPostBuild` (the site serves its own
+        // `static/sitemap.xml`), so the <link rel="sitemap"> the plugin adds to every
+        // page would point to a missing file (4xx).
+        createLinkInHead: false,
         excludes: [
           '/contact-us/taas',
           '/contact-us/taaas',
