@@ -5,8 +5,12 @@ import { isEmpty } from 'lodash';
 import { Select } from 'antd';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
-import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL, getTrafficAttribution } from '@app/utils';
+import {
+  createBemBlockBuilder,
+  CONTACT_US_URL,
+  FORM_TYPE_CONTACT,
+  getTrafficAttribution,
+} from '@app/utils';
 import { SALESFORCE_SOURCE_NAME, LEAD_SOURCE } from '@app/utils/contactUsConfig';
 import axios from 'axios';
 
@@ -94,6 +98,7 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
+          form_type: FORM_TYPE_CONTACT,
           ...formValues,
           company: formValues.company?.trim() || 'N/A',
           ...baseSalesForceValues,
@@ -103,12 +108,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
         };
 
-        if (values.wouldLikeToReceiveAds) {
-          subscribeUser(values.email).catch(console.error);
-        }
-
         const headers = {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         };
 
         await axios.post(CONTACT_US_URL, postData, { headers });

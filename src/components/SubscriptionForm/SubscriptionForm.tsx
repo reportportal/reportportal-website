@@ -15,9 +15,7 @@ const getBlocksWith = createBemBlockBuilder(['subscription-form']);
 
 enum SubscriptionStatus {
   success,
-  alreadySubscribed,
   error,
-  checkEmail,
 }
 
 export const SubscriptionForm: FC = () => {
@@ -32,45 +30,12 @@ export const SubscriptionForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const email = Form.useWatch('email', form);
 
-  const handleSubscribeUser = async (emailToSubscribe: string) => {
-    return subscribeUser(emailToSubscribe)
-      .then(response => {
-        setValidation({
-          isValid: true,
-          status:
-            response.data.status === 'pending'
-              ? SubscriptionStatus.checkEmail
-              : SubscriptionStatus.success,
-        });
-      })
-      .catch(error => {
-        const shouldCheckEmail = error.response.data.error === 'email address already pending';
-        const isAlreadySubscribed =
-          error.response.data.error === 'email address already subscribed';
-
-        if (shouldCheckEmail || isAlreadySubscribed) {
-          setValidation({
-            isValid: true,
-            status: shouldCheckEmail
-              ? SubscriptionStatus.checkEmail
-              : SubscriptionStatus.alreadySubscribed,
-          });
-        } else {
-          setValidation({
-            isValid: false,
-            status: SubscriptionStatus.error,
-            message:
-              'This email cannot be added to the list. Please enter a different email address.',
-          });
-        }
-      });
-  };
-
   const handleFinish = async () => {
-    const isLengthValid = email?.length <= 128;
-    const isFormatValid = EMAIL_VALIDATION_REGEX.test(email);
+    const trimmedEmail = email?.trim() ?? '';
+    const isLengthValid = trimmedEmail.length > 0 && trimmedEmail.length <= 128;
+    const isFormatValid = EMAIL_VALIDATION_REGEX.test(trimmedEmail);
 
-    if (!email || !isFormatValid || !isLengthValid) {
+    if (!isFormatValid || !isLengthValid) {
       setValidation({
         isValid: false,
         message: 'Please use a valid email format',
@@ -78,17 +43,25 @@ export const SubscriptionForm: FC = () => {
       return;
     }
 
+    if (isLoading) {
+      return;
+    }
+
     try {
       setIsLoading(true);
-
-      await handleSubscribeUser(email);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
+      await subscribeUser(trimmedEmail);
+      setValidation({
+        isValid: true,
+        status: SubscriptionStatus.success,
+      });
+    } catch {
       setValidation({
         isValid: false,
+        status: SubscriptionStatus.error,
         message: 'Subscription failed. Please try again.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,6 +69,8 @@ export const SubscriptionForm: FC = () => {
     setValidation(prevState => ({
       ...prevState,
       isValid: true,
+      status: prevState.status === SubscriptionStatus.error ? undefined : prevState.status,
+      message: undefined,
     }));
   }, [email]);
 
@@ -104,24 +79,6 @@ export const SubscriptionForm: FC = () => {
       <SubscriptionFormCard
         title="Thank you for subscribing!"
         subtitle="Check your email and if our confirmation letter landed in your spam folder, please mark it as “Not spam” to continue receiving our updates."
-      />
-    );
-  }
-
-  if (validation.status === SubscriptionStatus.alreadySubscribed) {
-    return (
-      <SubscriptionFormCard
-        title="Already subscribed!"
-        subtitle="You already have a subscription linked to this email address."
-      />
-    );
-  }
-
-  if (validation.status === SubscriptionStatus.checkEmail) {
-    return (
-      <SubscriptionFormCard
-        title="Almost there! Confirm your subsciption."
-        subtitle="Confirmation email sent. Please check your inbox and click the link to complete your subscription. If absent, check your spam or junk folder."
       />
     );
   }

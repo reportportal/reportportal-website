@@ -16,12 +16,11 @@ env:
   AWS_S3_BUCKET_NAME : rpp-landing-prod
   AWS_REGION_NAME : eu-central-1
   BUILD_DIR : public/
-  CONTACT_US_URL: https://testio.my.salesforce-sites.com/leadcapture/services/apexrest/leadservice
+  CONTACT_US_URL: https://hooks.zapier.com/hooks/catch/28895522/4m5e4vi/
   DOCUMENTATION_URL: /docs
   GTM_ID: GTM-MK7ZHTL
   CONTENTFUL_ENV_ID: master
   CONTENTFUL_HOST: cdn.contentful.com
-  GATSBY_MAILCHIMP_LIST_ID: ca6d0eec5b
 
 on:
   push:
@@ -79,7 +78,6 @@ jobs:
           echo GTM_ID=${{ env.GTM_ID }} >> .env.production
           echo CONTACT_US_URL=${{ env.CONTACT_US_URL }} >> .env.production
           echo DOCUMENTATION_URL=${{ env.DOCUMENTATION_URL }} >> .env.production
-          echo GATSBY_MAILCHIMP_LIST_ID=${{ env.GATSBY_MAILCHIMP_LIST_ID }} >> .env.production
           echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env.production
           echo GATSBY_ENABLE_VWO=false >> .env.production
           echo SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }} >> .env.production
