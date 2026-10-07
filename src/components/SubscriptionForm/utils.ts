@@ -1,11 +1,19 @@
 import axios, { AxiosPromise } from 'axios';
-
-import { SUBSCRIPTION_URL } from './constants';
+import { CONTACT_US_URL, FORM_TYPE_NEWSLETTER } from '@app/utils';
 
 export const subscribeUser = (email: string): AxiosPromise => {
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'text/plain',
   };
 
-  return axios.post(SUBSCRIPTION_URL, { email_address: email }, { headers });
+  return axios.post(
+    CONTACT_US_URL,
+    {
+      form_type: FORM_TYPE_NEWSLETTER,
+      email: email.trim(),
+      wouldLikeToReceiveAds: true,
+      termsAgree: true,
+    },
+    { headers },
+  );
 };

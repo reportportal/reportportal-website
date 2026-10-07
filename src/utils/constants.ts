@@ -7,6 +7,9 @@ export const BLOG_PAGE_SIZE = 12;
 export const DOCUMENTATION_URL = process.env.DOCUMENTATION_URL as string;
 export const CONTACT_US_URL = process.env.CONTACT_US_URL as string;
 
+export const FORM_TYPE_CONTACT = 'contact_form';
+export const FORM_TYPE_NEWSLETTER = 'newsletter_subscription';
+
 export const isNewYearMode = isDateBetweenNov25AndJan15GMT3();
 
 export const ANNOUNCEMENT_CLOSED_KEY = 'wasAnnouncementClosed';

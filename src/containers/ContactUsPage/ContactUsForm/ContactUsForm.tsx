@@ -3,8 +3,7 @@ import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import { isEmpty } from 'lodash';
 import { Link } from '@app/components/Link';
-import { subscribeUser } from '@app/components/SubscriptionForm/utils';
-import { createBemBlockBuilder, CONTACT_US_URL } from '@app/utils';
+import { createBemBlockBuilder, CONTACT_US_URL, FORM_TYPE_CONTACT } from '@app/utils';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -53,16 +52,13 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
         const postData = {
+          form_type: FORM_TYPE_CONTACT,
           ...values,
           ...baseSalesForceValues,
         };
 
-        if (values.wouldLikeToReceiveAds) {
-          subscribeUser(values.email).catch(console.error);
-        }
-
         const headers = {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         };
 
         await axios.post(CONTACT_US_URL, postData, { headers });
