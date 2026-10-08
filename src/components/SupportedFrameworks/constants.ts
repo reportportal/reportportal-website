@@ -11,6 +11,7 @@ import cucumber5 from '@app/svg/icon_framework_cucumber5.svg';
 import cucumber6 from '@app/svg/icon_framework_cucumber6.svg';
 import cypress from '@app/svg/icon_framework_cypress.svg';
 import gauge from '@app/svg/icon_framework_gauge.svg';
+import ginkgo from '@app/svg/icon_framework_ginkgo.svg';
 import gwen from '@app/svg/icon_framework_gwen.svg';
 import jasmine from '@app/svg/icon_framework_jasmine.svg';
 import jbehave from '@app/svg/icon_framework_jbehave.svg';
@@ -310,6 +311,11 @@ export const FRAMEWORK_ICONS_OTHER = [
     icon: gauge,
     badge: false,
     href: 'https://github.com/reportportal/agent-net-gauge',
+  },
+  {
+    icon: ginkgo,
+    badge: true,
+    href: 'https://github.com/That-geeky-shree/report-portal-go/blob/main/agent-go-ginkgo/README.md',
   },
 ];
 
