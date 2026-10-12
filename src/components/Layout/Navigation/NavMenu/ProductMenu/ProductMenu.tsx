@@ -64,7 +64,10 @@ export const ProductMenu: FC<MenuProps> = ({ isDesktop = true, isOpen, menuConta
         <div className={getBlocksWith('__body-col--rt', '__body-col--flex-column')}>
           {integrationsList}
           <div>
-            <ArrowLink to={`${DOCUMENTATION_URL}/plugins/`} text="See all integrations" />
+            <ArrowLink
+              to={`${DOCUMENTATION_URL}/integrations/ManagePlugins/`}
+              text="See all integrations"
+            />
           </div>
         </div>
       </div>
