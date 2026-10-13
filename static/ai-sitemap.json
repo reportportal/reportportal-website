@@ -252,6 +252,11 @@
           "description": "Track Reqnroll test results instantly in ReportPortal. Reqnroll agent with full setup instructions."
         },
         {
+          "title": "ReportPortal 26.1: A New Approach to Roles and Permissions",
+          "url": "https://reportportal.io/blog/reportportal-26-1-a-new-approach-to-roles-and-permissions/",
+          "description": "ReportPortal 26.1: new roles and permissions, simplified access management across instances, organizations, and projects."
+        },
+        {
           "title": "ReportPortal completes SOC 2 Type II audit",
           "url": "https://reportportal.io/blog/reportportal-completes-soc-2-type-ii-audit/",
           "description": "ReportPortal confirms SOC 2 Type II compliance, ensuring high-level data security as a trusted SaaS provider."
@@ -370,6 +375,11 @@
           "title": "Trends in automated testing in 2023",
           "url": "https://reportportal.io/blog/trends-in-automated-testing-in-2023/",
           "description": "Stay informed and optimize your testing processes by reading our article on the dynamic and evolving trends in automated testing."
+        },
+        {
+          "title": "Unique Error Analysis: group repeated test failures",
+          "url": "https://reportportal.io/blog/unique-error-analysis-group-repeated-test-failures/",
+          "description": "Learn how ReportPortal Unique Error Analysis groups matching error logs, supports test failure triage, and identifies new errors with Quality Gates."
         }
       ]
     },
