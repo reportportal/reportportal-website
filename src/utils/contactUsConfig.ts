@@ -270,17 +270,17 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Individual',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/individual',
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Business',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/business',
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Business / Diamond',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/business/diamond',
   }),
   createContactUsConfig({
