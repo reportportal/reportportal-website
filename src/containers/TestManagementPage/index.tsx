@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { createBemBlockBuilder } from '@app/utils';
+import { buildContactUsGeneralPath, createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 import { LinkedCard } from '@app/components/LinkedCard';
 import { Faq } from '@app/components/Faq';
@@ -121,7 +121,7 @@ export const TestManagementPage: FC = () => (
           </p>
           <Link
             className="btn btn--secondary btn--large"
-            to="/contact-us/general/?reason=demo&cta=test_management_demo"
+            to={buildContactUsGeneralPath({ reason: 'demo', cta: 'test_management_demo' })}
             data-gtm="test_management_request_demo"
           >
             Request a Demo

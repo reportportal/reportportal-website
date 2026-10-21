@@ -4,7 +4,12 @@ import { useScroll } from 'ahooks';
 import classNames from 'classnames';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
-import { createBemBlockBuilder, MEDIA_DESKTOP_SM, iconsCommon } from '@app/utils';
+import {
+  buildContactUsGeneralPath,
+  createBemBlockBuilder,
+  MEDIA_DESKTOP_SM,
+  iconsCommon,
+} from '@app/utils';
 import SuccessIcon from '@app/svg/success.inline.svg';
 import { Link } from '@app/components/Link';
 import { SupportedFrameworks } from '@app/components/SupportedFrameworks';
@@ -254,7 +259,7 @@ export const FeaturesPage: FC = () => {
           <Banner
             title="Still have questions about our features?"
             linkTitle="Contact us"
-            link="/contact-us/general/"
+            link={buildContactUsGeneralPath()}
           />
         </div>
       </FooterContent>

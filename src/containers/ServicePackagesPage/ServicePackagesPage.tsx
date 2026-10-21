@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { OfferPageWrapper } from '@app/components/OfferPageWrapper';
-import { OfferingPlansQuery, formatOfferingPlans } from '@app/utils';
+import { OfferingPlansQuery, buildContactUsGeneralPath, formatOfferingPlans } from '@app/utils';
 
 import { FAQ_DATA, TIME_SCALE_DATA } from './constants';
 
@@ -32,7 +32,7 @@ export const ServicePackagesPage: FC = () => {
       timeScaleData={TIME_SCALE_DATA}
       plans={plans}
       faqData={FAQ_DATA}
-      contactUsLink="/contact-us/service-packages/"
+      contactUsLink={buildContactUsGeneralPath({ cta: 'service_packages_questions' })}
     />
   );
 };

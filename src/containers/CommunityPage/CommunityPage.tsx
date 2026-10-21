@@ -4,7 +4,7 @@ import { Link } from '@app/components/Link';
 import { InfoCard } from '@app//components/InfoCard';
 import { LinkedCardBlock } from '@app/components/LinkedCardBlock';
 import { SubscriptionBanner } from '@app/components/SubscriptionBanner';
-import { DOCUMENTATION_URL } from '@app/utils';
+import { DOCUMENTATION_URL, buildContactUsGeneralPath } from '@app/utils';
 
 import { Hero } from './Hero';
 import { JoinOurCommunity } from './JoinOurCommunity';
@@ -52,7 +52,12 @@ export const CommunityPage: FC = () => (
       </Link>
     </LinkedCardBlock>
     <YouTube />
-    <StartTestingWithReportPortal startFreeTrialUrl="/contact-us/general/?reason=free_trial&cta=community_free_trial" />
+    <StartTestingWithReportPortal
+      startFreeTrialUrl={buildContactUsGeneralPath({
+        reason: 'free_trial',
+        cta: 'community_free_trial',
+      })}
+    />
     <LatestFromOurBlog isViewAll />
     <SubscriptionBanner />
   </div>

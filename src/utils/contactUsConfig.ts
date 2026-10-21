@@ -1,5 +1,6 @@
 import { kebabCase } from 'lodash';
 
+import { CONTACT_US_GENERAL_PATH } from './constants';
 import { ContactUsBaseConfig, PlanType } from './types';
 
 export const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
@@ -236,7 +237,7 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
   createContactUsConfig({
     salesforceSourceName: 'General',
     leadSource: 'RP General',
-    url: '/contact-us/general',
+    url: CONTACT_US_GENERAL_PATH,
   }),
   {
     id: '[Service Packages]',

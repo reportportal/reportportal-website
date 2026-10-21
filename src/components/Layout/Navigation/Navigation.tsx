@@ -4,7 +4,12 @@ import { Drawer, Collapse } from 'antd';
 import { upperFirst } from 'lodash';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
-import { createBemBlockBuilder, isNewYearMode, MEDIA_DESKTOP } from '@app/utils';
+import {
+  buildContactUsGeneralPath,
+  createBemBlockBuilder,
+  isNewYearMode,
+  MEDIA_DESKTOP,
+} from '@app/utils';
 import { useScrollDirection } from '@app/hooks/useScrollDirection';
 import { useHasMounted } from '@app/hooks/useHasMounted';
 import { useMediaQuerySafe } from '@app/hooks/useMediaQuerySafe';
@@ -197,7 +202,7 @@ export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
                   <Link
                     data-gtm="get_a_quote_header"
                     className={getBlocksWith('-navigation__signup-button')}
-                    to="/contact-us/general/"
+                    to={buildContactUsGeneralPath()}
                   >
                     Contact us
                   </Link>
@@ -255,7 +260,7 @@ export const Navigation: FC<NavigationProps> = ({ announcementBarRef }) => {
         <div className="mobile-menu__auth-buttons">
           <Link
             className="btn btn--outline full-width"
-            to="/contact-us/general/"
+            to={buildContactUsGeneralPath()}
             data-gtm="get_a_quote_header"
           >
             Contact us

@@ -2,6 +2,7 @@ import React, { FC, Fragment } from 'react';
 import { useLocation } from '@gatsbyjs/reach-router';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import {
+  CONTACT_US_GENERAL_PATH,
   ContactUsConfig,
   createBemBlockBuilder,
   formatNumberWithCommas,
@@ -47,7 +48,7 @@ export const ContactUsDetails: FC<
   const { pathname } = useLocation();
   // Limit the hardcoded fallback to the /contact-us/general page only, so it
   // doesn't override the CMS message on other no-planType pages (qasp, taas…).
-  const isGeneralContact = pathname.includes('/contact-us/general');
+  const isGeneralContact = pathname.includes(CONTACT_US_GENERAL_PATH);
 
   const priceInfo =
     planType && price && price[planType] ? (

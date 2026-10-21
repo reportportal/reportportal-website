@@ -28,10 +28,27 @@ export const REASON_SOURCE_MAP: Record<ReasonValue, string> = {
 export const GENERAL_SOURCE = 'Landing page / General';
 export const CUSTOM_TEXT_SOURCE = 'Landing page / General / Custom text';
 
-export const CTA_SOURCE_OVERRIDES: Record<
-  string,
-  { reason: ReasonValue; source: string; leadSource?: string }
-> = {
+export const GENERAL_LEAD_SOURCE = 'RP General';
+export const CUSTOM_TEXT_LEAD_SOURCE = 'RP Custom text';
+
+// Website CTA mapping rows 1–8 → Salesforce Lead Source
+export const REASON_LEAD_SOURCE_MAP: Record<ReasonValue, string> = {
+  demo: 'RP Request a Demo',
+  pricing: 'RP Pricing details',
+  free_trial: 'RP Free Trial',
+  support: 'RP Technical support',
+  other: 'RP Other',
+};
+
+export type CtaSourceOverride = {
+  source: string;
+  reason?: ReasonValue;
+  leadSource?: string;
+  // Always send `source` as ReportPortalSource; lead_source follows rows 1–8
+  keepCtaSource?: boolean;
+};
+
+export const CTA_SOURCE_OVERRIDES: Record<string, CtaSourceOverride> = {
   hero_free_trial: {
     reason: 'free_trial',
     source: 'Landing page / General / Hero / Button "Start Free Trial"',
@@ -64,5 +81,18 @@ export const CTA_SOURCE_OVERRIDES: Record<
     reason: 'free_trial',
     source: 'Landing page / RP Community',
     leadSource: 'RP Community',
+  },
+  // Pricing → SaaS / Service Packages overview CTAs (rows 27, 31, 32)
+  saas_questions: {
+    source: 'Landing page / SaaS / Interest in SaaS Plans',
+    keepCtaSource: true,
+  },
+  service_packages_interest: {
+    source: 'Landing page / Service Packages / Interest in Support Packages',
+    keepCtaSource: true,
+  },
+  service_packages_questions: {
+    source: 'Landing page / Service Packages / Interest in Support Packages',
+    keepCtaSource: true,
   },
 };

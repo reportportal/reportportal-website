@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
-import { createBemBlockBuilder } from '@app/utils';
+import { buildContactUsGeneralPath, createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 import { ArrowLink } from '@app/components/ArrowLink';
 
@@ -22,7 +22,10 @@ export const CtaSection: FC = () => (
       <div className={getBlocksWith('__actions')}>
         <Link
           className="btn btn--secondary btn--large"
-          to="/contact-us/general/?reason=free_trial&cta=faster_releases_free_trial"
+          to={buildContactUsGeneralPath({
+            reason: 'free_trial',
+            cta: 'faster_releases_free_trial',
+          })}
           data-gtm="get_started_cta"
         >
           Start free trial
@@ -39,7 +42,7 @@ export const CtaSection: FC = () => (
       <ArrowLink
         mode="primary"
         text="Or contact our team"
-        to="/contact-us/general/"
+        to={buildContactUsGeneralPath()}
         data-gtm="contact_us_cta"
         className={getBlocksWith('__secondary-link')}
       />

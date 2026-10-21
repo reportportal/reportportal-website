@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
-import { createBemBlockBuilder } from '@app/utils';
+import { buildContactUsGeneralPath, createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 
 import { ReleaseDecisionIllustration } from './components/ReleaseDecisionIllustration';
@@ -34,7 +34,7 @@ export const HeroSection: FC = () => {
             </Link>
             <Link
               className="btn btn--outline-2 btn--large"
-              to="/contact-us/general/?reason=free_trial&cta=hero_free_trial"
+              to={buildContactUsGeneralPath({ reason: 'free_trial', cta: 'hero_free_trial' })}
               data-gtm="start_free_trial_hero"
             >
               Start free trial

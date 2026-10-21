@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { Link } from '@app/components/Link';
 import {
+  buildContactUsGeneralPath,
   createBemBlockBuilder,
   getEaseInOutTransition,
   iconsCommon,
@@ -23,7 +24,7 @@ const getBlocksWith = createBemBlockBuilder(['start-testing-with-report-portal']
 export const StartTestingWithReportPortal: FC<
   PropsWithAnimation<StartTestingWithReportPortalProps>
 > = ({
-  startFreeTrialUrl = '/contact-us/general/?reason=free_trial',
+  startFreeTrialUrl = buildContactUsGeneralPath({ reason: 'free_trial' }),
   isAnimationEnabled = false,
 }) => {
   const [ref, isInView] = useInView();

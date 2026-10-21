@@ -2,6 +2,7 @@ import React, { FC, ReactNode, useRef } from 'react';
 import { motion } from 'framer-motion';
 import classNames from 'classnames';
 import {
+  buildContactUsGeneralPath,
   createBemBlockBuilder,
   easeInOutOpacityScaleAnimationProps,
   OfferingPlansDto,
@@ -177,7 +178,11 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         }
         description="Start a conversation with us to discover the support experience that fits you perfectly."
         buttonText="Contact us now!"
-        buttonLink={isPricingPage ? '/contact-us/service-packages' : contactUsLink}
+        buttonLink={
+          isPricingPage
+            ? buildContactUsGeneralPath({ cta: 'service_packages_interest' })
+            : contactUsLink
+        }
       />
       <div className={getBlocksWith('__faq-container')}>
         <Faq
@@ -188,7 +193,15 @@ export const OfferPageWrapper: FC<OfferPageWrapperProps> = ({
         />
       </div>
       <FooterContent>
-        <Banner title="Do you still have questions?" linkTitle="Contact us" link={contactUsLink} />
+        <Banner
+          title="Do you still have questions?"
+          linkTitle="Contact us"
+          link={
+            isPricingPage
+              ? buildContactUsGeneralPath({ cta: 'service_packages_questions' })
+              : contactUsLink
+          }
+        />
       </FooterContent>
     </>
   );
