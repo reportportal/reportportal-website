@@ -7,6 +7,7 @@ import { Link } from '@app/components/Link';
 import { useClientCarouselItems } from '@app/hooks/useClientCarouselItems';
 import {
   COMMON_MARQUEE_PROPS,
+  buildContactUsGeneralPath,
   createBemBlockBuilder,
   defaultSpringTransition,
   MEDIA_DESKTOP,
@@ -86,7 +87,7 @@ export const Showcase: FC = () => {
             </Link>
             <Link
               className="btn btn--outline-2 btn--large"
-              to="/contact-us/general/"
+              to={buildContactUsGeneralPath()}
               data-gtm="get_a_quote"
             >
               Contact us

@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react';
 import classNames from 'classnames';
-import { createBemBlockBuilder } from '@app/utils';
+import { buildContactUsGeneralPath, createBemBlockBuilder } from '@app/utils';
 import { Link } from '@app/components/Link';
 
 import Soc2 from './svg/soc2.inline.svg';
@@ -160,7 +160,7 @@ export const Enterprise: FC = () => (
         <div className={getBlocksWith('__actions')}>
           <Link
             className="btn btn--primary btn--large"
-            to="/contact-us/general/?reason=demo&cta=enterprise_demo"
+            to={buildContactUsGeneralPath({ reason: 'demo', cta: 'enterprise_demo' })}
             data-gtm="request_demo_enterprise"
           >
             Request demo

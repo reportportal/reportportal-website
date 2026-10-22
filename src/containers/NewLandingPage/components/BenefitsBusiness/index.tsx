@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { AnimatedList } from '@app/components/AnimatedList';
 import { Link } from '@app/components/Link';
+import { buildContactUsGeneralPath } from '@app/utils';
 
 import { BENEFITS_ITEMS } from './constants';
 import { QualityGatesIllustration } from './illustrations/QualityGatesIllustration';
@@ -30,14 +31,14 @@ export const BenefitsBusiness: FC = () => (
   >
     <Link
       className="btn btn--primary btn--large"
-      to="/contact-us/general/?reason=free_trial&cta=benefits_free_trial"
+      to={buildContactUsGeneralPath({ reason: 'free_trial', cta: 'benefits_free_trial' })}
       data-gtm="start_free_trial_benefits"
     >
       Start free trial
     </Link>
     <Link
       className="btn btn--outline btn--large"
-      to="/contact-us/general/"
+      to={buildContactUsGeneralPath()}
       data-gtm="contact_us_benefits"
     >
       Contact us

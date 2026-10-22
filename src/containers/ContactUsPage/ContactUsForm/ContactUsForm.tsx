@@ -7,6 +7,7 @@ import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
 import {
   createBemBlockBuilder,
+  CONTACT_US_GENERAL_PATH,
   CONTACT_US_URL,
   FORM_TYPE_CONTACT,
   getTrafficAttribution,
@@ -28,8 +29,11 @@ import {
   TRAFFIC_SOURCE_SALESFORCE_FIELD,
   PAGE_REFERRER_SALESFORCE_FIELD,
   REASON_SOURCE_MAP,
+  REASON_LEAD_SOURCE_MAP,
   GENERAL_SOURCE,
   CUSTOM_TEXT_SOURCE,
+  GENERAL_LEAD_SOURCE,
+  CUSTOM_TEXT_LEAD_SOURCE,
   CTA_SOURCE_OVERRIDES,
 } from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
@@ -79,16 +83,30 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         const sourceOverride: Record<string, string> = {};
         if (
           typeof window !== 'undefined' &&
-          window.location.pathname.includes('/contact-us/general')
+          window.location.pathname.includes(CONTACT_US_GENERAL_PATH)
         ) {
           const cta = new URLSearchParams(window.location.search).get('cta');
           const ctaOverride = cta ? CTA_SOURCE_OVERRIDES[cta] : undefined;
+          const hasCustomText = Boolean(reasonOther?.trim());
+          const matchesCtaReason =
+            Boolean(ctaOverride?.reason) && values.reason === ctaOverride?.reason;
 
-          if (reasonOther?.trim()) {
-            sourceOverride[SALESFORCE_SOURCE_NAME] = CUSTOM_TEXT_SOURCE;
-          } else if (ctaOverride && values.reason === ctaOverride.reason) {
+          if (hasCustomText) {
+            sourceOverride[LEAD_SOURCE] = CUSTOM_TEXT_LEAD_SOURCE;
+          } else if (matchesCtaReason && ctaOverride?.leadSource) {
+            sourceOverride[LEAD_SOURCE] = ctaOverride.leadSource;
+          } else if (values.reason) {
+            sourceOverride[LEAD_SOURCE] = REASON_LEAD_SOURCE_MAP[values.reason];
+          } else {
+            sourceOverride[LEAD_SOURCE] = GENERAL_LEAD_SOURCE;
+          }
+
+          if (ctaOverride?.keepCtaSource) {
             sourceOverride[SALESFORCE_SOURCE_NAME] = ctaOverride.source;
-            if (ctaOverride.leadSource) sourceOverride[LEAD_SOURCE] = ctaOverride.leadSource;
+          } else if (hasCustomText) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = CUSTOM_TEXT_SOURCE;
+          } else if (matchesCtaReason && ctaOverride) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = ctaOverride.source;
           } else if (values.reason) {
             sourceOverride[SALESFORCE_SOURCE_NAME] = REASON_SOURCE_MAP[values.reason];
           } else {
@@ -126,9 +144,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
   const { getFieldProps, validateForm, setFieldValue, values } = formik;
   const { pathname } = useLocation();
   // The inquiry-reason dropdown is shown only on the general contact page.
-  const isGeneralContact = pathname.includes('/contact-us/general');
+  const isGeneralContact = pathname.includes(CONTACT_US_GENERAL_PATH);
 
-  // Pre-fill the inquiry reason from a URL param, e.g. /contact-us/general/?reason=free_trial
+  // Pre-fill the inquiry reason from a URL param, e.g. ?reason=free_trial
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const urlReason = new URLSearchParams(window.location.search).get(

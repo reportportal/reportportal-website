@@ -7,7 +7,12 @@ import { Banner } from '@app/components/Banner';
 import { PricingHero } from '@app/components/PricingHero';
 import { FooterContent } from '@app/components/Layout';
 import { usePricingHeroProps } from '@app/hooks/usePricingHeroProps';
-import { OfferingPlansQuery, createBemBlockBuilder, formatOfferingPlans } from '@app/utils';
+import {
+  OfferingPlansQuery,
+  buildContactUsGeneralPath,
+  createBemBlockBuilder,
+  formatOfferingPlans,
+} from '@app/utils';
 import { CertificationCard } from '@app/components/CertificationCard';
 
 import { PricingCards } from './PricingCards';
@@ -66,7 +71,7 @@ export const SaasPage: FC = () => {
         <Banner
           title="Do you still have questions?"
           linkTitle="Contact us"
-          link="/contact-us/saas/"
+          link={buildContactUsGeneralPath({ cta: 'saas_questions' })}
         />
       </FooterContent>
     </>
