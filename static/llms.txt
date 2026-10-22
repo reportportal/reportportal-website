@@ -79,6 +79,7 @@
 - [Top CI/CD tools](https://reportportal.io/blog/top-ci-cd-tools/): Explore top CI/CD tools to automate workflows and streamline your development with our test automation metrics dashboard.
 - [Top tips for using Quality Gates in ReportPortal](https://reportportal.io/blog/top-tips-for-using-quality-gates-in-reportportal/): Discover how Quality Gates, a premium feature in our test automation dashboard, can enhance your CI/CD pipeline.
 - [Trends in automated testing in 2023](https://reportportal.io/blog/trends-in-automated-testing-in-2023/): Stay informed and optimize your testing processes by reading our article on the dynamic and evolving trends in automated testing.
+- [Unique Error Analysis: group repeated test failures](https://reportportal.io/blog/unique-error-analysis-group-repeated-test-failures/): Learn how ReportPortal Unique Error Analysis groups matching error logs, supports test failure triage, and identifies new errors with Quality Gates.
 
 ## Case Studies
 

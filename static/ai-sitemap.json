@@ -370,6 +370,11 @@
           "title": "Trends in automated testing in 2023",
           "url": "https://reportportal.io/blog/trends-in-automated-testing-in-2023/",
           "description": "Stay informed and optimize your testing processes by reading our article on the dynamic and evolving trends in automated testing."
+        },
+        {
+          "title": "Unique Error Analysis: group repeated test failures",
+          "url": "https://reportportal.io/blog/unique-error-analysis-group-repeated-test-failures/",
+          "description": "Learn how ReportPortal Unique Error Analysis groups matching error logs, supports test failure triage, and identifies new errors with Quality Gates."
         }
       ]
     },
