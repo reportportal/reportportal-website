@@ -55,6 +55,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           form_type: FORM_TYPE_CONTACT,
           ...values,
           ...baseSalesForceValues,
+          formLink: typeof window !== 'undefined' ? window.location.href : '',
+          submission_date: new Date().toISOString(),
         };
 
         const headers = {
