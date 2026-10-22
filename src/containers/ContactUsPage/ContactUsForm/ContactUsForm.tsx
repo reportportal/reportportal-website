@@ -124,6 +124,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           [REASON_SALESFORCE_FIELD]: reasonOther?.trim() || 'No',
           [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
           [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
+          formLink: typeof window !== 'undefined' ? window.location.href : '',
+          submission_date: new Date().toISOString(),
         };
 
         const headers = {
