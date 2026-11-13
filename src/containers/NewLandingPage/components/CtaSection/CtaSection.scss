@@ -1,0 +1,77 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.cta-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: url('/svg/cta-bg.svg') center top / cover no-repeat;
+  text-align: center;
+  color: var(--white);
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('large');
+
+    margin: 0 0 24px;
+    color: var(--white);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('x2-large');
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale('x3-large');
+
+      max-width: 800px;
+    }
+  }
+
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    max-width: 792px;
+    margin: 0 0 48px;
+    line-height: 1.7;
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    a {
+      flex: 1;
+      min-width: 180px;
+    }
+  }
+
+  &__secondary-link {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+    @include m.font-scale('base');
+
+    margin-top: 24px;
+    transition: var(--basic-transition);
+    text-decoration: none;
+    color: var(--color-primary-200);
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--white);
+    }
+  }
+}

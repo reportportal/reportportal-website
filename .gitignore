@@ -11,6 +11,7 @@ yarn-debug.log*
 yarn-error.log*
 static/github.json
 static/youtube.json
+static/stats.json
 
 # Runtime data
 pids
@@ -79,3 +80,14 @@ Thumbs.db
 
 # Visual Studio Code files
 .vscode/*
+.vercel
+
+# Local Claude / agent settings
+.claude/
+
+PERFORMANCE_AUDIT.md
+static/antd.min.css
+static/svg/test.txt
+ai-stories-presentation-outline.md
+prototypes/
+.fuse_hidden*

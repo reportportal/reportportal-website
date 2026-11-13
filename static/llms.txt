@@ -10,6 +10,7 @@
 - [Installation guide](https://reportportal.io/installation/): Three steps to get started with our test automation dashboard.
 - [Quality Engineering Consulting](https://reportportal.io/qe-consulting/): Achieve a product-quality transformation with our outstanding Quality Engineering Consulting.
 - [Test Automation as a Service](https://reportportal.io/test-automation-as-a-service/): Enhance your testing process by utilizing our on-demand automation tools, infrastructure, hardware, and expert resources.
+- [Test Management System — ReportPortal](https://reportportal.io/test-management/): Plan, design, and execute tests inside ReportPortal. A unified Test Management System with Test Case Library, Milestones, Test Plans, and Manual Executions.
 - [Testing as a Service](https://reportportal.io/testing-as-a-service/): Optimize your testing costs with our on-demand software, hardware, and expert resources.
 
 ## Blog

@@ -1,0 +1,8 @@
+<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- User silhouette -->
+  <circle cx="13" cy="13" r="5" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M4 34c0-5.5 4-9 9-9h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Add-user circle with plus -->
+  <circle cx="30" cy="28" r="7" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M30 23v10M25 28h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

@@ -1,10 +1,11 @@
-import { SITE_URL, SITE_NAME, LOGO_URL, SOCIAL_LINKS } from './constants';
+import { SITE_URL, SITE_NAME, LOGO_URL, PREVIEW_IMAGE_URL, SOCIAL_LINKS } from './constants';
 import {
   ArticleSchemaParams,
   BreadcrumbItem,
   FAQSchemaItem,
   HowToSchemaParams,
   ProductSchemaParams,
+  WebPageSchemaParams,
 } from './types';
 
 export const organizationSchema = () => ({
@@ -61,26 +62,61 @@ export const articleSchema = ({
   },
 });
 
-export const productSchema = ({ name, description, url, image, offers }: ProductSchemaParams) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Product',
+/**
+ * Google only accepts a Product that has `offers` (each with `price` and
+ * `priceCurrency`), `review` or `aggregateRating`. Use this builder only for pages
+ * that sell something with a public price; otherwise use `webPageSchema`.
+ */
+export const productSchema = ({
   name,
   description,
-  brand: {
-    '@type': 'Organization',
+  url,
+  image = PREVIEW_IMAGE_URL,
+  offers,
+}: ProductSchemaParams) => {
+  const validOffers = (offers ?? []).filter(offer => offer.price && offer.priceCurrency);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    image,
+    brand: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+    },
+    ...(url && { url: `${SITE_URL}${url}` }),
+    ...(validOffers.length > 0 && {
+      offers: validOffers.map(offer => ({
+        '@type': 'Offer',
+        name: offer.name,
+        price: offer.price,
+        priceCurrency: offer.priceCurrency,
+        availability: 'https://schema.org/InStock',
+        ...(offer.url && { url: `${SITE_URL}${offer.url}` }),
+        ...(offer.description && { description: offer.description }),
+      })),
+    }),
+  };
+};
+
+export const webPageSchema = ({ name, description, url, aboutName }: WebPageSchemaParams) => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name,
+  description,
+  url: `${SITE_URL}${url}`,
+  isPartOf: {
+    '@type': 'WebSite',
     name: SITE_NAME,
+    url: SITE_URL,
   },
-  ...(url && { url: `${SITE_URL}${url}` }),
-  ...(image && { image }),
-  ...(offers?.length && {
-    offers: offers.map(offer => ({
-      '@type': 'Offer',
-      name: offer.name,
-      ...(offer.price !== undefined && { price: offer.price }),
-      ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
-      ...(offer.url && { url: `${SITE_URL}${offer.url}` }),
-      ...(offer.description && { description: offer.description }),
-    })),
+  ...(aboutName && {
+    about: {
+      '@type': 'Thing',
+      name: aboutName,
+    },
   }),
 });
 

@@ -117,7 +117,12 @@ $desktop-sm-header: 1124px;
     align-items: center;
     min-inline-size: max-content;
     border: unset;
-    padding: 28px 16px;
+
+    // 26 + 24 (line-height) + 26 = 76px = --header-height. At 28px the links
+    // were the tallest thing in the header and stretched it to 80px, four more
+    // than the variable every hero uses for `margin-top: calc(-1 * ...)` —
+    // which left a 4px strip of white page above the header site-wide.
+    padding: 26px 16px;
     background: unset;
     transition: color 0.3s;
     text-decoration: none;

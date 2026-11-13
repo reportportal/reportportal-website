@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormikProvider, useFormik } from 'formik';
 import { useBoolean } from 'ahooks';
 import { isEmpty } from 'lodash';
+import { Select } from 'antd';
+import { useLocation } from '@gatsbyjs/reach-router';
 import { Link } from '@app/components/Link';
-import { createBemBlockBuilder, CONTACT_US_URL, FORM_TYPE_CONTACT } from '@app/utils';
+import {
+  createBemBlockBuilder,
+  CONTACT_US_GENERAL_PATH,
+  CONTACT_US_URL,
+  FORM_TYPE_CONTACT,
+  getTrafficAttribution,
+} from '@app/utils';
+import { SALESFORCE_SOURCE_NAME, LEAD_SOURCE } from '@app/utils/contactUsConfig';
 import axios from 'axios';
 
 import { validate, getBaseSalesForceValues } from './utils';
@@ -11,7 +20,22 @@ import { FormFieldWrapper } from './FormFieldWrapper';
 import { FeedbackForm } from './FeedbackForm';
 import { FormInput } from './FormInput';
 import { CustomCheckbox } from './CustomCheckbox';
-import { MAX_LENGTH } from './constants';
+import {
+  MAX_LENGTH,
+  MESSAGE_MAX_LENGTH,
+  REASON_OPTIONS,
+  ReasonValue,
+  REASON_SALESFORCE_FIELD,
+  TRAFFIC_SOURCE_SALESFORCE_FIELD,
+  PAGE_REFERRER_SALESFORCE_FIELD,
+  REASON_SOURCE_MAP,
+  REASON_LEAD_SOURCE_MAP,
+  GENERAL_SOURCE,
+  CUSTOM_TEXT_SOURCE,
+  GENERAL_LEAD_SOURCE,
+  CUSTOM_TEXT_LEAD_SOURCE,
+  CTA_SOURCE_OVERRIDES,
+} from './constants';
 import ArrowIcon from '../../../svg/arrow.inline.svg';
 
 import '../ContactUsPage.scss';
@@ -28,6 +52,8 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
       last_name: '',
       email: '',
       company: '',
+      reason: '' as ReasonValue | '',
+      reason_other: '',
       termsAgree: false,
       wouldLikeToReceiveAds: false,
       ...(isDiscussFieldShown && { discuss: '' }),
@@ -51,10 +77,53 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
         setCustomError(null);
 
         const baseSalesForceValues = getBaseSalesForceValues(options);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, camelcase
+        const { reason, reason_other: reasonOther, ...formValues } = values;
+
+        const sourceOverride: Record<string, string> = {};
+        if (
+          typeof window !== 'undefined' &&
+          window.location.pathname.includes(CONTACT_US_GENERAL_PATH)
+        ) {
+          const cta = new URLSearchParams(window.location.search).get('cta');
+          const ctaOverride = cta ? CTA_SOURCE_OVERRIDES[cta] : undefined;
+          const hasCustomText = Boolean(reasonOther?.trim());
+          const matchesCtaReason =
+            Boolean(ctaOverride?.reason) && values.reason === ctaOverride?.reason;
+
+          if (hasCustomText) {
+            sourceOverride[LEAD_SOURCE] = CUSTOM_TEXT_LEAD_SOURCE;
+          } else if (matchesCtaReason && ctaOverride?.leadSource) {
+            sourceOverride[LEAD_SOURCE] = ctaOverride.leadSource;
+          } else if (values.reason) {
+            sourceOverride[LEAD_SOURCE] = REASON_LEAD_SOURCE_MAP[values.reason];
+          } else {
+            sourceOverride[LEAD_SOURCE] = GENERAL_LEAD_SOURCE;
+          }
+
+          if (ctaOverride?.keepCtaSource) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = ctaOverride.source;
+          } else if (hasCustomText) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = CUSTOM_TEXT_SOURCE;
+          } else if (matchesCtaReason && ctaOverride) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = ctaOverride.source;
+          } else if (values.reason) {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = REASON_SOURCE_MAP[values.reason];
+          } else {
+            sourceOverride[SALESFORCE_SOURCE_NAME] = GENERAL_SOURCE;
+          }
+        }
+
+        const { trafficSource, pageReferrer } = getTrafficAttribution();
         const postData = {
           form_type: FORM_TYPE_CONTACT,
-          ...values,
+          ...formValues,
+          company: formValues.company?.trim() || 'N/A',
           ...baseSalesForceValues,
+          ...sourceOverride,
+          [REASON_SALESFORCE_FIELD]: reasonOther?.trim() || 'No',
+          [TRAFFIC_SOURCE_SALESFORCE_FIELD]: trafficSource,
+          [PAGE_REFERRER_SALESFORCE_FIELD]: pageReferrer,
           formLink: typeof window !== 'undefined' ? window.location.href : '',
           submission_date: new Date().toISOString(),
         };
@@ -67,12 +136,36 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
         showFeedbackForm();
       } catch (error) {
-        setCustomError('Request failed. Please try again.');
+        setCustomError(
+          "We couldn't send your request. Try again, or email us directly at support@reportportal.io.",
+        );
         setIsLoading(false);
       }
     },
   });
-  const { getFieldProps, validateForm } = formik;
+  const { getFieldProps, validateForm, setFieldValue, values } = formik;
+  const { pathname } = useLocation();
+  // The inquiry-reason dropdown is shown only on the general contact page.
+  const isGeneralContact = pathname.includes(CONTACT_US_GENERAL_PATH);
+
+  // Pre-fill the inquiry reason from a URL param, e.g. ?reason=free_trial
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlReason = new URLSearchParams(window.location.search).get(
+      'reason',
+    ) as ReasonValue | null;
+    if (urlReason && REASON_OPTIONS.some(o => o.value === urlReason)) {
+      setFieldValue('reason', urlReason);
+    }
+  }, [setFieldValue]);
+
+  // Scroll to the top of the page so the success message is visible right away,
+  // without the user having to scroll up manually.
+  useEffect(() => {
+    if (isFeedbackFormVisible && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isFeedbackFormVisible]);
 
   if (isFeedbackFormVisible) {
     return <FeedbackForm title={title} />;
@@ -82,16 +175,72 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
     <FormikProvider value={formik}>
       <div className={getBlocksWith('-container')}>
         <form noValidate className={getBlocksWith()} onSubmit={formik.handleSubmit}>
-          <FormInput name="first_name" label="First name" placeholder="John" maxLength={40} />
-          <FormInput name="last_name" label="Last name" placeholder="Smith" maxLength={80} />
+          <h2 className={getBlocksWith('__title')}>Contact form</h2>
+          {isGeneralContact && (
+            <div className={getBlocksWith('__select-field')}>
+              <label className={getBlocksWith('__select-label')} htmlFor="reason-select">
+                I&apos;m interested in
+                <span className={getBlocksWith('__required')}> *</span>
+              </label>
+              <Select
+                id="reason-select"
+                className={getBlocksWith('__select')}
+                value={values.reason || undefined}
+                placeholder="Choose your inquiry type"
+                suffixIcon={
+                  <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L6 6.5L11 1"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+                onChange={(value: ReasonValue) => setFieldValue('reason', value)}
+                options={REASON_OPTIONS.map(({ label, value }) => ({ label, value }))}
+              />
+            </div>
+          )}
+          <FormInput
+            name="first_name"
+            label="First name"
+            required
+            placeholder="Jane"
+            maxLength={40}
+          />
+          <FormInput name="last_name" label="Last name" required placeholder="Doe" maxLength={80} />
           <FormInput
             name="email"
             label="Email"
-            placeholder="name@company.com"
+            required
+            placeholder="jane@mail.com"
             type="email"
             maxLength={80}
           />
-          <FormInput name="company" label="Company name" placeholder="ABC" maxLength={MAX_LENGTH} />
+          <FormInput
+            name="company"
+            label="Company name"
+            placeholder="Acme Inc"
+            maxLength={MAX_LENGTH}
+          />
+          {isGeneralContact && (
+            <FormInput
+              name="reason_other"
+              label="Tell us more"
+              placeholder="Provide a brief summary of your request"
+              InputElement="textarea"
+              maxLength={MESSAGE_MAX_LENGTH}
+              showCharCount
+            />
+          )}
           {isDiscussFieldShown && (
             <FormInput
               name="discuss"
@@ -101,9 +250,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
               maxLength={MAX_LENGTH}
             />
           )}
-          <FormFieldWrapper name="wouldLikeToReceiveAds">
-            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
-          </FormFieldWrapper>
           <FormFieldWrapper name="termsAgree">
             <CustomCheckbox
               label={
@@ -112,10 +258,14 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
                   information as set out in the{' '}
                   <Link to="https://privacy.epam.com/core/interaction/showpolicy?type=PrivacyPolicy">
                     Privacy Policy <ArrowIcon />
-                  </Link>
+                  </Link>{' '}
+                  *
                 </>
               }
             />
+          </FormFieldWrapper>
+          <FormFieldWrapper name="wouldLikeToReceiveAds">
+            <CustomCheckbox label="Subscribe to ReportPortal newsletter" />
           </FormFieldWrapper>
           {customError && <div className="recaptcha-error">{customError}</div>}
           <button
@@ -126,6 +276,9 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
           >
             {isLoading ? 'Sending...' : 'Send request'}
           </button>
+          <p className={getBlocksWith('__submit-hint')}>
+            Complete required fields (*) and check consent box to submit
+          </p>
         </form>
       </div>
     </FormikProvider>

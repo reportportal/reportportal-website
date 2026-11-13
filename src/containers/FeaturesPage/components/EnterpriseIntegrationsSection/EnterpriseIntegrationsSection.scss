@@ -1,0 +1,172 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.enterprise-integrations {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: var(--gradient-section-light);
+
+  @include m.breakpoint(v.$tablet-sm-exact) {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Heading block — badge + title + description (centered)
+  // ---------------------------------------------------------------------------
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__badge {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+    @include m.font-scale('x-small');
+
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 16px;
+    border: 1px solid var(--color-primary-200);
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(x4-medium);
+
+    margin: 0;
+    text-align: center;
+    color: var(--text-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(large);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
+  }
+
+  &__description {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    max-width: 640px;
+    margin: 24px auto 0;
+    text-align: center;
+    line-height: 1.6;
+    color: var(--text-service);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Linked-card grid — icon + title + description only (no link)
+  // Base card styles come from LinkedCard.scss — no overrides needed on light bg.
+  // ---------------------------------------------------------------------------
+  &__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 48px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .linked-card {
+      border: 1px solid var(--purple-grey);
+      box-shadow: none;
+      background: var(--white);
+    }
+  }
+
+  &__card-icon-wrap {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+    background: rgb(0 157 187 / 0.15);
+    line-height: 0;
+  }
+
+  &__card-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary-600);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Integrations marquee strip — matches ProcessIntegration carousel style
+  // ---------------------------------------------------------------------------
+  &__strip {
+    margin-top: 40px;
+
+    // overflow-x: clip prevents horizontal scroll without creating a BFC,
+    // so overflow-y: visible keeps box-shadows on logo cards unclipped
+    overflow: clip visible;
+  }
+
+  &__strip-marquee {
+    // react-fast-marquee sets overflow: hidden on .rfm-marquee-container internally,
+    // which clips vertical box-shadows on logo cards. We override it here:
+    // overflow-x: clip keeps the horizontal marquee masking (no scroll, clips at edge)
+    // without creating a BFC, so overflow-y: visible lets shadows breathe.
+    .rfm-marquee-container {
+      overflow: clip visible;
+    }
+
+    div:has(.rfm-child) {
+      align-items: center;
+      padding: 16px 0;
+    }
+  }
+
+  &__strip-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // margin-right instead of parent gap — ensures the last item in each
+    // rfm-marquee copy also carries the spacing, so the loop junction is seamless
+    margin-right: 80px;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgb(0 45 55 / 0.1);
+
+    img {
+      max-width: 48px;
+      max-height: 48px;
+      object-fit: contain;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // CTA block (centered primary button)
+  // ---------------------------------------------------------------------------
+  &__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 96px;
+  }
+}

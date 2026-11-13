@@ -1,16 +1,7 @@
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
 import { ButtonSwitcherProps } from '@app/components/ButtonSwitcher';
 import { HeroSwitching } from '@app/components/HeroSwitching';
-import {
-  createBemBlockBuilder,
-  easeInOutOpacityScaleAnimationProps,
-  easeInOutTransition,
-  heroBackgroundAnimationProps,
-  PropsWithAnimation,
-} from '@app/utils';
-import { useInView } from '@app/hooks/useInView';
-import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
+import { createBemBlockBuilder } from '@app/utils';
 
 import { PlanTypeSwitcher, PlanTypeSwitcherProps } from './PlanTypeSwitcher';
 
@@ -28,19 +19,13 @@ interface PricingHeroProps {
 
 const getBlocksWith = createBemBlockBuilder(['pricing-hero']);
 
-const offerDescriptionAnimation = {
-  hiddenState: {
-    opacity: 0,
-    y: 150,
-  },
-  enterState: {
-    opacity: 1,
-    y: 0,
-  },
-  ...easeInOutTransition,
-};
-
-export const PricingHero: FC<PropsWithAnimation<PricingHeroProps>> = ({
+/**
+ * Deliberately free of framer-motion. Everything here is above the fold on
+ * load, so an enter animation buys no reveal — it only holds the LCP element at
+ * `opacity: 0` while the browser waits to count it as painted. `isAnimationEnabled`
+ * is not accepted any more: there is nothing left to switch off.
+ */
+export const PricingHero: FC<PricingHeroProps> = ({
   title,
   subtitle,
   buttons,
@@ -48,65 +33,23 @@ export const PricingHero: FC<PropsWithAnimation<PricingHeroProps>> = ({
   switcherProps,
   offerType,
   description,
-  isAnimationEnabled = true,
-}) => {
-  const [heroRef, isHeroInView] = useInView();
-
-  const getOfferDescriptionAnimation = useMotionEnterAnimation(
-    offerDescriptionAnimation,
-    isAnimationEnabled,
-  );
-  const getDiscountSwitcherAnimation = useMotionEnterAnimation(
-    easeInOutOpacityScaleAnimationProps,
-    isAnimationEnabled,
-  );
-  const getBackgroundAnimation = useMotionEnterAnimation(
-    heroBackgroundAnimationProps,
-    isAnimationEnabled,
-  );
-
-  return (
-    <motion.div
-      className={getBlocksWith()}
-      ref={heroRef}
-      {...getBackgroundAnimation({ isInView: isHeroInView })}
-    >
-      <HeroSwitching
-        activeButton={activeButton}
-        buttons={buttons}
-        title={title}
-        subtitle={subtitle}
-        isHeroInView={isHeroInView}
-        isAnimationEnabled={isAnimationEnabled}
-      />
-      <motion.div
-        className={getBlocksWith('__wrapper')}
-        {...getOfferDescriptionAnimation({
-          isInView: isHeroInView,
-        })}
-      >
-        {offerType && <div className={getBlocksWith('__wrapper-title')}>{offerType}</div>}
-        <div className={getBlocksWith('__wrapper-subtitle')}>{description}</div>
-      </motion.div>
-      {switcherProps && (
-        <motion.div
-          className={getBlocksWith('__plan-type-switcher')}
-          {...getDiscountSwitcherAnimation({
-            isInView: isHeroInView,
-            delay: 0.5,
-            additionalEffects: {
-              hiddenAdditional: {
-                y: 50,
-              },
-              enterAdditional: {
-                y: 0,
-              },
-            },
-          })}
-        >
-          <PlanTypeSwitcher {...switcherProps} />
-        </motion.div>
-      )}
-    </motion.div>
-  );
-};
+}) => (
+  <div className={getBlocksWith()}>
+    <HeroSwitching
+      activeButton={activeButton}
+      buttons={buttons}
+      title={title}
+      subtitle={subtitle}
+      isAnimationEnabled={false}
+    />
+    <div className={getBlocksWith('__wrapper')}>
+      {offerType && <div className={getBlocksWith('__wrapper-title')}>{offerType}</div>}
+      <div className={getBlocksWith('__wrapper-subtitle')}>{description}</div>
+    </div>
+    {switcherProps && (
+      <div className={getBlocksWith('__plan-type-switcher')}>
+        <PlanTypeSwitcher {...switcherProps} />
+      </div>
+    )}
+  </div>
+);

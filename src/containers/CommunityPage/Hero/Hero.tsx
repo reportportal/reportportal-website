@@ -1,10 +1,10 @@
 import React, { FC, useMemo } from 'react';
 import { StatisticList } from '@app/components/StatisticList';
 import { createBemBlockBuilder } from '@app/utils';
+import { formatShortNumber } from '@app/utils/formatShortNumber';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import githubStats from '../../../../static/github.json'; // Will be generated at build time
+import githubStats from '../../../../static/github.json';
+import statsData from '../../../../static/stats.json';
 import { STATISTICS } from './constants';
 
 import './Hero.scss';
@@ -16,9 +16,26 @@ export const Hero: FC = () => {
     () =>
       STATISTICS.map(statistic => {
         if (statistic.entities === 'Stars on GitHub') {
+          const raw = githubStats.repos.reportportal;
+          const value = Number(raw);
+
           return {
             ...statistic,
-            quantity: `${githubStats.repos.reportportal}`,
+            quantity: formatShortNumber(Number.isFinite(value) ? value : 0),
+          };
+        }
+
+        if (statistic.entities === 'Downloads') {
+          return {
+            ...statistic,
+            quantity: formatShortNumber(statsData.downloads),
+          };
+        }
+
+        if (statistic.entities === 'Community members') {
+          return {
+            ...statistic,
+            quantity: formatShortNumber(statsData.slackMembers),
           };
         }
 

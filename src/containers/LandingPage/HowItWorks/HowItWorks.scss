@@ -1,31 +1,85 @@
 @use 'src/styles/mixins' as m;
 @use 'src/styles/variables' as v;
 
-@keyframes stepsAnimation {
-  0% {
-    opacity: 0;
-    transform: translateX(-50px) scale(0.5);
-  }
-
+// ---------------------------------------------------------------------------
+// Keyframes
+// ---------------------------------------------------------------------------
+@keyframes pulse {
+  0%,
   100% {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.72);
   }
 }
 
+// ---------------------------------------------------------------------------
+// Section root
+// ---------------------------------------------------------------------------
 .how-it-works {
+  --hiw-bg: #0b1220;
+  --hiw-title: #e8f2ff;
+  --hiw-subtitle: #4a5e78;
+  --hiw-badge-bg: rgb(155 89 245 / 0.1);
+  --hiw-badge-border: rgb(155 89 245 / 0.35);
+  --hiw-badge-color: #b794f4;
+  --hiw-card-border: rgb(255 255 255 / 0.07);
+  --hiw-icon-bg: #1a2235;
+  --hiw-icon-color: #e8f2ff;
+  --hiw-step-label: #3b6b8a;
+  --hiw-card-title: #d8eeff;
+  --hiw-card-desc: #3f5472;
+  --hiw-card-hover: rgb(255 255 255 / 0.02);
+
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding-top: 80px;
   padding-bottom: 80px;
+  background: var(--hiw-bg);
+  overflow: hidden;
 
+  @include m.breakpoint(v.$desktop-sm) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  // Radial teal glow behind content
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 0;
+    width: 900px;
+    height: 640px;
+    background: radial-gradient(
+      ellipse 900px 640px at 50% 20%,
+      rgb(0 180 213 / 0.11) 0%,
+      transparent 68%
+    );
+    transform: translateX(-50%);
+    content: '';
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // ── Section heading ──────────────────────────────────────────────────────
   h2 {
     @include m.font-poppins(v.$fw-bold);
     @include m.font-scale(x4-medium);
 
     margin: 0;
     text-align: center;
-    color: var(--text-primary);
+    color: var(--hiw-title);
 
     @include m.breakpoint(v.$tablet-sm-exact) {
       @include m.font-scale(large);
@@ -36,265 +90,208 @@
     }
   }
 
-  &__content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding-top: 64px;
-    padding-bottom: 64px;
+  // ── Subtitle ─────────────────────────────────────────────────────────────
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale(base);
+
+    margin-top: 12px;
+    text-align: center;
+    color: var(--hiw-subtitle);
+  }
+
+  // ── Badge ─────────────────────────────────────────────────────────────────
+  // Pill with pulsing left dot.
+  &__badge {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+    @include m.font-scale(small);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--hiw-badge-border);
+    border-radius: 100px;
+    padding: 6px 14px 6px 10px;
+    background: var(--hiw-badge-bg);
+    color: var(--hiw-badge-color);
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      flex-direction: row;
-      justify-content: space-between;
-      margin-top: 32px;
-      margin-bottom: 64px;
-      padding-bottom: 0;
-
-      > div {
-        width: 342px;
-      }
+      margin-bottom: 24px;
     }
 
-    @include m.breakpoint(v.$desktop-sm) {
-      gap: 100px;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-bottom: 64px;
-
-      > div:last-child {
-        width: auto;
-      }
-
-      > div:first-child {
-        flex-shrink: 0;
-        width: 294px;
-      }
-    }
-
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 19.5px;
-      z-index: -1;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(
-        180deg,
-        rgb(195 200 213 / 0) 0%,
-        var(--text-light-grey) 13.95%,
-        var(--text-light-grey) 86.62%,
-        rgb(195 200 213 / 0) 100%
-      );
+    // Pulsing dot
+    &::before {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--hiw-badge-color);
+      animation: pulse 2s ease-in-out infinite;
       content: '';
     }
-
-    &::after,
-    .ant-steps-item-icon,
-    .ant-steps-item-tail::after,
-    .ant-steps-item-content {
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        opacity: 0;
-        transform: translateX(-50px) scale(0.5);
-      }
-    }
-
-    .ant-steps-item {
-      min-height: 80px;
-      transition: height 0.3s;
-
-      &:not(.ant-steps-item-active) {
-        .ant-steps-item-description {
-          display: none !important;
-        }
-
-        .ant-steps-item-container:hover:not(:focus) {
-          .ant-steps-item-icon {
-            .ant-steps-icon-dot {
-              border-color: var(--color-primary-500);
-            }
-          }
-
-          .ant-steps-item-title {
-            color: var(--color-primary-500) !important;
-          }
-        }
-      }
-
-      .ant-steps-item-container {
-        .ant-steps-icon {
-          left: 14px;
-        }
-
-        .ant-steps-item-icon {
-          width: 12px;
-          height: 12px;
-          margin-top: 5px;
-          margin-inline-end: 32px;
-
-          .ant-steps-icon-dot {
-            border: 1px solid var(--text-light-grey);
-            background-color: var(--white);
-          }
-        }
-
-        .ant-steps-item-title {
-          @include m.font-poppins(v.$fw-semi-bold);
-          @include m.font-scale();
-
-          color: var(--text-light-grey) !important;
-        }
-      }
-
-      .ant-steps-item-tail {
-        padding: 0 !important;
-
-        &::after {
-          margin-inline-start: 19.5px !important;
-        }
-      }
-
-      &.ant-steps-item-active {
-        .ant-steps-item-container .ant-steps-item-icon .ant-steps-icon-dot {
-          border-color: var(--color-primary-500);
-          background-color: var(--color-primary-500);
-        }
-
-        .ant-steps-item-title {
-          color: var(--text-primary) !important;
-        }
-
-        .ant-steps-item-description {
-          margin-top: 4px;
-
-          @include m.breakpoint(v.$tablet-sm-exact) {
-            span {
-              display: block;
-              padding-bottom: 30px;
-            }
-
-            div {
-              display: none;
-            }
-          }
-
-          @include m.breakpoint(v.$desktop-sm) {
-            span {
-              display: none;
-            }
-          }
-
-          span {
-            @include m.font-noto-sans();
-            @include m.font-scale();
-
-            color: var(--text-grey);
-          }
-        }
-
-        .ant-steps-item-tail {
-          @keyframes progressAnimationBottom {
-            100% {
-              background-position: top;
-            }
-          }
-
-          &::before {
-            position: absolute;
-            left: 18.5px;
-            display: none;
-            width: 3px;
-            height: 100%;
-            border-radius: 1px;
-            background: linear-gradient(to bottom, var(--color-primary-500) 50%, transparent 0);
-            background-position: bottom;
-            background-size: 100% 200%;
-            transition: background 0.3s, opacity 0.5s;
-            animation: progressAnimationBottom linear 10s forwards 0.6s;
-            content: '';
-
-            @include m.breakpoint(v.$tablet-sm-exact) {
-              animation: progressAnimationBottom linear 10s forwards 0.6s,
-                stepsAnimation 0.6s ease-in-out forwards;
-            }
-          }
-        }
-      }
-    }
-
-    &.has-interval {
-      .ant-steps-item-tail::before {
-        display: block !important;
-      }
-    }
-
-    &--in-view .ant-steps-item-icon,
-    &--in-view .ant-steps-item-content {
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        animation: stepsAnimation 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-      }
-    }
-
-    &--in-view::after,
-    &--in-view .ant-steps-item-tail::after {
-      @include m.breakpoint(v.$tablet-sm-exact) {
-        animation: stepsAnimation 0.5s ease-in-out forwards;
-      }
-    }
   }
 
-  &__step-content {
-    display: none;
+  // ── SVG Connector  ────────────────────────────────────────────────────────
+  // Vertical stem → horizontal spine → 5 vertical drops to cards.
+  // Gradient definitions and stroke colors are set in the SVG markup in TSX.
+  // Here we only control layout / visibility.
+  &__connector {
+    display: block;
+    width: 100%;
 
     @include m.breakpoint(v.$tablet-sm-exact) {
-      display: flex;
-    }
-
-    @include m.breakpoint(v.$desktop-sm) {
-      align-items: center;
-      gap: 40px;
-
-      &-text-title {
-        @include m.font-poppins(v.$fw-bold);
-        @include m.font-scale(x3-medium);
-      }
-
-      &-text-description {
-        @include m.font-noto-sans();
-        @include m.font-scale(medium);
-
-        margin-top: 24px;
-      }
-
-      > div:first-child {
-        flex-shrink: 0;
-        width: 400px;
-      }
-    }
-
-    &-text {
       display: none;
-
-      @include m.breakpoint(v.$desktop-sm) {
-        display: block;
-        color: var(--text-primary);
-      }
     }
   }
 
+  // ── Cards grid wrapper ────────────────────────────────────────────────────
+  // Single bordered container; cards separated by inner dividers only.
+  &__features-list {
+    display: grid;
+
+    // ── Mobile — 2 columns, layout: 2 + 2 + 1 ──────────────────────────────
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    border: 1px solid var(--hiw-card-border);
+    border-radius: 16px;
+    overflow: hidden;
+
+    // ── Tablet — 3 columns, layout: 3 + 2 ─────────────────────────────────
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      grid-template-columns: repeat(3, 1fr);
+
+      // Reset all mobile overrides
+      > * {
+        grid-column: auto;
+        border-top: none;
+        border-right: none;
+      }
+
+      // Row 1 dividers (between cards 1-2 and 2-3)
+      > *:nth-child(1),
+      > *:nth-child(2) {
+        border-right: 1px solid var(--hiw-card-border);
+      }
+
+      // Row 2 separator
+      > *:nth-child(4),
+      > *:nth-child(5) {
+        border-top: 1px solid var(--hiw-card-border);
+      }
+
+      // Row 2 divider (between card 4 and 5)
+      > *:nth-child(4) {
+        border-right: 1px solid var(--hiw-card-border);
+      }
+    }
+
+    // ── Desktop — 5 columns, single row ────────────────────────────────────
+    @include m.breakpoint(v.$desktop-sm) {
+      grid-template-columns: repeat(5, 1fr);
+
+      // Reset all tablet overrides
+      > * {
+        grid-column: auto;
+        border-top: none !important;
+        border-right: 1px solid var(--hiw-card-border);
+      }
+
+      // Last card: no trailing right border
+      > *:last-child {
+        border-right: none !important;
+      }
+    }
+
+    // Right border between the two columns (col-1 items, but not card 5)
+    > *:nth-child(2n + 1):not(:last-child) {
+      border-right: 1px solid var(--hiw-card-border);
+    }
+
+    // Top border for every row after the first (items 3 onward)
+    > *:nth-child(n + 3) {
+      border-top: 1px solid var(--hiw-card-border);
+    }
+
+    // Card 5 spans both columns; no right border
+    > *:last-child {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+  }
+
+  // ── Individual card ───────────────────────────────────────────────────────
+  &__feature-item {
+    padding: 28px 20px;
+    background: transparent;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--hiw-card-hover);
+    }
+  }
+
+  // ── Icon circle ───────────────────────────────────────────────────────────
+  &__step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: var(--hiw-icon-bg);
+    color: var(--hiw-icon-color);
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  // ── Step label (e.g. "STEP 01") ───────────────────────────────────────────
+  &__step-label {
+    @include m.font-noto-sans();
+
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hiw-step-label);
+    font-size: 14px;
+  }
+
+  // ── Card title ────────────────────────────────────────────────────────────
+  &__feature-title {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    color: var(--hiw-card-title);
+    font-size: 13px;
+  }
+
+  // ── Card description ──────────────────────────────────────────────────────
+  &__feature-description {
+    @include m.font-noto-sans();
+
+    display: block;
+    line-height: 1.6;
+    color: var(--hiw-card-desc);
+    font-size: 11px;
+  }
+
+  // ── CTA button group ──────────────────────────────────────────────────────
   &__button-group {
     display: flex;
     justify-content: center;
+    margin-top: 48px;
 
     button {
       flex-grow: 1;
 
-      @include m.breakpoint(v.$phone) {
-        max-width: 284px;
-      }
-
-      @include m.breakpoint(v.$desktop-sm) {
+      @include m.breakpoint(v.$tablet-sm-exact) {
         flex-grow: 0;
-        max-width: initial;
       }
     }
   }
