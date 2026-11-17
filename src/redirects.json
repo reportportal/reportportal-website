@@ -361,22 +361,22 @@
   },
   {
     "source": "/docs/Setup-TLS(SSL)-in/",
-    "target": "/docs/installation-steps-advanced/",
+    "target": "/docs/installation-and-deployment/advanced-installation/SetupTLSHTTPSDockerComposeTraefikV2/",
     "status": "301"
   },
   {
     "source": "/docs/Setup-TLS(SSL)-in",
-    "target": "/docs/installation-steps-advanced/",
+    "target": "/docs/installation-and-deployment/advanced-installation/SetupTLSHTTPSDockerComposeTraefikV2/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/SetupTSLSSLInTraefik2.0.x/",
-    "target": "/docs/installation-steps-advanced/",
+    "target": "/docs/installation-and-deployment/advanced-installation/SetupTLSHTTPSDockerComposeTraefikV2/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/SetupTSLSSLInTraefik2.0.x",
-    "target": "/docs/installation-steps-advanced/",
+    "target": "/docs/installation-and-deployment/advanced-installation/SetupTLSHTTPSDockerComposeTraefikV2/",
     "status": "301"
   },
   {
@@ -621,12 +621,12 @@
   },
   {
     "source": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop20/",
-    "target": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop50/",
+    "target": "/docs/dashboards-and-visualization/FlakyTestCasesTableTop50/",
     "status": "301"
   },
   {
     "source": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop20",
-    "target": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop50/",
+    "target": "/docs/dashboards-and-visualization/FlakyTestCasesTableTop50/",
     "status": "301"
   },
   {
@@ -681,12 +681,12 @@
   },
   {
     "source": "/docs/installation-steps/OptimalPerformanceHardwareSetup/",
-    "target": "/docs/installation-steps/HardwareRequirements/",
+    "target": "/docs/installation-and-deployment/HardwareRequirements/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/OptimalPerformanceHardwareSetup",
-    "target": "/docs/installation-steps/HardwareRequirements/",
+    "target": "/docs/installation-and-deployment/HardwareRequirements/",
     "status": "301"
   },
   {
@@ -911,12 +911,12 @@
   },
   {
     "source": "/docs/installation-steps/ReportPortal23.1FileStorageOptions/",
-    "target": "/docs/installation-steps-advanced/file-storage-options/",
+    "target": "/docs/installation-and-deployment/advanced-installation/file-storage-options/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/ReportPortal23.1FileStorageOptions",
-    "target": "/docs/installation-steps-advanced/file-storage-options/",
+    "target": "/docs/installation-and-deployment/advanced-installation/file-storage-options/",
     "status": "301"
   },
   {
@@ -981,12 +981,12 @@
   },
   {
     "source": "/docs/reportportal-configuration/HowToGetAnAccessTokenInReportPortal/",
-    "target": "/docs/log-data-in-reportportal/HowToGetAnAccessTokenInReportPortal/",
+    "target": "/docs/test-results-reporting/HowToGetAnAccessTokenInReportPortal/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/HowToGetAnAccessTokenInReportPortal",
-    "target": "/docs/log-data-in-reportportal/HowToGetAnAccessTokenInReportPortal/",
+    "target": "/docs/test-results-reporting/HowToGetAnAccessTokenInReportPortal/",
     "status": "301"
   },
   {
@@ -1021,32 +1021,32 @@
   },
   {
     "source": "/docs/reportportal-configuration/IntegrationViaPlugin/",
-    "target": "/docs/configuration/IntegrationViaPlugin/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/IntegrationViaPlugin",
-    "target": "/docs/configuration/IntegrationViaPlugin/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
     "source": "/docs/configuration/ProjectConfiguration/",
-    "target": "/docs/configuration/ProjectSettings/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
     "source": "/docs/configuration/ProjectConfiguration",
-    "target": "/docs/configuration/ProjectSettings/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ProjectConfiguration/",
-    "target": "/docs/configuration/ProjectSettings/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ProjectConfiguration",
-    "target": "/docs/configuration/ProjectSettings/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
     "status": "301"
   },
   {
@@ -1141,22 +1141,22 @@
   },
   {
     "source": "/docs/plugins/AtlassianJiraServer/",
-    "target": "/docs/plugins/bug-tracking/AtlassianJiraServer/",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
     "status": "301"
   },
   {
     "source": "/docs/plugins/AtlassianJiraServer",
-    "target": "/docs/plugins/bug-tracking/AtlassianJiraServer/",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
     "status": "301"
   },
   {
     "source": "/docs/plugins/JiraServer/",
-    "target": "/docs/plugins/bug-tracking/AtlassianJiraServer/",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
     "status": "301"
   },
   {
     "source": "/docs/plugins/JiraServer",
-    "target": "/docs/plugins/bug-tracking/AtlassianJiraServer/",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
     "status": "301"
   },
   {
@@ -1327,6 +1327,396 @@
   {
     "source": "/docs/category/releases",
     "target": "/docs/releases/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel/ServerSettings/",
+    "target": "/docs/configuration/instance-level/ServerSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel/ServerSettings",
+    "target": "/docs/configuration/instance-level/ServerSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/ProjectSettings/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/ProjectSettings",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/UserManagement/",
+    "target": "/docs/configuration/organization-level/OrganizationUsers/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/UserManagement",
+    "target": "/docs/configuration/organization-level/OrganizationUsers/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/ComponentHealthCheck/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ComponentHealthCheck",
+    "target": "/docs/dashboards-and-visualization/ComponentHealthCheck/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/CumulativeTrendChart/",
+    "target": "/docs/dashboards-and-visualization/CumulativeTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/CumulativeTrendChart",
+    "target": "/docs/dashboards-and-visualization/CumulativeTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/DifferentLaunchesComparisonChart/",
+    "target": "/docs/dashboards-and-visualization/DifferentLaunchesComparisonChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/DifferentLaunchesComparisonChart",
+    "target": "/docs/dashboards-and-visualization/DifferentLaunchesComparisonChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/FailedCasesTrendChart/",
+    "target": "/docs/dashboards-and-visualization/FailedCasesTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/FailedCasesTrendChart",
+    "target": "/docs/dashboards-and-visualization/FailedCasesTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop50/",
+    "target": "/docs/dashboards-and-visualization/FlakyTestCasesTableTop50/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/FlakyTestCasesTableTop50",
+    "target": "/docs/dashboards-and-visualization/FlakyTestCasesTableTop50/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/InvestigatedPercentageOfLaunches/",
+    "target": "/docs/dashboards-and-visualization/InvestigatedPercentageOfLaunches/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/InvestigatedPercentageOfLaunches",
+    "target": "/docs/dashboards-and-visualization/InvestigatedPercentageOfLaunches/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchesDurationChart/",
+    "target": "/docs/dashboards-and-visualization/LaunchesDurationChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchesDurationChart",
+    "target": "/docs/dashboards-and-visualization/LaunchesDurationChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchesTable/",
+    "target": "/docs/dashboards-and-visualization/LaunchesTable/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchesTable",
+    "target": "/docs/dashboards-and-visualization/LaunchesTable/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchExecutionAndIssueStatistic/",
+    "target": "/docs/dashboards-and-visualization/LaunchExecutionAndIssueStatistic/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchExecutionAndIssueStatistic",
+    "target": "/docs/dashboards-and-visualization/LaunchExecutionAndIssueStatistic/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchStatisticsChart/",
+    "target": "/docs/dashboards-and-visualization/LaunchStatisticsChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/LaunchStatisticsChart",
+    "target": "/docs/dashboards-and-visualization/LaunchStatisticsChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostFailedTestCasesTableTop50/",
+    "target": "/docs/dashboards-and-visualization/MostFailedTestCasesTableTop50/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostFailedTestCasesTableTop50",
+    "target": "/docs/dashboards-and-visualization/MostFailedTestCasesTableTop50/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostPopularPatternTableTop20/",
+    "target": "/docs/dashboards-and-visualization/MostPopularPatternTableTop20/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostPopularPatternTableTop20",
+    "target": "/docs/dashboards-and-visualization/MostPopularPatternTableTop20/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostTimeConsumingTestCasesWidgetTop20/",
+    "target": "/docs/dashboards-and-visualization/MostTimeConsumingTestCasesWidgetTop20/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/MostTimeConsumingTestCasesWidgetTop20",
+    "target": "/docs/dashboards-and-visualization/MostTimeConsumingTestCasesWidgetTop20/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/NonPassedTestCasesTrendChart/",
+    "target": "/docs/dashboards-and-visualization/NonPassedTestCasesTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/NonPassedTestCasesTrendChart",
+    "target": "/docs/dashboards-and-visualization/NonPassedTestCasesTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/OverallStatistics/",
+    "target": "/docs/dashboards-and-visualization/OverallStatistics/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/OverallStatistics",
+    "target": "/docs/dashboards-and-visualization/OverallStatistics/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/PassingRatePerLaunch/",
+    "target": "/docs/dashboards-and-visualization/PassingRatePerLaunch/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/PassingRatePerLaunch",
+    "target": "/docs/dashboards-and-visualization/PassingRatePerLaunch/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/PassingRateSummary/",
+    "target": "/docs/dashboards-and-visualization/PassingRateSummary/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/PassingRateSummary",
+    "target": "/docs/dashboards-and-visualization/PassingRateSummary/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ProjectActivityPanel/",
+    "target": "/docs/dashboards-and-visualization/ProjectActivityPanel/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ProjectActivityPanel",
+    "target": "/docs/dashboards-and-visualization/ProjectActivityPanel/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TableComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/TableComponentHealthCheck/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TableComponentHealthCheck",
+    "target": "/docs/dashboards-and-visualization/TableComponentHealthCheck/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TestCaseSearch/",
+    "target": "/docs/dashboards-and-visualization/TestCaseSearch/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TestCaseSearch",
+    "target": "/docs/dashboards-and-visualization/TestCaseSearch/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TestCasesGrowthTrendChart/",
+    "target": "/docs/dashboards-and-visualization/TestCasesGrowthTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/TestCasesGrowthTrendChart",
+    "target": "/docs/dashboards-and-visualization/TestCasesGrowthTrendChart/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/UniqueBugsTable/",
+    "target": "/docs/dashboards-and-visualization/UniqueBugsTable/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/UniqueBugsTable",
+    "target": "/docs/dashboards-and-visualization/UniqueBugsTable/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/features/TestExecutions/",
+    "target": "/docs/working-with-test-results/test-executions/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/features/TestExecutions",
+    "target": "/docs/working-with-test-results/test-executions/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/ResolveAnalyzerKnownIssues/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/ResolveAnalyzerKnownIssues/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/ResolveAnalyzerKnownIssues",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/ResolveAnalyzerKnownIssues/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/ImplementOwnIntegration/",
+    "target": "/docs/integrations/ImplementOwnIntegration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/ImplementOwnIntegration",
+    "target": "/docs/integrations/ImplementOwnIntegration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/",
+    "target": "/docs/integrations/test-frameworks/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration",
+    "target": "/docs/integrations/test-frameworks/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/",
+    "target": "/docs/integrations/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins",
+    "target": "/docs/integrations/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/ManagePlugins/",
+    "target": "/docs/integrations/ManagePlugins/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/ManagePlugins",
+    "target": "/docs/integrations/ManagePlugins/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/releases/Version26.1/",
+    "target": "/docs/releases/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/releases/Version26.1",
+    "target": "/docs/releases/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/InvestigationOfFailure/",
+    "target": "/docs/working-with-test-results/InvestigationOfFailure/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/InvestigationOfFailure",
+    "target": "/docs/working-with-test-results/InvestigationOfFailure/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/",
+    "target": "/docs/installation-and-deployment/advanced-installation/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced",
+    "target": "/docs/installation-and-deployment/advanced-installation/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/file-storage-options/",
+    "target": "/docs/installation-and-deployment/advanced-installation/file-storage-options/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/file-storage-options",
+    "target": "/docs/installation-and-deployment/advanced-installation/file-storage-options/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/HardwareRequirements/",
+    "target": "/docs/installation-and-deployment/HardwareRequirements/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/HardwareRequirements",
+    "target": "/docs/installation-and-deployment/HardwareRequirements/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/IntegrationViaPlugin/",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/configuration/IntegrationViaPlugin",
+    "target": "/docs/configuration/project-level/ProjectSettings/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/HowToGetAnAccessTokenInReportPortal/",
+    "target": "/docs/test-results-reporting/HowToGetAnAccessTokenInReportPortal/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/HowToGetAnAccessTokenInReportPortal",
+    "target": "/docs/test-results-reporting/HowToGetAnAccessTokenInReportPortal/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/bug-tracking/AtlassianJiraServer/",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/bug-tracking/AtlassianJiraServer",
+    "target": "/docs/integrations/bug-tracking/AtlassianJiraServer/",
     "status": "301"
   },
   {
