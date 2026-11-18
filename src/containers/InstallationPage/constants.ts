@@ -40,7 +40,7 @@ export const DOCKER_HOW_TO_SCHEMA: HowToSchemaParams = {
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default@reportportal.internal, password: 1q2w3e) for user access, or (login: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
@@ -56,11 +56,11 @@ export const KUBERNETES_HOW_TO_SCHEMA: HowToSchemaParams = {
   steps: [
     {
       name: 'Install the Helm chart',
-      text: 'Ensure you have Kubernetes v1.26+ and Helm v3.4+. Minimum requirements: 2 CPUs and 6Gi of memory. Add the official ReportPortal Helm repository with: helm repo add reportportal https://reportportal.io/kubernetes && helm repo update reportportal. Install the chart with: helm install my-release --set uat.superadminInitPasswd.password="MyPassword" reportportal/reportportal.',
+      text: 'Ensure you have Kubernetes v1.26+ and Helm v3.4+. Minimum requirements: 2 CPUs and 6Gi of memory. Add the official ReportPortal Helm repository with: helm repo add reportportal https://reportportal.io/kubernetes && helm repo update reportportal. Install the chart with: helm install my-release --set serviceapi.auth.superadminInitPasswd.password="MyPassword" reportportal/reportportal.',
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default@reportportal.internal, password: 1q2w3e) for user access, or (login: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
