@@ -11,7 +11,7 @@ export const DockerDeployingStep: FC = () => {
   const { Text } = Typography;
   const getBlocksWith = createBemBlockBuilder(['installation']);
   const dockerSnippet = `services:
-  uat:
+  api:
     environment:
       RP_INITIAL_ADMIN_PASSWORD: "YourSecurePass"`;
 

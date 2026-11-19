@@ -13,17 +13,9 @@ export const DOCKER_SECTIONS = [
   { step: 'Step 3', title: 'Integrate with your test framework', id: 'section-3' },
 ];
 
-export const GOOGLE_CLOUD_SECTIONS = [
-  { step: 'Step 1', title: 'Configure and deploy ReportPortal', id: 'section-0' },
-  { step: 'Step 2', title: 'Launch ReportPortal', id: 'section-1' },
-  { step: 'Step 3', title: 'Integrate with your test framework', id: 'section-2' },
-];
-
 export const DOCKER = 'Docker';
 
 export const KUBERNETES = 'Kubernetes';
-
-export const GOOGLE_CLOUD = 'Google CM';
 
 export const DOCKER_HOW_TO_SCHEMA: HowToSchemaParams = {
   name: 'How to Install ReportPortal with Docker',
@@ -40,7 +32,7 @@ export const DOCKER_HOW_TO_SCHEMA: HowToSchemaParams = {
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (email: default@reportportal.internal, password: 1q2w3e) for user access, or (email: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
@@ -56,30 +48,11 @@ export const KUBERNETES_HOW_TO_SCHEMA: HowToSchemaParams = {
   steps: [
     {
       name: 'Install the Helm chart',
-      text: 'Ensure you have Kubernetes v1.26+ and Helm v3.4+. Minimum requirements: 2 CPUs and 6Gi of memory. Add the official ReportPortal Helm repository with: helm repo add reportportal https://reportportal.io/kubernetes && helm repo update reportportal. Install the chart with: helm install my-release --set uat.superadminInitPasswd.password="MyPassword" reportportal/reportportal.',
+      text: 'Ensure you have Kubernetes v1.26+ and Helm v3.4+. Minimum requirements: 2 CPUs and 6Gi of memory. Add the official ReportPortal Helm repository with: helm repo add reportportal https://reportportal.io/kubernetes && helm repo update reportportal. Install the chart with: helm install my-release --set serviceapi.auth.superadminInitPasswd.password="MyPassword" reportportal/reportportal.',
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
-    },
-    {
-      name: 'Integrate with your test framework',
-      text: 'Choose the appropriate integration agent for your programming language and test framework, then configure it to report test results to your ReportPortal instance.',
-    },
-  ],
-};
-
-export const GOOGLE_CLOUD_HOW_TO_SCHEMA: HowToSchemaParams = {
-  name: 'How to Install ReportPortal on Google Cloud Marketplace',
-  description: 'Step-by-step guide to deploy ReportPortal from Google Cloud Marketplace.',
-  steps: [
-    {
-      name: 'Configure and deploy ReportPortal on Google Cloud Marketplace',
-      text: "Create a Cloud Billing account, then open ReportPortal at Google Cloud Marketplace and press 'Get Started'. Choose an existing project or create a new one, set up billing, enable the Kubernetes Engine API, fill in mandatory fields, and create a new cluster. By default, a three-node cluster is created which reduces to one after installation.",
-    },
-    {
-      name: 'Launch ReportPortal',
-      text: 'Access ReportPortal through the Google Cloud deployment URL. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (email: default@reportportal.internal, password: 1q2w3e) for user access, or (email: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',

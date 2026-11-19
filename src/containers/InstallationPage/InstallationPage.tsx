@@ -15,22 +15,13 @@ import { useInView } from '@app/hooks/useInView';
 import { useMotionEnterAnimation } from '@app/hooks/useMotionEnterAnimation';
 
 import DockerIcon from './icons/docker.inline.svg';
-import GoogleCloudIcon from './icons/googleCloud.inline.svg';
 import KubernetesIcon from './icons/kubernetes.inline.svg';
 import { KubernetesContent } from './KubernetesContent';
-import { GoogleCloudContent, GoogleCloudLaunchPortal } from './GoogleCloudContent';
 import { LaunchPortal } from './LaunchPortal';
 import { DockerDeployingStep, DockerInstall } from './DockerContent';
 import { IntegrationContent } from './IntegrationContent';
 import { ScrollIndicator } from './ScrollIndicator';
-import {
-  KUBERNETES_SECTIONS,
-  DOCKER_SECTIONS,
-  GOOGLE_CLOUD_SECTIONS,
-  DOCKER,
-  GOOGLE_CLOUD,
-  KUBERNETES,
-} from './constants';
+import { KUBERNETES_SECTIONS, DOCKER_SECTIONS, DOCKER, KUBERNETES } from './constants';
 
 import './InstallationPage.scss';
 
@@ -47,11 +38,6 @@ const buttons = [
     icon: <KubernetesIcon />,
     scrollPoints: KUBERNETES_SECTIONS,
   },
-  {
-    text: GOOGLE_CLOUD,
-    icon: <GoogleCloudIcon />,
-    scrollPoints: GOOGLE_CLOUD_SECTIONS,
-  },
 ];
 
 const ACTIVE_BUTTON = buttons[0].text;
@@ -59,7 +45,6 @@ const ACTIVE_BUTTON = buttons[0].text;
 const sectionsContent: Record<string, FC[]> = {
   [DOCKER]: [DockerInstall, DockerDeployingStep, LaunchPortal, IntegrationContent],
   [KUBERNETES]: [KubernetesContent, LaunchPortal, IntegrationContent],
-  [GOOGLE_CLOUD]: [GoogleCloudContent, GoogleCloudLaunchPortal, IntegrationContent],
 };
 
 export const InstallationPage: FC = () => {
@@ -88,7 +73,7 @@ export const InstallationPage: FC = () => {
             activeButton={activeButton}
             buttons={buttons}
             title="Installation guide"
-            subtitle="Discover 3 pathways to install ReportPortal with"
+            subtitle="Discover 2 pathways to install ReportPortal with"
             isHeroInView={isHeroInView}
             switchActiveBtn={switchActiveBtn}
           />

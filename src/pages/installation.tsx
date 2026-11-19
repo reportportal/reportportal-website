@@ -5,7 +5,6 @@ import { InstallationPage } from '@app/containers/InstallationPage';
 import {
   DOCKER_HOW_TO_SCHEMA,
   KUBERNETES_HOW_TO_SCHEMA,
-  GOOGLE_CLOUD_HOW_TO_SCHEMA,
 } from '@app/containers/InstallationPage/constants';
 import { SEO_DATA } from '@app/utils';
 
@@ -29,7 +28,6 @@ export const Head = () => {
       />
       <JsonLd data={howToSchema(DOCKER_HOW_TO_SCHEMA)} />
       <JsonLd data={howToSchema(KUBERNETES_HOW_TO_SCHEMA)} />
-      <JsonLd data={howToSchema(GOOGLE_CLOUD_HOW_TO_SCHEMA)} />
     </>
   );
 };
