@@ -40,7 +40,7 @@ export const DOCKER_HOW_TO_SCHEMA: HowToSchemaParams = {
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default@reportportal.internal, password: 1q2w3e) for user access, or (login: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (email: default@reportportal.internal, password: 1q2w3e) for user access, or (email: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
@@ -60,7 +60,7 @@ export const KUBERNETES_HOW_TO_SCHEMA: HowToSchemaParams = {
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (login: default@reportportal.internal, password: 1q2w3e) for user access, or (login: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
+      text: 'Open http://localhost:8080 in your browser and log in. Use the default credentials (email: default@reportportal.internal, password: 1q2w3e) for user access, or (email: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
@@ -79,7 +79,7 @@ export const GOOGLE_CLOUD_HOW_TO_SCHEMA: HowToSchemaParams = {
     },
     {
       name: 'Launch ReportPortal',
-      text: 'Access ReportPortal through the Google Cloud deployment URL. Use the default credentials (login: default, password: 1q2w3e) for user access, or (login: superadmin, password: erebus) for admin access. Change the admin password for security reasons.',
+      text: 'Access ReportPortal through the Google Cloud deployment URL. Use the default credentials (email: default@reportportal.internal, password: 1q2w3e) for user access, or (email: admin@reportportal.internal, password: password specified in Step 1) for admin access. Change the admin password for security reasons.',
     },
     {
       name: 'Integrate with your test framework',
