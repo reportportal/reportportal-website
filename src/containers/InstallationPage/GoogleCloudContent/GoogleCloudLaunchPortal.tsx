@@ -33,9 +33,9 @@ export const GoogleCloudLaunchPortal: FC = () => {
         Service URL address).
       </p>
       <p>
-        3. On the opened ReportPortal authorization page, input <b>superadmin</b> as your login. For
-        the password, use the auto-generated <b>initial password</b> from the &apos;ReportPortal
-        info&apos; section.
+        3. On the opened ReportPortal authorization page, input <b>admin@reportportal.internal</b>
+        as your email. For the password, use the auto-generated <b>initial password</b> from the
+        &apos;ReportPortal info&apos; section.
       </p>
       <Notice>
         It may take Google Kubernetes Engine a few minutes before the application becomes accessible
