@@ -2315,6 +2315,76 @@
     "status": "301"
   },
   {
+    "source": "/docs/quality-gates/IntegrationWithCICD/",
+    "target": "/docs/integrations/cicd/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD",
+    "target": "/docs/integrations/cicd/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithAzureDevOps/",
+    "target": "/docs/integrations/cicd/IntegrationWithAzureDevOps/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithAzureDevOps",
+    "target": "/docs/integrations/cicd/IntegrationWithAzureDevOps/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithBitrise/",
+    "target": "/docs/integrations/cicd/IntegrationWithBitrise/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithBitrise",
+    "target": "/docs/integrations/cicd/IntegrationWithBitrise/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithCircleCI/",
+    "target": "/docs/integrations/cicd/IntegrationWithCircleCI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithCircleCI",
+    "target": "/docs/integrations/cicd/IntegrationWithCircleCI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithGitHubActions/",
+    "target": "/docs/integrations/cicd/IntegrationWithGitHubActions/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithGitHubActions",
+    "target": "/docs/integrations/cicd/IntegrationWithGitHubActions/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithGitLabCI/",
+    "target": "/docs/integrations/cicd/IntegrationWithGitLabCI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithGitLabCI",
+    "target": "/docs/integrations/cicd/IntegrationWithGitLabCI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithJenkins/",
+    "target": "/docs/integrations/cicd/IntegrationWithJenkins/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/IntegrationWithCICD/IntegrationWithJenkins",
+    "target": "/docs/integrations/cicd/IntegrationWithJenkins/",
+    "status": "301"
+  },
+  {
     "source": "/docs/<*>",
     "target": "/docs/404.html",
     "status": "404"
