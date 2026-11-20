@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import { StyleProvider } from '@ant-design/cssinjs';
 import type { GatsbyBrowser } from 'gatsby';
+import { captureTrafficAttribution, markInternalNavigation } from '@app/utils';
 
 export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({ element }) =>
   React.createElement(
@@ -9,6 +10,13 @@ export const wrapRootElement: NonNullable<GatsbyBrowser['wrapRootElement']> = ({
     null,
     React.createElement(ConfigProvider, { theme: { hashed: false } }, element),
   );
+
+export const onClientEntry: GatsbyBrowser['onClientEntry'] = () => {
+  // OneTrust calls this whenever consent changes — overrides the no-op stub in gatsby-ssr.tsx.
+  if (typeof window !== 'undefined') {
+    window.OptanonWrapper = () => captureTrafficAttribution();
+  }
+};
 
 export const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   if (typeof window !== 'undefined' && window.history.scrollRestoration) {
@@ -28,6 +36,20 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
     location?.pathname?.startsWith('/blog/') &&
     location.pathname !== '/blog/' &&
     !location.hash
+  ) {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    return false;
+  }
+
+  // Cross-page anchor link (e.g. nav menu "/features/#ai-capabilities" clicked
+  // from another page). Land at the top of the destination instead of letting
+  // the browser jump straight to the anchor — the page itself then performs a
+  // smooth scroll down to it, so the user sees where they landed.
+  // Same-page hash changes are excluded: those must keep native behaviour.
+  if (
+    location?.hash &&
+    prevRouterProps?.location &&
+    prevRouterProps.location.pathname !== location.pathname
   ) {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     return false;
@@ -69,7 +91,11 @@ export const onPreRouteUpdate: GatsbyBrowser['onPreRouteUpdate'] = ({ prevLocati
   document.documentElement.classList.add('no-transitions');
 };
 
-export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = () => {
+export const onRouteUpdate: GatsbyBrowser['onRouteUpdate'] = ({ prevLocation }) => {
+  // prevLocation set = client-side nav, so document.referrer is stale (trafficAttribution.ts)
+  if (prevLocation) markInternalNavigation();
+  captureTrafficAttribution();
+
   // Settle one frame with transitions disabled so hover/active re-evaluation
   // after back-navigation does not fade in over 300ms (flicker), then
   // re-enable them for normal user interactions.

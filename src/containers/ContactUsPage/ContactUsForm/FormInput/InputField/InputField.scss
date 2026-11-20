@@ -15,7 +15,7 @@
   }
 
   .input {
-    @include m.font-poppins(v.$fw-medium);
+    @include m.font-poppins(v.$fw-regular);
     @include m.font-scale();
 
     display: flex;
@@ -46,10 +46,21 @@
 
   textarea.input {
     height: 88px;
+    resize: vertical;
   }
 
   &.error .input {
     border-color: var(--graphics-coral);
+  }
+
+  .char-count {
+    @include m.font-poppins();
+    @include m.font-scale(x-small);
+
+    margin-top: 4px;
+    text-align: right;
+    line-height: 20px;
+    color: var(--text-service);
   }
 
   .error-message {

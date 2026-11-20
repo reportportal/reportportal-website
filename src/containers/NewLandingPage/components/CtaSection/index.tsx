@@ -1,0 +1,51 @@
+import React, { FC } from 'react';
+import classNames from 'classnames';
+import { buildContactUsGeneralPath, createBemBlockBuilder } from '@app/utils';
+import { Link } from '@app/components/Link';
+import { ArrowLink } from '@app/components/ArrowLink';
+
+import './CtaSection.scss';
+
+const getBlocksWith = createBemBlockBuilder(['cta-section']);
+
+export const CtaSection: FC = () => (
+  <section className={getBlocksWith()}>
+    <div className={classNames(getBlocksWith('__inner'), 'container')}>
+      <h2 className={getBlocksWith('__title')}>
+        Faster releases. Smarter triage. One unified platform.
+      </h2>
+      <p className={getBlocksWith('__subtitle')}>
+        Spend less time triaging failures and more time shipping releases. AI agents handle the
+        analysis across every framework you use — automatically.
+      </p>
+
+      <div className={getBlocksWith('__actions')}>
+        <Link
+          className="btn btn--secondary btn--large"
+          to={buildContactUsGeneralPath({
+            reason: 'free_trial',
+            cta: 'faster_releases_free_trial',
+          })}
+          data-gtm="get_started_cta"
+        >
+          Start free trial
+        </Link>
+        <Link
+          className="btn btn--outline-2 btn--large"
+          to="https://demo.reportportal.io/ui/#login"
+          data-gtm="try_demo_cta"
+        >
+          Try demo
+        </Link>
+      </div>
+
+      <ArrowLink
+        mode="primary"
+        text="Or contact our team"
+        to={buildContactUsGeneralPath()}
+        data-gtm="contact_us_cta"
+        className={getBlocksWith('__secondary-link')}
+      />
+    </div>
+  </section>
+);

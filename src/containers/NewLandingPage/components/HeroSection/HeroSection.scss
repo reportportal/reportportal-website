@@ -1,0 +1,139 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+.hero-section {
+  position: relative;
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: calc(var(--header-height) + 80px);
+  padding-bottom: 80px;
+  overflow: hidden;
+  color: var(--white);
+
+  @include m.breakpoint(v.$tablet-sm-exact) {
+    padding-top: calc(var(--header-height) + 80px);
+    padding-bottom: 80px;
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    // Clean blue gradient — covers mobile & tablet where SVG is not used.
+    background: var(--gradient-primary);
+
+    @include m.breakpoint(v.$desktop-sm) {
+      // On desktop the wrapper's HomeBackgroundHero.svg provides the background.
+      background: transparent;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 56px;
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 848px;
+    text-align: center;
+  }
+
+  &__title {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale('large');
+
+    margin: 0;
+    color: var(--white);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale('x3-large');
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale('x4-large');
+    }
+  }
+
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    margin: 24px auto 0;
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    // Make the two primary buttons equal width
+    .btn {
+      min-width: 180px;
+    }
+  }
+
+  &__watch-video {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale('base');
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: none;
+    background: transparent;
+    transition: var(--basic-transition);
+    color: var(--white);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary-200);
+    }
+  }
+
+  &__play-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+
+    &::after {
+      display: block;
+      width: 0;
+      height: 0;
+      margin-left: 3px;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 12px solid var(--white);
+      content: '';
+    }
+  }
+
+  &__dashboard {
+    // Hidden on mobile: at <768 px viewport the illustration would scale down
+    // to ~0.35 of its natural 960 px width, making the inner 8–10 px labels
+    // unreadable (3–4 px effective). Mobile users see Hero h1 + CTA + scroll
+    // straight into TrustedBy section — illustration adds nothing at that size.
+    display: none;
+    width: 100%;
+    max-width: 960px;
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      display: block;
+    }
+  }
+}

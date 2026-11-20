@@ -40,9 +40,9 @@ export const LaunchPortal: FC = () => {
           <h6>For user access:</h6>
           <div className={getBlocksWith('__access-container')}>
             <div className={getBlocksWith('__access-item')}>
-              Login:
+              Email:
               <Text className={getBlocksWith('__code')} code copyable>
-                default
+                default@reportportal.internal
               </Text>
             </div>
 
@@ -58,16 +58,16 @@ export const LaunchPortal: FC = () => {
           <h6>For admin access:</h6>
           <div className={getBlocksWith('__access-container')}>
             <div className={getBlocksWith('__access-item')}>
-              Login:
+              Email:
               <Text className={getBlocksWith('__code')} code copyable>
-                superadmin
+                admin@reportportal.internal
               </Text>
             </div>
 
             <div className={getBlocksWith('__access-item')}>
               Password:
-              <Text className={getBlocksWith('__code')} code copyable>
-                erebus
+              <Text className={getBlocksWith('__code')} code>
+                Password specified in Step 1
               </Text>
             </div>
           </div>

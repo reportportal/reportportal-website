@@ -1,0 +1,18 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+// Wrapper styles for standalone illustration pages that are embedded as
+// <iframe> on FeaturesPage. Intentionally minimal — no header, no footer.
+.illustration-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px;
+  background: transparent;
+
+  @include m.breakpoint(v.$desktop-sm) {
+    padding: 24px;
+  }
+}

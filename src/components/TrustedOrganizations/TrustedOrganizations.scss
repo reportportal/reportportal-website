@@ -6,7 +6,6 @@
     @include m.font-poppins(v.$fw-semi-bold);
     @include m.font-scale(medium);
 
-    width: 309px;
     margin: 0 auto 40px;
     text-align: center;
     color: var(--text-primary);
@@ -24,31 +23,34 @@
   }
 
   &__icons {
-    display: grid;
+    display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 40px;
+    gap: 32px 30px;
     width: 100%;
-    max-width: 252px;
-    margin: 0 5px;
-
-    @include m.breakpoint(v.$tablet-sm-exact) {
-      display: flex;
-      justify-content: center;
-      gap: 32px 30px;
-      max-width: 100%;
-    }
 
     @include m.breakpoint(v.$desktop-sm) {
+      flex-wrap: nowrap;
       column-gap: 56px;
     }
 
     &-wrapper {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
     }
+  }
+
+  &__and-more {
+    @include m.font-poppins();
+    @include m.font-scale(small);
+
+    display: flex;
+    align-items: center;
+    color: var(--text-service);
   }
 
   &__icon {

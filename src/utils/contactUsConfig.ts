@@ -1,9 +1,10 @@
 import { kebabCase } from 'lodash';
 
+import { CONTACT_US_GENERAL_PATH } from './constants';
 import { ContactUsBaseConfig, PlanType } from './types';
 
-const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
-const LEAD_SOURCE = 'lead_source';
+export const SALESFORCE_SOURCE_NAME = 'ReportPortalSource';
+export const LEAD_SOURCE = 'lead_source';
 const servicePackagesAndAcceleratorsPlans = ['Silver', 'Gold', 'Platinum'];
 const availableOptions: PlanType[] = ['quarterly', 'yearly'];
 
@@ -236,7 +237,7 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
   createContactUsConfig({
     salesforceSourceName: 'General',
     leadSource: 'RP General',
-    url: '/contact-us/general',
+    url: CONTACT_US_GENERAL_PATH,
   }),
   {
     id: '[Service Packages]',
@@ -250,6 +251,19 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     ],
     isDiscussFieldShown: false,
   },
+  {
+    id: '[Service Packages]',
+    title: 'SaaS Plans',
+    url: '/contact-us/saas',
+    options: [
+      {
+        name: SALESFORCE_SOURCE_NAME,
+        value: 'Landing page / SaaS / Interest in SaaS Plans',
+      },
+      { name: LEAD_SOURCE, value: 'RP SaaS' },
+    ],
+    isDiscussFieldShown: false,
+  },
   createContactUsConfig({
     salesforceSourceName: 'RP Community',
     leadSource: 'RP Community',
@@ -257,17 +271,17 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Individual',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/individual',
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Business',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/business',
   }),
   createContactUsConfig({
     salesforceSourceName: 'Sponsorship Program / Business / Diamond',
-    leadSource: 'RP Sponsorship Program',
+    leadSource: 'RP Sponsorship',
     url: '/contact-us/sponsorship-program/business/diamond',
   }),
   createContactUsConfig({

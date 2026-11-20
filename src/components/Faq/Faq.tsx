@@ -25,7 +25,7 @@ export const Faq: FC<FaqProps> = ({
 }) => (
   <div className={classNames('container', getBlocksWith())}>
     <div className={getBlocksWith('__heading')}>
-      <h1 id={titleId}>Frequently asked questions</h1>
+      <h2 id={titleId}>Frequently asked questions</h2>
     </div>
     <div className={getBlocksWith('__content')}>
       <Collapse

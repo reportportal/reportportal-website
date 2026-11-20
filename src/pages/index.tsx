@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { Layout, Seo } from '@app/components/Layout';
-import { LandingPage } from '@app/containers/LandingPage';
+import { NewLandingPage } from '@app/containers/NewLandingPage';
 import { SEO_DATA } from '@app/utils';
 
 const Root: FC = () => (
   <Layout>
-    <LandingPage />
+    <NewLandingPage />
   </Layout>
 );
 

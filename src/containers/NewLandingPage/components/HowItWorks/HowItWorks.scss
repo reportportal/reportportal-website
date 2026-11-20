@@ -1,0 +1,403 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/variables' as v;
+
+// ---------------------------------------------------------------------------
+// Keyframes
+// ---------------------------------------------------------------------------
+@keyframes hiw-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.72);
+  }
+}
+
+// Ping-pong comet: badge → cards (2 s) → pause (2 s) → cards → badge (2 s) → pause (2 s).
+// dashoffset=100 → comet at position 0 (badge); dashoffset=15 → position 85 (card).
+// Reverse: dashoffset 15 → 100 moves comet back from card to badge.
+// Opacity fades the comet out at each end so the instant snap is never visible.
+@keyframes hiw-flow {
+  /* Phase 1 — badge → card (0–25%, 2 s) */
+  0% {
+    opacity: 1;
+    stroke-dashoffset: 100;
+  } /* comet at badge        */
+  22% {
+    opacity: 1;
+    stroke-dashoffset: 20;
+  } /* comet near card       */
+  25% {
+    opacity: 0;
+    stroke-dashoffset: 15;
+  } /* comet at card, faded  */
+
+  /* Phase 2 — pause at card (25–50%, 2 s) */
+  49% {
+    opacity: 0;
+    stroke-dashoffset: 15;
+  }
+
+  /* Phase 3 — card → badge (50–75%, 2 s) */
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 15;
+  } /* comet snaps at card   */
+  72% {
+    opacity: 1;
+    stroke-dashoffset: 95;
+  } /* comet near badge      */
+  75% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  } /* comet at badge, faded */
+
+  /* Phase 4 — pause at badge (75–100%, 2 s) */
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Section root — full-width dark background
+// ---------------------------------------------------------------------------
+.how-it-works-new {
+  position: relative;
+  background: var(--surface-dark);
+  overflow: hidden;
+
+  // Circular orb glow — nested radial-gradient simulates a blurred sphere
+  // behind the heading without GPU-heavy filter: blur().
+  &::before {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    z-index: 0;
+    width: 640px;
+    height: 640px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgb(var(--color-primary-500-rgb) / 0.22) 0%,
+      rgb(var(--color-primary-500-rgb) / 0.14) 20%,
+      rgb(var(--color-primary-500-rgb) / 0.06) 45%,
+      transparent 70%
+    );
+    transform: translateX(-50%);
+    content: '';
+    pointer-events: none;
+  }
+
+  // Pause infinite animations (hiw-pulse, hiw-flow) when off-screen or the
+  // tab is hidden — frees frames for smoother scrolling, no visual change.
+  &--paused,
+  &--paused * {
+    animation-play-state: paused !important;
+  }
+
+  // ── SVG decorative patterns — top & bottom edges (max 240px overlap) ────────
+  &__pattern-top,
+  &__pattern-bottom {
+    position: absolute;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 240px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  &__pattern-top {
+    top: 0;
+    background-image: url('/svg/RP-Pattern-top.svg');
+    background-position: top center;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  }
+
+  &__pattern-bottom {
+    bottom: 0;
+    background-image: url('/svg/RP-Pattern-bottom.svg');
+    background-position: bottom center;
+    mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  }
+
+  // ── Content wrapper ───────────────────────────────────────────────────────
+  &__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+  }
+
+  // ── Heading ───────────────────────────────────────────────────────────────
+  h2 {
+    @include m.font-poppins(v.$fw-bold);
+    @include m.font-scale(x4-medium);
+
+    margin: 0;
+    text-align: center;
+    color: var(--on-surface-dark-primary);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      @include m.font-scale(large);
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      @include m.font-scale(x3-large);
+    }
+  }
+
+  // ── Subtitle ──────────────────────────────────────────────────────────────
+  &__subtitle {
+    @include m.font-noto-sans();
+    @include m.font-scale('x2-medium');
+
+    max-width: 792px;
+    margin: 16px auto 40px;
+    text-align: center;
+    line-height: 1.7;
+    color: var(--on-surface-dark-primary);
+  }
+
+  // ── Badge ─────────────────────────────────────────────────────────────────
+  &__badge {
+    @include m.font-noto-sans(v.$fw-semi-bold);
+    @include m.font-scale(small);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    margin-bottom: 8px; // small gap to stem below
+    border: 1px solid var(--accent-purple-border);
+    border-radius: 100px;
+    padding: 6px 14px 6px 10px;
+    background: var(--accent-purple-bg);
+    color: var(--accent-purple);
+
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      margin-top: 28px;
+    }
+
+    @include m.breakpoint(v.$desktop-sm) {
+      margin-bottom: 0; // T-bar SVG starts immediately after badge
+    }
+
+    // Pulsing dot
+    &::before {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-purple);
+      animation: hiw-pulse 2s ease-in-out infinite;
+      content: '';
+    }
+  }
+
+  // ── Simple gradient stem — mobile & tablet ────────────────────────────────
+  // On desktop the T-bar SVG takes over; this element is hidden there.
+  &__connector-stem {
+    width: 1px;
+    height: 28px;
+    margin: 0 auto;
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--accent-purple-rgb) / 0) 0%,
+      rgb(var(--accent-purple-rgb) / 0.7) 25%,
+      rgb(var(--color-primary-500-rgb) / 0.7) 75%,
+      rgb(var(--color-primary-500-rgb) / 0) 100%
+    );
+
+    @include m.breakpoint(v.$desktop-sm) {
+      display: none;
+    }
+  }
+
+  // ── T-bar SVG connector — desktop only ────────────────────────────────────
+  &__connector {
+    display: none;
+    width: 100%;
+    overflow: visible;
+
+    @include m.breakpoint(v.$desktop-sm) {
+      display: block;
+    }
+
+    // Ping-pong: 2 s forward + 2 s pause + 2 s back + 2 s pause = 8 s cycle.
+    .hiw-flow {
+      animation: hiw-flow 8s linear infinite;
+      stroke-dasharray: 15 85;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hiw-flow {
+        animation: none;
+        stroke-dasharray: none;
+      }
+    }
+  }
+
+  // ── Cards grid — single bordered container with interior dividers ─────────
+  &__features-list {
+    display: grid;
+
+    // ── Mobile — 1 col, vertical stack ───────────────────────────────────
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-top: 0;
+    border: 1px solid var(--surface-dark-border);
+    border-radius: 16px;
+    overflow: hidden;
+
+    // ── Tablet — 3 cols, layout 3 + 2 ───────────────────────────────────
+    @include m.breakpoint(v.$tablet-sm-exact) {
+      grid-template-columns: repeat(3, 1fr);
+
+      // Reset mobile top-border-on-all rule
+      > * {
+        border-top: none;
+        border-right: none;
+      }
+
+      > *:last-child {
+        grid-column: auto !important;
+        border-right: none;
+      }
+
+      // Row 1 dividers
+      > *:nth-child(1),
+      > *:nth-child(2) {
+        border-right: 1px solid var(--surface-dark-border);
+      }
+
+      // Row 2 top separator + divider
+      > *:nth-child(4),
+      > *:nth-child(5) {
+        border-top: 1px solid var(--surface-dark-border);
+      }
+
+      > *:nth-child(4) {
+        border-right: 1px solid var(--surface-dark-border);
+      }
+    }
+
+    // ── Desktop — 5 cols, single row ────────────────────────────────────
+    @include m.breakpoint(v.$desktop-sm) {
+      grid-template-columns: repeat(5, 1fr);
+
+      > * {
+        grid-column: auto;
+        border-top: none !important;
+        border-right: 1px solid var(--surface-dark-border);
+      }
+
+      > *:last-child {
+        grid-column: auto !important;
+        border-right: none !important;
+      }
+    }
+
+    > *:nth-child(n + 2) {
+      border-top: 1px solid var(--surface-dark-border);
+    }
+  }
+
+  // ── Individual card ───────────────────────────────────────────────────────
+  &__feature-item {
+    padding: 28px 20px;
+    background: linear-gradient(
+      160deg,
+      rgb(255 255 255 / 0.05) 0%,
+      rgb(255 255 255 / 0.01) 50%,
+      transparent 100%
+    );
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(
+        160deg,
+        rgb(255 255 255 / 0.08) 0%,
+        rgb(255 255 255 / 0.03) 50%,
+        transparent 100%
+      );
+    }
+  }
+
+  // ── Icon circle — glassmorphism ───────────────────────────────────────────
+  &__step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 50%;
+    box-shadow: 0 4px 24px rgb(0 0 0 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.1);
+    background: rgb(255 255 255 / 0.05);
+    color: var(--on-surface-dark-primary);
+  }
+
+  // ── Step label (STEP 01 … STEP 05) ───────────────────────────────────────
+  &__step-label {
+    @include m.font-poppins(v.$fw-semi-bold);
+
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary-500);
+    font-size: 14px;
+  }
+
+  // ── Card title — matches .linked-card__title ──────────────────────────────
+  &__feature-title {
+    @include m.font-poppins(v.$fw-semi-bold);
+    @include m.font-scale(medium);
+
+    display: block;
+    margin-bottom: 8px;
+    color: var(--on-surface-dark-secondary);
+  }
+
+  // ── Card description — matches .linked-card__description ─────────────────
+  &__feature-description {
+    @include m.font-noto-sans();
+    @include m.font-scale(base);
+
+    display: block;
+    line-height: 24px;
+    color: var(--on-surface-dark-muted);
+  }
+
+  // ── CTA button group ──────────────────────────────────────────────────────
+  &__button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 48px;
+
+    a {
+      flex-grow: 1;
+
+      @include m.breakpoint(v.$tablet-sm-exact) {
+        flex-grow: 0;
+      }
+    }
+  }
+}

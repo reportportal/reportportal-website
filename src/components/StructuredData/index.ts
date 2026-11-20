@@ -4,6 +4,7 @@ export {
   breadcrumbListSchema,
   articleSchema,
   productSchema,
+  webPageSchema,
   faqPageSchema,
   howToSchema,
 } from './schemas';
@@ -15,6 +16,7 @@ export {
   FAQSchemaItem,
   OfferSchemaParams,
   ProductSchemaParams,
+  WebPageSchemaParams,
   HowToStepSchemaItem,
   HowToSchemaParams,
 } from './types';

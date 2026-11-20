@@ -18,12 +18,24 @@ export interface FAQSchemaItem {
   answer: string;
 }
 
+/**
+ * Google requires `price` and `priceCurrency` on every Offer, so both are
+ * mandatory here. Plans without a public price (e.g. custom-priced Enterprise)
+ * must not be described as an Offer.
+ */
 export interface OfferSchemaParams {
   name: string;
-  price?: string;
-  priceCurrency?: string;
+  price: string;
+  priceCurrency: string;
   url?: string;
   description?: string;
+}
+
+export interface WebPageSchemaParams {
+  name: string;
+  description: string;
+  url: string;
+  aboutName?: string;
 }
 
 export interface ProductSchemaParams {

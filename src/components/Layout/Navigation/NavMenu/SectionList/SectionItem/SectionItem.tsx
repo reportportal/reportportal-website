@@ -1,6 +1,7 @@
 import React, { CSSProperties, FC, ReactElement } from 'react';
 import classNames from 'classnames';
 import { Link } from '@app/components/Link';
+import { Badge, BadgeVariant } from '@app/components/Badge';
 import {
   ContentfulAsset,
   createBemBlockBuilder,
@@ -21,6 +22,7 @@ interface SectionItemBaseProps {
   className?: string;
   isDataFromContentful?: boolean;
   mode?: 'primary' | 'secondary';
+  badge?: BadgeVariant;
 }
 
 export type SectionItemProps =
@@ -28,7 +30,17 @@ export type SectionItemProps =
   | (SectionItemBaseProps & { icon: ContentfulAsset | ReactElement | string; iconClass?: never });
 
 export const SectionItem: FC<SectionItemProps> = props => {
-  const { title, link, icon, hoverIcon, iconClass, text, className = '', mode = 'primary' } = props;
+  const {
+    title,
+    link,
+    icon,
+    hoverIcon,
+    iconClass,
+    text,
+    className = '',
+    mode = 'primary',
+    badge,
+  } = props;
 
   const getBlocksWith = createBemBlockBuilder(['section-item', className]);
   const shouldDisplayArrow = mode === 'secondary' && isAbsoluteURL(link.url);
@@ -66,6 +78,7 @@ export const SectionItem: FC<SectionItemProps> = props => {
       <div>
         <p className={getBlocksWith('-title')}>
           {title}
+          {badge && <Badge variant={badge} />}
           {shouldDisplayArrow && <ArrowIcon className={getBlocksWith('-arrow')} />}
         </p>
         {text && <p className={getBlocksWith('-text')}>{text}</p>}

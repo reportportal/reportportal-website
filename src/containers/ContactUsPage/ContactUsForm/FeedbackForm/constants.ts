@@ -1,9 +1,10 @@
 export const TAGS_DATA = [
   'Friends/Colleagues',
-  'Email newsletter',
+  'Email',
+  'Course',
   'Social Media',
   'Google etc.',
-  'Course',
   'Conference',
   'Article',
+  'AI',
 ];

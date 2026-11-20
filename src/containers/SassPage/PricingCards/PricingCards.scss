@@ -11,17 +11,64 @@
 
   @include m.breakpoint(v.$desktop-sm) {
     flex-flow: row nowrap;
+
+    // Matches the 120px the compare section below opens with, so the two blocks
+    // are separated by one gap rather than by two different ones.
+    padding-bottom: 120px;
   }
 
-  > div {
-    &:first-child {
-      li {
-        &:first-child {
-          @include m.font-poppins(v.$fw-bold);
+  // The highlight used to be positional — "first bullet of the first card",
+  // whatever it said — so reordering the list moved it to a random line. It now
+  // follows bold in the rich text, which the editor controls.
+  // Scoped to `li` on purpose: Service Packages renders its 50 / 150 / 600
+  // figures as <b> inside .pricing-card__features, and a bare selector would
+  // turn those green too.
+  li b {
+    @include m.font-poppins(v.$fw-bold);
 
-          color: var(--graphics-jade);
-        }
-      }
+    color: var(--graphics-jade);
+  }
+
+  // Two lines of caption, reserved whether or not a card has one. The bottom
+  // panel sits at the foot of the card, so without this the Enterprise price
+  // line ("Let's talk") drops below $569 and $2,659 next to it. Scoped to this
+  // page: Service Packages captions are a single line and need no reserve.
+  .pricing-card__price-period {
+    min-height: 48px;
+  }
+
+  // Everything below is tuned for these three cards only. PricingCard is shared
+  // with Service Packages and the accelerators, whose copy is a different
+  // length, so the widths and rhythm stay on this page.
+  .pricing-card {
+    // The gap down to the bullets is now the list's own top margin, so the
+    // description no longer carries 40px of its own.
+    &__description {
+      max-width: 292px;
+      margin-right: auto;
+      margin-bottom: 0;
+      margin-left: auto;
+    }
+
+    // Narrow enough to push "unlimited users" onto its own line, which keeps
+    // the caption to two lines and matches the reserve above.
+    &__price {
+      max-width: 280px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    // Same badge as the Service Packages cards, only jade instead of amber. The
+    // ring is white at 40% — a soft lighter edge over the fill that still holds
+    // the badge apart from the hero behind it.
+    &__popular {
+      border: 1px solid var(--white-40);
+      background: var(--graphics-jade);
+    }
+
+    ul {
+      margin: 24px 0 28px;
+      padding-left: 0;
     }
   }
 }

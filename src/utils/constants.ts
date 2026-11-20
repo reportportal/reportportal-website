@@ -7,12 +7,42 @@ export const BLOG_PAGE_SIZE = 12;
 export const DOCUMENTATION_URL = process.env.DOCUMENTATION_URL as string;
 export const CONTACT_US_URL = process.env.CONTACT_US_URL as string;
 
+/** General Contact Us page path (no trailing slash). Links append `/` via builder. */
+export const CONTACT_US_GENERAL_PATH = '/contact-us/general';
+
+export const buildContactUsGeneralPath = ({
+  reason,
+  cta,
+}: {
+  reason?: string;
+  cta?: string;
+} = {}): string => {
+  const href = `${CONTACT_US_GENERAL_PATH}/`;
+
+  if (!reason && !cta) {
+    return href;
+  }
+
+  const params = new URLSearchParams();
+
+  if (reason) {
+    params.set('reason', reason);
+  }
+  if (cta) {
+    params.set('cta', cta);
+  }
+
+  return `${href}?${params.toString()}`;
+};
+
 export const FORM_TYPE_CONTACT = 'contact_form';
 export const FORM_TYPE_NEWSLETTER = 'newsletter_subscription';
 
 export const isNewYearMode = isDateBetweenNov25AndJan15GMT3();
 
 export const ANNOUNCEMENT_CLOSED_KEY = 'wasAnnouncementClosed';
+
+export const TRAFFIC_ATTRIBUTION_STORAGE_KEY = 'rp_traffic_attribution';
 
 export const SEO_DATA = {
   index: {

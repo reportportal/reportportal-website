@@ -17,6 +17,9 @@ declare module '*.svg' {
 interface Window {
   dataLayer: object[];
   prevLocation?: Location;
+  /** Comma-delimited OneTrust consent category ids, e.g. ",C0001,C0004,". */
+  OnetrustActiveGroups?: string;
+  OptanonWrapper?: () => void;
 }
 
 declare module 'react-scroll' {
@@ -25,4 +28,24 @@ declare module 'react-scroll' {
   // https://github.com/fisshy/react-scroll/issues/566
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const Link: ComponentType<any>;
+}
+
+/** Generated at build time by gatsby-node.ts */
+declare module '*/static/github.json' {
+  interface RepoStats {
+    total: number;
+    repos: Record<string, number | string>;
+  }
+  const content: RepoStats;
+  export default content;
+}
+
+/** Generated at build time by gatsby-node.ts */
+declare module '*/static/stats.json' {
+  interface CommunityStats {
+    downloads: number;
+    slackMembers: number;
+  }
+  const content: CommunityStats;
+  export default content;
 }

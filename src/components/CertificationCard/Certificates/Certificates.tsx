@@ -6,6 +6,7 @@ import soc2Url from './svg/soc2.svg';
 import isae3402Url from './svg/isae3402.svg';
 import iso9001Url from './svg/iso9001.svg';
 import iso27001Url from './svg/iso27001.svg';
+import iso42001Url from './svg/iso42001.svg';
 
 import './Certificates.scss';
 
@@ -16,6 +17,7 @@ const certificates: { src: string; alt: string }[] = [
   { src: isae3402Url, alt: 'ISAE 3402' },
   { src: iso9001Url, alt: 'ISO 9001' },
   { src: iso27001Url, alt: 'ISO 27001' },
+  { src: iso42001Url, alt: 'ISO 42001' },
 ];
 
 interface CertificatesProps {

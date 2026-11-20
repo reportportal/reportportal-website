@@ -37,6 +37,20 @@ export const PricingCard: FC<PricingCardProps> = ({
   const currency = plan.price?.currency;
   const price = plan.price?.[planType] as number;
 
+  // Contentful has held a per-period caption for the price since the fields were
+  // added, but the component ignored it and printed a hardcoded string instead.
+  // It is the only place that can say "billed quarterly" next to the number —
+  // without it the card shows $569 while the first invoice is three times that.
+  const priceCaption = plan.price?.[`${planType}Description`];
+
+  // The yearly rate is a discount off the quarterly one, so show what it saves.
+  // Written as a comparison rather than a truthy check: Service Packages store
+  // quarterly: 0, and every other page shares this component.
+  const previousPrice =
+    planType === 'yearly' && Number(plan.price?.quarterly) > Number(plan.price?.yearly)
+      ? plan.price?.quarterly
+      : undefined;
+
   return (
     <div className={classNames(getBlocksWith(), { [getBlocksWith('--full-width')]: isFullWidth })}>
       <div>
@@ -69,16 +83,30 @@ export const PricingCard: FC<PricingCardProps> = ({
             <span className={getBlocksWith('__price-value')}>{plan.pricingInfo}</span>
           ) : (
             <>
+              {previousPrice && (
+                <span className={getBlocksWith('__price-previous')}>
+                  {currency}
+                  {formatNumberWithCommas(previousPrice)}
+                </span>
+              )}
               <span className={getBlocksWith('__price-value')}>
                 {currency}
                 {formatNumberWithCommas(price)}
                 {isDiamond && '+'}
               </span>
-              <div className={getBlocksWith('__price-period')}>
-                for package per {plan.price?.period}
-              </div>
             </>
           )}
+          {/* Always rendered, even with nothing to say. The bottom panel is
+              anchored to the foot of the card, so a shorter caption pushes the
+              price line down and the three cards stop lining up. A plan priced
+              "Let's talk" has no `price` node to hold a caption at all — and it
+              cannot get one without inventing a currency and an amount, since
+              Contentful marks both required. Reserving the space here keeps the
+              layout honest instead. */}
+          <div className={getBlocksWith('__price-period')}>
+            {priceCaption && formatTextFromContentfulTextFieldWithLineBreaks(priceCaption)}
+            {!priceCaption && !plan.pricingInfo && `for package per ${plan.price?.period}`}
+          </div>
         </div>
         <Link
           className={classNames('btn', `btn--${plan.cta.type}`, 'btn--large')}

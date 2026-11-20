@@ -6,7 +6,7 @@ import { getEaseInOutTransition, PropsWithAnimation } from '@app/utils';
 import './StatisticList.scss';
 
 export interface StatisticsEntry {
-  quantity: string;
+  quantity?: string;
   entities: string;
   achievement?: string;
 }
@@ -40,7 +40,7 @@ export const StatisticList: FC<PropsWithAnimation<StatisticListProps>> = ({
     <ul className="statistic-list">
       {statistics.map(({ quantity, entities, achievement }, index) => (
         <motion.li
-          key={quantity}
+          key={entities}
           className="white-border"
           {...getAnimation({ isInView, delay: 0.5 + index * 0.1 })}
         >

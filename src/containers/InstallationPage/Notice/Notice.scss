@@ -6,6 +6,7 @@
   margin-top: 24px;
 
   &__border {
+    flex-shrink: 0;
     width: 4px;
     border-radius: 4px;
     background-color: var(--text-light-grey);

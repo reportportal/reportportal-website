@@ -34,7 +34,8 @@ export const KubernetesContent: FC = () => {
       </Text>
       <p>Install the chart:</p>
       <Text className={getBlocksWith('__code')} code copyable>
-        helm install my-release --set uat.superadminInitPasswd.password=&quot;MyPassword&quot;
+        helm install my-release --set
+        serviceapi.auth.superadminInitPasswd.password=&quot;MyPassword&quot;
         reportportal/reportportal
       </Text>
       <Notice title="NOTE">
