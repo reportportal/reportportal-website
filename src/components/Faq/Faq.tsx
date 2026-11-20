@@ -20,7 +20,7 @@ const getBlocksWith = createBemBlockBuilder(['faq']);
 export const Faq: FC<FaqProps> = ({
   items,
   titleId,
-  documentationLink = `${DOCUMENTATION_URL}/FAQ/`,
+  documentationLink = `${DOCUMENTATION_URL}/references/FAQ/`,
   showMoreInfoLink = true,
 }) => (
   <div className={classNames('container', getBlocksWith())}>
