@@ -201,12 +201,12 @@
   },
   {
     "source": "/docs/category/work-with-reports/",
-    "target": "/docs/work-with-reports/",
+    "target": "/docs/working-with-test-results/",
     "status": "301"
   },
   {
     "source": "/docs/category/work-with-reports",
-    "target": "/docs/work-with-reports/",
+    "target": "/docs/working-with-test-results/",
     "status": "301"
   },
   {
@@ -221,12 +221,12 @@
   },
   {
     "source": "/docs/category/saved-searches-filters/",
-    "target": "/docs/saved-searches-filters/",
+    "target": "/docs/working-with-test-results/saved-searches-filters/",
     "status": "301"
   },
   {
     "source": "/docs/category/saved-searches-filters",
-    "target": "/docs/saved-searches-filters/",
+    "target": "/docs/working-with-test-results/saved-searches-filters/",
     "status": "301"
   },
   {
@@ -241,12 +241,12 @@
   },
   {
     "source": "/docs/category/admin-panel/",
-    "target": "/docs/admin-panel/",
+    "target": "/docs/configuration/",
     "status": "301"
   },
   {
     "source": "/docs/category/admin-panel",
-    "target": "/docs/admin-panel/",
+    "target": "/docs/configuration/",
     "status": "301"
   },
   {
@@ -261,32 +261,32 @@
   },
   {
     "source": "/docs/category/external-integrations/",
-    "target": "/docs/external-integrations/",
+    "target": "/docs/integrations/",
     "status": "301"
   },
   {
     "source": "/docs/category/external-integrations",
-    "target": "/docs/external-integrations/",
+    "target": "/docs/integrations/",
     "status": "301"
   },
   {
     "source": "/docs/category/quality-gates/",
-    "target": "/docs/quality-gates/",
+    "target": "/docs/analysis/quality-gates/",
     "status": "301"
   },
   {
     "source": "/docs/category/quality-gates",
-    "target": "/docs/quality-gates/",
+    "target": "/docs/analysis/quality-gates/",
     "status": "301"
   },
   {
     "source": "/docs/category/case-studies/",
-    "target": "/docs/case-studies/",
+    "target": "/docs/references/case-studies/",
     "status": "301"
   },
   {
     "source": "/docs/category/case-studies",
-    "target": "/docs/case-studies/",
+    "target": "/docs/references/case-studies/",
     "status": "301"
   },
   {
@@ -416,32 +416,37 @@
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SAMLProvider/AzureSAML/",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SAMLProvider/AzureSAML",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
     "source": "/docs/Azure-SAML-Integration/",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
     "source": "/docs/Azure-SAML-Integration",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SamlProviders/AzureSaml/",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SamlProviders/AzureSaml",
-    "target": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/SamlProviders/AzureSaml/",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
     "status": "301"
   },
   {
@@ -456,22 +461,22 @@
   },
   {
     "source": "/docs/How-to-resolve/",
-    "target": "/docs/issues-troubleshooting/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
     "status": "301"
   },
   {
     "source": "/docs/How-to-resolve",
-    "target": "/docs/issues-troubleshooting/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
     "status": "301"
   },
   {
     "source": "/docs/category/issues-troubleshooting/",
-    "target": "/docs/issues-troubleshooting/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
     "status": "301"
   },
   {
     "source": "/docs/category/issues-troubleshooting",
-    "target": "/docs/issues-troubleshooting/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
     "status": "301"
   },
   {
@@ -499,7 +504,11 @@
     "target": "/docs/test-results-reporting/ImportDataToReportPortal/",
     "status": "301"
   },
-  { "source": "/docs/Log-Data-in/", "target": "/docs/test-results-reporting/", "status": "301" },
+  {
+    "source": "/docs/Log-Data-in/",
+    "target": "/docs/test-results-reporting/",
+    "status": "301"
+  },
   {
     "source": "/docs/Log-Data-in",
     "target": "/docs/test-results-reporting/",
@@ -522,42 +531,47 @@
   },
   {
     "source": "/docs/Maintain-commands-Cheat/",
-    "target": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet/",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
     "status": "301"
   },
   {
     "source": "/docs/Maintain-commands-Cheat",
-    "target": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet/",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/MaintainCommandsCheatSheet/",
-    "target": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet/",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/MaintainCommandsCheatSheet",
-    "target": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet/",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-with-Kubernetes/",
-    "target": "/docs/installation-steps/DeployWithKubernetes/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-with-Kubernetes",
-    "target": "/docs/installation-steps/DeployWithKubernetes/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes/",
-    "target": "/docs/installation-steps/DeployWithKubernetes/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes",
-    "target": "/docs/installation-steps/DeployWithKubernetes/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/DeployWithKubernetes/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
     "status": "301"
   },
   {
@@ -582,12 +596,12 @@
   },
   {
     "source": "/docs/Issues-with-LDAPS/",
-    "target": "/docs/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
     "status": "301"
   },
   {
     "source": "/docs/Issues-with-LDAPS",
-    "target": "/docs/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
     "status": "301"
   },
   {
@@ -602,62 +616,87 @@
   },
   {
     "source": "/docs/reportportal-configuration/authorization/",
-    "target": "/docs/plugins/authorization/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization",
-    "target": "/docs/plugins/authorization/",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/category/authorization/",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/category/authorization",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-ReportPortal-without/",
-    "target": "/docs/installation-steps/DeployWithoutDocker/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-ReportPortal-without",
-    "target": "/docs/installation-steps/DeployWithoutDocker/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-Without-Docker/",
-    "target": "/docs/installation-steps/DeployWithoutDocker/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-Without-Docker",
-    "target": "/docs/installation-steps/DeployWithoutDocker/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/DeployWithoutDocker/",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
     "status": "301"
   },
   {
     "source": "/docs/Active-Directory-Auth/",
-    "target": "/docs/plugins/authorization/ActiveDirectory/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/Active-Directory-Auth",
-    "target": "/docs/plugins/authorization/ActiveDirectory/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/ActiveDirectory/",
-    "target": "/docs/plugins/authorization/ActiveDirectory/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/ActiveDirectory",
-    "target": "/docs/plugins/authorization/ActiveDirectory/",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/ActiveDirectory/",
+    "target": "/docs/integrations/authorization/",
     "status": "301"
   },
   {
     "source": "/docs/View-launches/",
-    "target": "/docs/work-with-reports/ViewLaunches/",
+    "target": "/docs/working-with-test-results/ViewLaunches/",
     "status": "301"
   },
   {
     "source": "/docs/View-launches",
-    "target": "/docs/work-with-reports/ViewLaunches/",
+    "target": "/docs/working-with-test-results/ViewLaunches/",
     "status": "301"
   },
   {
@@ -682,32 +721,32 @@
   },
   {
     "source": "/docs/Deploy-with-AWS/",
-    "target": "/docs/installation-steps-advanced/DeployWithAWSECSFargate/",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
     "status": "301"
   },
   {
     "source": "/docs/Deploy-with-AWS",
-    "target": "/docs/installation-steps-advanced/DeployWithAWSECSFargate/",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/DeployWithAWSECSFargate/",
-    "target": "/docs/installation-steps-advanced/DeployWithAWSECSFargate/",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/DeployWithAWSECSFargate",
-    "target": "/docs/installation-steps-advanced/DeployWithAWSECSFargate/",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
     "status": "301"
   },
   {
     "source": "/docs/How-to-activate/",
-    "target": "/docs/work-with-reports/ViewLaunches/#markdown-mode-on-logs-view",
+    "target": "/docs/working-with-test-results/LogLevel/#markdown-mode-on-logs-view",
     "status": "301"
   },
   {
     "source": "/docs/How-to-activate",
-    "target": "/docs/work-with-reports/ViewLaunches/#markdown-mode-on-logs-view",
+    "target": "/docs/working-with-test-results/LogLevel/#markdown-mode-on-logs-view",
     "status": "301"
   },
   {
@@ -772,182 +811,252 @@
   },
   {
     "source": "/docs/category/dev-guides/",
-    "target": "/docs/developers-guides/",
+    "target": "/docs/developers-and-api/",
     "status": "301"
   },
   {
     "source": "/docs/category/dev-guides",
-    "target": "/docs/developers-guides/",
+    "target": "/docs/developers-and-api/",
     "status": "301"
   },
   {
     "source": "/docs/category/developers-guides/",
-    "target": "/docs/developers-guides/",
+    "target": "/docs/developers-and-api/",
     "status": "301"
   },
   {
     "source": "/docs/category/developers-guides",
-    "target": "/docs/developers-guides/",
+    "target": "/docs/developers-and-api/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/",
+    "target": "/docs/developers-and-api/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/APIDifferencesBetweenV4AndV5/",
-    "target": "/docs/developers-guides/APIDifferencesBetweenV4AndV5/",
+    "target": "/docs/26.0.7/developers-guides/APIDifferencesBetweenV4AndV5/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/APIDifferencesBetweenV4AndV5",
-    "target": "/docs/developers-guides/APIDifferencesBetweenV4AndV5/",
+    "target": "/docs/26.0.7/developers-guides/APIDifferencesBetweenV4AndV5/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/APIDifferencesBetweenV4AndV5/",
+    "target": "/docs/26.0.7/developers-guides/APIDifferencesBetweenV4AndV5/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/AsynchronousReporting/",
-    "target": "/docs/developers-guides/AsynchronousReporting/",
+    "target": "/docs/developers-and-api/AsynchronousReporting/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/AsynchronousReporting",
-    "target": "/docs/developers-guides/AsynchronousReporting/",
+    "target": "/docs/developers-and-api/AsynchronousReporting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/AsynchronousReporting/",
+    "target": "/docs/developers-and-api/AsynchronousReporting/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/AttachmentsGuide/",
-    "target": "/docs/developers-guides/AttachmentsGuide/",
+    "target": "/docs/developers-and-api/AttachmentsGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/AttachmentsGuide",
-    "target": "/docs/developers-guides/AttachmentsGuide/",
+    "target": "/docs/developers-and-api/AttachmentsGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/AttachmentsGuide/",
+    "target": "/docs/developers-and-api/AttachmentsGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/BackEndJavaContributionGuide/",
-    "target": "/docs/developers-guides/BackEndJavaContributionGuide/",
+    "target": "/docs/developers-and-api/BackEndJavaContributionGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/BackEndJavaContributionGuide",
-    "target": "/docs/developers-guides/BackEndJavaContributionGuide/",
+    "target": "/docs/developers-and-api/BackEndJavaContributionGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/BackEndJavaContributionGuide/",
+    "target": "/docs/developers-and-api/BackEndJavaContributionGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/InteractionsBetweenAPIAndAnalyzer/",
-    "target": "/docs/developers-guides/InteractionsBetweenAPIAndAnalyzer/",
+    "target": "/docs/developers-and-api/InteractionsBetweenAPIAndAnalyzer/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/InteractionsBetweenAPIAndAnalyzer",
-    "target": "/docs/developers-guides/InteractionsBetweenAPIAndAnalyzer/",
+    "target": "/docs/developers-and-api/InteractionsBetweenAPIAndAnalyzer/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/InteractionsBetweenAPIAndAnalyzer/",
+    "target": "/docs/developers-and-api/InteractionsBetweenAPIAndAnalyzer/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/PluginDevelopersGuide/",
-    "target": "/docs/developers-guides/PluginDevelopersGuide/",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/PluginDevelopersGuide",
-    "target": "/docs/developers-guides/PluginDevelopersGuide/",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/PluginDevelopersGuide/",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/ReportPortalAPI/",
-    "target": "/docs/developers-guides/ReportPortalAPI/",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/ReportPortalAPI",
-    "target": "/docs/developers-guides/ReportPortalAPI/",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/ReportPortalAPI/",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/ReportingDevelopersGuide/",
-    "target": "/docs/developers-guides/ReportingDevelopersGuide/",
+    "target": "/docs/developers-and-api/ReportingDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/ReportingDevelopersGuide",
-    "target": "/docs/developers-guides/ReportingDevelopersGuide/",
+    "target": "/docs/developers-and-api/ReportingDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/ReportingDevelopersGuide/",
+    "target": "/docs/developers-and-api/ReportingDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/RerunDevelopersGuide/",
-    "target": "/docs/developers-guides/RerunDevelopersGuide/",
+    "target": "/docs/developers-and-api/RerunDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/RerunDevelopersGuide",
-    "target": "/docs/developers-guides/RerunDevelopersGuide/",
+    "target": "/docs/developers-and-api/RerunDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/RerunDevelopersGuide/",
+    "target": "/docs/developers-and-api/RerunDevelopersGuide/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/RetriesReporting/",
-    "target": "/docs/developers-guides/RetriesReporting/",
+    "target": "/docs/developers-and-api/RetriesReporting/",
     "status": "301"
   },
   {
     "source": "/docs/dev-guides/RetriesReporting",
-    "target": "/docs/developers-guides/RetriesReporting/",
+    "target": "/docs/developers-and-api/RetriesReporting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/RetriesReporting/",
+    "target": "/docs/developers-and-api/RetriesReporting/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ComponentsOverview/",
-    "target": "/docs/installation-steps-advanced/ComponentsOverview/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ComponentsOverview/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ComponentsOverview",
-    "target": "/docs/installation-steps-advanced/ComponentsOverview/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ComponentsOverview/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/BasicMonitoringConfiguration/",
-    "target": "/docs/installation-steps-advanced/BasicMonitoringConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/BasicMonitoringConfiguration/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/BasicMonitoringConfiguration",
-    "target": "/docs/installation-steps-advanced/BasicMonitoringConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/BasicMonitoringConfiguration/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ReportPortalJobsConfiguration/",
-    "target": "/docs/installation-steps-advanced/JobsConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/JobsConfiguration/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ReportPortalJobsConfiguration",
-    "target": "/docs/installation-steps-advanced/JobsConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/JobsConfiguration/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ReportPortalBackupRestoreGuide/",
-    "target": "/docs/installation-steps-advanced/BackupRestoreGuide/",
+    "target": "/docs/administration-and-maintenance/BackupRestoreGuide/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/ReportPortalBackupRestoreGuide",
-    "target": "/docs/installation-steps-advanced/BackupRestoreGuide/",
+    "target": "/docs/administration-and-maintenance/BackupRestoreGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/BackupRestoreGuide/",
+    "target": "/docs/administration-and-maintenance/BackupRestoreGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/BackupRestoreGuide",
+    "target": "/docs/administration-and-maintenance/BackupRestoreGuide/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/AdditionalConfigurationParameters/",
-    "target": "/docs/installation-steps-advanced/AdditionalConfigurationParameters/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AdditionalConfigurationParameters/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/AdditionalConfigurationParameters",
-    "target": "/docs/installation-steps-advanced/AdditionalConfigurationParameters/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AdditionalConfigurationParameters/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/AdditionalConfigurationParameters/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AdditionalConfigurationParameters/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/MigrateOneInstanceToAnother/",
-    "target": "/docs/installation-steps-advanced/MigrateOneInstanceToAnother/",
+    "target": "/docs/installation-and-deployment/upgrade-and-migration/MigrateOneInstanceToAnother/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/MigrateOneInstanceToAnother",
-    "target": "/docs/installation-steps-advanced/MigrateOneInstanceToAnother/",
+    "target": "/docs/installation-and-deployment/upgrade-and-migration/MigrateOneInstanceToAnother/",
     "status": "301"
   },
   {
@@ -962,62 +1071,72 @@
   },
   {
     "source": "/docs/installation-steps/ScalingUpReportPortalAPIService/",
-    "target": "/docs/installation-steps-advanced/ScalingReportPortalServices/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/ScalingUpReportPortalAPIService",
-    "target": "/docs/installation-steps-advanced/ScalingReportPortalServices/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes/AmazonALBNGINXIngressController/",
-    "target": "/docs/installation-steps-advanced/AWSLoadBalancerIntegrationOnEKS/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AWSLoadBalancerIntegrationOnEKS/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes/AmazonALBNGINXIngressController",
-    "target": "/docs/installation-steps-advanced/AWSLoadBalancerIntegrationOnEKS/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AWSLoadBalancerIntegrationOnEKS/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/AWSLoadBalancerIntegrationOnEKS/",
+    "target": "/docs/installation-and-deployment/advanced-installation/AWSLoadBalancerIntegrationOnEKS/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes/QuickStartWithGCPGKE/",
-    "target": "/docs/installation-steps-advanced/QuickStartWithGCPGKE/",
+    "target": "/docs/installation-and-deployment/advanced-installation/QuickStartWithGCPGKE/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps/deploy-with-kubernetes/QuickStartWithGCPGKE",
-    "target": "/docs/installation-steps-advanced/QuickStartWithGCPGKE/",
+    "target": "/docs/installation-and-deployment/advanced-installation/QuickStartWithGCPGKE/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/QuickStartWithGCPGKE/",
+    "target": "/docs/installation-and-deployment/advanced-installation/QuickStartWithGCPGKE/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-tutorial/",
-    "target": "/docs/tutorial/",
+    "target": "/docs/getting-started/Tutorial/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-tutorial",
-    "target": "/docs/tutorial/",
+    "target": "/docs/getting-started/Tutorial/",
     "status": "301"
   },
   {
     "source": "/docs/What-is-ReportPortal/",
-    "target": "/docs/tutorial/",
+    "target": "/docs/getting-started/Tutorial/",
     "status": "301"
   },
   {
     "source": "/docs/What-is-ReportPortal",
-    "target": "/docs/tutorial/",
+    "target": "/docs/getting-started/Tutorial/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-glossary/",
-    "target": "/docs/glossary/",
+    "target": "/docs/references/glossary/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-glossary",
-    "target": "/docs/glossary/",
+    "target": "/docs/references/glossary/",
     "status": "301"
   },
   {
@@ -1032,32 +1151,47 @@
   },
   {
     "source": "/docs/reportportal-configuration/authorization/GitHub/",
-    "target": "/docs/plugins/authorization/GitHub/",
+    "target": "/docs/integrations/authorization/GitHub/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/GitHub",
-    "target": "/docs/plugins/authorization/GitHub/",
+    "target": "/docs/integrations/authorization/GitHub/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/GitHub/",
+    "target": "/docs/integrations/authorization/GitHub/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/LDAP/",
-    "target": "/docs/plugins/authorization/LDAP/",
+    "target": "/docs/integrations/authorization/LDAP/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/LDAP",
-    "target": "/docs/plugins/authorization/LDAP/",
+    "target": "/docs/integrations/authorization/LDAP/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/LDAP/",
+    "target": "/docs/integrations/authorization/LDAP/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SamlProviders/Overview/",
-    "target": "/docs/plugins/authorization/SamlProviders/Overview/",
+    "target": "/docs/integrations/authorization/SamlProviders/Overview/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/authorization/SamlProviders/Overview",
-    "target": "/docs/plugins/authorization/SamlProviders/Overview/",
+    "target": "/docs/integrations/authorization/SamlProviders/Overview/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/SamlProviders/Overview/",
+    "target": "/docs/integrations/authorization/SamlProviders/Overview/",
     "status": "301"
   },
   {
@@ -1092,72 +1226,62 @@
   },
   {
     "source": "/docs/configuration/CreationOfProjectAndAddingUsers/",
-    "target": "/docs/admin-panel/AllProjectsPage/",
+    "target": "/docs/configuration/organization-level/Projects/",
     "status": "301"
   },
   {
     "source": "/docs/configuration/CreationOfProjectAndAddingUsers",
-    "target": "/docs/admin-panel/AllProjectsPage/",
+    "target": "/docs/configuration/organization-level/Projects/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/CreationOfProjectAndAddingUsers/",
-    "target": "/docs/admin-panel/AllProjectsPage/",
+    "target": "/docs/configuration/organization-level/Projects/",
     "status": "301"
   },
   {
     "source": "/docs/reportportal-configuration/CreationOfProjectAndAddingUsers",
-    "target": "/docs/admin-panel/AllProjectsPage/",
+    "target": "/docs/configuration/organization-level/Projects/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps-advanced/ScalingUpReportPortalAPIService/",
-    "target": "/docs/installation-steps-advanced/ScalingReportPortalServices/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
     "status": "301"
   },
   {
     "source": "/docs/installation-steps-advanced/ScalingUpReportPortalAPIService",
-    "target": "/docs/installation-steps-advanced/ScalingReportPortalServices/",
-    "status": "301"
-  },
-  {
-    "source": "/docs/category/authorization/",
-    "target": "/docs/plugins/authorization/",
-    "status": "301"
-  },
-  {
-    "source": "/docs/category/authorization",
-    "target": "/docs/plugins/authorization/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
     "status": "301"
   },
   {
     "source": "/docs/category/saml-providers/",
-    "target": "/docs/plugins/authorization/SamlProviders/",
+    "target": "/docs/integrations/authorization/SamlProviders/",
     "status": "301"
   },
   {
     "source": "/docs/category/saml-providers",
-    "target": "/docs/plugins/authorization/SamlProviders/",
+    "target": "/docs/integrations/authorization/SamlProviders/",
     "status": "301"
   },
   {
     "source": "/docs/Test-case-ID>what-does-happen-if-you-do-not-report-items-with-test-case-id-/",
-    "target": "/docs/work-with-reports/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
     "status": "301"
   },
   {
     "source": "/docs/Test-case-ID>what-does-happen-if-you-do-not-report-items-with-test-case-id-",
-    "target": "/docs/work-with-reports/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
     "status": "301"
   },
   {
     "source": "/docs/Test-case-ID>what-is-it-test-case-id/",
-    "target": "/docs/work-with-reports/TestCaseId/#what-is-it-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-is-it-test-case-id",
     "status": "301"
   },
   {
     "source": "/docs/Test-case-ID>what-is-it-test-case-id",
-    "target": "/docs/work-with-reports/TestCaseId/#what-is-it-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-is-it-test-case-id",
     "status": "301"
   },
   {
@@ -1172,12 +1296,12 @@
   },
   {
     "source": "/docs/JVM-based-clients-configuration/",
-    "target": "/docs/log-data-in-reportportal/test-framework-integration/Java/",
+    "target": "/docs/integrations/test-frameworks/Java/",
     "status": "301"
   },
   {
     "source": "/docs/JVM-based-clients-configuration",
-    "target": "/docs/log-data-in-reportportal/test-framework-integration/Java/",
+    "target": "/docs/integrations/test-frameworks/Java/",
     "status": "301"
   },
   {
@@ -1402,12 +1526,12 @@
   },
   {
     "source": "/docs/api/",
-    "target": "/docs/developers-guides/ReportPortalAPI/",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
     "status": "301"
   },
   {
     "source": "/docs/api",
-    "target": "/docs/developers-guides/ReportPortalAPI/",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
     "status": "301"
   },
   {
@@ -1833,6 +1957,361 @@
   {
     "source": "/docs/terms-and-conditions/PremiumFeatures/",
     "target": "/docs/premium-features/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/BasicMonitoringConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/BasicMonitoringConfiguration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/BasicMonitoringConfiguration",
+    "target": "/docs/installation-and-deployment/advanced-installation/BasicMonitoringConfiguration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/ComponentsOverview/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ComponentsOverview/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/ComponentsOverview",
+    "target": "/docs/installation-and-deployment/advanced-installation/ComponentsOverview/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/DeployWithAWSECSFargate/",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/DeployWithAWSECSFargate",
+    "target": "/docs/installation-and-deployment/advanced-installation/DeployWithAWSECSFargate/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/JobsConfiguration/",
+    "target": "/docs/installation-and-deployment/advanced-installation/JobsConfiguration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/JobsConfiguration",
+    "target": "/docs/installation-and-deployment/advanced-installation/JobsConfiguration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet/",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/MaintainCommandsCheatSheet",
+    "target": "/docs/installation-and-deployment/advanced-installation/MaintainCommandsCheatSheet/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/MigrateOneInstanceToAnother/",
+    "target": "/docs/installation-and-deployment/upgrade-and-migration/MigrateOneInstanceToAnother/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/MigrateOneInstanceToAnother",
+    "target": "/docs/installation-and-deployment/upgrade-and-migration/MigrateOneInstanceToAnother/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/ScalingReportPortalServices/",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/ScalingReportPortalServices",
+    "target": "/docs/installation-and-deployment/advanced-installation/ScalingReportPortalServices/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/QuickStartWithGCPGKE",
+    "target": "/docs/installation-and-deployment/advanced-installation/QuickStartWithGCPGKE/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/ActiveDirectory",
+    "target": "/docs/integrations/authorization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/GitHub",
+    "target": "/docs/integrations/authorization/GitHub/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/LDAP",
+    "target": "/docs/integrations/authorization/LDAP/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/SamlProviders/AzureSaml",
+    "target": "/docs/integrations/authorization/SamlProviders/AzureSaml/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/authorization/SamlProviders/Overview",
+    "target": "/docs/integrations/authorization/SamlProviders/Overview/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/",
+    "target": "/docs/working-with-test-results/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports",
+    "target": "/docs/working-with-test-results/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/ViewLaunches/",
+    "target": "/docs/working-with-test-results/ViewLaunches/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/ViewLaunches",
+    "target": "/docs/working-with-test-results/ViewLaunches/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/ViewLaunches/#markdown-mode-on-logs-view",
+    "target": "/docs/working-with-test-results/LogLevel/#markdown-mode-on-logs-view",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-does-happen-if-you-do-not-report-items-with-test-case-id",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/TestCaseId/#what-is-it-test-case-id",
+    "target": "/docs/working-with-test-results/TestCaseId/#what-is-it-test-case-id",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/",
+    "target": "/docs/dashboards-and-visualization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets",
+    "target": "/docs/dashboards-and-visualization/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/WorkWithDashboards/#dashboard-cloning",
+    "target": "/docs/dashboards-and-visualization/WorkWithDashboards/#dashboard-cloning",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/WorkWithDashboards/",
+    "target": "/docs/dashboards-and-visualization/WorkWithDashboards/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/WorkWithDashboards",
+    "target": "/docs/dashboards-and-visualization/WorkWithDashboards/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/saved-searches-filters/",
+    "target": "/docs/working-with-test-results/saved-searches-filters/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/saved-searches-filters",
+    "target": "/docs/working-with-test-results/saved-searches-filters/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel/",
+    "target": "/docs/configuration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel",
+    "target": "/docs/configuration/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel/AllProjectsPage/",
+    "target": "/docs/configuration/organization-level/Projects/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/admin-panel/AllProjectsPage",
+    "target": "/docs/configuration/organization-level/Projects/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/case-studies/",
+    "target": "/docs/references/case-studies/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/case-studies",
+    "target": "/docs/references/case-studies/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/external-integrations/",
+    "target": "/docs/integrations/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/external-integrations",
+    "target": "/docs/integrations/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/glossary/",
+    "target": "/docs/references/glossary/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/glossary",
+    "target": "/docs/references/glossary/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/IssuesWithLDAPSHowToResolve",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/IssuesWithLDAPSHowToResolve/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/",
+    "target": "/docs/integrations/test-frameworks/Java/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java",
+    "target": "/docs/integrations/test-frameworks/Java/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates/",
+    "target": "/docs/analysis/quality-gates/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/quality-gates",
+    "target": "/docs/analysis/quality-gates/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/releases/index.html",
+    "target": "/docs/releases/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/tutorial/",
+    "target": "/docs/getting-started/Tutorial/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/tutorial",
+    "target": "/docs/getting-started/Tutorial/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides",
+    "target": "/docs/developers-and-api/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/AsynchronousReporting",
+    "target": "/docs/developers-and-api/AsynchronousReporting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/APIDifferencesBetweenV4AndV5",
+    "target": "/docs/26.0.7/developers-guides/APIDifferencesBetweenV4AndV5/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/AttachmentsGuide",
+    "target": "/docs/developers-and-api/AttachmentsGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/BackEndJavaContributionGuide",
+    "target": "/docs/developers-and-api/BackEndJavaContributionGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/InteractionsBetweenAPIAndAnalyzer",
+    "target": "/docs/developers-and-api/InteractionsBetweenAPIAndAnalyzer/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/PluginDevelopersGuide",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/ReportPortalAPI",
+    "target": "/docs/developers-and-api/ReportPortalAPI/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/ReportingDevelopersGuide",
+    "target": "/docs/developers-and-api/ReportingDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/RerunDevelopersGuide",
+    "target": "/docs/developers-and-api/RerunDevelopersGuide/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/developers-guides/RetriesReporting",
+    "target": "/docs/developers-and-api/RetriesReporting/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/DeployWithKubernetes",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithKubernetes/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps/DeployWithoutDocker",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithoutDocker/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/AdditionalConfigurationParameters",
+    "target": "/docs/installation-and-deployment/advanced-installation/AdditionalConfigurationParameters/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/AWSLoadBalancerIntegrationOnEKS",
+    "target": "/docs/installation-and-deployment/advanced-installation/AWSLoadBalancerIntegrationOnEKS/",
     "status": "301"
   },
   {
