@@ -211,12 +211,12 @@
   },
   {
     "source": "/docs/category/dashboards-and-widgets/",
-    "target": "/docs/dashboards-and-widgets/",
+    "target": "/docs/dashboards-and-visualization/",
     "status": "301"
   },
   {
     "source": "/docs/category/dashboards-and-widgets",
-    "target": "/docs/dashboards-and-widgets/",
+    "target": "/docs/dashboards-and-visualization/",
     "status": "301"
   },
   {
@@ -631,12 +631,12 @@
   },
   {
     "source": "/docs/Component-health-check/",
-    "target": "/docs/dashboards-and-widgets/ComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/ComponentHealthCheck/",
     "status": "301"
   },
   {
     "source": "/docs/Component-health-check",
-    "target": "/docs/dashboards-and-widgets/ComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/ComponentHealthCheck/",
     "status": "301"
   },
   {
@@ -721,12 +721,12 @@
   },
   {
     "source": "/docs/Table-Component-health/",
-    "target": "/docs/dashboards-and-widgets/TableComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/TableComponentHealthCheck/",
     "status": "301"
   },
   {
     "source": "/docs/Table-Component-health",
-    "target": "/docs/dashboards-and-widgets/TableComponentHealthCheck/",
+    "target": "/docs/dashboards-and-visualization/TableComponentHealthCheck/",
     "status": "301"
   },
   {
@@ -1121,12 +1121,12 @@
   },
   {
     "source": "/docs/Cumulative-trend-chart/",
-    "target": "/docs/dashboards-and-widgets/CumulativeTrendChart/",
+    "target": "/docs/dashboards-and-visualization/CumulativeTrendChart/",
     "status": "301"
   },
   {
     "source": "/docs/Cumulative-trend-chart",
-    "target": "/docs/dashboards-and-widgets/CumulativeTrendChart/",
+    "target": "/docs/dashboards-and-visualization/CumulativeTrendChart/",
     "status": "301"
   },
   {
@@ -1291,12 +1291,12 @@
   },
   {
     "source": "/docs/dashboards-and-widgets/DashboardCloning/",
-    "target": "/docs/dashboards-and-widgets/WorkWithDashboards/#dashboard-cloning",
+    "target": "/docs/dashboards-and-visualization/WorkWithDashboards/#dashboard-cloning",
     "status": "301"
   },
   {
     "source": "/docs/dashboards-and-widgets/DashboardCloning",
-    "target": "/docs/dashboards-and-widgets/WorkWithDashboards/#dashboard-cloning",
+    "target": "/docs/dashboards-and-visualization/WorkWithDashboards/#dashboard-cloning",
     "status": "301"
   },
   {
