@@ -56,7 +56,10 @@ export const Link: FC<LinkProps> = ({
   }
 
   // https://DOCUMENTATION_URL is the way to define DOCUMENTATION_URL in Contentful
-  const href = to.replace('https://DOCUMENTATION_URL', DOCUMENTATION_URL);
+  const href = to
+    .replace('https://DOCUMENTATION_URL', DOCUMENTATION_URL)
+    .replace('/docs/FAQ/', '/docs/references/FAQ/')
+    .replace(/\/docs\/FAQ$/, '/docs/references/FAQ/');
 
   return (
     // eslint-disable-next-line react/jsx-no-target-blank
