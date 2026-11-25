@@ -2385,6 +2385,72 @@
     "status": "301"
   },
   {
+    "source": "/pricing/",
+    "target": "/pricing/service-packages/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/external-integrations/MCPServer/",
+    "target": "/docs/integrations/ai-agents/MCPServer/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/test-executions/",
+    "target": "/docs/getting-started/features/TestExecutions/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/PossibleDashboardsInReportPortal/",
+    "target": "/docs/dashboards-and-visualization/PossibleDashboardsInReportPortal/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/WidgetCreation/",
+    "target": "/docs/dashboards-and-visualization/WidgetCreation/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ReportingAndMetricsInReportPortal/",
+    "target": "/docs/dashboards-and-visualization/ReportingAndMetricsInReportPortal/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/features/CategorisationOfFailures/",
+    "target": "/docs/getting-started/features/CategorisationOfFailures/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Python/pytest/",
+    "target": "/docs/integrations/test-frameworks/Python/pytest/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/user-role-guides/",
+    "target": "/docs/getting-started/UserRoleGuides/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/PHP/PHPUnit/",
+    "target": "/docs/integrations/test-frameworks/PHP/PHPUnit/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/FilteringLaunches/",
+    "target": "/docs/working-with-test-results/FilteringLaunches/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/plugins/import/",
+    "target": "/docs/integrations/import/",
+    "status": "301"
+  },
+  {
+    "source": "/docs/work-with-reports/LaunchesTestItemsAttributes/",
+    "target": "/docs/working-with-test-results/AutomatedAndAgenticLaunchTestItemAttributes/",
+    "status": "301"
+  },
+
+  {
     "source": "/docs/<*>",
     "target": "/docs/404.html",
     "status": "404"
