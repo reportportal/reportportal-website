@@ -43,7 +43,6 @@ export const REASON_LEAD_SOURCE_MAP: Record<ReasonValue, string> = {
 export type CtaSourceOverride = {
   source: string;
   reason?: ReasonValue;
-  leadSource?: string;
   // Always send `source` as ReportPortalSource; lead_source follows rows 1–8
   keepCtaSource?: boolean;
 };
@@ -71,7 +70,7 @@ export const CTA_SOURCE_OVERRIDES: Record<string, CtaSourceOverride> = {
   },
   features_demo: {
     reason: 'demo',
-    source: 'Landing page / General / Ready to transform /  Button "Request a Demo"',
+    source: 'Landing page / General / Ready to transform / Button "Request a Demo"',
   },
   test_management_demo: {
     reason: 'demo',
@@ -80,7 +79,6 @@ export const CTA_SOURCE_OVERRIDES: Record<string, CtaSourceOverride> = {
   community_free_trial: {
     reason: 'free_trial',
     source: 'Landing page / RP Community',
-    leadSource: 'RP Community',
   },
   // Pricing → SaaS / Service Packages overview CTAs (rows 27, 31, 32)
   saas_questions: {
