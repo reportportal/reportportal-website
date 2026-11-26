@@ -38,19 +38,19 @@ const createConfig = ({
 
 const createStartupPlanBaseConfig = (planType: PlanType) => ({
   id: '[SaaS] Startup Plan',
-  options: [{ name: LEAD_SOURCE, value: 'RP SaaS' }],
+  options: [{ name: LEAD_SOURCE, value: 'RP Startup Plan' }],
   planType,
 });
 
 const createBusinessPlanBaseConfig = (planType: PlanType) => ({
   id: '[SaaS] Business Plan',
-  options: [{ name: LEAD_SOURCE, value: 'RP SaaS' }],
+  options: [{ name: LEAD_SOURCE, value: 'RP Business Plan' }],
   planType,
 });
 
 const createEnterprisePlanBaseConfig = () => ({
   id: '[SaaS] Enterprise Plan',
-  options: [{ name: LEAD_SOURCE, value: 'RP SaaS' }],
+  options: [{ name: LEAD_SOURCE, value: 'RP Enterprise Plan' }],
 });
 
 const createContactUsConfig = ({ salesforceSourceName, leadSource, url }) => ({
@@ -137,7 +137,7 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     {
       id: `[Service Packages] ${plan}`,
       options: [
-        { name: LEAD_SOURCE, value: 'RP Service' },
+        { name: LEAD_SOURCE, value: `RP ${plan} Package` },
         {
           name: SALESFORCE_SOURCE_NAME,
           value: `Landing page / Service Packages / Request Support "${plan} Package"`,

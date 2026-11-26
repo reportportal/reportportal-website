@@ -93,8 +93,6 @@ export const ContactUsForm = ({ title, options, isDiscussFieldShown }) => {
 
           if (hasCustomText) {
             sourceOverride[LEAD_SOURCE] = CUSTOM_TEXT_LEAD_SOURCE;
-          } else if (matchesCtaReason && ctaOverride?.leadSource) {
-            sourceOverride[LEAD_SOURCE] = ctaOverride.leadSource;
           } else if (values.reason) {
             sourceOverride[LEAD_SOURCE] = REASON_LEAD_SOURCE_MAP[values.reason];
           } else {
