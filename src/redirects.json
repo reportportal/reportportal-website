@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "source": "/pricing/on-premises/",
     "target": "/pricing/service-packages/",
@@ -2449,7 +2449,286 @@
     "target": "/docs/working-with-test-results/AutomatedAndAgenticLaunchTestItemAttributes/",
     "status": "301"
   },
-
+  {
+    "source": "/pricing/saas",
+    "status": "301",
+    "target": "/pricing/saas/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/HowToReportAttributesToReportPortal/",
+    "status": "301",
+    "target": "/docs/test-results-reporting/HowToReportAttributesToReportPortal/"
+  },
+  {
+    "source": "/docs/issues-troubleshooting/HowToResolveIssuesWithMigrationToTheNewVersion/",
+    "status": "301",
+    "target": "/docs/administration-and-maintenance/issues-troubleshooting/HowToResolveIssuesWithMigrationToTheNewVersion/"
+  },
+  {
+    "source": "/docs/work-with-reports/LogLevel/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/LogLevel/"
+  },
+  {
+    "source": "/docs/features/RichArtifactsInTestReports/",
+    "status": "301",
+    "target": "/docs/getting-started/features/RichArtifactsInTestReports/"
+  },
+  {
+    "source": "/docs/features/AIFailureReasonDetection/",
+    "status": "301",
+    "target": "/docs/getting-started/features/AIFailureReasonDetection/"
+  },
+  {
+    "source": "/docs/work-with-reports/HistoryOfLaunches/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/HistoryOfLaunches/"
+  },
+  {
+    "source": "/docs/saved-searches-filters/FiltersPage/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/saved-searches-filters/FiltersPage/"
+  },
+  {
+    "source": "/docs/saved-searches-filters/ManageFilters/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/saved-searches-filters/ManageFilters/"
+  },
+  {
+    "source": "/docs/saved-searches-filters/CreateFilters/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/saved-searches-filters/CreateFilters/"
+  },
+  {
+    "source": "/docs/admin-panel/EventMonitoring/",
+    "status": "301",
+    "target": "/docs/administration-and-maintenance/EventMonitoring/"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/DockerHardenedImagesSupportForHelmChart/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/advanced-installation/DockerHardenedImagesSupportForHelmChart/"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/AuditLogsAndLogCollection/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/advanced-installation/AuditLogsAndLogCollection/"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/UpgradingPostgreSQLForReportPortalV24.2AndLater/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/advanced-installation/UpgradingPostgreSQLForReportPortalV24.2AndLater/"
+  },
+  {
+    "source": "/docs/installation-steps-advanced/SetupTLSHTTPSDockerComposeTraefikV2/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/advanced-installation/SetupTLSHTTPSDockerComposeTraefikV2/"
+  },
+  {
+    "source": "/docs/installation-steps/DeployOnUbuntuOS/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployOnUbuntuOS/"
+  },
+  {
+    "source": "/docs/installation-steps/DeployWithMinikube/",
+    "status": "301",
+    "target": "/docs/installation-and-deployment/installation-steps/DeployWithMinikube/"
+  },
+  {
+    "source": "/docs/quality-gates/AssessmentOfTestResultsUsingQualityGates/",
+    "status": "301",
+    "target": "/docs/analysis/quality-gates/AssessmentOfTestResultsUsingQualityGates/"
+  },
+  {
+    "source": "/docs/quality-gates/QualityRulesConfiguration/",
+    "status": "301",
+    "target": "/docs/analysis/quality-gates/QualityRulesConfiguration/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/Karate/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/Karate/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/JUnit4/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/JUnit4/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/TestNG/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/TestNG/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/Cucumber/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/Cucumber/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/Spock/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/Spock/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/Loggers/Selenide/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/Loggers/Selenide/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Java/Loggers/ApacheHttpComponents/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Java/Loggers/ApacheHttpComponents/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/Python/RobotFramework/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/Python/RobotFramework/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/Playwright/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/Playwright/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/CucumberJS/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/CucumberJS/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/WebdriverIO/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/WebdriverIO/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/Vitest/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/Vitest/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/Mocha/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/Mocha/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/JavaScript/Postman/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/JavaScript/Postman/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/test-framework-integration/PHP/",
+    "status": "301",
+    "target": "/docs/integrations/test-frameworks/PHP/"
+  },
+  {
+    "source": "/docs/log-data-in-reportportal/ReportingSDK/",
+    "status": "301",
+    "target": "/docs/test-results-reporting/ReportingSDK/"
+  },
+  {
+    "source": "/docs/user-account/RestoreAPassword/",
+    "status": "301",
+    "target": "/docs/configuration/user-account/RestoreAPassword/"
+  },
+  {
+    "source": "/docs/user-account/DeleteAccount/",
+    "status": "301",
+    "target": "/docs/configuration/user-account/DeleteAccount/"
+  },
+  {
+    "source": "/docs/user-account/DataRetentionProcedure/",
+    "status": "301",
+    "target": "/docs/administration-and-maintenance/DataRetentionProcedure/"
+  },
+  {
+    "source": "/docs/user-account/api-key-revocation/",
+    "status": "301",
+    "target": "/docs/administration-and-maintenance/api-key-revocation/"
+  },
+  {
+    "source": "/docs/features/SCIMServerFeature/",
+    "status": "301",
+    "target": "/docs/getting-started/features/SCIMServerFeature/"
+  },
+  {
+    "source": "/docs/features/VisualisationOfTestResults/",
+    "status": "301",
+    "target": "/docs/getting-started/features/VisualisationOfTestResults/"
+  },
+  {
+    "source": "/docs/dev-guide/Auto-Analysis/",
+    "status": "301",
+    "target": "/docs/analysis/AutoAnalysisOfLaunches/"
+  },
+  {
+    "source": "/docs/analysis/auto-analysis/",
+    "status": "301",
+    "target": "/docs/analysis/AutoAnalysisOfLaunches/"
+  },
+  {
+    "source": "/docs/developers-guides/PluginDevelopersGuide/DevelopACustomImportPlugin/",
+    "status": "301",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/DevelopACustomImportPlugin/"
+  },
+  {
+    "source": "/docs/developers-guides/PluginDevelopersGuide/PluginUIDevelopersGuide/",
+    "status": "301",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/PluginUIDevelopersGuide/"
+  },
+  {
+    "source": "/docs/developers-guides/PluginDevelopersGuide/PluginAPIDevelopersGuide/",
+    "status": "301",
+    "target": "/docs/developers-and-api/PluginDevelopersGuide/PluginAPIDevelopersGuide/"
+  },
+  {
+    "source": "/docs/external-integrations/UserProvisioning/overview/",
+    "status": "301",
+    "target": "/docs/integrations/UserProvisioning/overview/"
+  },
+  {
+    "source": "/docs/external-integrations/UserProvisioning/Scim/okta/",
+    "status": "301",
+    "target": "/docs/integrations/UserProvisioning/Scim/okta/"
+  },
+  {
+    "source": "/docs/dashboards-and-widgets/ManageWidgets/",
+    "status": "301",
+    "target": "/docs/dashboards-and-visualization/ManageWidgets/"
+  },
+  {
+    "source": "/docs/plugins/bug-tracking/",
+    "status": "301",
+    "target": "/docs/integrations/bug-tracking/"
+  },
+  {
+    "source": "/docs/plugins/authorization/SamlProviders/GoogleWorkspaceSso/",
+    "status": "301",
+    "target": "/docs/integrations/authorization/SamlProviders/GoogleWorkspaceSso/"
+  },
+  {
+    "source": "/docs/configuration/LaunchesRetentionPolicy/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/LaunchesRetentionPolicy/"
+  },
+  {
+    "source": "/docs/work-with-reports/TestItemDetails/",
+    "status": "301",
+    "target": "/docs/working-with-test-results/ViewLaunches/"
+  },
+  {
+    "source": "/docs/test-management-system/test-case-library/Requirements/",
+    "status": "301",
+    "target": "/docs/test-management-system/test-case-library/TestCases/"
+  },
+  {
+    "source": "/docs/terms-and-conditions/",
+    "status": "301",
+    "target": "/docs/references/"
+  },
   {
     "source": "/docs/<*>",
     "target": "/docs/404.html",
