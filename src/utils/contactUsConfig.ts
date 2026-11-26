@@ -146,18 +146,6 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
       url: `/contact-us/service-packages/${kebabCase(plan)}`,
       planType: 'yearly',
     },
-    {
-      id: `[Service Packages] ${plan}`,
-      options: [
-        { name: LEAD_SOURCE, value: 'RP Service' },
-        {
-          name: SALESFORCE_SOURCE_NAME,
-          value: `Landing page / Service Packages / Compare Plan / Request Support "${plan} Plan"`,
-        },
-      ],
-      url: `/contact-us/service-packages/compare/${kebabCase(plan)}`,
-      planType: 'yearly',
-    },
     createConfig({
       baseConfig: QaSpaceBaseConfig,
       url: `/contact-us/qasp/${kebabCase(plan)}`,
@@ -239,31 +227,6 @@ export const contactUsBaseConfigs: ContactUsBaseConfig[] = [
     leadSource: 'RP General',
     url: CONTACT_US_GENERAL_PATH,
   }),
-  {
-    id: '[Service Packages]',
-    url: '/contact-us/service-packages',
-    options: [
-      {
-        name: SALESFORCE_SOURCE_NAME,
-        value: 'Landing page / Service Packages / Interest in Support Packages',
-      },
-      { name: LEAD_SOURCE, value: 'RP Service' },
-    ],
-    isDiscussFieldShown: false,
-  },
-  {
-    id: '[Service Packages]',
-    title: 'SaaS Plans',
-    url: '/contact-us/saas',
-    options: [
-      {
-        name: SALESFORCE_SOURCE_NAME,
-        value: 'Landing page / SaaS / Interest in SaaS Plans',
-      },
-      { name: LEAD_SOURCE, value: 'RP SaaS' },
-    ],
-    isDiscussFieldShown: false,
-  },
   createContactUsConfig({
     salesforceSourceName: 'RP Community',
     leadSource: 'RP Community',
